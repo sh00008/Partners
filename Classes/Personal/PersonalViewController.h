@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MGScrollView, MGBox;
 
 @interface PersonalViewController : UIViewController
+{
+    
+}
 
+@property (nonatomic, retain) IBOutlet MGScrollView* scroller;
+
+- (MGBox *)libAddBox;
+- (BOOL)allLibsLoaded;
+- (MGBox *)libBoxFor:(int)i;
+- (CGSize)libBoxSize;
 @end

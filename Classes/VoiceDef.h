@@ -12,6 +12,52 @@
 
 
 #endif
+
+#ifdef DEBUGX
+#define V_NSLog(format, ...)		NSLog(format, ##__VA_ARGS__)
+#else
+#define V_NSLog(format, ...)
+#endif
+
+#define APP_KEY_UMENG @"507fd3f75270150daf00005d"
+#define NOTIFICATION_DOWNLOADED_VOICE_PKGXML   @"DownloadedVoicePkgXMLNotification"
+
+#define NOTIFICATION_EDIT_VOICE_PKG @"EditPkgNotification"
+#define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
+
+#define STRING_STORE_URL_ADDRESS @"http://hd2002105.ourhost.cn/index_ios.xml"
+#define STRING_MY_DATA_CENTER @"我的资料库"
+#define STRING_DATA_CENTER @"在线资料"
+#define VALUE_TITLEBAR_COLOR_R 51.0/255.0
+#define VALUE_TITLEBAR_COLOR_G 61.0/255.0
+#define VALUE_TITLEBAR_COLOR_B 75.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR1_R 247.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR1_G 246.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR1_B 242.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR2_R 246.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR2_G 242.0/255.0
+#define VALUE_DETAIL_STORE_BACKGROUND_COLOR2_B 240.0/255.0
+#define STRING_DATA_SAMPLE_1 @"出国必备"
+#define STRING_DATA_SAMPLE_2 @"职场英语"
+#define STRING_LOADINGDATA_WAITING @"正在载入..."
+#define STRING_LOADINGDATA_ERROR @"网络连接错误"
+#define STRING_DOWNLOAD         @"添加至“我的资料库”"
+#define STRING_DOWNLOADING      @"正在添加"
+#define STRING_START_LEARNING   @"开始学习"
+#define STRING_DOWNLOADED       @"添加成功"
+#define STRING_INTRO_TITLE      @"内容简介："
+#define STRING_LESSONS_TITLE    @"课程内容："
+#define STRING_DELETE           @"删除"
+#define STRING_UNDO             @"返回"
+#define STRING_DELETEBOOK_ALERT_MESSAGE @"您确定要删除添加的资料《%@》吗?"
+#define STRING_DELETEBOOK_ALERT_TITLE   @"删除资料"
+#define STRING_DELETEBOOK_BUTTON_CONFIRM @"确认"
+#define STRING_DELETEBOOK_BUTTON_CANCEL @"取消"
+#define STRING_COURSE_INDEX @"课程"
+#define STRING_VOICE_PKG_DIR    @"VoicePkgData"
+#define SUB_DIR_DOCUMENT				@"/Documents/"
+#define SUB_DIR_CACHE                   @"/Caches/"
+
 #define kBufferDurationSeconds 1.0
 
 #define TAG_OF_TIME_INTEVAL 40000
@@ -111,3 +157,5 @@
 #define PS_ARRAY	@"ai,au,εə,i:,a:,ɔ:,u:,i,e,æ,ə,ʌ,ɔ,u,θ,ʃ,tʃ,tr,dʒ,dr,ŋ,ð,p,t,k,f,s,h,b,d,g,v,d,z,r,w,m,n,l"
 #define PS_CHAR_ARRAY @"ah ih,ah uh,eh ex,ii,aa,oo,uu,ih,eh,ae,ex,ah,oh,uh,th,sh,tg,tr,zh,dr,ng,dh,pp,tt,kk,ff,ss,hh,bb,dd,gg,vv,dd,zz,rr,ww,mm,nn,ll"
 #define DAYBYDY_TITLE                   @"每日一句"
+
+#define PERSONAL_INFO                   @"您的口语训练历史信息"
