@@ -21,6 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     if (_mainViewController == nil) {
         _mainViewController = [[MainViewController alloc] init];
+        _mainViewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         [self.view addSubview:_mainViewController.view];
     }
 }

@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     if (_scrollview == nil) {
-        _scrollview = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         [self.view addSubview:_scrollview];
         PersonalViewController* persnoal = [[PersonalViewController alloc] initWithNibName:@"PersonalViewController" bundle:nil];
         [_scrollview addSubview:persnoal.view];
