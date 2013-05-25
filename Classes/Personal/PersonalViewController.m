@@ -11,6 +11,7 @@
 #import "MGTableBoxStyled.h"
 #import "MGLine.h"
 #import "PersonalLibary.h"
+#import "StoreViewController.h"
 #import "VoiceDef.h"
 
 #define TOTAL_IMAGES           28
@@ -171,8 +172,23 @@
     PersonalLibary *box = [PersonalLibary libBoxFor:i size:[self libBoxSize]];
     
     // remove the box when tapped
-    __block id bbox = box;
+    //__block id bbox = box;
     box.onTap = ^{
+        StoreViewController* store = [[StoreViewController alloc] initWithNibName:@"StoreViewController" bundle:nil];
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
+        
+        UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
+        [UIView beginAnimations: nil context: nil];
+        [UIView setAnimationDuration:0.5];
+        [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
+        [self presentModalViewController:nav animated:NO];
+        [UIView commitAnimations];
+        
+        //CATransition *
+        [store release];
+        [nav release];
+       /*
+        // delete box
         MGBox *section = (id)box.parentBox;
         
         // remove
@@ -185,7 +201,7 @@
         
         // animate
         [section layoutWithSpeed:0.3 completion:nil];
-        [self.scroller layoutWithSpeed:0.3 completion:nil];
+        [self.scroller layoutWithSpeed:0.3 completion:nil];*/
     };
     
     return box;
