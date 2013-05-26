@@ -286,7 +286,7 @@
     [menu.topLines addObject:header];
     
     // layout menu line
-    MGLine *layoutLine = [MGLine lineWithLeft:@"Layout Features" right:arrow
+    MGLine *layoutLine = [MGLine lineWithLeft:@"2013年5月24日" right:arrow
                                          size:ROW_SIZE];
     layoutLine.leftPadding = layoutLine.rightPadding = 16;
     [menu.topLines addObject:layoutLine];
@@ -298,7 +298,7 @@
     
     // convenience features menu line
     MGLine
-    *conviniLine = [MGLine lineWithLeft:@"Code Convenience Features" right:arrow
+    *conviniLine = [MGLine lineWithLeft:@"2013年5月25日" right:arrow
                                    size:ROW_SIZE];
     conviniLine.leftPadding = conviniLine.rightPadding = 16;
     [menu.topLines addObject:conviniLine];
@@ -319,12 +319,12 @@
     [table1.boxes addObject:layout];
     
     // header
-    MGLine *head = [MGLine lineWithLeft:@"Layout Features" right:nil size:ROW_SIZE];
+    MGLine *head = [MGLine lineWithLeft:@"2013年5月24日" right:nil size:ROW_SIZE];
     head.leftPadding = head.rightPadding = 16;
     [layout.topLines addObject:head];
     head.font = HEADER_FONT;
     
-    MGLine *grids = [MGLine lineWithLeft:@"Grid layouts" right:arrow size:ROW_SIZE];
+    MGLine *grids = [MGLine lineWithLeft:@"13：34：23" right:arrow size:ROW_SIZE];
     grids.leftPadding = grids.rightPadding = 16;
     [layout.topLines addObject:grids];
     grids.onTap = ^{
@@ -332,7 +332,7 @@
     };
     
     MGLine
-    *tables = [MGLine lineWithLeft:@"Table layouts" right:arrow size:ROW_SIZE];
+    *tables = [MGLine lineWithLeft:@"14：34：23" right:arrow size:ROW_SIZE];
     tables.leftPadding = tables.rightPadding = 16;
     [layout.topLines addObject:tables];
     tables.onTap = ^{
@@ -340,14 +340,14 @@
     };
     
     MGLine
-    *anims = [MGLine lineWithLeft:@"Animated layout" right:arrow size:ROW_SIZE];
+    *anims = [MGLine lineWithLeft:@"15：34：23" right:arrow size:ROW_SIZE];
     anims.leftPadding = anims.rightPadding = 16;
     [layout.topLines addObject:anims];
     anims.onTap = ^{
         [self loadAnimatedLayoutSection];
     };
     
-    MGLine *asyncs = [MGLine lineWithLeft:@"Asynchronous layout" right:arrow
+    MGLine *asyncs = [MGLine lineWithLeft:@"16：34：23" right:arrow
                                      size:ROW_SIZE];
     asyncs.leftPadding = asyncs.rightPadding = 16;
     [layout.topLines addObject:asyncs];
@@ -355,7 +355,7 @@
         [self loadAsyncLayoutSection];
     };
     
-    MGLine *more = [MGLine lineWithLeft:@"CSS style properties" right:arrow
+    MGLine *more = [MGLine lineWithLeft:@"18：34：23" right:arrow
                                    size:ROW_SIZE];
     more.leftPadding = more.rightPadding = 16;
     [layout.topLines addObject:more];
@@ -383,14 +383,14 @@
     [table1.boxes addObject:convini];
     
     // header
-    MGLine *head = [MGLine lineWithLeft:@"Code Convenience Features" right:nil
+    MGLine *head = [MGLine lineWithLeft:@"2013年5月25日" right:nil
                                    size:ROW_SIZE];
     head.leftPadding = head.rightPadding = 16;
     [convini.topLines addObject:head];
     head.font = HEADER_FONT;
     
     // stuff
-    MGLine *gestures = [MGLine lineWithLeft:@"Blocks Based Tap, Swipe, and Hold"
+    MGLine *gestures = [MGLine lineWithLeft:@"14：34：23"
                                       right:arrow size:ROW_SIZE];
     gestures.leftPadding = gestures.rightPadding = 16;
     [convini.topLines addObject:gestures];
@@ -400,7 +400,7 @@
     
     // stuff
     MGLine
-    *triggers = [MGLine lineWithLeft:@"Blocks Based Custom Events" right:arrow
+    *triggers = [MGLine lineWithLeft:@"15：34：23" right:arrow
                                 size:ROW_SIZE];
     triggers.leftPadding = triggers.rightPadding = 16;
     [convini.topLines addObject:triggers];
@@ -409,7 +409,7 @@
     };
     
     // stuff
-    MGLine *cont = [MGLine lineWithLeft:@"Blocks Based UIControl Events" right:arrow
+    MGLine *cont = [MGLine lineWithLeft:@"16：34：23" right:arrow
                                    size:ROW_SIZE];
     cont.leftPadding = cont.rightPadding = 16;
     [convini.topLines addObject:cont];
@@ -418,7 +418,7 @@
     };
     
     // stuff
-    MGLine *obs = [MGLine lineWithLeft:@"Blocks Based Observers" right:arrow
+    MGLine *obs = [MGLine lineWithLeft:@"17：34：23" right:arrow
                                   size:ROW_SIZE];
     obs.leftPadding = obs.rightPadding = 16;
     [convini.topLines addObject:obs];
@@ -427,7 +427,7 @@
     };
     
     // stuff
-    MGLine *views = [MGLine lineWithLeft:@"UIView Easy Frame Accessors" right:arrow
+    MGLine *views = [MGLine lineWithLeft:@"18：34：23" right:arrow
                                     size:ROW_SIZE];
     views.leftPadding = views.rightPadding = 16;
     [convini.topLines addObject:views];
