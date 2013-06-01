@@ -60,6 +60,7 @@ static Database* _database;
         }
 		databaseLock = [[NSLock alloc] init];
         [self createVoicePkgInfoTable];
+        [self createVoicePkgcCourseTable];
 	}
 	return self;
 }
@@ -94,6 +95,39 @@ static Database* _database;
 	[sql release];
 	[databaseLock unlock];
 	return bSuccess;
+}
+
+- (BOOL)createVoicePkgcCourseTable;
+{
+    NSString* tableName = STRING_DB_TABLENAME_VOICE_COURSES;
+    if ([self isExistsTable:tableName]) {
+        return NO;
+	}
+	
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	BOOL bSuccess = NO;
+	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
+	[sql appendString:@"("];
+	[sql appendFormat:@"[%@] integer",STRING_DB_VOICE_PKG_ID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
+	[sql appendString:@");"];
+	
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+	} else {
+		
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+	return bSuccess;
+   
 }
 - (BOOL)createTable;
 {
@@ -198,6 +232,64 @@ static Database* _database;
 		return NO;
 	}
     
+    [self insertVoiceCourseInfo:info];
+    return YES;
+}
+
+- (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;
+{
+    NSInteger nID = [self getVoicePkgInfoID:info.title];
+    if (nID == -1) {
+        return NO;
+    }
+    [databaseLock lock];
+    
+    for (NSInteger i = 0; i < [info.dataPkgCourseInfoArray count]; i++) {
+        DownloadDataPkgCourseInfo* course = [info.dataPkgCourseInfoArray objectAtIndex:i];
+        sqlite3_stmt *statement;
+        NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
+        //NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+        if (success == SQLITE_OK) {
+            NSInteger i = 1;
+            // id
+            sqlite3_bind_int(statement, i, nID);
+
+            i++;
+            // title
+            sqlite3_bind_text(statement, i, [course.title UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+            
+            // path
+            sqlite3_bind_text(statement, i, [course.title UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+            
+            
+            // cover
+            sqlite3_bind_text(statement, i, [@"" UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+            
+            // url
+            sqlite3_bind_text(statement, i, [course.url UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+            
+            // createTime
+            NSDate* d = [NSDate date];
+            sqlite3_bind_text(statement, i, [[d description] UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+            
+            success = sqlite3_step(statement);
+            sqlite3_finalize(statement);
+            if (success == SQLITE_ERROR) {
+                V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+            }
+        } else {
+             V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+        }
+
+    }
+    [databaseLock unlock];
+   
     return YES;
 }
 
@@ -222,6 +314,14 @@ static Database* _database;
             if (titleChars != nil) {
                 NSString *title = [NSString stringWithUTF8String:pathChars];
                 pkgObject.dataTitle = [NSString stringWithFormat:@"%@",title];
+                NSInteger nID = [self getVoicePkgInfoID:title];
+                if (nID != -1) {
+                    NSMutableArray* courseTitleArray = [self getCourseTitleByID:nID];
+                    if ([courseTitleArray count] > 0) {
+                        pkgObject.dataPkgCourseTitleArray = courseTitleArray ;
+                    }
+                }
+                
             }
             [arrResult addObject:pkgObject];
  			
@@ -231,8 +331,27 @@ static Database* _database;
 	sqlite3_finalize(statement);
 	[sql release];
 	[databaseLock unlock];
-	
-	return arrResult;
+ 	return arrResult;
+}
+
+- (NSInteger)getVoicePkgInfoID:(NSString*)title;
+{
+	//[databaseLock lock];
+	int uniqueId = -1;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@'", STRING_DB_VOICE_PKG_ID, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			uniqueId = sqlite3_column_int(statement, 0);
+		}
+    } else {
+		uniqueId = -1;
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	//[databaseLock unlock];
+	return uniqueId;
 }
 
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
@@ -277,9 +396,38 @@ static Database* _database;
 	sqlite3_finalize(statement);
 	[sql release];
 	[databaseLock unlock];
-	
+    NSInteger nID = [self getVoicePkgInfoID:title];
+    if (nID != -1) {
+        NSMutableArray* courseTitleArray = [self getCourseTitleByID:nID];
+        if ([courseTitleArray count] > 0) {
+            info.dataPkgCourseTitleArray = courseTitleArray ;
+        }
+    }
 	return [info autorelease];
 
+}
+
+- (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
+{
+   // [databaseLock lock];
+    NSMutableArray* courseTitleArray = [[ NSMutableArray alloc] init];
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, nID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            char *titleChars = (char *) sqlite3_column_text(statement, 0);
+             if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                [courseTitleArray addObject:[NSString stringWithFormat:@"%@",title]];
+            }
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	//[databaseLock unlock];
+	return [courseTitleArray autorelease];
 }
 
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;

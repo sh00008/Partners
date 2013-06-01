@@ -38,6 +38,7 @@
 @property (nonatomic, retain) NSString* dataPath;
 @property (nonatomic, retain) NSString* dataTitle;
 @property (nonatomic, retain) NSString* dataCover;
+@property (nonatomic, retain, readwrite) NSMutableArray* dataPkgCourseTitleArray;
 
 @end
 

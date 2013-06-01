@@ -13,6 +13,7 @@
 #define HISTORY_ID         @"ID"
 
 #define STRING_DB_TABLENAME_VOICE_PKG @"VoicePkgInfo"
+#define STRING_DB_TABLENAME_VOICE_COURSES @"VoicePkgCoursesInfo"
 #define STRING_DB_VOICE_PKG_ID         @"ID"
 #define STRING_DB_VOICE_PKG_TITLE      @"Title"
 #define STRING_DB_VOICE_PKG_PATH       @"Path"
@@ -31,12 +32,15 @@
 + (Database*)sharedDatabase;
 - (BOOL)createTable;
 - (BOOL)createVoicePkgInfoTable;
+- (BOOL)createVoicePkgcCourseTable;
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
-
+- (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
+- (NSInteger)getVoicePkgInfoID:(NSString*)title;
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
+- (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;
 - (NSString*)getAbsolutelyPath:(NSString*)path;
 

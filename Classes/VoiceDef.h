@@ -23,6 +23,7 @@
 #define NOTIFICATION_DOWNLOADED_VOICE_PKGXML   @"DownloadedVoicePkgXMLNotification"
 
 #define NOTIFICATION_EDIT_VOICE_PKG @"EditPkgNotification"
+#define NOTIFICATION_ADD_VOICE_PKG @"ADDPkgNotification"
 #define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
 
 #define STRING_STORE_URL_ADDRESS @"http://hd2002105.ourhost.cn/index_ios.xml"
@@ -159,3 +160,5 @@
 #define DAYBYDY_TITLE                   @"每日一句"
 
 #define PERSONAL_INFO                   @"您的口语训练历史信息"
+#define MAIN_COURSE_GRID_W              90
+#define MAIN_COURSE_GRID_H              60

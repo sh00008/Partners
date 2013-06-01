@@ -40,6 +40,8 @@
 		0D1531CC1740C5D900633FA0 /* Globle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CB1740C5D900633FA0 /* Globle.m */; };
 		0D1531D01740C65F00633FA0 /* ConfigData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CF1740C65F00633FA0 /* ConfigData.m */; };
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
+		0D97C3D8175902C00070E696 /* FavorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D97C3D7175902C00070E696 /* FavorViewCell.xib */; };
+		0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3DA1759030D0070E696 /* FavorViewCell.m */; };
 		0DA1482F1750D44B004EBCFF /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */; };
 		0DA148481750FAE4004EBCFF /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */; };
 		0DA148491750FAE4004EBCFF /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148351750FAE4004EBCFF /* UIView+MGEasyFrame.m */; };
@@ -206,6 +208,9 @@
 		0D1531CF1740C65F00633FA0 /* ConfigData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigData.m; sourceTree = "<group>"; };
 		0D1531D21740C84F00633FA0 /* FavorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorViewController.h; path = Classes/Favor/FavorViewController.h; sourceTree = SOURCE_ROOT; };
 		0D1531D31740C84F00633FA0 /* FavorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewController.m; path = Classes/Favor/FavorViewController.m; sourceTree = SOURCE_ROOT; };
+		0D97C3D7175902C00070E696 /* FavorViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavorViewCell.xib; sourceTree = "<group>"; };
+		0D97C3D91759030D0070E696 /* FavorViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorViewCell.h; path = Classes/Favor/FavorViewCell.h; sourceTree = SOURCE_ROOT; };
+		0D97C3DA1759030D0070E696 /* FavorViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewCell.m; path = Classes/Favor/FavorViewCell.m; sourceTree = SOURCE_ROOT; };
 		0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		0DA148321750FAE4004EBCFF /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
 		0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
@@ -539,6 +544,9 @@
 			children = (
 				0D1531D21740C84F00633FA0 /* FavorViewController.h */,
 				0D1531D31740C84F00633FA0 /* FavorViewController.m */,
+				0D97C3D7175902C00070E696 /* FavorViewCell.xib */,
+				0D97C3D91759030D0070E696 /* FavorViewCell.h */,
+				0D97C3DA1759030D0070E696 /* FavorViewCell.m */,
 			);
 			name = Favor;
 			sourceTree = "<group>";
@@ -989,6 +997,7 @@
 				0DA149A0175116A5004EBCFF /* starsForeground.png in Resources */,
 				0DA149A2175116B1004EBCFF /* Image in Resources */,
 				0DA149A517519715004EBCFF /* Database in Resources */,
+				0D97C3D8175902C00070E696 /* FavorViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1090,7 @@
 				0DA148501750FAE4004EBCFF /* MGTableBox.m in Sources */,
 				0DA148511750FAE4004EBCFF /* MGTableBoxStyled.m in Sources */,
 				0DA148551750FB60004EBCFF /* PersonalLibary.m in Sources */,
+				0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

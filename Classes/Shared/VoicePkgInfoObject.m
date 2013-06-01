@@ -26,12 +26,13 @@ static DownloadServerInfo* _serverInfo;
 @synthesize  dataPath;
 @synthesize  dataTitle;
 @synthesize  dataCover;
-
+@synthesize  dataPkgCourseTitleArray;
 - (void)dealloc
 {
     [self.dataPath release];
     [self.dataTitle release];
     [self.dataCover release];
+    [self.dataPkgCourseTitleArray release];
     [super dealloc];
 }
 @end

@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VoicePkgInfoObject.h"
 
 @interface FavorViewController : UIViewController
+{
+    VoiceDataPkgObject* _deleteObject;
+    NSMutableArray* _pkgArray;
+    BOOL _bEdit;
 
+}
+@property (nonatomic, retain) IBOutlet UITableView* tableView;
+- (void)loadPkgArray;
 @end
