@@ -42,6 +42,8 @@
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
 		0D97C3D8175902C00070E696 /* FavorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D97C3D7175902C00070E696 /* FavorViewCell.xib */; };
 		0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3DA1759030D0070E696 /* FavorViewCell.m */; };
+		0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */; };
+		0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3E1175AB68E0070E696 /* CourseViewController.m */; };
 		0DA1482F1750D44B004EBCFF /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */; };
 		0DA148481750FAE4004EBCFF /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */; };
 		0DA148491750FAE4004EBCFF /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148351750FAE4004EBCFF /* UIView+MGEasyFrame.m */; };
@@ -211,6 +213,10 @@
 		0D97C3D7175902C00070E696 /* FavorViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavorViewCell.xib; sourceTree = "<group>"; };
 		0D97C3D91759030D0070E696 /* FavorViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorViewCell.h; path = Classes/Favor/FavorViewCell.h; sourceTree = SOURCE_ROOT; };
 		0D97C3DA1759030D0070E696 /* FavorViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewCell.m; path = Classes/Favor/FavorViewCell.m; sourceTree = SOURCE_ROOT; };
+		0D97C3DC175AB40B0070E696 /* FavorCourseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorCourseButton.h; path = Classes/Favor/FavorCourseButton.h; sourceTree = SOURCE_ROOT; };
+		0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorCourseButton.m; path = Classes/Favor/FavorCourseButton.m; sourceTree = SOURCE_ROOT; };
+		0D97C3E0175AB68E0070E696 /* CourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CourseViewController.h; path = Classes/CoursesView/CourseViewController.h; sourceTree = SOURCE_ROOT; };
+		0D97C3E1175AB68E0070E696 /* CourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CourseViewController.m; path = Classes/CoursesView/CourseViewController.m; sourceTree = SOURCE_ROOT; };
 		0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		0DA148321750FAE4004EBCFF /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
 		0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
@@ -547,6 +553,8 @@
 				0D97C3D7175902C00070E696 /* FavorViewCell.xib */,
 				0D97C3D91759030D0070E696 /* FavorViewCell.h */,
 				0D97C3DA1759030D0070E696 /* FavorViewCell.m */,
+				0D97C3DC175AB40B0070E696 /* FavorCourseButton.h */,
+				0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */,
 			);
 			name = Favor;
 			sourceTree = "<group>";
@@ -554,12 +562,22 @@
 		0D1531D51741D75000633FA0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				0D97C3DF175AB6080070E696 /* CoursesView */,
 				0D1531D11740C81A00633FA0 /* Favor */,
 				0D1531A51740B58F00633FA0 /* Location */,
 				0D1531A41740B53800633FA0 /* Setting */,
 				0D1531A31740B52D00633FA0 /* Personal */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		0D97C3DF175AB6080070E696 /* CoursesView */ = {
+			isa = PBXGroup;
+			children = (
+				0D97C3E0175AB68E0070E696 /* CourseViewController.h */,
+				0D97C3E1175AB68E0070E696 /* CourseViewController.m */,
+			);
+			name = CoursesView;
 			sourceTree = "<group>";
 		};
 		0DA148301750FAE4004EBCFF /* MGBox */ = {
@@ -1091,6 +1109,8 @@
 				0DA148511750FAE4004EBCFF /* MGTableBoxStyled.m in Sources */,
 				0DA148551750FB60004EBCFF /* PersonalLibary.m in Sources */,
 				0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */,
+				0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */,
+				0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

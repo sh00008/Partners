@@ -10,6 +10,8 @@
 #import "Database.h"
 #import "FavorViewCell.h"
 #import "VoiceDef.h"
+#import "FavorCourseButton.h"
+#import "CourseViewController.h"
 
 @interface FavorViewController ()
 
@@ -106,13 +108,12 @@
     NSInteger h = MAIN_COURSE_GRID_H;
     NSInteger r = 1;
 	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
-        UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-        [bt setFont:[UIFont systemFontOfSize:12]];
-        [bt setBackgroundColor:[UIColor colorWithRed:66.0/255.0 green:168.0/255.0 blue:250.0/255.0 alpha:1.0]];// forState:UIControlStateNormal];
+        FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
-        [bt setTitle:courseTitle forState:UIControlStateNormal];
-        //[bt setBackgroundColor:[UIColor redColor]];
+        [bt setCourseTitle:courseTitle];
         [cell.pkgCourseBGView addSubview:bt];
+        [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
+        [bt release];
         if ((i >= 2) && (r * (i + 1)) % 3 == 0 ) {
             // next row
             r++;
@@ -234,7 +235,32 @@
 
 - (void)openSences:(id)sender
 {
+    /*VoicePkgShelfCell* cover = (VoicePkgShelfCell*)sender;
+    ScenesCoverViewController * scenes = [[ScenesCoverViewController alloc] init];
+    NSInteger index = cover.index;
+    if (index < [_pkgArray count]) {
+        VoiceDataPkgObject* pkg = [_pkgArray objectAtIndex:index];
+        scenes.dataPath = pkg.dataPath;
+        scenes.dataTitle = pkg.dataTitle;
+        [self.delegate openVoiceData:scenes];
+        
+    }
+    */
     
+    CourseViewController* course = [[CourseViewController alloc] init];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:course];
+    
+    UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
+    [UIView beginAnimations: nil context: nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
+    [self presentModalViewController:nav animated:NO];
+    [UIView commitAnimations];
+    
+    //CATransition *
+    [course release];
+    [nav release];
+
 }
 
 - (void)reloadPkgTable;
