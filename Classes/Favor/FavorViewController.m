@@ -19,6 +19,7 @@
 
 @implementation FavorViewController
 @synthesize tableView;
+@synthesize folders ;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -235,6 +236,33 @@
 
 - (void)openSences:(id)sender
 {
+    self.folders = [[ZYFolders alloc] init];
+    [self.folders release];
+    self.folders.containerView = self.view;
+    FavorCourseButton* button = (FavorCourseButton*)sender;
+    UIView* buttonSuperView = button.superview;
+    CGRect buttonFrame = [buttonSuperView convertRect:button.frame toView:self.view];
+    
+    /*if(tag/4==0){
+        folders.positon = CGPointMake(button.frame.origin.x+32, button.frame.origin.y + 64);
+        folders.direction = ZYFoldersDirectionUp;
+    }else{
+        folders.positon = CGPointMake(button.frame.origin.x+32, button.frame.origin.y);
+        folders.direction = ZYFoldersDirectionDown;
+    }
+    */
+    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width)/2, buttonFrame.origin.y + buttonFrame.size.height);
+    self.folders.direction = ZYFoldersDirectionUp;
+    CGRect popView = CGRectMake(10, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.folders.positon.y - 50);
+    UILabel *label = [[UILabel alloc] initWithFrame:popView];
+    label.backgroundColor = [UIColor clearColor];
+    label.text  = @"Content View";
+    label.textColor = [UIColor whiteColor];
+    self.folders.contentView = label;
+    [label release];
+    
+    [self.folders open];
+
     /*VoicePkgShelfCell* cover = (VoicePkgShelfCell*)sender;
     ScenesCoverViewController * scenes = [[ScenesCoverViewController alloc] init];
     NSInteger index = cover.index;
@@ -247,7 +275,7 @@
     }
     */
     
-    CourseViewController* course = [[CourseViewController alloc] init];
+    /*CourseViewController* course = [[CourseViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:course];
     
     UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
@@ -259,7 +287,7 @@
     
     //CATransition *
     [course release];
-    [nav release];
+    [nav release];*/
 
 }
 

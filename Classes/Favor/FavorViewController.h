@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VoicePkgInfoObject.h"
+#import "ZYFolders.h"
 
 @interface FavorViewController : UIViewController
 {
@@ -17,5 +18,6 @@
 
 }
 @property (nonatomic, retain) IBOutlet UITableView* tableView;
+@property(nonatomic, retain) ZYFolders *folders;
 - (void)loadPkgArray;
 @end
