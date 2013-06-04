@@ -107,6 +107,14 @@
 		0DA149A0175116A5004EBCFF /* starsForeground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DA1494D175116A5004EBCFF /* starsForeground.png */; };
 		0DA149A2175116B1004EBCFF /* Image in Resources */ = {isa = PBXBuildFile; fileRef = 0DA149A1175116B1004EBCFF /* Image */; };
 		0DA149A517519715004EBCFF /* Database in Resources */ = {isa = PBXBuildFile; fileRef = 0DA149A417519715004EBCFF /* Database */; };
+		0DAA13D6175E208C00E51620 /* LessonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13D4175E208C00E51620 /* LessonsViewController.m */; };
+		0DAA13D7175E208C00E51620 /* LessonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA13D5175E208C00E51620 /* LessonsViewController.xib */; };
+		0DAA13DE175E223A00E51620 /* LessonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13DA175E223A00E51620 /* LessonCell.m */; };
+		0DAA13DF175E223A00E51620 /* LessonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA13DB175E223A00E51620 /* LessonCell.xib */; };
+		0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */; };
+		0DAA13E3175E225700E51620 /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E2175E225700E51620 /* RatingView.m */; };
+		0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E5175E227200E51620 /* BubbleCell.m */; };
+		0DAA13EB175E298100E51620 /* ListeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13EA175E298100E51620 /* ListeningViewController.m */; };
 		0DC0D52717509BEB00684ED2 /* GTMGatherInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */; };
 		0DC0D52817509BEB00684ED2 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FF17509BEA00684ED2 /* GTMHTTPFetcher.m */; };
 		0DC0D52917509BEB00684ED2 /* GTMHTTPFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D50117509BEA00684ED2 /* GTMHTTPFetcherLogging.m */; };
@@ -295,6 +303,20 @@
 		0DA1494D175116A5004EBCFF /* starsForeground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starsForeground.png; sourceTree = "<group>"; };
 		0DA149A1175116B1004EBCFF /* Image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Image; sourceTree = "<group>"; };
 		0DA149A417519715004EBCFF /* Database */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Database; path = Resources/Database; sourceTree = SOURCE_ROOT; };
+		0DAA13D3175E208C00E51620 /* LessonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonsViewController.h; sourceTree = "<group>"; };
+		0DAA13D4175E208C00E51620 /* LessonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonsViewController.m; sourceTree = "<group>"; };
+		0DAA13D5175E208C00E51620 /* LessonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LessonsViewController.xib; sourceTree = "<group>"; };
+		0DAA13D9175E223A00E51620 /* LessonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonCell.h; sourceTree = "<group>"; };
+		0DAA13DA175E223A00E51620 /* LessonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonCell.m; sourceTree = "<group>"; };
+		0DAA13DB175E223A00E51620 /* LessonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LessonCell.xib; sourceTree = "<group>"; };
+		0DAA13DC175E223A00E51620 /* UACellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACellBackgroundView.h; sourceTree = "<group>"; };
+		0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACellBackgroundView.m; sourceTree = "<group>"; };
+		0DAA13E1175E225700E51620 /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
+		0DAA13E2175E225700E51620 /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
+		0DAA13E4175E227200E51620 /* BubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleCell.h; sourceTree = "<group>"; };
+		0DAA13E5175E227200E51620 /* BubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleCell.m; sourceTree = "<group>"; };
+		0DAA13E9175E298100E51620 /* ListeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeningViewController.h; sourceTree = "<group>"; };
+		0DAA13EA175E298100E51620 /* ListeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListeningViewController.m; sourceTree = "<group>"; };
 		0DC0D4FC17509BEA00684ED2 /* GTMGatherInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGatherInputStream.h; sourceTree = "<group>"; };
 		0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMGatherInputStream.m; sourceTree = "<group>"; };
 		0DC0D4FE17509BEA00684ED2 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
@@ -551,6 +573,8 @@
 		0D1531D11740C81A00633FA0 /* Favor */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA13E8175E296400E51620 /* Listening */,
+				0DAA13D2175E208C00E51620 /* Lessons */,
 				0D1531D21740C84F00633FA0 /* FavorViewController.h */,
 				0D1531D31740C84F00633FA0 /* FavorViewController.m */,
 				0D97C3D7175902C00070E696 /* FavorViewCell.xib */,
@@ -737,6 +761,36 @@
 			);
 			path = Store;
 			sourceTree = "<group>";
+		};
+		0DAA13D2175E208C00E51620 /* Lessons */ = {
+			isa = PBXGroup;
+			children = (
+				0DAA13E4175E227200E51620 /* BubbleCell.h */,
+				0DAA13E5175E227200E51620 /* BubbleCell.m */,
+				0DAA13E1175E225700E51620 /* RatingView.h */,
+				0DAA13E2175E225700E51620 /* RatingView.m */,
+				0DAA13D9175E223A00E51620 /* LessonCell.h */,
+				0DAA13DA175E223A00E51620 /* LessonCell.m */,
+				0DAA13DB175E223A00E51620 /* LessonCell.xib */,
+				0DAA13DC175E223A00E51620 /* UACellBackgroundView.h */,
+				0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */,
+				0DAA13D3175E208C00E51620 /* LessonsViewController.h */,
+				0DAA13D4175E208C00E51620 /* LessonsViewController.m */,
+				0DAA13D5175E208C00E51620 /* LessonsViewController.xib */,
+			);
+			name = Lessons;
+			path = Classes/Favor/Lessons;
+			sourceTree = SOURCE_ROOT;
+		};
+		0DAA13E8175E296400E51620 /* Listening */ = {
+			isa = PBXGroup;
+			children = (
+				0DAA13E9175E298100E51620 /* ListeningViewController.h */,
+				0DAA13EA175E298100E51620 /* ListeningViewController.m */,
+			);
+			name = Listening;
+			path = Classes/Favor/Listening;
+			sourceTree = SOURCE_ROOT;
 		};
 		0DC0D4FA17509BEA00684ED2 /* Store */ = {
 			isa = PBXGroup;
@@ -1029,6 +1083,8 @@
 				0DA149A2175116B1004EBCFF /* Image in Resources */,
 				0DA149A517519715004EBCFF /* Database in Resources */,
 				0D97C3D8175902C00070E696 /* FavorViewCell.xib in Resources */,
+				0DAA13D7175E208C00E51620 /* LessonsViewController.xib in Resources */,
+				0DAA13DF175E223A00E51620 /* LessonCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1125,6 +1181,12 @@
 				0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */,
 				0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */,
 				0D425A77175DDAFA005566DB /* ZYFolders.m in Sources */,
+				0DAA13D6175E208C00E51620 /* LessonsViewController.m in Sources */,
+				0DAA13DE175E223A00E51620 /* LessonCell.m in Sources */,
+				0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */,
+				0DAA13E3175E225700E51620 /* RatingView.m in Sources */,
+				0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */,
+				0DAA13EB175E298100E51620 /* ListeningViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,5 +10,7 @@
 
 @interface FavorCourseButton : UIButton
 
+@property(nonatomic, retain)NSString* pkgPath;
+@property(nonatomic, retain)NSString* pkgTitle;
 - (void)setCourseTitle:(NSString*)title;
 @end

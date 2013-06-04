@@ -12,7 +12,7 @@
 #import "VoiceDef.h"
 #import "FavorCourseButton.h"
 #import "CourseViewController.h"
-
+#import "LessonsViewController.h"
 @interface FavorViewController ()
 
 @end
@@ -111,6 +111,8 @@
 	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
         FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
+        bt.pkgPath = pkgObject.dataPath;
+        bt.pkgTitle = courseTitle;
         [bt setCourseTitle:courseTitle];
         [cell.pkgCourseBGView addSubview:bt];
         [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
@@ -251,15 +253,25 @@
         folders.direction = ZYFoldersDirectionDown;
     }
     */
-    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width)/2, buttonFrame.origin.y + buttonFrame.size.height);
+    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), buttonFrame.origin.y + buttonFrame.size.height);
     self.folders.direction = ZYFoldersDirectionUp;
-    CGRect popView = CGRectMake(10, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.folders.positon.y - 50);
-    UILabel *label = [[UILabel alloc] initWithFrame:popView];
-    label.backgroundColor = [UIColor clearColor];
-    label.text  = @"Content View";
-    label.textColor = [UIColor whiteColor];
-    self.folders.contentView = label;
-    [label release];
+    CGRect popView = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.folders.positon.y - 50);
+ 
+    
+    LessonsViewController* lesson = [[LessonsViewController alloc] initWithNibName:@"LessonsViewController" bundle:nil];
+    lesson.dataPath = button.pkgPath;
+    lesson.scenesName = button.pkgTitle;
+    NSLog(@"%@", button.pkgPath);
+    NSLog(@"%@", button.pkgTitle);
+    lesson.view.frame = popView;
+//    lesson.delegate = (id)self;
+ //   lesson.navigationItem.title = scenes;
+//    [scenes release];
+ //   [self.navigationController pushViewController:lesson animated:YES];
+
+    
+    self.folders.contentView = lesson.view;
+//    [lesson release];
     
     [self.folders open];
 

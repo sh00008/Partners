@@ -36,7 +36,7 @@
         self.triHeight = 10;
         
         self.strokeColor = [UIColor colorWithWhite:1.f alpha:0.8];
-        self.fillColor = [UIColor blackColor];
+        self.fillColor = [UIColor grayColor];
     }
     return self;
 }

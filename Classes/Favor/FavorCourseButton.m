@@ -9,6 +9,8 @@
 #import "FavorCourseButton.h"
 
 @implementation FavorCourseButton
+@synthesize pkgPath;
+@synthesize pkgTitle;
 
 - (id)initWithFrame:(CGRect)frame
 {
