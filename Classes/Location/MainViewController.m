@@ -57,8 +57,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
  	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_OPEN_LESSONS object:nil];
-
-    [center addObserver:self selector:@selector(addNewPkg:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
     
     // download voice.xml
     NSURL* url = [NSURL URLWithString:STRING_STORE_URL_ADDRESS];

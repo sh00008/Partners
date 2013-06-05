@@ -177,7 +177,7 @@
         [self addLoadingView];
         bParseWAV = YES;
         self.sentencesTableView.hidden = YES;
-        [self.navigationItem setHidesBackButton:YES animated:YES];
+        [self.navigationItem setHidesBackButton:NO animated:YES];
         [self performSelector:@selector(parseWAVFile) withObject:nil afterDelay:2.0];
     } else {
         self.sentencesTableView.hidden = NO;
@@ -243,7 +243,7 @@
 - (void)addDownloadingView
 {
     self.sentencesTableView.hidden = YES;
-    [self.navigationItem setHidesBackButton:YES animated:YES];
+    [self.navigationItem setHidesBackButton:NO animated:YES];
    [self removeDownloadingView];
     [self addWaitingView:DOWNLOADINGVIEWTAG withText:STRING_DOWNLOADING_TEXT withAnimation:YES];
 

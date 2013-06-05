@@ -252,7 +252,7 @@
         folders.direction = ZYFoldersDirectionDown;
     }
     */
-    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), buttonFrame.origin.y + buttonFrame.size.height);
+    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), 0);//CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), buttonFrame.origin.y + buttonFrame.size.height);
     self.folders.direction = ZYFoldersDirectionUp;
     CGRect popView = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.folders.positon.y - 50);
  
