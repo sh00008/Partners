@@ -48,8 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // iPhone or iPad?
+     // iPhone or iPad?
     UIDevice *device = UIDevice.currentDevice;
     phone = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone;
     
@@ -102,6 +101,9 @@
         [self loadConviniFeaturesSection:NO];
     }
     [tablesGrid layout];
+    [self willAnimateRotationToInterfaceOrientation:self.interfaceOrientation
+                                           duration:1];
+    [self didRotateFromInterfaceOrientation:UIInterfaceOrientationPortrait];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
