@@ -25,7 +25,7 @@
 #define NOTIFICATION_EDIT_VOICE_PKG @"EditPkgNotification"
 #define NOTIFICATION_ADD_VOICE_PKG @"ADDPkgNotification"
 #define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
-
+#define NOTIFICATION_OPEN_LESSONS @"OpenLessonsNotification"
 #define STRING_STORE_URL_ADDRESS @"http://hd2002105.ourhost.cn/index_ios.xml"
 #define STRING_MY_DATA_CENTER @"我的资料库"
 #define STRING_DATA_CENTER @"在线资料"

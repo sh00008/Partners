@@ -114,9 +114,12 @@
 		0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */; };
 		0DAA13E3175E225700E51620 /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E2175E225700E51620 /* RatingView.m */; };
 		0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E5175E227200E51620 /* BubbleCell.m */; };
-		0DAA13EB175E298100E51620 /* ListeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13EA175E298100E51620 /* ListeningViewController.m */; };
 		0DAA140E175F6FC700E51620 /* 4-light-menu-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA140C175F6FC700E51620 /* 4-light-menu-bar.png */; };
 		0DAA140F175F6FC700E51620 /* 4-light-menu-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA140D175F6FC700E51620 /* 4-light-menu-bar@2x.png */; };
+		0DAA1413175F761900E51620 /* ListeningViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA1411175F761900E51620 /* ListeningViewController.mm */; };
+		0DAA1414175F761900E51620 /* ListeningViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA1412175F761900E51620 /* ListeningViewController.xib */; };
+		0DAA1416175F770E00E51620 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAA1415175F770E00E51620 /* AVFoundation.framework */; };
+		0DAA1418175F771500E51620 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAA1417175F771500E51620 /* AudioToolbox.framework */; };
 		0DC0D52717509BEB00684ED2 /* GTMGatherInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */; };
 		0DC0D52817509BEB00684ED2 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FF17509BEA00684ED2 /* GTMHTTPFetcher.m */; };
 		0DC0D52917509BEB00684ED2 /* GTMHTTPFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D50117509BEA00684ED2 /* GTMHTTPFetcherLogging.m */; };
@@ -317,10 +320,13 @@
 		0DAA13E2175E225700E51620 /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
 		0DAA13E4175E227200E51620 /* BubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleCell.h; sourceTree = "<group>"; };
 		0DAA13E5175E227200E51620 /* BubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleCell.m; sourceTree = "<group>"; };
-		0DAA13E9175E298100E51620 /* ListeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeningViewController.h; sourceTree = "<group>"; };
-		0DAA13EA175E298100E51620 /* ListeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListeningViewController.m; sourceTree = "<group>"; };
 		0DAA140C175F6FC700E51620 /* 4-light-menu-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4-light-menu-bar.png"; sourceTree = "<group>"; };
 		0DAA140D175F6FC700E51620 /* 4-light-menu-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4-light-menu-bar@2x.png"; sourceTree = "<group>"; };
+		0DAA1410175F761900E51620 /* ListeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeningViewController.h; sourceTree = "<group>"; };
+		0DAA1411175F761900E51620 /* ListeningViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ListeningViewController.mm; sourceTree = "<group>"; };
+		0DAA1412175F761900E51620 /* ListeningViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListeningViewController.xib; sourceTree = "<group>"; };
+		0DAA1415175F770E00E51620 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0DAA1417175F771500E51620 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0DC0D4FC17509BEA00684ED2 /* GTMGatherInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGatherInputStream.h; sourceTree = "<group>"; };
 		0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMGatherInputStream.m; sourceTree = "<group>"; };
 		0DC0D4FE17509BEA00684ED2 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
@@ -404,6 +410,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DAA1418175F771500E51620 /* AudioToolbox.framework in Frameworks */,
+				0DAA1416175F770E00E51620 /* AVFoundation.framework in Frameworks */,
 				0DA148571750FC57004EBCFF /* QuartzCore.framework in Frameworks */,
 				0DA1482F1750D44B004EBCFF /* libsqlite3.0.dylib in Frameworks */,
 				0D1531651740B20000633FA0 /* UIKit.framework in Frameworks */,
@@ -431,6 +439,8 @@
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
+				0DAA1417175F771500E51620 /* AudioToolbox.framework */,
+				0DAA1415175F770E00E51620 /* AVFoundation.framework */,
 				0D15316A1740B20000633FA0 /* Partners */,
 				0D1531911740B20000633FA0 /* PartnersTests */,
 				0D1531631740B20000633FA0 /* Frameworks */,
@@ -791,8 +801,9 @@
 		0DAA13E8175E296400E51620 /* Listening */ = {
 			isa = PBXGroup;
 			children = (
-				0DAA13E9175E298100E51620 /* ListeningViewController.h */,
-				0DAA13EA175E298100E51620 /* ListeningViewController.m */,
+				0DAA1410175F761900E51620 /* ListeningViewController.h */,
+				0DAA1411175F761900E51620 /* ListeningViewController.mm */,
+				0DAA1412175F761900E51620 /* ListeningViewController.xib */,
 			);
 			name = Listening;
 			path = Classes/Favor/Listening;
@@ -1093,6 +1104,7 @@
 				0DAA13DF175E223A00E51620 /* LessonCell.xib in Resources */,
 				0DAA140E175F6FC700E51620 /* 4-light-menu-bar.png in Resources */,
 				0DAA140F175F6FC700E51620 /* 4-light-menu-bar@2x.png in Resources */,
+				0DAA1414175F761900E51620 /* ListeningViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1194,7 +1206,7 @@
 				0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */,
 				0DAA13E3175E225700E51620 /* RatingView.m in Sources */,
 				0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */,
-				0DAA13EB175E298100E51620 /* ListeningViewController.m in Sources */,
+				0DAA1413175F761900E51620 /* ListeningViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

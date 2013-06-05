@@ -7,7 +7,7 @@
 //
 
 #import "LessonsViewController.h"
-//#import "ListeningViewController.h"
+#import "ListeningViewController.h"
 #import "SettingViewController.h"
 #import "LessonCell.h"
 #import "ConfigData.h"
@@ -20,6 +20,7 @@
 @synthesize pageSegment = _pageSegment;
 @synthesize dataPath;
 @synthesize delegate;
+@synthesize pkgName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -334,7 +335,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   /* ListeningViewController *detailViewController = [[ListeningViewController alloc] initWithNibName:@"ListeningViewController" bundle:nil];
+    ListeningViewController *detailViewController = [[ListeningViewController alloc] initWithNibName:@"ListeningViewController" bundle:nil];
     // ...
     // Pass the selected object to the new view controller.
     ConfigData* configData = [ConfigData sharedConfigData];
@@ -348,11 +349,11 @@
         detailViewController.nPositionInCourse = nPostion;
         detailViewController.courseParser = _courseParser;
         detailViewController.delegate = (id)self;
-        [self.navigationController pushViewController:detailViewController animated:YES];
+  		[[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_OPEN_LESSONS object: detailViewController];
         [detailViewController release];
     }
 
-    */
+    
 
     // Navigation logic may go here. Create and push another view controller.
     /*
@@ -500,7 +501,7 @@
 
 - (NSString*)getPkgTitle
 {
-    return [self.delegate getPkgTitle];
+    return self.pkgName;
 }
 
 - (NSString*)getCourseTitle;

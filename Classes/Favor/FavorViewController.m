@@ -48,7 +48,6 @@
     [self loadPkgArray];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -264,7 +263,16 @@
     NSLog(@"%@", button.pkgPath);
     NSLog(@"%@", button.pkgTitle);
     lesson.view.frame = popView;
-//    lesson.delegate = (id)self;
+    lesson.scenesName = button.pkgTitle;
+    NSRange range = [button.pkgPath rangeOfString:@"/" options:NSBackwardsSearch];
+    if (range.location != NSNotFound) {
+        
+  		NSInteger nSubFromIndex = range.location + range.length;
+		if (nSubFromIndex < button.pkgPath.length) {
+			lesson.pkgName = [button.pkgPath substringFromIndex:nSubFromIndex];
+		}
+    }
+
  //   lesson.navigationItem.title = scenes;
 //    [scenes release];
  //   [self.navigationController pushViewController:lesson animated:YES];
@@ -395,6 +403,7 @@
     }
     [self.tableView reloadData];
 }
+
 
 - (void)openCourseNotification:(NSNotification*)aNotification;
 {
