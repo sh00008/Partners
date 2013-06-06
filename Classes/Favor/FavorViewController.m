@@ -91,7 +91,7 @@
     FavorViewCell *cell = [array objectAtIndex:0];
     
     // Configure the cell...
-
+    
     while ([cell.pkgCourseBGView.subviews count] > 0) {
         UIView* subView = [[cell.pkgCourseBGView subviews] objectAtIndex:0];
         if (subView != nil) {
@@ -100,6 +100,7 @@
         }
     }
 	NSInteger nRow = indexPath.row;
+
     VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
     cell.pkgTitle.text = pkgObject.dataTitle;
     NSInteger dx = 0;

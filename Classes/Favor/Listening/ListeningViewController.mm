@@ -20,6 +20,7 @@
 #import "VoiceDef.h"
 #import "GTMHTTPFetcher.h"
 #import "Database.h"
+#import "ListeningCell.h"
 
 #define LOADINGVIEWTAG      20933
 #define DOWNLOADINGVIEWTAG  20936
@@ -121,10 +122,15 @@
     [self.sentencesTableView setBackgroundView:nil];
     [self.sentencesTableView setBackgroundView:[[[UIView alloc] init] autorelease]];
     [self.sentencesTableView setBackgroundColor:UIColor.clearColor];
-    
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithTitle:backString style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
     [backItem release];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[UIColor blackColor] forKey:UITextAttributeTextColor];
+    [dict setObject:[UIColor clearColor] forKey:UITextAttributeTextShadowColor];
+    [dict setObject:[UIFont fontWithName:@"Arial" size:16] forKey:UITextAttributeFont];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    [dict release];
     
     UIImage* bkimage = [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/background_gray.png", resourcePath]] stretchableImageWithLeftCapWidth:24 topCapHeight:15];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
