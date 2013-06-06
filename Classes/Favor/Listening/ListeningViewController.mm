@@ -295,13 +295,7 @@
     loopstarttime = 0.0;
     loopendtime = self.player.duration;
     fVolumn = 5.0;
-    
-    NSString* recordingTitle = STRING_SINGLE_TRAINING;
-    UIBarButtonItem* recordingItem = [[UIBarButtonItem alloc] initWithTitle:recordingTitle style:UIBarButtonItemStyleDone target:self action:@selector(onRecording)];
-    self.navigationItem.rightBarButtonItem = recordingItem;
-    self.recordingItem = recordingItem;
-    [recordingItem release];
-    
+        
 //    self.listeningToolbar.previousItem.enabled = (nPosition != 0);
 //    self.listeningToolbar.nextItem.enabled = ((nPosition + 1) != [_sentencesArray count]);
 }
