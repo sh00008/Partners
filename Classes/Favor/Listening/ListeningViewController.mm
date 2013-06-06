@@ -122,9 +122,27 @@
     [self.sentencesTableView setBackgroundView:nil];
     [self.sentencesTableView setBackgroundView:[[[UIView alloc] init] autorelease]];
     [self.sentencesTableView setBackgroundColor:UIColor.clearColor];
+    
+    
+    /*UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"Btn_Back."] forState:UIControlStateNormal];
+    [button setTitle:@"Delete" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0f];
+    [button.layer setCornerRadius:4.0f];
+    [button.layer setMasksToBounds:YES];
+    [button.layer setBorderWidth:1.0f];
+    [button.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
+    [button addTarget:self action:@selector(batchDelete) forControlEvents:UIControlEventTouchUpInside];*/
+
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithTitle:backString style:UIBarButtonItemStyleBordered target:nil action:nil];
+    backItem.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = backItem;
     [backItem release];
+    
+    
+    
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
     [dict setObject:[UIColor blackColor] forKey:UITextAttributeTextColor];
     [dict setObject:[UIColor clearColor] forKey:UITextAttributeTextShadowColor];
