@@ -13,7 +13,7 @@
 #import "Lesson.h"
 #import "Course.h"
 #import "UACellBackgroundView.h"
-#import "BubbleCell.h"
+#import "Globle.h"
 #import "SettingViewController.h"
 #import "isaybio.h"
 #import "ConfigData.h"
@@ -21,6 +21,7 @@
 #import "GTMHTTPFetcher.h"
 #import "Database.h"
 #import "ListeningCell.h"
+#import "ListeningPlayCell.h"
 
 #define LOADINGVIEWTAG      20933
 #define DOWNLOADINGVIEWTAG  20936
@@ -213,6 +214,9 @@
         self.progressBar.enabled = YES;
 //        [self.listeningToolbar enableToolbar:YES];
     }
+    
+    didSection = -1;
+    //[self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
 }
 
 - (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
@@ -422,172 +426,242 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    /*if (section == didSection) {
+        return 2;
+    }*/
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
-{
-    return 5.0;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    Sentence * sentence = [self.sentencesArray objectAtIndex:section];
+   	NSString *aMsg = sentence.orintext;
+    NSString *transText = sentence.transtext;
+    CGFloat divide = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone?  0.9 : 0.95;
+    CGFloat width = self.view.bounds.size.width * divide - 2*MAGIN_OF_BUBBLE_TEXT_START;
+	CGSize size    = [Globle calcTextHeight:aMsg withWidth:width];
+    if (sentence.transtext != nil) {
+        CGSize szTrans = [Globle calcTextHeight:transText withWidth:width];
+        size = CGSizeMake(size.width, size.height + szTrans.height + MAGIN_OF_TEXTANDTRANSLATE);
+    }
+	size.height += 5;
+	
+	CGFloat height = (size.height < 44) ? 44 : size.height;
+	
+	return fmax(height, 107);
 }
+
 
 // Section header & footer information. Views are preferred over title should you decide to provide both
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;   // custom view for header. will be adjusted to default or specified header height
 {
-        // create the parent view that will hold header Label
-    UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(2, 0.0, self.view.bounds.size.width, 5.0)] autorelease];
-    return customView;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *CellIdentifier = @"MsgListCell";
-    
-    BubbleCell *cell = (BubbleCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[BubbleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    } else {
-        [cell cleanUp];
-    }
-    
-    int nTeacher = 0;
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
+    ListeningCell *cell = [array objectAtIndex:0];
+    [cell layoutCell];
+     int nTeacher = 0;
     Teacher* teacher1 = nil;
     Teacher* teacher2 = nil;
-    Teacher* teacher3 = nil;
-    Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
-    CGFloat colorvalueR = 0.83;
-    CGFloat colorvalueG = 0.83;
-    CGFloat colorvalueBlue = 0.83;
-    CGFloat r = 159.0/255.0;
-    CGFloat g = 208.0/255.0;
-    CGFloat b = 54.0/255.0;
-    CGFloat txtColor1 = 0.0;
-    CGFloat txtColor2 = 0.0;
-    if ([self.teachersArray count] > 0) {
-        if ([self.teachersArray count] == 2) {
-            teacher1 = [self.teachersArray objectAtIndex:0];
-            if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
-                nTeacher = 1;
-                [cell setBurnColor:colorvalueR withGreen:colorvalueG withBlue:colorvalueBlue];
-                [cell setTextColor:txtColor1 withGreen:txtColor1 withBlue:txtColor1];
-            } else {
-                nTeacher = 2;
-                [cell setBurnColor:r withGreen:g withBlue:b];
-                [cell setTextColor:txtColor2 withGreen:txtColor2 withBlue:txtColor2];
-            }
-            
-        } else {
-            if ([self.teachersArray count] == 3) {
-                teacher1 = [self.teachersArray objectAtIndex:0];
-                teacher2 = [self.teachersArray objectAtIndex:1];
-                teacher3 = [self.teachersArray objectAtIndex:2];
-                if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
-                    nTeacher = 1;
-                    [cell setBurnColor:colorvalueR withGreen:colorvalueG withBlue:colorvalueBlue];
-                    [cell setTextColor:txtColor1 withGreen:txtColor1 withBlue:txtColor1];
-                } else if ([teacher2.teacherid isEqualToString:sentence.techerid]) {
-                    nTeacher = 2;
-                    [cell setBurnColor:r withGreen:b withBlue:b];
-                    [cell setTextColor:txtColor2 withGreen:txtColor2 withBlue:txtColor2];
-                } else {
-                    nTeacher = 2;
-                    [cell setBurnColor:0.92 withGreen:0.92 withBlue:0.92];
-                    [cell setTextColor:txtColor1 withGreen:txtColor1 withBlue:txtColor1];
-                    
-                }
-                
-            }
-            
-        }
-    } else {
-        if (indexPath.section % 2 == 0) {
+    Sentence * sentence = [self.sentencesArray objectAtIndex:section];
+    if ([self.teachersArray count] > 1) {
+        teacher1 = [self.teachersArray objectAtIndex:0];
+        if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
             nTeacher = 1;
-            [cell setBurnColor:colorvalueR withGreen:colorvalueG withBlue:colorvalueBlue];
-            [cell setTextColor:txtColor1 withGreen:txtColor1 withBlue:txtColor1];
         } else {
             nTeacher = 2;
-            [cell setBurnColor:r withGreen:b withBlue:b];
-            [cell setTextColor:txtColor2 withGreen:txtColor2 withBlue:txtColor2];
         }
-        
+    } else {
+        if (section % 2 == 0) {
+            nTeacher = 1;
+        } else {
+            nTeacher = 2;
+        }
     }
-   ConfigData* configData = [ConfigData sharedConfigData];
-    NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female1.png" :@"female3.png";
-    NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male1.png" :@"male3.png";
-    NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ? @"female2.png" :@"female4.png";
-    NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"male2.png" :@"male4.png";
+    ConfigData* configData = [ConfigData sharedConfigData];
+    NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
+    NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male_a@2x.png" :@"male_b@2x.png";;
+    NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ?@"male_a@2x.png" :@"male_b@2x.png";
+    NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
     switch (nTeacher) {
         case 1:
-        { 
+        {
+            NSString* imagePath = nil;
             if ([[teacher1 gender] isEqualToString:@"female"]) {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
             } else {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
             }
-                         
-            NSString* imgName = [[NSString alloc] initWithString:[resourcePath stringByAppendingPathComponent:@"bubble1.png"]];
-            cell.imgName = imgName;
-            [imgName release];
+            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+            [imagePath release];
         }
             
             break;
         case 2:
         {
+            NSString* imagePath = nil;
             if ([[teacher1 gender] isEqualToString:@"female"]) {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
             } else {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
             }
             if ([[teacher2 gender] isEqualToString:@"female"]) {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
             } else {
-                cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
             }
-
-            NSString* imgName = [[NSString alloc] initWithString:[resourcePath stringByAppendingPathComponent:@"bubble2.png"]];
-            cell.imgName = imgName;
-            [imgName release];
+            
+            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+            [imagePath release];
             break;
         }
         default:
-            cell.imgIcon = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-            NSString* imgName = [[NSString alloc] initWithString:[resourcePath stringByAppendingPathComponent:@"bubble2.png"]];
-            cell.imgName = imgName;
-            [imgName release];
-           break;
+            NSString* imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+            [imagePath release];
+            break;
     }
-    /*NSString* imgName = [[NSString alloc] initWithString:[resourcePath stringByAppendingPathComponent:@"aqua.png"]];
-     cell.imgName = imgName;
-     [imgName release];
-     */
-    cell.selectedImgName = [NSString stringWithFormat:@"%@/aqua_playing.png", resourcePath];
-    cell.msgText = sentence.orintext;
-    cell.transText = sentence.transtext;
-    cell.nShowTextStyle = settingData.eShowTextType;
-    if (ePlayStatus != PLAY_STATUS_NONE && nPosition == indexPath.section) {
-        NSIndexPath * path = [NSIndexPath  indexPathForRow:0  inSection:nPosition];
-            [_sentencesTableView scrollToRowAtIndexPath:path
-                                       atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [cell setIsHighlightText:YES];
-        nLastScrollPos = nPosition;
-    } else {
-        [cell setIsHighlightText:NO];
-    }
-
+    [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
     return cell;
 }
 
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    if (row == 0) {
+        // text, translation
+        NSString *CellIdentifier = @"ListeningCell";
+        
+        ListeningCell *cell = (ListeningCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
+            cell = [array objectAtIndex:0];
+       } else {
+            //[cell cleanUp];
+        }
+        
+        int nTeacher = 0;
+        Teacher* teacher1 = nil;
+        Teacher* teacher2 = nil;
+        Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
+        if ([self.teachersArray count] > 1) {
+            teacher1 = [self.teachersArray objectAtIndex:0];
+            if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
+                nTeacher = 1;
+            } else {
+                nTeacher = 2;
+            }            
+        } else {
+            if (indexPath.section % 2 == 0) {
+                nTeacher = 1;
+            } else {
+                nTeacher = 2;
+            }
+        }
+        ConfigData* configData = [ConfigData sharedConfigData];
+        NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
+        NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male_a@2x.png" :@"male_b@2x.png";;
+        NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ?@"male_a@2x.png" :@"male_b@2x.png";
+        NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
+        switch (nTeacher) {
+            case 1:
+            {
+                NSString* imagePath = nil;
+                if ([[teacher1 gender] isEqualToString:@"female"]) {
+                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+                 } else {
+                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+                }
+                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+                [imagePath release];
+            }
+                
+                break;
+            case 2:
+            {
+                NSString* imagePath = nil;
+                if ([[teacher1 gender] isEqualToString:@"female"]) {
+                    imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+                } else {
+                    imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+                }
+                if ([[teacher2 gender] isEqualToString:@"female"]) {
+                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
+                } else {
+                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
+                }
+                
+                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+                [imagePath release];
+                break;
+            }
+            default:
+                NSString* imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+                [imagePath release];
+                 break;
+        }
+        cell.sentenceSrc.text = sentence.orintext;
+        cell.sentenceTrans.text = sentence.transtext;
+        return cell;
+
+    } else {
+        // play button...
+        ListeningPlayCell *cell = (ListeningPlayCell*)[tableView dequeueReusableCellWithIdentifier:@"ListeningPlayCell"];
+        
+        if (cell == nil) {
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningPlayCell" owner:self options:nil];
+            cell = [array objectAtIndex:0];
+    }
+        return cell;
+    }
+}
+
+- (void)firstOneClicked{
+    didSection = 0;
+    endSection = 0;
+    [self didSelectCellRowFirstDo:YES nextDo:NO];
+}
+
+
+- (void)didSelectCellRowFirstDo:(BOOL)firstDoInsert nextDo:(BOOL)nextDoInsert{
+    [self.sentencesTableView beginUpdates];
+    ifOpen = firstDoInsert;
+    NSMutableArray* rowToInsert = [[NSMutableArray alloc] init];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:didSection];
+    [rowToInsert addObject:indexPath];
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:didSection];
+    [rowToInsert addObject:indexPath1];
+    if (!ifOpen) {
+        didSection = self.sentencesArray.count + 1;
+        [self.sentencesTableView deleteRowsAtIndexPaths:rowToInsert withRowAnimation:UITableViewRowAnimationFade];
+    }else{
+        [self.sentencesTableView insertRowsAtIndexPaths:rowToInsert withRowAnimation:UITableViewRowAnimationFade];
+    }
+    [rowToInsert release];
+    [self.sentencesTableView endUpdates];
+    if (nextDoInsert) {
+        didSection = endSection;
+        [self didSelectCellRowFirstDo:YES nextDo:NO];
+    }
+    [self.sentencesTableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section != didSection) {
+        return 0;
+    }
+    
     Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
    	NSString *aMsg = sentence.orintext;
     NSString *transText = sentence.transtext;
     CGFloat divide = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone?  0.9 : 0.95;
     CGFloat width = self.view.bounds.size.width * divide - 2*MAGIN_OF_BUBBLE_TEXT_START;
-	CGSize size    = [BubbleCell calcTextHeight:aMsg withWidth:width];
+	CGSize size    = [Globle calcTextHeight:aMsg withWidth:width];
     if (settingData.eShowTextType == 1 && sentence.transtext != nil) {
-        CGSize szTrans = [BubbleCell calcTextHeight:transText withWidth:width];
+        CGSize szTrans = [Globle calcTextHeight:transText withWidth:width];
         size = CGSizeMake(size.width, size.height + szTrans.height + MAGIN_OF_TEXTANDTRANSLATE);
     }
 	size.height += 5;
@@ -928,6 +1002,7 @@
 
 - (void)highlightCell:(NSInteger)nPos;
 {
+    /*
     if (nLastScrollPos != nPos) {
         NSIndexPath * lastpath = [NSIndexPath indexPathForRow:0  inSection:nLastScrollPos];
         BubbleCell* cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:lastpath];
@@ -944,7 +1019,7 @@
     }
     BubbleCell* cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:path];
     [cell setIsHighlightText:YES];
-    nLastScrollPos = nPos;
+    nLastScrollPos = nPos;*/
 }
 
 - (void)updateUI

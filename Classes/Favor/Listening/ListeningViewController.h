@@ -72,6 +72,10 @@ typedef enum {
     BOOL                            bParseWAV;
     BOOL                            _bDownloadedXAT;
     BOOL                            _bDownloadedISB;
+    
+    NSInteger endSection;
+    NSInteger didSection;
+    BOOL ifOpen;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;

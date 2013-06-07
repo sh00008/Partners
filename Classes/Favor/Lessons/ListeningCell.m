@@ -8,6 +8,7 @@
 
 #import "ListeningCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Globle.h"
 
 @implementation UITeacherIconView
 - (id) initWithFrame:(CGRect)frame
@@ -38,6 +39,28 @@
     return self;
 }
 
+- (void)layoutCell;
+{
+    self.teatcherIconView.layer.cornerRadius = 36;
+    self.teatcherIconView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.teatcherIconView.layer.borderWidth = 1.0;
+    self.sentenceSrc.numberOfLines = 0;
+    self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
+    self.sentenceTrans.numberOfLines = 0;
+    self.sentenceTrans.lineBreakMode   = UILineBreakModeWordWrap;
+}
+- (void)cleanUp;
+{
+    self.backgroundView = nil;
+    while ([[self.contentView subviews] count] > 0) {
+        UIView *sub = [[self.contentView subviews] objectAtIndex:0];
+        if (sub != nil) {
+            [sub removeFromSuperview];
+        }
+    }
+ }
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -45,4 +68,16 @@
     // Configure the view for the selected state
 }
 
+- (void)setMsgText:(NSString *)msgText withTrans:(NSString*)transText;
+{
+    self.sentenceSrc.text = msgText;
+    self.sentenceTrans.text = transText;
+}
+
+- (void)dealloc
+{
+    [self.teatcherImageView release];
+    [self.teatcherIconView release];
+    [super dealloc];
+}
 @end
