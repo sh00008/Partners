@@ -127,5 +127,5 @@ typedef enum {
 - (void)downloadXATByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex;
 - (void)downloadISBByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
 - (void)displayLesson;
-
+- (void)openCell:(id)sender;
 @end

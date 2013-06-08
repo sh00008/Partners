@@ -21,10 +21,13 @@
 #import "GTMHTTPFetcher.h"
 #import "Database.h"
 #import "ListeningCell.h"
-#import "ListeningPlayCell.h"
+#import "RecordingWaveCell.h"
 
 #define LOADINGVIEWTAG      20933
 #define DOWNLOADINGVIEWTAG  20936
+#define FAILEDRECORDINGVIEW_TAG 45505
+#define PLAY_SRC_VOICE_BUTTON_TAG 50001
+#define PLAY_USER_VOICE_BUTTON_TAG 50002
 #define STRING_KEY_LESSONFILE @"lessonFile"
 #define STRING_KEY_DATAPATH @"dataPath"
 #define STRING_KEY_COURSETITLE @"title"
@@ -216,7 +219,7 @@
     }
     
     didSection = -1;
-    //[self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
+    [self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
 }
 
 - (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
@@ -426,10 +429,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    /*if (section == didSection) {
+    if (section == didSection) {
         return 2;
-    }*/
-    return 1;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -458,6 +461,7 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
     ListeningCell *cell = [array objectAtIndex:0];
     [cell layoutCell];
+    
      int nTeacher = 0;
     Teacher* teacher1 = nil;
     Teacher* teacher2 = nil;
@@ -520,99 +524,75 @@
             break;
     }
     [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
+    UIButton* selectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
+    [selectButton setTag:section];
+    [selectButton addTarget:self action:@selector(openCell:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:selectButton];
+    [selectButton release];
     return cell;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    if (row == 0) {
-        // text, translation
-        NSString *CellIdentifier = @"ListeningCell";
+    Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
+   if (indexPath.row == 0) {
+           
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
+       
+       RecordingWaveCell *cell = [array objectAtIndex:0];
+        UIImage* itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
         
-        ListeningCell *cell = (ListeningCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
+        cell.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
+        UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/teachers/male1.png", resourcePath]];
+        CGFloat f = 211.0/255.0;
+        cell.waveView.layer.borderWidth = 1;
+        cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
+        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
+        cell.icon.image = iconImage;
+        /*cell.waveView.starttime = 0;
+         cell.waveView.endtime = 1*1000;
+         cell.waveView.wavefilename = [NSString stringWithFormat:@"%@/recordedFile.wav", resourcePath];*/
         
-        if (cell == nil) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
-            cell = [array objectAtIndex:0];
-       } else {
-            //[cell cleanUp];
-        }
-        
-        int nTeacher = 0;
-        Teacher* teacher1 = nil;
-        Teacher* teacher2 = nil;
-        Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
-        if ([self.teachersArray count] > 1) {
-            teacher1 = [self.teachersArray objectAtIndex:0];
-            if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
-                nTeacher = 1;
-            } else {
-                nTeacher = 2;
-            }            
-        } else {
-            if (indexPath.section % 2 == 0) {
-                nTeacher = 1;
-            } else {
-                nTeacher = 2;
-            }
-        }
-        ConfigData* configData = [ConfigData sharedConfigData];
-        NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
-        NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male_a@2x.png" :@"male_b@2x.png";;
-        NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ?@"male_a@2x.png" :@"male_b@2x.png";
-        NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
-        switch (nTeacher) {
-            case 1:
-            {
-                NSString* imagePath = nil;
-                if ([[teacher1 gender] isEqualToString:@"female"]) {
-                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-                 } else {
-                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
-                }
-                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-                [imagePath release];
-            }
-                
-                break;
-            case 2:
-            {
-                NSString* imagePath = nil;
-                if ([[teacher1 gender] isEqualToString:@"female"]) {
-                    imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-                } else {
-                    imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
-                }
-                if ([[teacher2 gender] isEqualToString:@"female"]) {
-                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
-                } else {
-                    imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
-                }
-                
-                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-                [imagePath release];
-                break;
-            }
-            default:
-                NSString* imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-                cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-                [imagePath release];
-                 break;
-        }
-        cell.sentenceSrc.text = sentence.orintext;
-        cell.sentenceTrans.text = sentence.transtext;
+        cell.waveView.starttime = [sentence startTime] * 1000;
+        cell.waveView.endtime = [sentence endTime] *1000;
+        cell.waveView.wavefilename = wavefile;
+        //[cell.waveView loadwavedatafromTime];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = (id)self;
+        cell.waveView.bReadfromTime = YES;
+        [cell.waveView setNeedsLayout];
+        cell.timelabel.text = [NSString stringWithFormat:@"Time: %.2f",[sentence endTime] - [sentence startTime]];
         return cell;
-
-    } else {
-        // play button...
-        ListeningPlayCell *cell = (ListeningPlayCell*)[tableView dequeueReusableCellWithIdentifier:@"ListeningPlayCell"];
         
-        if (cell == nil) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningPlayCell" owner:self options:nil];
-            cell = [array objectAtIndex:0];
-    }
+        
+    } else {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
+        RecordingWaveCell *cell = [array objectAtIndex:0];
+
+        cell.waveView.layer.borderWidth = 1;
+        cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
+        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
+        cell.backgroundColor = [UIColor whiteColor];
+        UIImage* itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
+        [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
+        cell.playingButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
+        UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/recording.png", resourcePath]];
+        cell.icon.image = iconImage;
+        cell.delegate = (id)self;
+        NSFileManager *mgr = [NSFileManager defaultManager];
+        NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+        if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
+            cell.playingButton.enabled = YES;
+        } else {
+            cell.playingButton.enabled = NO;
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //recordCell = cell;
+        cell.waveView.bReadfromTime = NO;
+        cell.waveView.wavefilename = recordFile;
+        [cell.waveView setNeedsLayout];
         return cell;
     }
 }
@@ -623,6 +603,22 @@
     [self didSelectCellRowFirstDo:YES nextDo:NO];
 }
 
+- (void)addCell:(UIButton *)bt{
+    endSection = bt.tag;
+    if (didSection == self.sentencesArray.count+1) {
+        ifOpen = NO;
+        didSection = endSection;
+        [self didSelectCellRowFirstDo:YES nextDo:NO];
+    }
+    else{
+        if (didSection == endSection) {
+            [self didSelectCellRowFirstDo:NO nextDo:NO];
+        }
+        else{
+            [self didSelectCellRowFirstDo:NO nextDo:YES];
+        }
+    }
+}
 
 - (void)didSelectCellRowFirstDo:(BOOL)firstDoInsert nextDo:(BOOL)nextDoInsert{
     [self.sentencesTableView beginUpdates];
@@ -654,21 +650,7 @@
         return 0;
     }
     
-    Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
-   	NSString *aMsg = sentence.orintext;
-    NSString *transText = sentence.transtext;
-    CGFloat divide = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone?  0.9 : 0.95;
-    CGFloat width = self.view.bounds.size.width * divide - 2*MAGIN_OF_BUBBLE_TEXT_START;
-	CGSize size    = [Globle calcTextHeight:aMsg withWidth:width];
-    if (settingData.eShowTextType == 1 && sentence.transtext != nil) {
-        CGSize szTrans = [Globle calcTextHeight:transText withWidth:width];
-        size = CGSizeMake(size.width, size.height + szTrans.height + MAGIN_OF_TEXTANDTRANSLATE);
-    }
-	size.height += 5;
-	
-	CGFloat height = (size.height < 44) ? 44 : size.height;
-	
-	return height;
+	return 107.0f;
 }
 
 /*- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1403,7 +1385,26 @@
             [self displayLesson];
         }
     }
+    
 }
 
+- (void)openCell:(id)sender;
+{
+    UIButton* button = (UIButton*)sender;
+    endSection = button.tag;
+    if (didSection == self.sentencesArray.count + 1) {
+        ifOpen = NO;
+        didSection = endSection;
+        [self didSelectCellRowFirstDo:YES nextDo:NO];
+    }
+    else{
+        if (didSection == endSection) {
+            [self didSelectCellRowFirstDo:NO nextDo:NO];
+        }
+        else{
+            [self didSelectCellRowFirstDo:NO nextDo:YES];
+        }
+    }
+}
 
 @end

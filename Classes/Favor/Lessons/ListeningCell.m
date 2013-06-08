@@ -46,8 +46,11 @@
     self.teatcherIconView.layer.borderWidth = 1.0;
     self.sentenceSrc.numberOfLines = 0;
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
+    [self.sentenceSrc sizeToFit];
     self.sentenceTrans.numberOfLines = 0;
     self.sentenceTrans.lineBreakMode   = UILineBreakModeWordWrap;
+    [self.sentenceTrans sizeToFit];
+
 }
 - (void)cleanUp;
 {
