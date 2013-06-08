@@ -440,7 +440,7 @@
    	NSString *aMsg = sentence.orintext;
     NSString *transText = sentence.transtext;
     CGFloat divide = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone?  0.9 : 0.95;
-    CGFloat width = self.view.bounds.size.width * divide - 2*MAGIN_OF_BUBBLE_TEXT_START;
+    CGFloat width = self.view.bounds.size.width * divide - 2*MAGIN_OF_BUBBLE_TEXT_START - 72;
 	CGSize size    = [Globle calcTextHeight:aMsg withWidth:width];
     if (sentence.transtext != nil) {
         CGSize szTrans = [Globle calcTextHeight:transText withWidth:width];
