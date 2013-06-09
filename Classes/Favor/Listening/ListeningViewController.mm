@@ -28,6 +28,9 @@
 #define FAILEDRECORDINGVIEW_TAG 45505
 #define PLAY_SRC_VOICE_BUTTON_TAG 50001
 #define PLAY_USER_VOICE_BUTTON_TAG 50002
+#define FONT_SIZE_OF_SRC    22
+#define FONT_SIZE_OF_TRANS    14
+
 #define STRING_KEY_LESSONFILE @"lessonFile"
 #define STRING_KEY_DATAPATH @"dataPath"
 #define STRING_KEY_COURSETITLE @"title"
@@ -460,35 +463,6 @@
     }
     return 0;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    /*Sentence* sentence = [self.sentencesArray objectAtIndex:indexPath.section];
-  
-    NSIndexPath * lastpath = [NSIndexPath indexPathForRow:0  inSection:nLastScrollPos];
-    BubbleCell* cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:lastpath];
-    [cell setIsHighlightText:NO];
-    nPosition = indexPath.section;
-    
-    [_sentencesTableView scrollToRowAtIndexPath:indexPath
-                               atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:indexPath];
-    [cell setIsHighlightText:YES];
-    nLastScrollPos = nPosition;
-    self.player.currentTime = [sentence startTime];
-    RecordingViewController *detailViewController = [[RecordingViewController alloc] initWithNibName:@"RecordingViewController" bundle:nil];
-    detailViewController.recordingdelegate = (id)self;
-    detailViewController.sentence = sentence;
-    detailViewController.nPos = nPosition;
-    detailViewController.nTotalCount = [_sentencesArray count];
-    detailViewController.wavefile = wavefile;
-    detailViewController.resourcePath = resourcePath;
-    [self updateUI];
-    // ...
-    // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];*/
- }
 
 #pragma Action
 - (IBAction)onOther:(id)sender;
@@ -1213,7 +1187,7 @@
 }
 
 - (UIView *)viewForCollapseClickContentViewAtIndex:(int)index {
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 107 * 2)];
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 134 * 2)];
     Sentence * sentence = [self.sentencesArray objectAtIndex:index];        
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
     

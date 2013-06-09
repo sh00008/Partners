@@ -19,4 +19,16 @@
     
     return size;
 }
+
++ (CGSize)calcTextHeight:(NSString *)str withWidth:(CGFloat)width withFontSize:(CGFloat)fontSize;
+{
+    
+    CGSize textSize = {width, 20000.0};
+    CGSize size     = [str sizeWithFont:[UIFont systemFontOfSize:fontSize]
+                      constrainedToSize:textSize];
+    
+    return size;
+}
+
+
 @end

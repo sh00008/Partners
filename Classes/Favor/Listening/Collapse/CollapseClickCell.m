@@ -29,10 +29,12 @@
     // Initialization Here
     [cell.TitleView addSubview:headerView];
     [cell bringSubviewToFront:headerView];
+    
     cell.TitleView.frame = headerView.frame;
     cell.index = index;
     cell.TitleButton.tag = index;
-    cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.ContentView.frame.origin.y, cell.ContentView.frame.size.width, content.frame.size.height);
+    cell.TitleButton.frame = headerView.frame;
+    cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.TitleView.frame.origin.y + cell.TitleView.frame.size.height, cell.ContentView.frame.size.width, content.frame.size.height);
     [cell.ContentView addSubview:content];
     if (index % 2 == 0) {
         cell.backgroundColor = [UIColor lightGrayColor];

@@ -14,13 +14,13 @@
 - (id) initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    self.layer.cornerRadius = 36;
+    self.layer.cornerRadius = 28;
     return self;
 }
 
 - (void) drawRect:(CGRect)rect
 {
-    self.layer.cornerRadius = 36;
+    self.layer.cornerRadius = 28;
     [super drawRect:rect];
 }
 @end
@@ -41,17 +41,15 @@
 
 - (void)layoutCell;
 {
-    self.teatcherIconView.layer.cornerRadius = 36;
+    //self.teatcherIconView.layer.cornerRadius = 28;
     self.teatcherIconView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.teatcherIconView.layer.borderWidth = 1.0;
     self.sentenceSrc.numberOfLines = 0;
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
-    [self.sentenceSrc sizeToFit];
     self.sentenceTrans.numberOfLines = 0;
     self.sentenceTrans.lineBreakMode   = UILineBreakModeWordWrap;
-    [self.sentenceTrans sizeToFit];
-
 }
+
 - (void)cleanUp;
 {
 }
@@ -68,8 +66,15 @@
 {
     self.sentenceSrc.text = msgText;
     self.sentenceTrans.text = transText;
+    CGSize szSrc = [Globle calcTextHeight:msgText withWidth:self.sentenceSrc.frame.size.width withFontSize:22];
+    
+    CGSize szTrans = [Globle calcTextHeight:transText withWidth:self.sentenceTrans.frame.size.width withFontSize:14];
     [self.sentenceSrc sizeToFit];
+    
     [self.sentenceTrans sizeToFit];
+    self.sentenceTrans.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, self.sentenceSrc.frame.size.width, szSrc.height);
+    self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, self.sentenceTrans.frame.size.width, szTrans.height);
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.sentenceTrans.frame.origin.y + self.sentenceTrans.frame.size.height + 20);
 }
 
 - (void)dealloc

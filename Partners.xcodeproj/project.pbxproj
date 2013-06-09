@@ -126,7 +126,6 @@
 		0DAA13DF175E223A00E51620 /* LessonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA13DB175E223A00E51620 /* LessonCell.xib */; };
 		0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */; };
 		0DAA13E3175E225700E51620 /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E2175E225700E51620 /* RatingView.m */; };
-		0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA13E5175E227200E51620 /* BubbleCell.m */; };
 		0DAA140E175F6FC700E51620 /* 4-light-menu-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA140C175F6FC700E51620 /* 4-light-menu-bar.png */; };
 		0DAA140F175F6FC700E51620 /* 4-light-menu-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA140D175F6FC700E51620 /* 4-light-menu-bar@2x.png */; };
 		0DAA1413175F761900E51620 /* ListeningViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA1411175F761900E51620 /* ListeningViewController.mm */; };
@@ -358,8 +357,6 @@
 		0DAA13DD175E223A00E51620 /* UACellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACellBackgroundView.m; sourceTree = "<group>"; };
 		0DAA13E1175E225700E51620 /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
 		0DAA13E2175E225700E51620 /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
-		0DAA13E4175E227200E51620 /* BubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleCell.h; sourceTree = "<group>"; };
-		0DAA13E5175E227200E51620 /* BubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleCell.m; sourceTree = "<group>"; };
 		0DAA140C175F6FC700E51620 /* 4-light-menu-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4-light-menu-bar.png"; sourceTree = "<group>"; };
 		0DAA140D175F6FC700E51620 /* 4-light-menu-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4-light-menu-bar@2x.png"; sourceTree = "<group>"; };
 		0DAA1410175F761900E51620 /* ListeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeningViewController.h; sourceTree = "<group>"; };
@@ -861,8 +858,6 @@
 				0DAA141A1760D8C800E51620 /* ListeningCell.h */,
 				0DAA141B1760D8C800E51620 /* ListeningCell.m */,
 				0DAA14211760D93F00E51620 /* ListeningCell.xib */,
-				0DAA13E4175E227200E51620 /* BubbleCell.h */,
-				0DAA13E5175E227200E51620 /* BubbleCell.m */,
 				0DAA13E1175E225700E51620 /* RatingView.h */,
 				0DAA13E2175E225700E51620 /* RatingView.m */,
 				0DAA13D9175E223A00E51620 /* LessonCell.h */,
@@ -1319,7 +1314,6 @@
 				0DAA13DE175E223A00E51620 /* LessonCell.m in Sources */,
 				0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */,
 				0DAA13E3175E225700E51620 /* RatingView.m in Sources */,
-				0DAA13E6175E227200E51620 /* BubbleCell.m in Sources */,
 				0DAA1413175F761900E51620 /* ListeningViewController.mm in Sources */,
 				0DAA141C1760D8C900E51620 /* ListeningCell.m in Sources */,
 				0D9540471763639900A616D8 /* RecordingWaveCell.mm in Sources */,

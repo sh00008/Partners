@@ -7,10 +7,11 @@
 //
 
 #import "LessonCell.h"
-#import "BubbleCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UACellBackgroundView.h"
 #import "VoiceDef.h"
+#import "Globle.h"
+
 @implementation LessonCell
 @synthesize lessonTitle = _lessonTitle;
 @synthesize lessonLabel = _lessonLabel;
@@ -119,7 +120,7 @@
         [path release];
    }
     if (self.lessonLabel == nil) {
-           CGSize size   = [BubbleCell calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE - MAGIN_OF_RIGHT];
+           CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE - MAGIN_OF_RIGHT];
         UILabel* txtLabel = [[UILabel alloc] initWithFrame:CGRectMake(MAGIN_OF_LESSON_TITLE, 10, size.width, size.height)];
         txtLabel.lineBreakMode   = UILineBreakModeWordWrap;
         txtLabel.numberOfLines   = 0;

@@ -10,5 +10,5 @@
 
 @interface Globle : NSObject
 + (CGSize)calcTextHeight:(NSString *)str withWidth:(CGFloat)width;
-
++ (CGSize)calcTextHeight:(NSString *)str withWidth:(CGFloat)width withFontSize:(CGFloat)fontSize;
 @end
