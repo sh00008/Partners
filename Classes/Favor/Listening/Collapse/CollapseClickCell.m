@@ -36,6 +36,8 @@
     cell.TitleButton.frame = headerView.frame;
     cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.TitleView.frame.origin.y + cell.TitleView.frame.size.height, cell.ContentView.frame.size.width, content.frame.size.height);
     [cell.ContentView addSubview:content];
+    [cell bringSubviewToFront:cell.TitleButton];
+   
     if (index % 2 == 0) {
         cell.backgroundColor = [UIColor lightGrayColor];
     } else {
