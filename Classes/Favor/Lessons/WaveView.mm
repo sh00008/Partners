@@ -27,6 +27,8 @@
         if (_points == nil) {
             _points = [[NSMutableArray alloc] init];
         }
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     }
     return self;
 }
@@ -218,7 +220,7 @@
         NSInteger nTimeCount = rect.size.width / dwWidPerSencond;
         CGFloat h = rect.size.height - 10;
         /// CGContextSetStrokeColorWithColor(context, [[UIColor whiteColor] CGColor]);
-        CGContextSelectFont(context, "Helvetica", 16, kCGEncodingMacRoman);
+        CGContextSelectFont(context, "Helvetica", 12, kCGEncodingMacRoman);
         CGContextSetTextDrawingMode(context, kCGTextFill);
         CGContextSetFillColorWithColor(context, [clr CGColor]);
         CGContextSetStrokeColorWithColor(context, [[UIColor whiteColor] CGColor]);

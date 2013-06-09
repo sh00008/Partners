@@ -24,7 +24,6 @@
 }
 @property (nonatomic, retain) IBOutlet UIButton* playingButton;
 @property (nonatomic, retain) IBOutlet WaveView* waveView;
-@property (nonatomic, retain) IBOutlet UIImageView* icon;
 @property (nonatomic, retain) IBOutlet UILabel* timelabel;
 @property (nonatomic, assign) id < RecordingWaveCellDelegate> delegate;
 

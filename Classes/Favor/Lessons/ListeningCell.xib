@@ -211,11 +211,6 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">10</int>
-						<reference key="object" ref="1019032710"/>
-						<reference key="parent" ref="1721567"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
 						<reference key="object" ref="885149403"/>
 						<reference key="parent" ref="1721567"/>
@@ -232,6 +227,11 @@
 						<int key="objectID">3</int>
 						<reference key="object" ref="910749388"/>
 						<reference key="parent" ref="338852539"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">10</int>
+						<reference key="object" ref="1019032710"/>
+						<reference key="parent" ref="1721567"/>
 					</object>
 				</array>
 			</object>

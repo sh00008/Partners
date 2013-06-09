@@ -1196,15 +1196,7 @@
     
     [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
     cellPlay.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
-    UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/teachers/male1.png", resourcePath]];
-      cellPlay.waveView.layer.borderWidth = 1;
-    cellPlay.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
-    cellPlay.icon.image = iconImage;
-    /*cell.waveView.starttime = 0;
-     cell.waveView.endtime = 1*1000;
-     cell.waveView.wavefilename = [NSString stringWithFormat:@"%@/recordedFile.wav", resourcePath];*/
-    
+     
     cellPlay.waveView.starttime = [sentence startTime] * 1000;
     cellPlay.waveView.endtime = [sentence endTime] *1000;
     cellPlay.waveView.wavefilename = wavefile;
@@ -1227,8 +1219,7 @@
     itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
     [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
     cell.playingButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
-    iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/recording.png", resourcePath]];
-    cell.icon.image = iconImage;
+    
     cell.delegate = (id)self;
     NSFileManager *mgr = [NSFileManager defaultManager];
     NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
