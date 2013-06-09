@@ -54,14 +54,7 @@
 }
 - (void)cleanUp;
 {
-    self.backgroundView = nil;
-    while ([[self.contentView subviews] count] > 0) {
-        UIView *sub = [[self.contentView subviews] objectAtIndex:0];
-        if (sub != nil) {
-            [sub removeFromSuperview];
-        }
-    }
- }
+}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

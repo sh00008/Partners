@@ -443,7 +443,7 @@
     [self.collpaseLesson reloadCollapseClick];
     
     // If you want a cell open on load, run this method:
-    [self.collpaseLesson openCollapseClickCellAtIndex:1 animated:NO];
+    [self.collpaseLesson openCollapseClickCellAtIndex:0 animated:YES];
 }
 
 #pragma mark - Table view delegate

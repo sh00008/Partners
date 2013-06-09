@@ -10,7 +10,7 @@
 @interface UITeacherIconView : UIView
 @end
 
-@interface ListeningCell : UITableViewCell
+@interface ListeningCell : UIView
 @property (nonatomic, retain) IBOutlet UITeacherIconView* teatcherIconView;
 @property (nonatomic, retain) IBOutlet UIImageView* teatcherImageView;
 @property (nonatomic, retain) IBOutlet UILabel* sentenceSrc;
