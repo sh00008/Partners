@@ -54,6 +54,7 @@
 @synthesize courseParser;
 @synthesize delegate;
 @synthesize adView;
+@synthesize collpaseLesson;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -71,8 +72,6 @@
         nLesson = PLAY_LESSON_TYPE_NONE;
         bRecording = NO;
         ePlayStatus = PLAY_STATUS_NONE;
-         //SettingViewController* setting = (SettingViewController*)[self.tabBarController.viewControllers objectAtIndex:1];
-        
         settingData = [[SettingData alloc] init];
         [settingData loadSettingData];
         nCurrentReadingCount = 1;
@@ -418,22 +417,6 @@
     [self reloadTableView];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return [self.sentencesArray count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    if (section == didSection) {
-        return 2;
-    }
-    return 0;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     Sentence * sentence = [self.sentencesArray objectAtIndex:section];
@@ -454,254 +437,14 @@
 }
 
 
-// Section header & footer information. Views are preferred over title should you decide to provide both
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;   // custom view for header. will be adjusted to default or specified header height
-{
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
-    ListeningCell *cell = [array objectAtIndex:0];
-    [cell layoutCell];
-    
-     int nTeacher = 0;
-    Teacher* teacher1 = nil;
-    Teacher* teacher2 = nil;
-    Sentence * sentence = [self.sentencesArray objectAtIndex:section];
-    if ([self.teachersArray count] > 1) {
-        teacher1 = [self.teachersArray objectAtIndex:0];
-        if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
-            nTeacher = 1;
-        } else {
-            nTeacher = 2;
-        }
-    } else {
-        if (section % 2 == 0) {
-            nTeacher = 1;
-        } else {
-            nTeacher = 2;
-        }
-    }
-    ConfigData* configData = [ConfigData sharedConfigData];
-    NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
-    NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male_a@2x.png" :@"male_b@2x.png";;
-    NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ?@"male_a@2x.png" :@"male_b@2x.png";
-    NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
-    switch (nTeacher) {
-        case 1:
-        {
-            NSString* imagePath = nil;
-            if ([[teacher1 gender] isEqualToString:@"female"]) {
-                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-            } else {
-                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
-            }
-            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-            [imagePath release];
-        }
-            
-            break;
-        case 2:
-        {
-            NSString* imagePath = nil;
-            if ([[teacher1 gender] isEqualToString:@"female"]) {
-                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-            } else {
-                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
-            }
-            if ([[teacher2 gender] isEqualToString:@"female"]) {
-                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
-            } else {
-                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
-            }
-            
-            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-            [imagePath release];
-            break;
-        }
-        default:
-            NSString* imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
-            cell.teatcherImageView.image = [UIImage imageWithContentsOfFile:imagePath];
-            [imagePath release];
-            break;
-    }
-    [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
-    UIButton* selectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    [selectButton setTag:section];
-    [selectButton addTarget:self action:@selector(openCell:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:selectButton];
-    [selectButton release];
-    return cell;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Sentence * sentence = [self.sentencesArray objectAtIndex:indexPath.section];
-   if (indexPath.row == 0) {
-           
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
-       
-       RecordingWaveCell *cell = [array objectAtIndex:0];
-        UIImage* itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
-        
-        [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
-        cell.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
-        UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/teachers/male1.png", resourcePath]];
-        CGFloat f = 211.0/255.0;
-        cell.waveView.layer.borderWidth = 1;
-        cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
-        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
-        cell.icon.image = iconImage;
-        /*cell.waveView.starttime = 0;
-         cell.waveView.endtime = 1*1000;
-         cell.waveView.wavefilename = [NSString stringWithFormat:@"%@/recordedFile.wav", resourcePath];*/
-        
-        cell.waveView.starttime = [sentence startTime] * 1000;
-        cell.waveView.endtime = [sentence endTime] *1000;
-        cell.waveView.wavefilename = wavefile;
-        //[cell.waveView loadwavedatafromTime];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.delegate = (id)self;
-        cell.waveView.bReadfromTime = YES;
-        [cell.waveView setNeedsLayout];
-        cell.timelabel.text = [NSString stringWithFormat:@"Time: %.2f",[sentence endTime] - [sentence startTime]];
-        return cell;
-        
-        
-    } else {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
-        RecordingWaveCell *cell = [array objectAtIndex:0];
-
-        cell.waveView.layer.borderWidth = 1;
-        cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
-        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
-        cell.backgroundColor = [UIColor whiteColor];
-        UIImage* itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
-        [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
-        cell.playingButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
-        UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/recording.png", resourcePath]];
-        cell.icon.image = iconImage;
-        cell.delegate = (id)self;
-        NSFileManager *mgr = [NSFileManager defaultManager];
-        NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
-        if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
-            cell.playingButton.enabled = YES;
-        } else {
-            cell.playingButton.enabled = NO;
-        }
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //recordCell = cell;
-        cell.waveView.bReadfromTime = NO;
-        cell.waveView.wavefilename = recordFile;
-        [cell.waveView setNeedsLayout];
-        return cell;
-    }
-}
-
 - (void)firstOneClicked{
-    didSection = 0;
-    endSection = 0;
-    [self didSelectCellRowFirstDo:YES nextDo:NO];
-}
-
-- (void)addCell:(UIButton *)bt{
-    endSection = bt.tag;
-    if (didSection == self.sentencesArray.count+1) {
-        ifOpen = NO;
-        didSection = endSection;
-        [self didSelectCellRowFirstDo:YES nextDo:NO];
-    }
-    else{
-        if (didSection == endSection) {
-            [self didSelectCellRowFirstDo:NO nextDo:NO];
-        }
-        else{
-            [self didSelectCellRowFirstDo:NO nextDo:YES];
-        }
-    }
-}
-
-- (void)didSelectCellRowFirstDo:(BOOL)firstDoInsert nextDo:(BOOL)nextDoInsert{
-    [self.sentencesTableView beginUpdates];
-    ifOpen = firstDoInsert;
-    NSMutableArray* rowToInsert = [[NSMutableArray alloc] init];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:didSection];
-    [rowToInsert addObject:indexPath];
-    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:didSection];
-    [rowToInsert addObject:indexPath1];
-    if (!ifOpen) {
-        didSection = self.sentencesArray.count + 1;
-        [self.sentencesTableView deleteRowsAtIndexPaths:rowToInsert withRowAnimation:UITableViewRowAnimationFade];
-    }else{
-        [self.sentencesTableView insertRowsAtIndexPaths:rowToInsert withRowAnimation:UITableViewRowAnimationFade];
-    }
-    [rowToInsert release];
-    [self.sentencesTableView endUpdates];
-    if (nextDoInsert) {
-        didSection = endSection;
-        [self didSelectCellRowFirstDo:YES nextDo:NO];
-    }
-    [self.sentencesTableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionTop animated:YES];
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section != didSection) {
-        return 0;
-    }
     
-	return 107.0f;
+    self.collpaseLesson.CollapseClickDelegate = (id)self;
+    [self.collpaseLesson reloadCollapseClick];
+    
+    // If you want a cell open on load, run this method:
+    [self.collpaseLesson openCollapseClickCellAtIndex:1 animated:NO];
 }
-
-/*- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	
-    // create the parent view that will hold header Label
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(2, 0.0, self.view.bounds.size.width, 5.0)] autorelease];
-    return customView;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 5.0;
-}
-*/
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -1360,7 +1103,7 @@
         NSString* courseTitle = [dic objectForKey:STRING_KEY_COURSETITLE];
         NSString* lessonFile = [dic objectForKey:STRING_KEY_LESSONFILE];
         NSString* xatFile = [lessonFile substringToIndex:[lessonFile length] - 4];
-        NSNumber* indexNumber = [dic objectForKey:STRING_KEY_TRYSERVERLIST];
+        //NSNumber* indexNumber = [dic objectForKey:STRING_KEY_TRYSERVERLIST];
         V_NSLog(@"try list %d", [indexNumber integerValue]);
         
         NSString* fileType = [dic objectForKey:STRING_KEY_FILETYPE];
@@ -1388,23 +1131,150 @@
     
 }
 
-- (void)openCell:(id)sender;
-{
-    UIButton* button = (UIButton*)sender;
-    endSection = button.tag;
-    if (didSection == self.sentencesArray.count + 1) {
-        ifOpen = NO;
-        didSection = endSection;
-        [self didSelectCellRowFirstDo:YES nextDo:NO];
-    }
-    else{
-        if (didSection == endSection) {
-            [self didSelectCellRowFirstDo:NO nextDo:NO];
-        }
-        else{
-            [self didSelectCellRowFirstDo:NO nextDo:YES];
-        }
-    }
+#pragma collapse cell
+-(int)numberOfCellsForCollapseClick {
+    return [self.sentencesArray count];
 }
 
+-(UIView *)viewForCollapseClickAtIndex:(int)index {
+
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningCell" owner:self options:nil];
+    ListeningCell *cell = [array objectAtIndex:0];
+    [cell layoutCell];
+    
+    int nTeacher = 0;
+    Teacher* teacher1 = nil;
+    Teacher* teacher2 = nil;
+    NSInteger section = index;
+    Sentence * sentence = [self.sentencesArray objectAtIndex:section];
+    if ([self.teachersArray count] > 1) {
+        teacher1 = [self.teachersArray objectAtIndex:0];
+        if ([teacher1.teacherid isEqualToString:sentence.techerid]) {
+            nTeacher = 1;
+        } else {
+            nTeacher = 2;
+        }
+    } else {
+        if (section % 2 == 0) {
+            nTeacher = 1;
+        } else {
+            nTeacher = 2;
+        }
+    }
+    ConfigData* configData = [ConfigData sharedConfigData];
+    NSString* teacherfemale1 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
+    NSString* teachermale1 = configData.nTeacherHeadStyle == 0 ? @"male_a@2x.png" :@"male_b@2x.png";;
+    NSString* teacherfemale2 = configData.nTeacherHeadStyle == 0 ?@"male_a@2x.png" :@"male_b@2x.png";
+    NSString* teachermale2 = configData.nTeacherHeadStyle == 0 ? @"female_a@2x.png" :@"female_b@2x.png";
+    switch (nTeacher) {
+        case 1:
+        {
+            NSString* imagePath = nil;
+            if ([[teacher1 gender] isEqualToString:@"female"]) {
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+            } else {
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+            }
+            UIImage* im = [UIImage imageWithContentsOfFile:imagePath];
+            cell.teatcherImageView.image = im;
+            [imagePath release];
+        }
+            
+            break;
+        case 2:
+        {
+            NSString* imagePath = nil;
+            if ([[teacher1 gender] isEqualToString:@"female"]) {
+                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+            } else {
+                imagePath =  [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale1];
+            }
+            if ([[teacher2 gender] isEqualToString:@"female"]) {
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale2];
+            } else {
+                imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teachermale2];
+            }
+            
+            UIImage* im = [UIImage imageWithContentsOfFile:imagePath];
+            cell.teatcherImageView.image = im;
+            [imagePath release];
+            break;
+        }
+        default:
+            NSString* imagePath = [[NSString alloc] initWithFormat:@"%@/%@%@", resourcePath, @"teachers/", teacherfemale1];
+            UIImage* im = [UIImage imageWithContentsOfFile:imagePath];
+            cell.teatcherImageView.image = im;
+            [imagePath release];
+            break;
+    }
+    [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
+    
+    return cell;
+}
+
+- (UIView *)viewForCollapseClickContentViewAtIndex:(int)index {
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 107 * 2)];
+    Sentence * sentence = [self.sentencesArray objectAtIndex:index];        
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
+    
+    RecordingWaveCell *cellPlay = [array objectAtIndex:0];
+    UIImage* itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
+    
+    [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
+    cellPlay.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
+    UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/teachers/male1.png", resourcePath]];
+      cellPlay.waveView.layer.borderWidth = 1;
+    cellPlay.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
+    cellPlay.icon.image = iconImage;
+    /*cell.waveView.starttime = 0;
+     cell.waveView.endtime = 1*1000;
+     cell.waveView.wavefilename = [NSString stringWithFormat:@"%@/recordedFile.wav", resourcePath];*/
+    
+    cellPlay.waveView.starttime = [sentence startTime] * 1000;
+    cellPlay.waveView.endtime = [sentence endTime] *1000;
+    cellPlay.waveView.wavefilename = wavefile;
+    //[cell.waveView loadwavedatafromTime];
+    cellPlay.selectionStyle = UITableViewCellSelectionStyleNone;
+    cellPlay.delegate = (id)self;
+    cellPlay.waveView.bReadfromTime = YES;
+    [cellPlay.waveView setNeedsLayout];
+    cellPlay.timelabel.text = [NSString stringWithFormat:@"Time: %.2f",[sentence endTime] - [sentence startTime]];
+    [contentView addSubview:cellPlay];
+    
+        
+    array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
+    RecordingWaveCell *cell = [array objectAtIndex:0];
+    cell.frame = CGRectMake(0, cellPlay.frame.size.height, cellPlay.frame.size.width, cellPlay.frame.size.height);
+    cell.waveView.layer.borderWidth = 1;
+    cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
+        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
+    cell.backgroundColor = [UIColor whiteColor];
+    itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
+    [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
+    cell.playingButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
+    iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/recording.png", resourcePath]];
+    cell.icon.image = iconImage;
+    cell.delegate = (id)self;
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+    if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
+        cell.playingButton.enabled = YES;
+    } else {
+        cell.playingButton.enabled = NO;
+    }
+        
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //recordCell = cell;
+    cell.waveView.bReadfromTime = NO;
+    cell.waveView.wavefilename = recordFile;
+    [cell.waveView setNeedsLayout];
+    [contentView addSubview:cell];
+    return contentView;
+}
+
+
+-(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open {
+    NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
+}
 @end

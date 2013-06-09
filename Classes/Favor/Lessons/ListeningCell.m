@@ -75,6 +75,8 @@
 {
     self.sentenceSrc.text = msgText;
     self.sentenceTrans.text = transText;
+    [self.sentenceSrc sizeToFit];
+    [self.sentenceTrans sizeToFit];
 }
 
 - (void)dealloc

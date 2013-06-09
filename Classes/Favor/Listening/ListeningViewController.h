@@ -11,6 +11,7 @@
 //#import "ListeningToolbar.h"
 #import "SettingData.h"
 #import "CourseParser.h"
+#import "CollapseClick.h"
 
 
 #define VOLUMNVIEW_TAG  50001
@@ -76,6 +77,7 @@ typedef enum {
     NSInteger endSection;
     NSInteger didSection;
     BOOL ifOpen;
+    
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;
@@ -96,6 +98,8 @@ typedef enum {
 @property (nonatomic, retain) CourseParser* courseParser;
 @property (nonatomic, assign) id<ListeningViewControllerDelegate>delegate;
 @property (nonatomic, retain) IBOutlet UIView* adView;
+@property (nonatomic, retain) IBOutlet CollapseClick* collpaseLesson;
+
 - (void)initMembers;
 - (void)initValue;
 - (void)parseWAVFile;

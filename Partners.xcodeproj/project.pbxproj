@@ -181,6 +181,10 @@
 		0DC0D57417509D8800684ED2 /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D56D17509D8800684ED2 /* WaveFile.cpp */; };
 		0DC0D57517509D8800684ED2 /* libIsaybEncrypt.d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC0D57117509D8800684ED2 /* libIsaybEncrypt.d.a */; };
 		0DC0D57617509D8800684ED2 /* libIsaybEncrypt.s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC0D57217509D8800684ED2 /* libIsaybEncrypt.s.a */; };
+		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
+		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
+		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
+		0DDD8828176413E90078D6B7 /* CollapseClickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -448,6 +452,13 @@
 		0DC0D57017509D8800684ED2 /* IsaybEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsaybEncrypt.h; sourceTree = "<group>"; };
 		0DC0D57117509D8800684ED2 /* libIsaybEncrypt.d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.d.a; sourceTree = "<group>"; };
 		0DC0D57217509D8800684ED2 /* libIsaybEncrypt.s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.s.a; sourceTree = "<group>"; };
+		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
+		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
+		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
+		0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClickArrow.m; sourceTree = "<group>"; };
+		0DDD8822176413E90078D6B7 /* CollapseClickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickCell.h; sourceTree = "<group>"; };
+		0DDD8823176413E90078D6B7 /* CollapseClickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClickCell.m; sourceTree = "<group>"; };
+		0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollapseClickCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -870,6 +881,7 @@
 		0DAA13E8175E296400E51620 /* Listening */ = {
 			isa = PBXGroup;
 			children = (
+				0DDD881D176413E90078D6B7 /* Collapse */,
 				0DAA1410175F761900E51620 /* ListeningViewController.h */,
 				0DAA1411175F761900E51620 /* ListeningViewController.mm */,
 				0DAA1412175F761900E51620 /* ListeningViewController.xib */,
@@ -1033,6 +1045,20 @@
 			name = VoiceBase;
 			sourceTree = "<group>";
 		};
+		0DDD881D176413E90078D6B7 /* Collapse */ = {
+			isa = PBXGroup;
+			children = (
+				0DDD881E176413E90078D6B7 /* CollapseClick.h */,
+				0DDD881F176413E90078D6B7 /* CollapseClick.m */,
+				0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */,
+				0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */,
+				0DDD8822176413E90078D6B7 /* CollapseClickCell.h */,
+				0DDD8823176413E90078D6B7 /* CollapseClickCell.m */,
+				0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */,
+			);
+			path = Collapse;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1192,6 +1218,7 @@
 				0D95403D176230BE00A616D8 /* Btn_Record@2x.png in Resources */,
 				0D95403E176230BE00A616D8 /* Btn_Recording@2x.png in Resources */,
 				0D9540481763639900A616D8 /* RecordingWaveCell.xib in Resources */,
+				0DDD8828176413E90078D6B7 /* CollapseClickCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1297,6 +1324,9 @@
 				0DAA141C1760D8C900E51620 /* ListeningCell.m in Sources */,
 				0D9540471763639900A616D8 /* RecordingWaveCell.mm in Sources */,
 				0D9540491763639900A616D8 /* WaveView.mm in Sources */,
+				0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */,
+				0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */,
+				0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
