@@ -40,7 +40,7 @@
              setBackgroundImage:[UIImage imageNamed:@"4-light-menu-bar.png"]
              forBarMetrics:UIBarMetricsDefault];
         }
-        
+    nav.navigationBar.tintColor = [UIColor grayColor];
     
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];

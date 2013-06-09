@@ -1242,4 +1242,9 @@
 -(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open {
     NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
+
+- (void)playing:(NSInteger)buttonTag;
+{
+    NSLog(@"playing");
+}
 @end
