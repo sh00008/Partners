@@ -28,6 +28,7 @@
 #define FAILEDRECORDINGVIEW_TAG 45505
 #define PLAY_SRC_VOICE_BUTTON_TAG 50001
 #define PLAY_USER_VOICE_BUTTON_TAG 50002
+#define RECORDING_USER_VOICE_BUTTON_TAG 50003
 #define FONT_SIZE_OF_SRC    22
 #define FONT_SIZE_OF_TRANS    14
 
@@ -1196,7 +1197,7 @@
     
     [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
     cellPlay.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
-     
+    cellPlay.sentence = (id)sentence;
     cellPlay.waveView.starttime = [sentence startTime] * 1000;
     cellPlay.waveView.endtime = [sentence endTime] *1000;
     cellPlay.waveView.wavefilename = wavefile;
@@ -1217,18 +1218,27 @@
         //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
     cell.backgroundColor = [UIColor whiteColor];
     itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
-    [cell.playingButton setImage:itemImage forState:UIControlStateNormal];
-    cell.playingButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
     
+    cell.playingUpButton.hidden = NO;
+    cell.playingDownButton.hidden = NO;
+    cell.playingButton.hidden = YES;
+    [cell.playingUpButton setImage:itemImage forState:UIControlStateNormal];
+    cell.playingUpButton.tag = RECORDING_USER_VOICE_BUTTON_TAG;
+    
+    itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
+    [cell.playingDownButton setImage:itemImage forState:UIControlStateNormal];
+    cell.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
+    cell.playingDownButton.enabled = NO;
+
     cell.delegate = (id)self;
-    NSFileManager *mgr = [NSFileManager defaultManager];
     NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+    /*NSFileManager *mgr = [NSFileManager defaultManager];
     if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
         cell.playingButton.enabled = YES;
     } else {
         cell.playingButton.enabled = NO;
     }
-        
+       */ 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //recordCell = cell;
     cell.waveView.bReadfromTime = NO;
@@ -1243,8 +1253,23 @@
     NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
-- (void)playing:(NSInteger)buttonTag;
+- (void)playing:(NSInteger)buttonTag withSentence:(id)sen
 {
-    NSLog(@"playing");
+    Sentence* sentence = (Sentence*)sen;
+    switch (buttonTag) {
+        case PLAY_SRC_VOICE_BUTTON_TAG:
+            
+            break;
+        case PLAY_USER_VOICE_BUTTON_TAG:
+            
+            break;
+        case RECORDING_USER_VOICE_BUTTON_TAG:
+            
+            break;
+
+        default:
+            break;
+    }
 }
+
 @end

@@ -14,6 +14,8 @@
 @synthesize waveView = _waveView;
 @synthesize timelabel = _timelabel;
 @synthesize delegate;
+@synthesize sentence;
+@synthesize playingUpButton, playingDownButton;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -33,6 +35,7 @@
 
 - (void)dealloc
 {
+    self.sentence = nil;
     [self.playingButton release];
     [self.waveView release];
     [self.timelabel release];
@@ -41,7 +44,7 @@
 
 - (IBAction)onPlaying:(id)sender;
 {
-    [delegate playing:self.playingButton.tag];
+    [delegate playing:self.playingButton.tag withSentence:self.sentence];
 }
 
 @end
