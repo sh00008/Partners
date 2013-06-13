@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "isaybiosscroe.h"
 #import "Sentence.h"
+#import "AQRecorder.h"
+#import "AQPlayer.h"
 
 @interface RecordingObject : NSObject
 {
-    // Score
-    ISAYB5WORD * pWord;
-    int nWord;
-    int score;
-
+    AQRecorder*				recorder;
 }
++ (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename toResult:(NSMutableDictionary*)scoreDictionary;
+
 @end

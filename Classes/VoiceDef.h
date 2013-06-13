@@ -75,6 +75,8 @@
 
 #define MAGIN_OF_LESSON_TITLE  64
 #define MAGIN_OF_RIGHT         40
+#define kBufferDurationSeconds 1.0
+
 
 #define KEY_SETTING_USE_COVERFLOW                   @"UICoverFlow"
 #define KEY_SETTING_LESSONCELLSTYLE                 @"UILessonCellStyle"

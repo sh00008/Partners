@@ -29,6 +29,7 @@
 @synthesize teatcherIconView, teatcherImageView;
 @synthesize sentenceSrc;
 @synthesize sentenceTrans;
+@synthesize scroeLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -81,6 +82,7 @@
 {
     [self.teatcherImageView release];
     [self.teatcherIconView release];
+    [self.scroeLabel release];
     [super dealloc];
 }
 @end

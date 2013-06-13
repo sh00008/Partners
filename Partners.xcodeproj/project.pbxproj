@@ -45,6 +45,9 @@
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
 		0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */; };
+		0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAD176A11C600873CF8 /* AQPlayer.mm */; };
+		0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAF176A11C600873CF8 /* AQRecorder.mm */; };
+		0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAB2176A11C600873CF8 /* libisayscore.a */; };
 		0D954035176230BE00A616D8 /* Btn_Pause_Avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */; };
 		0D954036176230BE00A616D8 /* Btn_Pause_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */; };
 		0D954037176230BE00A616D8 /* Btn_Pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */; };
@@ -258,6 +261,12 @@
 		0D50AAA6176A05BD00873CF8 /* isaybioDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybioDecode.h; sourceTree = "<group>"; };
 		0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayioDecode.a; sourceTree = "<group>"; };
 		0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.a; sourceTree = "<group>"; };
+		0D50AAAC176A11C600873CF8 /* AQPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQPlayer.h; sourceTree = "<group>"; };
+		0D50AAAD176A11C600873CF8 /* AQPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQPlayer.mm; sourceTree = "<group>"; };
+		0D50AAAE176A11C600873CF8 /* AQRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecorder.h; sourceTree = "<group>"; };
+		0D50AAAF176A11C600873CF8 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
+		0D50AAB1176A11C600873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
+		0D50AAB2176A11C600873CF8 /* libisayscore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayscore.a; sourceTree = "<group>"; };
 		0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_Avatar@2x.png"; sourceTree = "<group>"; };
 		0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_S@2x.png"; sourceTree = "<group>"; };
 		0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause@2x.png"; sourceTree = "<group>"; };
@@ -477,6 +486,7 @@
 				0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */,
 				0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */,
 				0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */,
+				0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +697,26 @@
 			name = VoiceScore;
 			path = Classes/WaveDecode/VoiceScore;
 			sourceTree = SOURCE_ROOT;
+		};
+		0D50AAAB176A11C600873CF8 /* PlayRecord */ = {
+			isa = PBXGroup;
+			children = (
+				0D50AAAC176A11C600873CF8 /* AQPlayer.h */,
+				0D50AAAD176A11C600873CF8 /* AQPlayer.mm */,
+				0D50AAAE176A11C600873CF8 /* AQRecorder.h */,
+				0D50AAAF176A11C600873CF8 /* AQRecorder.mm */,
+			);
+			path = PlayRecord;
+			sourceTree = "<group>";
+		};
+		0D50AAB0176A11C600873CF8 /* VoiceScore */ = {
+			isa = PBXGroup;
+			children = (
+				0D50AAB1176A11C600873CF8 /* isaybiosscroe.h */,
+				0D50AAB2176A11C600873CF8 /* libisayscore.a */,
+			);
+			path = VoiceScore;
+			sourceTree = "<group>";
 		};
 		0D97C3DF175AB6080070E696 /* CoursesView */ = {
 			isa = PBXGroup;
@@ -1026,6 +1056,8 @@
 		0DC0D56A17509D8800684ED2 /* WaveDecode */ = {
 			isa = PBXGroup;
 			children = (
+				0D50AAAB176A11C600873CF8 /* PlayRecord */,
+				0D50AAB0176A11C600873CF8 /* VoiceScore */,
 				0D50AAA6176A05BD00873CF8 /* isaybioDecode.h */,
 				0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */,
 				0DC0D56D17509D8800684ED2 /* WaveFile.cpp */,
@@ -1338,6 +1370,8 @@
 				0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */,
 				0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */,
 				0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */,
+				0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */,
+				0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

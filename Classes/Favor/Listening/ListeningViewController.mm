@@ -22,6 +22,7 @@
 #import "Database.h"
 #import "ListeningCell.h"
 #import "RecordingWaveCell.h"
+#import "RecordingObject.h"
 
 #define LOADINGVIEWTAG      20933
 #define DOWNLOADINGVIEWTAG  20936

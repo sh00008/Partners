@@ -15,6 +15,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView* teatcherImageView;
 @property (nonatomic, retain) IBOutlet UILabel* sentenceSrc;
 @property (nonatomic, retain) IBOutlet UILabel* sentenceTrans;
+@property (nonatomic, retain) IBOutlet UILabel* scroeLabel;
 
 - (void)layoutCell;
 - (void)setMsgText:(NSString *)msgText withTrans:(NSString*)transText;

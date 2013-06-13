@@ -8,14 +8,20 @@
 
 #import "RecordingObject.h"
 #import "Word.h"
+#import "isaybiosscroe.h"
+
 //弹出信息
 #define ALERT(msg) [[[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show]
 
 @implementation RecordingObject
 
-- (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename
++ (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename toResult:(NSMutableDictionary*)scoreDictionary
 {
-    FILE* file = fopen([filename cStringUsingEncoding:NSUTF8StringEncoding], "rb");
+    // Score
+    ISAYB5WORD * pWord;
+    int nWord;
+    int score;
+   FILE* file = fopen([filename cStringUsingEncoding:NSUTF8StringEncoding], "rb");
     
     fseeko(file, 0, SEEK_END);
     long fileLength = ftell(file);
@@ -38,7 +44,7 @@
         nOffset += 2;
     }
     
-    NSLog([NSString stringWithFormat:@"%d, %d", n, nOffset]);
+    NSLog(@"%d, %d", n, nOffset);
     
     [isaybios ISAYB_Recognition:[sentence.orintext cStringUsingEncoding:NSUTF8StringEncoding]
                            From:&buffer[nOffset]
@@ -65,8 +71,9 @@
         tempString = [tempString stringByAppendingFormat:@"%f -> %f : %s\n", pWord[i].fTimeSt,pWord[i].fTimeEd, pWord[i].text];
     }
     
-    tempString = [tempString stringByAppendingFormat:@"Score: %d", score];
-    ALERT(tempString);
+    //tempString = [tempString stringByAppendingFormat:@"Score: %d", score];
+    //ALERT(tempString);
+    [scoreDictionary setObject:@(score) forKey:@"score"];
     return score;
 }
 
