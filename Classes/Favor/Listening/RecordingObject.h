@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "isaybiosscroe.h"
+#import "Sentence.h"
 
 @interface RecordingObject : NSObject
+{
+    // Score
+    ISAYB5WORD * pWord;
+    int nWord;
+    int score;
 
+}
 @end

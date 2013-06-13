@@ -15,7 +15,7 @@
 #import "UACellBackgroundView.h"
 #import "Globle.h"
 #import "SettingViewController.h"
-#import "isaybio.h"
+#import "isaybioDecode.h"
 #import "ConfigData.h"
 #import "VoiceDef.h"
 #import "GTMHTTPFetcher.h"
@@ -253,7 +253,7 @@
     loadingText.text = text;
     loadingText.font = [UIFont systemFontOfSize:14];
     loadingText.backgroundColor = [UIColor clearColor];
-    loadingText.textAlignment  = UITextAlignmentCenter;
+    loadingText.textAlignment  = NSTextAlignmentCenter;
     [loadingView addSubview:loadingText];
     [loadingText release];
     loadingView.center = self.view.center;
@@ -348,7 +348,7 @@
     
     char strisbfile[256];
     [self.isbfile getCString:strisbfile maxLength:256 encoding:NSUTF8StringEncoding];
-    [isaybio ISB_Isb:strisbfile toWav:strwavefile];
+    [isaybioDecode ISB_Isb:strisbfile toWav:strwavefile];
     [self removeLoadingView];
     [self initValue];
     [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -449,357 +449,10 @@
     // If you want a cell open on load, run this method:
     [self.collpaseLesson openCollapseClickCellAtIndex:0 animated:YES];
 }
-
-#pragma mark - Table view delegate
-
-- (int)getSentenceIndex:(NSTimeInterval)time
-{
-    Sentence* sentence = nil;
-    for (int i = 0; i < [_sentencesArray count]; i++) {
-        sentence = [_sentencesArray objectAtIndex:i];
-        if (time < [sentence endTime]) {
-           // NSLog(@"%d", i);
-            return i;
-        }
-    }
-    return 0;
-}
-
-#pragma Action
-- (IBAction)onOther:(id)sender;
-{
-    /*ListeningVolumView* volumView = (ListeningVolumView*)[self.view viewWithTag:(NSInteger)VOLUMNVIEW_TAG];
-    if (volumView != nil) {
-        return;
-    }
-    
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ListeningVolumView" owner:self options:NULL];
-    if ([array count] > 0) {
-        volumView = [array objectAtIndex:0];
-        volumView.frame = self.view.frame;
-        volumView.centerView.center = CGPointMake(self.view.center.x, self.view.center.y - 25);
-        volumView.viewDelegate = (id)self;
-        [volumView loadResource];
-        [volumView setVolumnDisplay:fVolumn];
-        volumView.tag = VOLUMNVIEW_TAG;
-        [self.view addSubview:volumView];
-    }*/
-}
-
-- (IBAction)onPrevious:(id)sender;
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    nCurrentReadingCount = 0;
-    ePlayStatus = PLAY_STATUS_PLAYING;
-    if (nPosition > 0) {
-        [self highlightCell:(nPosition-1)];
-        nLastScrollPos = nPosition-1;
-        nPosition = nPosition - 1;
-        Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-        player.currentTime = [sentence startTime];
-        [self updateUI];
-        [self playfromCurrentPos];
-    }
-}
-
-- (IBAction)onNext:(id)sender;
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    nCurrentReadingCount = 0;
-    ePlayStatus = PLAY_STATUS_PLAYING;
-    if (nPosition < [_sentencesArray count] - 1) {
-        ePlayStatus = PLAY_STATUS_PLAYING;
-        // scroll to cell
-        [self highlightCell:(nPosition+1)];
-        nPosition = nPosition + 1;
-        Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-        player.currentTime = [sentence startTime];
-        [self updateUI];
-        [self playfromCurrentPos];
-    }
-}
-
-- (void)scrollCell
-{
-    if (bAlReadyPaused) {
-        return;
-    }
-    int nCurrentIndex = [self getSentenceIndex:self.player.currentTime];
-    
-   if (nLesson == PLAY_SENTENCE) {
-        if (nCurrentIndex != nPosition) {
-            bAlReadyPaused = YES;
-            // NSLog(@"pause sentence");
-            [player pause];
-            Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-            inter = inter + inter * 0.1;
-            
-            [NSTimer scheduledTimerWithTimeInterval:inter target:self selector:@selector(continueReading) userInfo:nil repeats:NO];
-            
-            if (nCurrentReadingCount == settingData.nReadingCount) {
-                // scroll to cell
-                [self highlightCell:nCurrentIndex];
-                nPosition = nCurrentIndex;
-                nCurrentReadingCount = 0;
-                // NSLog(@"scroll to cell %d", nCurrentIndex);
-            } 
-            
-
-            // set the time Interval
-        } else if (nCurrentIndex == nPosition) {
-            [self highlightCell:nPosition];
-        }
-
-    } else {
-        if (nCurrentIndex != nPosition) {
-            // scroll to cell
-            
-            bAlReadyPaused = YES;
-            [self highlightCell:nCurrentIndex];
-            NSInteger nLast = nPosition;
-            nPosition = nCurrentIndex;
-            
-            // set the time Interval
-            [player pause];
-            if (nLast == ([_sentencesArray count] - 1) && !settingData.bLoop) {
-                ePlayStatus = PLAY_STATUS_NONE;
-                [player stop];
-                bAlReadyPaused = NO;
-                //self.listeningToolbar.playItem.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/play.png", resourcePath]];
-                [self updateUI];
-                
-            } else {
-                [NSTimer scheduledTimerWithTimeInterval:settingData.dTimeInterval target:self selector:@selector(continueReading) userInfo:nil repeats:NO];
-            }
-        } else if (nCurrentIndex == nPosition) {
-            // scroll to cell
-            [self highlightCell:nCurrentIndex];
-        }
-    }
-}
-
-- (IBAction)onStart:(id)sender;
-{
-    Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-    loopstarttime = [sentence startTime];
-    loopendtime = [sentence endTime];    
-    switch (ePlayStatus) {
-        case PLAY_STATUS_NONE:
-        {
-            [self highlightCell:nPosition];
-            player.currentTime = [sentence startTime];
-            ePlayStatus = PLAY_STATUS_PLAYING;
-            nCurrentReadingCount = 0;
-       }
-            break;
-        case PLAY_STATUS_PLAYING:
-        {
-            [self setStatusPause];
-        }
-            break;
-        case PLAY_STATUS_PAUSING:
-        {
-            ePlayStatus = PLAY_STATUS_PLAYING;
-        }
-            break;
-        default:
-            break;
-    }
-    [self updateUI];
-    [self playfromCurrentPos];
-}
-
-- (void)onRecording;
-{
-    /*Sentence* sentence = [self.sentencesArray objectAtIndex:nPosition];
-    RecordingViewController *detailViewController = [[RecordingViewController alloc] initWithNibName:@"RecordingViewController" bundle:nil];
-    detailViewController.recordingdelegate = (id)self;
-    detailViewController.sentence = sentence;
-    detailViewController.nPos = nPosition;
-    detailViewController.nTotalCount = [_sentencesArray count];
-    detailViewController.wavefile = wavefile;
-    detailViewController.resourcePath = resourcePath;
-    // ...
-    // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
-*/
-}
-
-- (IBAction)onSetting:(id)sender;
-{
-    SettingViewController* setting = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
-    
-    NSString* settingTitle = STRING_SETTING_TITLE;
-    setting.title = settingTitle;
-    [self.navigationController pushViewController:setting animated:YES];
-    [setting release];
-}
-
-- (IBAction)onGotoSentence:(id)sender;
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    nCurrentReadingCount = 0;
-    CGFloat v = self.progressBar.value - 1;
-    nPosition = (v - 1);
-    ePlayStatus = PLAY_STATUS_PLAYING;
-    nPosition = v;
-    Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-    loopstarttime = [sentence startTime];
-    loopendtime = [sentence endTime];    
-    player.currentTime = loopstarttime;
-    [self updateUI];
-    [self playfromCurrentPos];
-}
-
-- (IBAction)onChangingGotoSentence:(id)sender;
-{
-    NSInteger v = (NSInteger)self.progressBar.value;
-    nPosition = (v - 1);
-    if (ePlayStatus == PLAY_STATUS_PLAYING) {
-        [self setStatusPause];
-    }
-    [self highlightCell:nPosition];
-    [self updateUI];
-}
-
-#pragma mark - Update timer
-
-- (void)updateCurrentTime
-{
-    if (ePlayStatus != PLAY_STATUS_PLAYING) {
-        return;
-    }
-        
-    [self scrollCell];
-//    self.listeningToolbar.previousItem.enabled = (nPosition != 0);
-//    self.listeningToolbar.nextItem.enabled = ((nPosition + 1) != [_sentencesArray count]);
-}
-
-- (void)continueReading
-{
-    if (ePlayStatus == PLAY_STATUS_PLAYING) {
-        if (nLesson == PLAY_SENTENCE) {
-            if (nCurrentReadingCount != settingData.nReadingCount) {
-                nCurrentReadingCount++;
-                // NSLog(@"nCurrentReadingCount++");
-                Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-                player.currentTime = [sentence startTime];
-            }
-            // NSLog(@"reading Count %d", nCurrentReadingCount);
-        }
-        bAlReadyPaused = NO;
-        UInt32 doChangeDefaultRoute = 1;
-        AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
-                                 sizeof (doChangeDefaultRoute),
-                                 &doChangeDefaultRoute); 
-       [player play];            
-    
-        [self updateUI];
-    }
-}
-
-- (void)highlightCell:(NSInteger)nPos;
-{
-    /*
-    if (nLastScrollPos != nPos) {
-        NSIndexPath * lastpath = [NSIndexPath indexPathForRow:0  inSection:nLastScrollPos];
-        BubbleCell* cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:lastpath];
-        if (cell != nil && [cell isKindOfClass:[BubbleCell class]]) {
-            // interrupted somtimes.
-            [cell setIsHighlightText:NO];
-        }
-    }
-    
-    NSIndexPath * path = [NSIndexPath  indexPathForRow:0  inSection:nPos];
-    if (nLastScrollPos != nPos) {
-        [_sentencesTableView scrollToRowAtIndexPath:path
-                                   atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    }
-    BubbleCell* cell = (BubbleCell*)[self.sentencesTableView cellForRowAtIndexPath:path];
-    [cell setIsHighlightText:YES];
-    nLastScrollPos = nPos;*/
-}
-
-- (void)updateUI
-{
-    //self.listeningToolbar.previousItem.enabled = (nPosition != 0);
-   // self.listeningToolbar.nextItem.enabled = ((nPosition + 1) != [_sentencesArray count]);
-	progressBar.value = nPosition + 1;
-    self.senCount.text = [NSString stringWithFormat:@"%d / %d ", nPosition + 1, [self.sentencesArray count]];
-    if (nLesson == PLAY_LESSON && settingData.bLoop) {
-        self.player.numberOfLoops = -1;
-    } else {
-        self.player.numberOfLoops = 1;
-    }
-    
-    if (ePlayStatus == PLAY_STATUS_PLAYING) {
-      //  self.listeningToolbar.playItem.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/pause.png", resourcePath]];
-    } else {
-       // self.listeningToolbar.playItem.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/play.png", resourcePath]];
-    }
-   
-}
-
-- (void)updateViewForPlayer
-{
-    if (nLesson == PLAY_LESSON && settingData.bLoop) {
-        self.player.numberOfLoops = -1;
-    } else {
-        self.player.numberOfLoops = 1;
-    }
-    
-    if (ePlayStatus == PLAY_STATUS_PLAYING) {
-      //  self.listeningToolbar.playItem.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/pause.png", resourcePath]];
-    } else {
-     //   self.listeningToolbar.playItem.image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/play.png", resourcePath]];
-    }
-    
-       
-	if (updateTimer) 
-		[updateTimer invalidate];
-
-    updateTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(updateCurrentTime) userInfo:nil repeats:YES];
-    
-}
-- (void)setVolumn:(CGFloat)fV;
-{
-    fVolumn = fV;
-}
-
-- (void)finishedRemovePromptAnimation:(NSString*)animationID finished:(BOOL)finished context:(void *)context {
-    [UIView setAnimationDelegate:nil];
-   // ListeningVolumView* volumView = (ListeningVolumView*)[self.view viewWithTag:(NSInteger)VOLUMNVIEW_TAG];
-    //if (volumView != nil) {
-    //    [volumView removeFromSuperview];
-    //}
-}
-
 #pragma Notifications
 - (void)settingChanged:(NSNotification *)aNotification
 {
     [settingData loadSettingData];
-    if (settingData.bLoop && nLesson == PLAY_LESSON) {
-        self.player.numberOfLoops = -1;
-    } else {
-        self.player.numberOfLoops = 1;
-    }
-    
-    if (settingData.eReadingMode == 0) {
-        // 设置起始终止时间
-        loopstarttime = 0.0;
-        loopendtime = self.player.duration;
-        nLesson = PLAY_LESSON;
-   } else {
-       // 设置单句起始和终止时间
-       int nCurrentIndex = [self getSentenceIndex:self.player.currentTime];
-       Sentence* sentence = [_sentencesArray objectAtIndex:nCurrentIndex];
-       loopstarttime = [sentence startTime];
-       loopendtime = [sentence endTime];    
-       nLesson = PLAY_SENTENCE;
-    }
-    [self reloadTableView];
 }
 
 - (void)willEnterToBackground:(NSNotification *)aNotification
@@ -812,119 +465,8 @@
     }
 }
 
-#pragma Toolbar
-- (BOOL)isPlaying
-{
-    return (ePlayStatus == PLAY_STATUS_PLAYING);
-}
-
-- (BOOL)isLesson
-{
-    return (nLesson == PLAY_LESSON);
-}
-
 - (void)reloadTableView;
 {
-    [self highlightCell:nPosition];
-    [self.sentencesTableView reloadData];
-}
-
-- (Sentence*)getSentencefromPos:(NSInteger)pos;
-{
-    if (pos > -1 && pos < [_sentencesArray count]) {
-        Sentence* sentence = [_sentencesArray objectAtIndex:pos];
-        return sentence;
-    }
-
-    return nil;
-}
-
-- (void)playfromCurrentPos;
-{
-    if (ePlayStatus != PLAY_STATUS_PLAYING) {
-        return;
-    }
-    if (nLesson != PLAY_LESSON) {
-        nCurrentReadingCount++;
-    } 
-    [self highlightCell:nPosition];
-    [self updateUI];
-    Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-    NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
-    UInt32 doChangeDefaultRoute = 1;
-    AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
-                             sizeof (doChangeDefaultRoute),
-                             &doChangeDefaultRoute); 
-    [self.player play];
-    [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
-    //[NSTimer scheduledTimerWithTimeInterval:inter target:self selector:@selector(pauseintime) userInfo:nil repeats:NO];        
-}
-
-- (void)pauseintime;
-{
-    if (ePlayStatus != PLAY_STATUS_PLAYING) {
-        return;
-    }
-    
-    Sentence* sentence = [_sentencesArray objectAtIndex:nPosition];
-    NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-    if (nLesson == PLAY_LESSON) {
-        [self.player pause];
-        if (nPosition < ([_sentencesArray count] - 1)) {
-            nPosition++;
-            sentence = [_sentencesArray objectAtIndex:nPosition];
-            self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
-           
-            //[NSTimer scheduledTimerWithTimeInterval:(settingData.dTimeInterval) target:self selector:@selector(playfromCurrentPos) userInfo:nil repeats:NO];        
-        } else {
-            if (settingData.bLoop) {
-                nPosition = 0;
-                sentence = [_sentencesArray objectAtIndex:nPosition];
-                self.player.currentTime = [sentence startTime];
-                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
-            } else {
-                [self setStatusPause];
-                [self updateUI];
-                nPosition = 0;
-                sentence = [_sentencesArray objectAtIndex:nPosition];
-                self.player.currentTime = [sentence startTime];
-            }
-
-            //[NSTimer scheduledTimerWithTimeInterval:(settingData.dTimeInterval) target:self selector:@selector(playfromCurrentPos) userInfo:nil repeats:NO];        
-           
-        }
-    } else {
-        [self.player pause];
-        self.player.currentTime = [sentence startTime];
-        if (nCurrentReadingCount < settingData.nReadingCount) {
-          // [NSTimer scheduledTimerWithTimeInterval:inter target:self selector:@selector(playfromCurrentPos) userInfo:nil repeats:NO];        
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
-
-        } else {
-            nCurrentReadingCount = 0;
-            if (nPosition < ([_sentencesArray count] - 1)) {
-                nPosition++;
-                sentence = [_sentencesArray objectAtIndex:nPosition];
-                self.player.currentTime = [sentence startTime];
-                //[NSTimer scheduledTimerWithTimeInterval:inter target:self selector:@selector(playfromCurrentPos) userInfo:nil repeats:NO]; 
-                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
-
-            } else {
-                ePlayStatus = PLAY_STATUS_NONE;
-                [self updateUI];
-            }
-          
-        }
-    }
-}
-
-- (void)setStatusPause;
-{
-    [self highlightCell:nPosition];
-    ePlayStatus = PLAY_STATUS_PAUSING;
-    [player pause];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (BOOL)downloadLesson;
@@ -1255,21 +797,38 @@
 
 - (void)playing:(NSInteger)buttonTag withSentence:(id)sen
 {
-    Sentence* sentence = (Sentence*)sen;
     switch (buttonTag) {
         case PLAY_SRC_VOICE_BUTTON_TAG:
-            
+        {
+            Sentence* sentence = (Sentence*)sen;
+            NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
+            UInt32 doChangeDefaultRoute = 1;
+            AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
+                                     sizeof (doChangeDefaultRoute),
+                                     &doChangeDefaultRoute);
+            [self.player play];
+            [self performSelector:@selector(pausePlaying) withObject:self afterDelay:inter];
+        }
             break;
         case PLAY_USER_VOICE_BUTTON_TAG:
+        {
             
+        }
             break;
         case RECORDING_USER_VOICE_BUTTON_TAG:
+        {
             
+        }
             break;
 
         default:
             break;
     }
+}
+
+- (void)pausePlaying
+{
+    [self.player pause];
 }
 
 @end

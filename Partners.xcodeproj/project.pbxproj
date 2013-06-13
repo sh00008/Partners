@@ -41,6 +41,10 @@
 		0D1531D01740C65F00633FA0 /* ConfigData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CF1740C65F00633FA0 /* ConfigData.m */; };
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
 		0D425A77175DDAFA005566DB /* ZYFolders.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D425A76175DDAFA005566DB /* ZYFolders.m */; };
+		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
+		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
+		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
+		0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */; };
 		0D954035176230BE00A616D8 /* Btn_Pause_Avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */; };
 		0D954036176230BE00A616D8 /* Btn_Pause_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */; };
 		0D954037176230BE00A616D8 /* Btn_Pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */; };
@@ -176,10 +180,7 @@
 		0DC0D56717509D0100684ED2 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D55617509D0100684ED2 /* CADebugMacros.cpp */; };
 		0DC0D56817509D0100684ED2 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D55917509D0100684ED2 /* CAStreamBasicDescription.cpp */; };
 		0DC0D56917509D0100684ED2 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D55B17509D0100684ED2 /* CAXException.cpp */; };
-		0DC0D57317509D8800684ED2 /* libisaybio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC0D56C17509D8800684ED2 /* libisaybio.a */; };
 		0DC0D57417509D8800684ED2 /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D56D17509D8800684ED2 /* WaveFile.cpp */; };
-		0DC0D57517509D8800684ED2 /* libIsaybEncrypt.d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC0D57117509D8800684ED2 /* libIsaybEncrypt.d.a */; };
-		0DC0D57617509D8800684ED2 /* libIsaybEncrypt.s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC0D57217509D8800684ED2 /* libIsaybEncrypt.s.a */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -250,6 +251,13 @@
 		0D1531D31740C84F00633FA0 /* FavorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewController.m; path = Classes/Favor/FavorViewController.m; sourceTree = SOURCE_ROOT; };
 		0D425A75175DDAFA005566DB /* ZYFolders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYFolders.h; sourceTree = "<group>"; };
 		0D425A76175DDAFA005566DB /* ZYFolders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYFolders.m; sourceTree = "<group>"; };
+		0D50AA9F176A022E00873CF8 /* RecordingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingObject.h; sourceTree = "<group>"; };
+		0D50AAA0176A022E00873CF8 /* RecordingObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RecordingObject.mm; sourceTree = "<group>"; };
+		0D50AAA3176A036500873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
+		0D50AAA4176A036500873CF8 /* libisayscore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayscore.a; sourceTree = "<group>"; };
+		0D50AAA6176A05BD00873CF8 /* isaybioDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybioDecode.h; sourceTree = "<group>"; };
+		0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayioDecode.a; sourceTree = "<group>"; };
+		0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.a; sourceTree = "<group>"; };
 		0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_Avatar@2x.png"; sourceTree = "<group>"; };
 		0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_S@2x.png"; sourceTree = "<group>"; };
 		0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause@2x.png"; sourceTree = "<group>"; };
@@ -442,13 +450,9 @@
 		0DC0D55A17509D0100684ED2 /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
 		0DC0D55B17509D0100684ED2 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
 		0DC0D55C17509D0100684ED2 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
-		0DC0D56B17509D8800684ED2 /* isaybio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybio.h; sourceTree = "<group>"; };
-		0DC0D56C17509D8800684ED2 /* libisaybio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisaybio.a; sourceTree = "<group>"; };
 		0DC0D56D17509D8800684ED2 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaveFile.cpp; sourceTree = "<group>"; };
 		0DC0D56E17509D8800684ED2 /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveFile.h; sourceTree = "<group>"; };
 		0DC0D57017509D8800684ED2 /* IsaybEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsaybEncrypt.h; sourceTree = "<group>"; };
-		0DC0D57117509D8800684ED2 /* libIsaybEncrypt.d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.d.a; sourceTree = "<group>"; };
-		0DC0D57217509D8800684ED2 /* libIsaybEncrypt.s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.s.a; sourceTree = "<group>"; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -470,9 +474,9 @@
 				0D1531651740B20000633FA0 /* UIKit.framework in Frameworks */,
 				0D1531671740B20000633FA0 /* Foundation.framework in Frameworks */,
 				0D1531691740B20000633FA0 /* CoreGraphics.framework in Frameworks */,
-				0DC0D57317509D8800684ED2 /* libisaybio.a in Frameworks */,
-				0DC0D57517509D8800684ED2 /* libIsaybEncrypt.d.a in Frameworks */,
-				0DC0D57617509D8800684ED2 /* libIsaybEncrypt.s.a in Frameworks */,
+				0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */,
+				0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */,
+				0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +677,16 @@
 			);
 			path = OpenFolder;
 			sourceTree = "<group>";
+		};
+		0D50AAA2176A036500873CF8 /* VoiceScore */ = {
+			isa = PBXGroup;
+			children = (
+				0D50AAA3176A036500873CF8 /* isaybiosscroe.h */,
+				0D50AAA4176A036500873CF8 /* libisayscore.a */,
+			);
+			name = VoiceScore;
+			path = Classes/WaveDecode/VoiceScore;
+			sourceTree = SOURCE_ROOT;
 		};
 		0D97C3DF175AB6080070E696 /* CoursesView */ = {
 			isa = PBXGroup;
@@ -876,10 +890,13 @@
 		0DAA13E8175E296400E51620 /* Listening */ = {
 			isa = PBXGroup;
 			children = (
+				0D50AAA2176A036500873CF8 /* VoiceScore */,
 				0DDD881D176413E90078D6B7 /* Collapse */,
 				0DAA1410175F761900E51620 /* ListeningViewController.h */,
 				0DAA1411175F761900E51620 /* ListeningViewController.mm */,
 				0DAA1412175F761900E51620 /* ListeningViewController.xib */,
+				0D50AA9F176A022E00873CF8 /* RecordingObject.h */,
+				0D50AAA0176A022E00873CF8 /* RecordingObject.mm */,
 			);
 			name = Listening;
 			path = Classes/Favor/Listening;
@@ -1009,8 +1026,8 @@
 		0DC0D56A17509D8800684ED2 /* WaveDecode */ = {
 			isa = PBXGroup;
 			children = (
-				0DC0D56B17509D8800684ED2 /* isaybio.h */,
-				0DC0D56C17509D8800684ED2 /* libisaybio.a */,
+				0D50AAA6176A05BD00873CF8 /* isaybioDecode.h */,
+				0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */,
 				0DC0D56D17509D8800684ED2 /* WaveFile.cpp */,
 				0DC0D56E17509D8800684ED2 /* WaveFile.h */,
 			);
@@ -1021,9 +1038,8 @@
 		0DC0D56F17509D8800684ED2 /* XMLDecrypt */ = {
 			isa = PBXGroup;
 			children = (
+				0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */,
 				0DC0D57017509D8800684ED2 /* IsaybEncrypt.h */,
-				0DC0D57117509D8800684ED2 /* libIsaybEncrypt.d.a */,
-				0DC0D57217509D8800684ED2 /* libIsaybEncrypt.s.a */,
 			);
 			name = XMLDecrypt;
 			path = Classes/XMLDecrypt;
@@ -1321,6 +1337,7 @@
 				0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */,
 				0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */,
 				0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */,
+				0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,9 +1399,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = armv7;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_EMPTY_BODY = NO;
 				CLANG_WARN_ENUM_CONVERSION = NO;
@@ -1392,12 +1409,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG_;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1415,9 +1432,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = armv7;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_EMPTY_BODY = NO;
 				CLANG_WARN_ENUM_CONVERSION = NO;
@@ -1425,8 +1442,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_C_LANGUAGE_STANDARD = gnu89;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1451,6 +1468,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/WaveDecode\"",
 					"\"$(SRCROOT)/Classes/XMLDecrypt\"",
+					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1468,6 +1486,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/WaveDecode\"",
 					"\"$(SRCROOT)/Classes/XMLDecrypt\"",
+					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
