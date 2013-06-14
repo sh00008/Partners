@@ -13,3 +13,8 @@
 xcuserdata
 Data
 DerivedData
+
+*.xcuserstate
+
+*.xcbkptlist
+
