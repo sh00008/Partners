@@ -44,7 +44,7 @@
 
 - (IBAction)onPlaying:(id)sender;
 {
-    [delegate playing:self.playingButton.tag withSentence:self.sentence];
+    [delegate playing:self.playingButton.tag withSentence:self.sentence withCell:self];
 }
 
 @end

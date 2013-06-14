@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "WaveView.h"
 
+@class RecordingWaveCell;
 @protocol RecordingWaveCellDelegate <NSObject>
 
-- (void)playing:(NSInteger)buttonTag withSentence:(id)sen;
+- (void)playing:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell*)cell;
 
 @end
 

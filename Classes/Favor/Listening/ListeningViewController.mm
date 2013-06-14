@@ -770,8 +770,8 @@
     
     itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
     [cell.playingDownButton setImage:itemImage forState:UIControlStateNormal];
-    cell.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
     cell.playingDownButton.enabled = NO;
+    cell.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
 
     cell.delegate = (id)self;
     NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
@@ -796,7 +796,7 @@
     NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
-- (void)playing:(NSInteger)buttonTag withSentence:(id)sen
+- (void)playing:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell *)cell
 {
     switch (buttonTag) {
         case PLAY_SRC_VOICE_BUTTON_TAG:
@@ -818,7 +818,10 @@
             break;
         case RECORDING_USER_VOICE_BUTTON_TAG:
         {
-            
+            Sentence* sentence = (Sentence*)sen;
+            NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
+            [self performSelector:@selector(stopRecording) withObject:self afterDelay:inter];
+          
         }
             break;
 
@@ -832,4 +835,8 @@
     [self.player pause];
 }
 
+- (void)stopRecording
+{
+    
+}
 @end

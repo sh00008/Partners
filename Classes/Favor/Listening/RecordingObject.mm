@@ -7,11 +7,28 @@
 //
 
 #import "RecordingObject.h"
+#import <QuartzCore/QuartzCore.h>
 #import "Word.h"
 #import "isaybiosscroe.h"
-
+#import "VoiceDef.h"
 //弹出信息
 #define ALERT(msg) [[[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show]
+char *OSTypeToStr(char *buf, OSType t)
+{
+	char *p = buf;
+	char str[4] = {""}, *q = str;
+	*(UInt32 *)str = CFSwapInt32(t);
+	for (int i = 0; i < 4; ++i) {
+		if (isprint(*q) && *q != '\\')
+			*p++ = *q++;
+		else {
+			sprintf(p, "\\x%02x", *q++);
+			p += 4;
+		}
+	}
+	*p = '\0';
+	return buf;
+}
 
 @implementation RecordingObject
 
@@ -77,4 +94,53 @@
     return score;
 }
 
+- (void)start
+{
+    BOOL bOK = recorder->StartRecord(CFSTR("recordedFile.wav"));
+    
+    
+    [self setFileDescriptionForFormat:recorder->DataFormat() withName:@"Recorded File"];
+    if (!bOK) {
+        [self addFailedRecordingView];
+        recorder->StopRecord();
+        [NSTimer scheduledTimerWithTimeInterval: 3 target: self selector:@selector(removeFailedRecordingView) userInfo: nil repeats: NO];
+    }
+
+}
+-(void)setFileDescriptionForFormat: (CAStreamBasicDescription)format withName:(NSString*)name
+{
+	char buf[5];
+	const char *dataFormat = OSTypeToStr(buf, format.mFormatID);
+	NSString* description = [[NSString alloc] initWithFormat:@"(%d ch. %s @ %g Hz)", (unsigned int)(format.NumberChannels()), dataFormat, format.mSampleRate, nil];
+	//fileDescription.text = description;
+	[description release];
+}
+
+- (void)addFailedRecordingView:(UIView*)toView;
+{
+    UIView *loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+    loadingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    loadingView.layer.cornerRadius = 8;
+    loadingView.tag = FAILEDRECORDINGVIEW_TAG;
+    loadingView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    UILabel* loadingText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, loadingView.frame.size.width, 20)];
+    loadingText.textColor = [UIColor whiteColor];
+    loadingText.text = STRING_RECORDING_ERROR;
+    loadingText.font = [UIFont systemFontOfSize:14];
+    loadingText.backgroundColor = [UIColor clearColor];
+    loadingText.textAlignment  = NSTextAlignmentCenter;
+    loadingText.center = loadingView.center;
+    [loadingView addSubview:loadingText];
+    [loadingText release];
+    loadingView.center = toView.center;
+    [toView addSubview:loadingView];
+    [loadingView release];
+    
+}
+
+- (void)stop
+{
+  	recorder->StopRecord();
+  
+}
 @end
