@@ -77,7 +77,7 @@ typedef enum {
     NSInteger endSection;
     NSInteger didSection;
     BOOL ifOpen;
-    
+    NSInteger clickindex;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;

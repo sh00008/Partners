@@ -30,15 +30,8 @@
 @synthesize sentenceSrc;
 @synthesize sentenceTrans;
 @synthesize scroeLabel;
+@synthesize scoreImageView;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 - (void)layoutCell;
 {
@@ -83,6 +76,7 @@
     [self.teatcherImageView release];
     [self.teatcherIconView release];
     [self.scroeLabel release];
+    [self.scoreImageView release];
     [super dealloc];
 }
 @end

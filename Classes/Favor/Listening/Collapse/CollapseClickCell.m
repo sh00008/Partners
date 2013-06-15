@@ -29,7 +29,7 @@
     // Initialization Here
     [cell.TitleView addSubview:headerView];
     [cell bringSubviewToFront:headerView];
-    
+    headerView.tag = 101;
     cell.TitleView.frame = headerView.frame;
     cell.index = index;
     cell.TitleButton.tag = index;

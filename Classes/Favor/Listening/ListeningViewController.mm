@@ -25,6 +25,7 @@
 #import "RecordingObject.h"
 
 #define LOADINGVIEWTAG      20933
+#define WAITINGVIEWTAG      20934
 #define DOWNLOADINGVIEWTAG  20936
 #define FAILEDRECORDINGVIEW_TAG 45505
 #define PLAY_SRC_VOICE_BUTTON_TAG 50001
@@ -134,31 +135,14 @@
     [self.sentencesTableView setBackgroundColor:UIColor.clearColor];
     
     
-    /*UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:[UIImage imageNamed:@"Btn_Back."] forState:UIControlStateNormal];
-    [button setTitle:@"Delete" forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0f];
-    [button.layer setCornerRadius:4.0f];
-    [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:1.0f];
-    [button.layer setBorderColor: [[UIColor grayColor] CGColor]];
-    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
-    [button addTarget:self action:@selector(batchDelete) forControlEvents:UIControlEventTouchUpInside];*/
-
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithTitle:backString style:UIBarButtonItemStyleBordered target:nil action:nil];
     backItem.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = backItem;
     [backItem release];
     
     
-    
-    
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:[UIColor blackColor] forKey:UITextAttributeTextColor];
-    [dict setObject:[UIColor clearColor] forKey:UITextAttributeTextShadowColor];
-    [dict setObject:[UIFont fontWithName:@"Arial" size:16] forKey:UITextAttributeFont];
-    self.navigationController.navigationBar.titleTextAttributes = dict;
-    [dict release];
+    [self addWaitingView:WAITINGVIEWTAG withText:STRING_WAITING_TEXT withAnimation:YES];
+  
     
     UIImage* bkimage = [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/background_gray.png", resourcePath]] stretchableImageWithLeftCapWidth:24 topCapHeight:15];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
@@ -185,11 +169,15 @@
     self.progressBar.enabled = NO;
 //    [self.listeningToolbar enableToolbar:NO];
 
-    [self performSelector:@selector(initDownload) withObject:nil afterDelay:1.0];
+   [self performSelector:@selector(initDownload) withObject:nil afterDelay:1.0];
 }
 
 - (void)initDownload;
 {
+    UIView* loadingView = [self.view viewWithTag:WAITINGVIEWTAG];
+    if (loadingView != nil) {
+        [loadingView removeFromSuperview];
+    }
     if (![self downloadLesson]) {
         return;
     }
@@ -207,7 +195,14 @@
     self.teachersArray = lesson.teachers;
     self.wavefile = lesson.wavfile;
     self.isbfile = lesson.isbfile;
-    self.navigationItem.title = lesson.title;
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.text = lesson.title;
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:16];
+    self.navigationItem.titleView = titleLabel;
+    [titleLabel release];
+    //self.navigationItem.title = lesson.title;
     
     
     // 解压wave
@@ -768,7 +763,8 @@
         //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
     cell.backgroundColor = [UIColor whiteColor];
     itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
-    
+    cell.sentence = (id)sentence;
+   
     cell.playingUpButton.hidden = NO;
     cell.playingDownButton.hidden = NO;
     cell.playingButton.hidden = YES;
@@ -800,6 +796,9 @@
 
 
 -(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open {
+    if (open) {
+        clickindex = index;
+    }
     NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
@@ -826,10 +825,13 @@
             break;
         case RECORDING_USER_VOICE_BUTTON_TAG:
         {
+            [self cleanScoreImageView];
             Sentence* sentence = (Sentence*)sen;
             [_recording start];
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-            [self performSelector:@selector(stopRecording) withObject:self afterDelay:inter];
+            cell.playingUpButton.enabled = NO;
+            cell.playingDownButton.enabled = NO;
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+            [self performSelector:@selector(stopRecording:) withObject:cell afterDelay:inter];
           
         }
             break;
@@ -847,11 +849,43 @@
 - (void)stopRecording:(RecordingWaveCell *)cell
 {
     [_recording stop];
+    cell.playingUpButton.enabled = YES;
     NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
-    if (cell != nil) {
+    NSFileManager* mgr = [NSFileManager defaultManager];
+    if ([mgr fileExistsAtPath:recordFile]) {
+        cell.playingDownButton.enabled = YES;
+    }
+   if (cell != nil) {
         cell.waveView.wavefilename = recordFile;
         [cell.waveView loadwavedata];
         cell.timelabel.text = [NSString stringWithFormat:@"Time: %.2f", cell.waveView.dwavesecond];
     }
+    int score = [RecordingObject scoreForSentence:cell.sentence file:recordFile toResult:nil];
+    CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+    ListeningCell* header = (ListeningCell*)[wholeCell.TitleView viewWithTag:101];
+    if (header != nil) {
+        header.scoreImageView.layer.cornerRadius = 18;
+       if (score < 60) {
+            header.scoreImageView.image = [UIImage imageNamed:@"Icon_Bad@2x.png"];
+            header.scoreImageView.backgroundColor = [UIColor redColor];
+        } else {
+            header.scoreImageView.image = nil;
+            header.scoreImageView.backgroundColor = [UIColor greenColor];
+            header.scroeLabel.text = [NSString stringWithFormat:@"%d", score];
+           
+        }
+    }
+}
+
+- (void)cleanScoreImageView
+{
+    CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+    ListeningCell* header = (ListeningCell*)[wholeCell.TitleView viewWithTag:101];
+    if (header != nil) {
+        header.scoreImageView.layer.cornerRadius = 18;
+        header.scoreImageView.backgroundColor = [UIColor clearColor];
+        header.scoreImageView.image = nil;
+    }
+
 }
 @end

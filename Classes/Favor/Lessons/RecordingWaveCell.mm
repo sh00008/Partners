@@ -44,7 +44,8 @@
 
 - (IBAction)onPlaying:(id)sender;
 {
-    [delegate playing:self.playingButton.tag withSentence:self.sentence withCell:self];
+    UIButton* button = (UIButton*)sender;
+    [delegate playing:button.tag withSentence:self.sentence withCell:self];
 }
 
 @end
