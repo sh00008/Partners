@@ -12,8 +12,7 @@
 #import "SettingData.h"
 #import "CourseParser.h"
 #import "CollapseClick.h"
-
-
+@class RecordingObject;
 #define VOLUMNVIEW_TAG  50001
 
 enum {
@@ -55,6 +54,7 @@ typedef enum {
     NSString*                       _isbfile;
     NSString*                       resourcePath;
     AVAudioPlayer *                 player;
+    RecordingObject*                _recording;
     
     // 循环控制
     NSTimeInterval                  loopstarttime;   // 循环开始时间
@@ -101,6 +101,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet CollapseClick* collpaseLesson;
 
 - (void)initMembers;
+- (void)initDownload;
 - (void)initValue;
 - (void)parseWAVFile;
 - (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;

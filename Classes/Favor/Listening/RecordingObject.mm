@@ -140,7 +140,7 @@ char *OSTypeToStr(char *buf, OSType t)
 
 - (void)stop
 {
-  	recorder->StopRecord();
+  	//recorder->StopRecord();
   
 }
 

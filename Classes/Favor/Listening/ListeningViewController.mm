@@ -88,6 +88,8 @@
         bInit = NO;
         bParseWAV = NO;
         resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Image"]];
+        _recording = [[RecordingObject alloc] init];
+        [_recording setAddInView:self.view];
     }
     return self;
 }
@@ -183,15 +185,20 @@
     self.progressBar.enabled = NO;
 //    [self.listeningToolbar enableToolbar:NO];
 
+    [self performSelector:@selector(initDownload) withObject:nil afterDelay:1.0];
+}
+
+- (void)initDownload;
+{
     if (![self downloadLesson]) {
         return;
     }
-
+    
     if (_bDownloadedISB && _bDownloadedXAT) {
         [self displayLesson];
     }
-}
 
+}
 - (void)displayLesson;
 {
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
@@ -306,7 +313,7 @@
     if (!bInit) {
         bInit = YES;
         [self initMembers];
-    }
+     }
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -820,7 +827,8 @@
         case RECORDING_USER_VOICE_BUTTON_TAG:
         {
             Sentence* sentence = (Sentence*)sen;
-            NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
+            [_recording start];
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
             [self performSelector:@selector(stopRecording) withObject:self afterDelay:inter];
           
         }
@@ -836,8 +844,14 @@
     [self.player pause];
 }
 
-- (void)stopRecording
+- (void)stopRecording:(RecordingWaveCell *)cell
 {
-    
+    [_recording stop];
+    NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+    if (cell != nil) {
+        cell.waveView.wavefilename = recordFile;
+        [cell.waveView loadwavedata];
+        cell.timelabel.text = [NSString stringWithFormat:@"Time: %.2f", cell.waveView.dwavesecond];
+    }
 }
 @end
