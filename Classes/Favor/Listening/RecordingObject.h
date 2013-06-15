@@ -15,10 +15,12 @@
 @interface RecordingObject : NSObject
 {
     AQRecorder*				recorder;
+    UIView*     addInview;
 }
 
 - (void)start;
 - (void)stop;
+- (void)setAddInView:(UIView*)v;
 + (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename toResult:(NSMutableDictionary*)scoreDictionary;
 
 @end

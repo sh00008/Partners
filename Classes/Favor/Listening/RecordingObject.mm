@@ -101,12 +101,12 @@ char *OSTypeToStr(char *buf, OSType t)
     
     [self setFileDescriptionForFormat:recorder->DataFormat() withName:@"Recorded File"];
     if (!bOK) {
-        [self addFailedRecordingView];
+        [self addFailedRecordingView:addInview];
         recorder->StopRecord();
         [NSTimer scheduledTimerWithTimeInterval: 3 target: self selector:@selector(removeFailedRecordingView) userInfo: nil repeats: NO];
     }
-
 }
+
 -(void)setFileDescriptionForFormat: (CAStreamBasicDescription)format withName:(NSString*)name
 {
 	char buf[5];
@@ -142,5 +142,10 @@ char *OSTypeToStr(char *buf, OSType t)
 {
   	recorder->StopRecord();
   
+}
+
+- (void)setAddInView:(UIView*)v;
+{
+    addInview = v;
 }
 @end

@@ -802,8 +802,9 @@
         case PLAY_SRC_VOICE_BUTTON_TAG:
         {
             Sentence* sentence = (Sentence*)sen;
+            self.player.currentTime = [sentence startTime];
             NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
-            UInt32 doChangeDefaultRoute = 1;
+             UInt32 doChangeDefaultRoute = 1;
             AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
                                      sizeof (doChangeDefaultRoute),
                                      &doChangeDefaultRoute);
