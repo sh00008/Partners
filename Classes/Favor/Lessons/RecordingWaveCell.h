@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WaveView.h"
+#import "CERoundProgressView.h"
 
 @class RecordingWaveCell;
 @protocol RecordingWaveCellDelegate <NSObject>
@@ -26,6 +27,9 @@
 @property (nonatomic, retain) IBOutlet UIButton* playingButton;
 @property (nonatomic, retain) IBOutlet UIButton* playingUpButton;
 @property (nonatomic, retain) IBOutlet UIButton* playingDownButton;
+@property (retain, nonatomic) IBOutlet CERoundProgressView *progressView;
+@property (retain, nonatomic) IBOutlet CERoundProgressView *progressUpView;
+@property (retain, nonatomic) IBOutlet CERoundProgressView *progressDownView;
 @property (nonatomic, retain) IBOutlet WaveView* waveView;
 @property (nonatomic, retain) IBOutlet UILabel* timelabel;
 @property (nonatomic, assign) id < RecordingWaveCellDelegate> delegate;

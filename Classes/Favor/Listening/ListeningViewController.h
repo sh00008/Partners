@@ -12,6 +12,8 @@
 #import "SettingData.h"
 #import "CourseParser.h"
 #import "CollapseClick.h"
+#import "ButtonPlayObject.h"
+
 @class RecordingObject;
 #define VOLUMNVIEW_TAG  50001
 
@@ -78,6 +80,8 @@ typedef enum {
     NSInteger didSection;
     BOOL ifOpen;
     NSInteger clickindex;
+    ButtonPlayObject* _buttonPlay;
+    
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;

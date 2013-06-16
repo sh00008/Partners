@@ -149,6 +149,9 @@
 		0DAA142E1760F6EB00E51620 /* Btn_Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAA142B1760F6EB00E51620 /* Btn_Back@2x.png */; };
 		0DB3627B176CB081007FDB60 /* Avatar_Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DB36279176CB081007FDB60 /* Avatar_Default@2x.png */; };
 		0DB3627C176CB081007FDB60 /* Icon_Bad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DB3627A176CB081007FDB60 /* Icon_Bad@2x.png */; };
+		0DB36282176CBC67007FDB60 /* CERoundProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3627F176CBC67007FDB60 /* CERoundProgressLayer.m */; };
+		0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36281176CBC67007FDB60 /* CERoundProgressView.m */; };
+		0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */; };
 		0DC0D52717509BEB00684ED2 /* GTMGatherInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */; };
 		0DC0D52817509BEB00684ED2 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FF17509BEA00684ED2 /* GTMHTTPFetcher.m */; };
 		0DC0D52917509BEB00684ED2 /* GTMHTTPFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D50117509BEA00684ED2 /* GTMHTTPFetcherLogging.m */; };
@@ -394,6 +397,12 @@
 		0DAA142B1760F6EB00E51620 /* Btn_Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Back@2x.png"; sourceTree = "<group>"; };
 		0DB36279176CB081007FDB60 /* Avatar_Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Avatar_Default@2x.png"; sourceTree = "<group>"; };
 		0DB3627A176CB081007FDB60 /* Icon_Bad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_Bad@2x.png"; sourceTree = "<group>"; };
+		0DB3627E176CBC67007FDB60 /* CERoundProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CERoundProgressLayer.h; sourceTree = "<group>"; };
+		0DB3627F176CBC67007FDB60 /* CERoundProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CERoundProgressLayer.m; sourceTree = "<group>"; };
+		0DB36280176CBC67007FDB60 /* CERoundProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CERoundProgressView.h; sourceTree = "<group>"; };
+		0DB36281176CBC67007FDB60 /* CERoundProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CERoundProgressView.m; sourceTree = "<group>"; };
+		0DB36284176CC0A7007FDB60 /* ButtonPlayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonPlayObject.h; sourceTree = "<group>"; };
+		0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonPlayObject.m; sourceTree = "<group>"; };
 		0DC0D4FC17509BEA00684ED2 /* GTMGatherInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGatherInputStream.h; sourceTree = "<group>"; };
 		0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMGatherInputStream.m; sourceTree = "<group>"; };
 		0DC0D4FE17509BEA00684ED2 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
@@ -658,6 +667,7 @@
 		0D1531D11740C81A00633FA0 /* Favor */ = {
 			isa = PBXGroup;
 			children = (
+				0DB3627D176CBC66007FDB60 /* ProgressView */,
 				0DAA13E8175E296400E51620 /* Listening */,
 				0DAA13D2175E208C00E51620 /* Lessons */,
 				0D1531D21740C84F00633FA0 /* FavorViewController.h */,
@@ -933,9 +943,23 @@
 				0DAA1412175F761900E51620 /* ListeningViewController.xib */,
 				0D50AA9F176A022E00873CF8 /* RecordingObject.h */,
 				0D50AAA0176A022E00873CF8 /* RecordingObject.mm */,
+				0DB36284176CC0A7007FDB60 /* ButtonPlayObject.h */,
+				0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */,
 			);
 			name = Listening;
 			path = Classes/Favor/Listening;
+			sourceTree = SOURCE_ROOT;
+		};
+		0DB3627D176CBC66007FDB60 /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3627E176CBC67007FDB60 /* CERoundProgressLayer.h */,
+				0DB3627F176CBC67007FDB60 /* CERoundProgressLayer.m */,
+				0DB36280176CBC67007FDB60 /* CERoundProgressView.h */,
+				0DB36281176CBC67007FDB60 /* CERoundProgressView.m */,
+			);
+			name = ProgressView;
+			path = Classes/Favor/ProgressView;
 			sourceTree = SOURCE_ROOT;
 		};
 		0DC0D4FA17509BEA00684ED2 /* Store */ = {
@@ -1380,6 +1404,9 @@
 				0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */,
 				0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */,
 				0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */,
+				0DB36282176CBC67007FDB60 /* CERoundProgressLayer.m in Sources */,
+				0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */,
+				0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

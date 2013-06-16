@@ -23,6 +23,7 @@
 #import "ListeningCell.h"
 #import "RecordingWaveCell.h"
 #import "RecordingObject.h"
+#import "ButtonPlayObject.h"
 
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
@@ -815,12 +816,34 @@
                                      sizeof (doChangeDefaultRoute),
                                      &doChangeDefaultRoute);
             [self.player play];
+            if (_buttonPlay == nil) {
+               _buttonPlay = [[ButtonPlayObject alloc] init];
+
+            }
+            _buttonPlay.progressview = cell.progressView;
+            _buttonPlay.durTime = inter;
+            [_buttonPlay play];
             [self performSelector:@selector(pausePlaying) withObject:self afterDelay:inter];
         }
-            break;
+            cell.progressUpView.hidden = YES;
+            cell.progressDownView.hidden = YES;
+           break;
         case PLAY_USER_VOICE_BUTTON_TAG:
         {
+            Sentence* sentence = (Sentence*)sen;
+            [_recording start];
+             NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+          if (_buttonPlay == nil) {
+                _buttonPlay = [[ButtonPlayObject alloc] init];
+                
+            }
+            cell.progressDownView.hidden = NO;
+            _buttonPlay.progressview = cell.progressDownView;
+            _buttonPlay.durTime = inter;
+            [_buttonPlay play];
             
+            cell.progressUpView.hidden = YES;
+            cell.progressView.hidden = YES;
         }
             break;
         case RECORDING_USER_VOICE_BUTTON_TAG:
@@ -831,6 +854,16 @@
             cell.playingUpButton.enabled = NO;
             cell.playingDownButton.enabled = NO;
             NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+            if (_buttonPlay == nil) {
+                _buttonPlay = [[ButtonPlayObject alloc] init];
+                
+            }
+            cell.progressUpView.hidden = NO;
+            _buttonPlay.progressview = cell.progressUpView;
+            _buttonPlay.durTime = inter;
+            [_buttonPlay play];
+            cell.progressDownView.hidden = YES;
+            cell.progressView.hidden = YES;
             [self performSelector:@selector(stopRecording:) withObject:cell afterDelay:inter];
           
         }

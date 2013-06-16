@@ -16,6 +16,7 @@
 @synthesize delegate;
 @synthesize sentence;
 @synthesize playingUpButton, playingDownButton;
+@synthesize progressView, progressUpView, progressDownView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
