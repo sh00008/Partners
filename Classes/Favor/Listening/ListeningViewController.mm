@@ -810,6 +810,7 @@
         {
             Sentence* sentence = (Sentence*)sen;
             self.player.currentTime = [sentence startTime];
+            cell.playingButton.enabled = NO;
             NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
              UInt32 doChangeDefaultRoute = 1;
             AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
@@ -823,7 +824,7 @@
             _buttonPlay.progressview = cell.progressView;
             _buttonPlay.durTime = inter;
             [_buttonPlay play];
-            [self performSelector:@selector(pausePlaying) withObject:self afterDelay:inter];
+            [self performSelector:@selector(pausePlaying:) withObject:cell afterDelay:inter];
         }
             cell.progressUpView.hidden = YES;
             cell.progressDownView.hidden = YES;
@@ -844,6 +845,23 @@
             
             cell.progressUpView.hidden = YES;
             cell.progressView.hidden = YES;
+            
+            
+            NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+            NSFileManager* mgr = [NSFileManager defaultManager];
+            if ([mgr fileExistsAtPath:recordFile]) {
+                
+                NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:recordFile];
+                AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
+                [fileURL release];
+                self.player = newPlayer;
+                [player prepareToPlay];
+                [player setDelegate:(id<AVAudioPlayerDelegate>)self];
+                [newPlayer release];
+                self.player.currentTime = timeStart;
+                self.player.volume = 5.0;
+            }
+            
         }
             break;
         case RECORDING_USER_VOICE_BUTTON_TAG:
@@ -874,9 +892,11 @@
     }
 }
 
-- (void)pausePlaying
+- (void)pausePlaying:(RecordingWaveCell *)cell
 {
     [self.player pause];
+    cell.playingButton.enabled = YES;
+    
 }
 
 - (void)stopRecording:(RecordingWaveCell *)cell
@@ -921,4 +941,25 @@
     }
 
 }
+
+- (IBAction)readwholelesson:(id)sender;
+{
+    if (self.player != nil) {
+        [self.player stop];
+        self.player = nil;
+    }
+    
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
+    [fileURL release];
+    
+    self.player = newPlayer;
+    [player prepareToPlay];
+    [player setDelegate:(id<AVAudioPlayerDelegate>)self];
+    [newPlayer release];
+    self.player.currentTime = 0;
+    self.player.volume = 5.0;
+    [self.player play];
+}
+
 @end

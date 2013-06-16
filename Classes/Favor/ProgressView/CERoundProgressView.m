@@ -45,7 +45,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.opaque = NO;
     //self.tintColor = [UIColor colorWithRed:59.0/255.0 green:201.0/255.0 blue:41.0/255.0 alpha:1.0];
-    self.tintColor = [UIColor blueColor];
+    self.tintColor = [UIColor greenColor];
 
     self.trackColor =[UIColor clearColor];;
     self.startAngle = (3.0*M_PI)/2.0;
