@@ -163,6 +163,12 @@
             
             // Reposition all CollapseClickCells below Cell
             [self repositionCollapseClickCellsBelowIndex:index withOffset:cell.ContentView.frame.size.height + kCCPad];
+            
+            // Call delegate method
+            if ([(id)CollapseClickDelegate respondsToSelector:@selector(didClickCollapseClickCellAtIndex:isNowOpen:)]) {
+                [CollapseClickDelegate didClickCollapseClickCellAtIndex:index isNowOpen:YES];
+            }
+
         }];
     }
 }

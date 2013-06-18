@@ -32,6 +32,10 @@
 #define PLAY_SRC_VOICE_BUTTON_TAG 50001
 #define PLAY_USER_VOICE_BUTTON_TAG 50002
 #define RECORDING_USER_VOICE_BUTTON_TAG 50003
+
+#define RECORDING_WAVE_CELL_TAG 20001
+#define PLAYINGSRC_WAVE_CELL_TAG 20002
+
 #define FONT_SIZE_OF_SRC    22
 #define FONT_SIZE_OF_TRANS    14
 
@@ -739,6 +743,7 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
     
     RecordingWaveCell *cellPlay = [array objectAtIndex:0];
+    cellPlay.tag = PLAYINGSRC_WAVE_CELL_TAG;
     UIImage* itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
     
     [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
@@ -758,6 +763,7 @@
         
     array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
     RecordingWaveCell *cell = [array objectAtIndex:0];
+    cell.tag = RECORDING_WAVE_CELL_TAG;
     cell.frame = CGRectMake(0, cellPlay.frame.size.height, cellPlay.frame.size.width, cellPlay.frame.size.height);
     cell.waveView.layer.borderWidth = 1;
     cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -799,8 +805,48 @@
 -(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open {
     if (open) {
         clickindex = index;
-    }
+        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+        
+        UIView* contentView = [wholeCell.ContentView viewWithTag:102];
+        CGFloat animationTime = 0.1;
+        if (contentView != nil) {
+            RecordingWaveCell* playingSrcCell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
+            if (playingSrcCell != nil) {
+                UIView* playingbutton =[playingSrcCell viewWithTag:PLAY_SRC_VOICE_BUTTON_TAG];
+                if (playingbutton != nil) {
+                    [self performSelector:@selector(playAnimationWithView:) withObject:playingbutton afterDelay:animationTime];
+                }
+            }
+            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
+            if (recoringCell != nil) {
+                UIView* recoringbutton =recoringCell.playingUpButton;
+                if (recoringbutton != nil) {
+                    [self performSelector:@selector(playAnimationWithView:) withObject:recoringbutton afterDelay:animationTime];
+                }
+                
+                UIView* playingbutton = recoringCell.playingDownButton;
+                if (playingbutton != nil) {
+                    //[self playAnimationWithView:playingbutton];
+                    [self performSelector:@selector(playAnimationWithView:) withObject:playingbutton afterDelay:animationTime];
+               }
+            }
+            
+        }
+   }
+    
+
     NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
+}
+
+- (void)playAnimationWithView:(UIView*)viewWillAnimation
+{
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    theAnimation.duration = 0.3;
+    theAnimation.autoreverses = NO;
+    theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
+    theAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    [viewWillAnimation.layer addAnimation:theAnimation forKey:nil];
 }
 
 - (void)playing:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell *)cell

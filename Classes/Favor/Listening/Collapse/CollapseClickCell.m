@@ -35,6 +35,7 @@
     cell.TitleButton.tag = index;
     cell.TitleButton.frame = headerView.frame;
     cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.TitleView.frame.origin.y + cell.TitleView.frame.size.height, cell.ContentView.frame.size.width, content.frame.size.height);
+    content.tag = 102;
     [cell.ContentView addSubview:content];
     [cell bringSubviewToFront:cell.TitleButton];
    

@@ -120,4 +120,5 @@ typedef enum {
 - (void)displayLesson;
 - (void)openCell:(id)sender;
 - (IBAction)readwholelesson:(id)sender;
+- (void)playAnimationWithView:(UIView*)viewWillAnimation;
 @end
