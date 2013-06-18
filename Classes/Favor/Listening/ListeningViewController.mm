@@ -854,6 +854,14 @@
     switch (buttonTag) {
         case PLAY_SRC_VOICE_BUTTON_TAG:
         {
+            NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
+            AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
+            [fileURL release];
+            
+            self.player = newPlayer;
+            [player prepareToPlay];
+            [player setDelegate:(id<AVAudioPlayerDelegate>)self];
+            [newPlayer release];
             Sentence* sentence = (Sentence*)sen;
             self.player.currentTime = [sentence startTime];
             cell.playingButton.enabled = NO;
