@@ -14,7 +14,7 @@
 @synthesize startAngle;
 @synthesize tintColor;
 @synthesize trackColor;
-
+@synthesize ringWidth;
 - (id) initWithLayer:(id)layer
 {
     self = [super initWithLayer:layer];
@@ -29,6 +29,7 @@
             self.startAngle = otherLayer.startAngle;
             self.tintColor = otherLayer.tintColor;
             self.trackColor = otherLayer.trackColor;
+            self.ringWidth = 10.0;
         }
     }
     
@@ -53,6 +54,7 @@
 
 - (void) drawInContext:(CGContextRef)context
 {
+    CGContextSaveGState(context);
     CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height)/2.0;
     CGPoint center = {self.bounds.size.width/2.0, self.bounds.size.height/2.0};
     
@@ -68,8 +70,12 @@
     CGContextAddLineToPoint(context, center.x, center.y);
     CGContextClosePath(context);
     
+    CGContextAddArc(context, center.x, center.y, radius - self.ringWidth, startAngle, startAngle + progress*2.0*M_PI, 0);
+    CGContextAddLineToPoint(context, center.x, center.y);
+    CGContextClosePath(context);
     CGContextSetFillColorWithColor(context, tintColor.CGColor);
-    CGContextFillPath(context);
+    CGContextEOFillPath(context);
+    CGContextRestoreGState(context);
 }
 
 @end

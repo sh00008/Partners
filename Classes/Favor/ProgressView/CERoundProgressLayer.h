@@ -15,5 +15,5 @@
 @property (nonatomic, assign) float startAngle;
 @property (nonatomic, retain) UIColor *tintColor;
 @property (nonatomic, retain) UIColor *trackColor;
-
+@property (nonatomic, assign) float ringWidth;
 @end
