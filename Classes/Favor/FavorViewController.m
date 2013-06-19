@@ -127,7 +127,11 @@
         }
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    // Configure the cell...
+    UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
+    newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
+    [cell addSubview:newCourse];
+    [newCourse release];
+      // Configure the cell...
     return cell;
 }
 

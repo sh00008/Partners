@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0D039AE91771DA440006EA85 /* DMCustomModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D039AE81771DA440006EA85 /* DMCustomModalViewController.m */; };
+		0D039AEC1771EDB10006EA85 /* Icon_New_L@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D039AEA1771EDB10006EA85 /* Icon_New_L@2x.png */; };
+		0D039AED1771EDB10006EA85 /* Icon_New_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D039AEB1771EDB10006EA85 /* Icon_New_S@2x.png */; };
 		0D1531651740B20000633FA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531641740B20000633FA0 /* UIKit.framework */; };
 		0D1531671740B20000633FA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531661740B20000633FA0 /* Foundation.framework */; };
 		0D1531691740B20000633FA0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531681740B20000633FA0 /* CoreGraphics.framework */; };
@@ -208,6 +210,8 @@
 /* Begin PBXFileReference section */
 		0D039AE71771DA440006EA85 /* DMCustomModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCustomModalViewController.h; sourceTree = "<group>"; };
 		0D039AE81771DA440006EA85 /* DMCustomModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCustomModalViewController.m; sourceTree = "<group>"; };
+		0D039AEA1771EDB10006EA85 /* Icon_New_L@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_New_L@2x.png"; sourceTree = "<group>"; };
+		0D039AEB1771EDB10006EA85 /* Icon_New_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_New_S@2x.png"; sourceTree = "<group>"; };
 		0D1531611740B20000633FA0 /* Partners.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partners.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1531641740B20000633FA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D1531661740B20000633FA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -846,6 +850,8 @@
 		0DA1492E175116A5004EBCFF /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				0D039AEA1771EDB10006EA85 /* Icon_New_L@2x.png */,
+				0D039AEB1771EDB10006EA85 /* Icon_New_S@2x.png */,
 				0DB36279176CB081007FDB60 /* Avatar_Default@2x.png */,
 				0DB3627A176CB081007FDB60 /* Icon_Bad@2x.png */,
 				0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */,
@@ -1294,6 +1300,8 @@
 				0DDD8828176413E90078D6B7 /* CollapseClickCell.xib in Resources */,
 				0DB3627B176CB081007FDB60 /* Avatar_Default@2x.png in Resources */,
 				0DB3627C176CB081007FDB60 /* Icon_Bad@2x.png in Resources */,
+				0D039AEC1771EDB10006EA85 /* Icon_New_L@2x.png in Resources */,
+				0D039AED1771EDB10006EA85 /* Icon_New_S@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

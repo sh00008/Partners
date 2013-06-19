@@ -278,8 +278,8 @@
         NSInteger nPostion = nSelectedPage*nPageCount + indexPath.row;
         if (nPostion < ([_courseParser.course.lessons count])) {
             LessonCell *cell = (LessonCell*)[self tableView: tableView cellForRowAtIndexPath: indexPath];
-            CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE - MAGIN_OF_RIGHT];
-            return size.height + 44;
+            CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE];
+            return size.height + 22;
             
         } else {
             return 44;
@@ -287,8 +287,8 @@
 
     } else {
         LessonCell *cell = (LessonCell*)[self tableView: tableView cellForRowAtIndexPath: indexPath];
-        CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE - MAGIN_OF_RIGHT];
-        return size.height + 44;        
+        CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE ];
+        return size.height + 22;
     }
 }
 

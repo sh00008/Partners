@@ -96,7 +96,7 @@ static const CGFloat kDeep = 0.80;
         CGRect oFrame = CGRectMake(0, 0, primaryView.frame.size.width,
                                    primaryView.frame.size.height);
         _overlayView = [[UIView alloc]initWithFrame:oFrame];
-        [self.overlayView setBackgroundColor:[UIColor whiteColor]];
+        [self.overlayView setBackgroundColor:[UIColor blackColor]];
         [self.overlayView setAlpha:0.0];
         [self.overlayView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|
          UIViewAutoresizingFlexibleWidth];
@@ -125,7 +125,7 @@ static const CGFloat kDeep = 0.80;
         frame.origin.y -= self.parentViewYPath;
         [primaryView setFrame:frame];
     };
-    primaryView.window.backgroundColor = [UIColor blackColor];
+    primaryView.window.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     [UIView animateWithDuration:_animationSpeed
                      animations:modifyAngle
                      completion:^(BOOL finished) {
