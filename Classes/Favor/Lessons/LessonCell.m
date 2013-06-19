@@ -42,6 +42,7 @@
             UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:self.bounds];
             self.backgroundView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height - 1);
             b.position = UACellBackgroundViewPositionMiddle;
+        //b.bDark = flag;
             self.backgroundView = b;
             [b release];
         //}
@@ -111,13 +112,13 @@
         labelLessonIndex.textAlignment = UITextAlignmentCenter;
         [self.board addSubview:labelLessonIndex];
         [labelLessonIndex release];
-        CGFloat playIconWidth = 24;
+        /*CGFloat playIconWidth = 24;
         UIImageView* playIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width - MAGIN_OF_RIGHT, (self.frame.size.height - playIconWidth) / 2, playIconWidth, playIconWidth)];
         path = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@/Cells/play.png", [[NSBundle mainBundle] resourcePath], @"Image"]];
         playIcon.image = [UIImage imageWithContentsOfFile:path];
         [self.contentView addSubview:playIcon];
         [playIcon release];
-        [path release];
+        [path release];*/
    }
     if (self.lessonLabel == nil) {
            CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE - MAGIN_OF_RIGHT];
@@ -134,7 +135,7 @@
     }
     
     if (self.ratingView == nil) {
-        RatingView* rating = [[RatingView alloc] initWithFrame:CGRectMake(self.lessonLabel.frame.origin.x, self.frame.size.height - 16 - 5, 70, 16)];
+       /* RatingView* rating = [[RatingView alloc] initWithFrame:CGRectMake(self.lessonLabel.frame.origin.x, self.frame.size.height - 16 - 5, 70, 16)];
         rating.rating = fRating;
         [self.contentView addSubview:rating];
         self.ratingView = rating;

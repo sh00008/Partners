@@ -19,8 +19,7 @@
 
 @implementation FavorViewController
 @synthesize tableView;
-@synthesize folders ;
-
+@synthesize modal;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,7 +47,7 @@
     [self loadPkgArray];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
-}
+ }
 
 - (void)didReceiveMemoryWarning
 {
@@ -238,79 +237,36 @@
 
 - (void)openSences:(id)sender
 {
-    self.folders = [[ZYFolders alloc] init];
-    [self.folders release];
-    self.folders.containerView = self.view;
+    
     FavorCourseButton* button = (FavorCourseButton*)sender;
-    UIView* buttonSuperView = button.superview;
-    CGRect buttonFrame = [buttonSuperView convertRect:button.frame toView:self.view];
-    
-    /*if(tag/4==0){
-        folders.positon = CGPointMake(button.frame.origin.x+32, button.frame.origin.y + 64);
-        folders.direction = ZYFoldersDirectionUp;
-    }else{
-        folders.positon = CGPointMake(button.frame.origin.x+32, button.frame.origin.y);
-        folders.direction = ZYFoldersDirectionDown;
-    }
-    */
-    self.folders.positon = CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), 0);//CGPointMake((buttonFrame.origin.x + buttonFrame.size.width/2), buttonFrame.origin.y + buttonFrame.size.height);
-    self.folders.direction = ZYFoldersDirectionUp;
-    CGRect popView = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.folders.positon.y - 50);
- 
-    
-    LessonsViewController* lesson = [[LessonsViewController alloc] initWithNibName:@"LessonsViewController" bundle:nil];
-    lesson.dataPath = button.pkgPath;
-    lesson.scenesName = button.pkgTitle;
+    LessonsViewController* lessons = [[LessonsViewController alloc] initWithNibName:@"LessonsViewController" bundle:nil];
+    lessons.dataPath = button.pkgPath;
+    lessons.scenesName = button.pkgTitle;
     NSLog(@"%@", button.pkgPath);
     NSLog(@"%@", button.pkgTitle);
-    lesson.view.frame = popView;
-    lesson.scenesName = button.pkgTitle;
+    lessons.scenesName = button.pkgTitle;
     NSRange range = [button.pkgPath rangeOfString:@"/" options:NSBackwardsSearch];
     if (range.location != NSNotFound) {
         
   		NSInteger nSubFromIndex = range.location + range.length;
 		if (nSubFromIndex < button.pkgPath.length) {
-			lesson.pkgName = [button.pkgPath substringFromIndex:nSubFromIndex];
+			lessons.pkgName = [button.pkgPath substringFromIndex:nSubFromIndex];
 		}
     }
-
- //   lesson.navigationItem.title = scenes;
-//    [scenes release];
- //   [self.navigationController pushViewController:lesson animated:YES];
-
-    
-    self.folders.contentView = lesson.view;
-//    [lesson release];
-    
-    [self.folders open];
-
-    /*VoicePkgShelfCell* cover = (VoicePkgShelfCell*)sender;
-    ScenesCoverViewController * scenes = [[ScenesCoverViewController alloc] init];
-    NSInteger index = cover.index;
-    if (index < [_pkgArray count]) {
-        VoiceDataPkgObject* pkg = [_pkgArray objectAtIndex:index];
-        scenes.dataPath = pkg.dataPath;
-        scenes.dataTitle = pkg.dataTitle;
-        [self.delegate openVoiceData:scenes];
-        
-    }
-    */
-    
-    /*CourseViewController* course = [[CourseViewController alloc] init];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:course];
-    
-    UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
-    [UIView beginAnimations: nil context: nil];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
-    [self presentModalViewController:nav animated:NO];
-    [UIView commitAnimations];
-    
-    //CATransition *
-    [course release];
-    [nav release];*/
-
-}
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:lessons];
+    navController.navigationBar.hidden = YES;
+    DMCustomModalViewController* modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
+                                                       parentViewController:self];
+    self.modal = modal;
+    [self.modal setRootViewControllerHeight:self.view.bounds.size.height * 0.8];
+    [self.modal setParentViewYPath:self.view.bounds.size.height * 0.2];
+  
+    [self.modal setDelegate:self];
+    [self.modal presentRootViewControllerWithPresentationStyle:DMCustomModalViewControllerPresentPartScreen
+                                          controllercompletion:^{
+                                              
+                                          }];
+ }
 
 - (void)reloadPkgTable;
 {

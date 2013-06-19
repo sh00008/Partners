@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D039AE91771DA440006EA85 /* DMCustomModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D039AE81771DA440006EA85 /* DMCustomModalViewController.m */; };
 		0D1531651740B20000633FA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531641740B20000633FA0 /* UIKit.framework */; };
 		0D1531671740B20000633FA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531661740B20000633FA0 /* Foundation.framework */; };
 		0D1531691740B20000633FA0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1531681740B20000633FA0 /* CoreGraphics.framework */; };
@@ -40,7 +41,6 @@
 		0D1531CC1740C5D900633FA0 /* Globle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CB1740C5D900633FA0 /* Globle.m */; };
 		0D1531D01740C65F00633FA0 /* ConfigData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CF1740C65F00633FA0 /* ConfigData.m */; };
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
-		0D425A77175DDAFA005566DB /* ZYFolders.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D425A76175DDAFA005566DB /* ZYFolders.m */; };
 		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
@@ -206,6 +206,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D039AE71771DA440006EA85 /* DMCustomModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCustomModalViewController.h; sourceTree = "<group>"; };
+		0D039AE81771DA440006EA85 /* DMCustomModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCustomModalViewController.m; sourceTree = "<group>"; };
 		0D1531611740B20000633FA0 /* Partners.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partners.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1531641740B20000633FA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D1531661740B20000633FA0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -257,8 +259,6 @@
 		0D1531CF1740C65F00633FA0 /* ConfigData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigData.m; sourceTree = "<group>"; };
 		0D1531D21740C84F00633FA0 /* FavorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorViewController.h; path = Classes/Favor/FavorViewController.h; sourceTree = SOURCE_ROOT; };
 		0D1531D31740C84F00633FA0 /* FavorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewController.m; path = Classes/Favor/FavorViewController.m; sourceTree = SOURCE_ROOT; };
-		0D425A75175DDAFA005566DB /* ZYFolders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYFolders.h; sourceTree = "<group>"; };
-		0D425A76175DDAFA005566DB /* ZYFolders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYFolders.m; sourceTree = "<group>"; };
 		0D50AA9F176A022E00873CF8 /* RecordingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingObject.h; sourceTree = "<group>"; };
 		0D50AAA0176A022E00873CF8 /* RecordingObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RecordingObject.mm; sourceTree = "<group>"; };
 		0D50AAA3176A036500873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
@@ -516,6 +516,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D039AE61771DA440006EA85 /* DMCustomModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0D039AE71771DA440006EA85 /* DMCustomModalViewController.h */,
+				0D039AE81771DA440006EA85 /* DMCustomModalViewController.m */,
+			);
+			path = DMCustomModalViewController;
+			sourceTree = "<group>";
+		};
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
@@ -691,15 +700,6 @@
 				0D1531A31740B52D00633FA0 /* Personal */,
 			);
 			name = Main;
-			sourceTree = "<group>";
-		};
-		0D425A74175DDAFA005566DB /* OpenFolder */ = {
-			isa = PBXGroup;
-			children = (
-				0D425A75175DDAFA005566DB /* ZYFolders.h */,
-				0D425A76175DDAFA005566DB /* ZYFolders.m */,
-			);
-			path = OpenFolder;
 			sourceTree = "<group>";
 		};
 		0D50AAA2176A036500873CF8 /* VoiceScore */ = {
@@ -1021,7 +1021,7 @@
 		0DC0D52217509BEA00684ED2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				0D425A74175DDAFA005566DB /* OpenFolder */,
+				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
 				0DA148301750FAE4004EBCFF /* MGBox */,
 				0DC0D52317509BEA00684ED2 /* Database.h */,
 				0DC0D52417509BEA00684ED2 /* Database.m */,
@@ -1389,7 +1389,6 @@
 				0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */,
 				0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */,
 				0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */,
-				0D425A77175DDAFA005566DB /* ZYFolders.m in Sources */,
 				0DAA13D6175E208C00E51620 /* LessonsViewController.m in Sources */,
 				0DAA13DE175E223A00E51620 /* LessonCell.m in Sources */,
 				0DAA13E0175E223A00E51620 /* UACellBackgroundView.m in Sources */,
@@ -1407,6 +1406,7 @@
 				0DB36282176CBC67007FDB60 /* CERoundProgressLayer.m in Sources */,
 				0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */,
 				0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */,
+				0D039AE91771DA440006EA85 /* DMCustomModalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

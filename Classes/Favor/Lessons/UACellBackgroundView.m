@@ -18,6 +18,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
 
 @synthesize position;
 @synthesize fromRed,fromGreen,fromBlue,toRed,toGreen,toBlue;
+@synthesize bDark;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -25,9 +26,9 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
         fromRed = 1.0;
         fromGreen = 1.0;
         fromBlue = 1.0;
-        toRed = 0.866;
-        toGreen = 0.866;
-        toBlue = 0.866;
+        toRed = 0.966;
+        toGreen = 0.966;
+        toBlue = 0.966;
     }
     return self;
 }
@@ -43,7 +44,21 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     
     int lineWidth = 1;
     
-    CGRect rect = [self bounds];	
+    CGRect rect = [self bounds];
+    if (bDark) {
+        CGContextSetFillColorWithColor(c, [[UIColor colorWithRed:toRed green:toGreen blue:toBlue alpha:1.0] CGColor]);
+
+    } else {
+        CGContextSetFillColorWithColor(c, [[UIColor whiteColor] CGColor]);
+    }
+    
+    CGContextFillRect(c, rect);
+    CGContextSetStrokeColorWithColor(c, [[UIColor colorWithRed:66.0/255.0 green:168.0/255.0 blue:250.0/255.0 alpha:0.5] CGColor]);
+    CGContextSetLineWidth(c, 1);
+    CGContextMoveToPoint(c, 0, rect.size.height);
+    CGContextAddLineToPoint(c, rect.size.width, rect.size.height);
+    CGContextStrokePath(c);
+    return;
     CGFloat minx = CGRectGetMinX(rect), midx = CGRectGetMidX(rect), maxx = CGRectGetMaxX(rect);
     CGFloat miny = CGRectGetMinY(rect), midy = CGRectGetMidY(rect), maxy = CGRectGetMaxY(rect);
     miny -= 1;

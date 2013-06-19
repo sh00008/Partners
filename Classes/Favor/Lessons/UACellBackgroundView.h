@@ -33,6 +33,6 @@ typedef enum  {
 @property(nonatomic) CGFloat toRed;
 @property(nonatomic) CGFloat toGreen;
 @property(nonatomic) CGFloat toBlue;
-
+@property(nonatomic) BOOL bDark;
 
 @end

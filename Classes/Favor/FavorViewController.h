@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VoicePkgInfoObject.h"
-#import "ZYFolders.h"
-
+#import "DMCustomModalViewController.h"
 @interface FavorViewController : UIViewController
 {
     VoiceDataPkgObject* _deleteObject;
@@ -17,7 +16,7 @@
     BOOL _bEdit;
 
 }
+@property (nonatomic, retain) DMCustomModalViewController *modal;
 @property (nonatomic, retain) IBOutlet UITableView* tableView;
-@property(nonatomic, retain) ZYFolders *folders;
 - (void)loadPkgArray;
 @end

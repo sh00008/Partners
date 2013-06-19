@@ -13,6 +13,7 @@
 #import "ConfigData.h"
 #import "VoiceDef.h"
 #import "Globle.h"
+#import "DMCustomModalViewController.h"
 //#import "MobiSageSDK.h"
 
 @implementation LessonsViewController
@@ -335,6 +336,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self dismissModal];
     ListeningViewController *detailViewController = [[ListeningViewController alloc] initWithNibName:@"ListeningViewController" bundle:nil];
     // ...
     // Pass the selected object to the new view controller.
@@ -508,4 +510,14 @@
 {
     return self.scenesName;
 }
+
+- (void)dismissModal
+{
+    //if you import DMCustomModalViewController.h in you modal root controller it add some magic to it
+    //you can freely access your DMCustomModalViewController
+    [self.customModalViewController dismissRootViewControllerWithcompletion:^{
+        
+    }];
+}
+
 @end
