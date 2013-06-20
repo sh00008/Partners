@@ -165,3 +165,5 @@
 #define PERSONAL_INFO                   @"您的口语训练历史信息"
 #define MAIN_COURSE_GRID_W              90
 #define MAIN_COURSE_GRID_H              60
+#define MAIN_COURSE_GRID_W_IPAD         120
+#define MAIN_COURSE_GRID_H_IPAD          90

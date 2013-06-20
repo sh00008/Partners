@@ -62,20 +62,21 @@
 {
     NSInteger index = indexPath.row;
     NSInteger nHeight = 44.0f;
-
-    if (index < [_pkgArray count]) {
+    NSInteger nSpace = IS_IPAD ? 20 : 0;
+    NSInteger count = IS_IPAD ? 5 : 3;
+   if (index < [_pkgArray count]) {
         VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:index];
-        NSInteger nMod = [pkgObject.dataPkgCourseTitleArray count] % 3;
+        NSInteger nMod = [pkgObject.dataPkgCourseTitleArray count] % count;
         if (nMod == 0) {
-            NSInteger nCount = [pkgObject.dataPkgCourseTitleArray count] / 3;
-            nHeight = 44.0 + nCount * MAIN_COURSE_GRID_H + (nCount - 1) * 1;
+            NSInteger nCount = [pkgObject.dataPkgCourseTitleArray count] / count;
+            nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
         } else {
-            NSInteger nCount = ([pkgObject.dataPkgCourseTitleArray count] / 3 + 1);
-            nHeight = 44.0 + nCount * MAIN_COURSE_GRID_H + (nCount - 1) * 1;
+            NSInteger nCount = ([pkgObject.dataPkgCourseTitleArray count] / count + 1);
+            nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
            
         }
     }
-    return nHeight;
+    return nHeight + nSpace;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -102,10 +103,18 @@
 
     VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
     cell.pkgTitle.text = pkgObject.dataTitle;
-    NSInteger dx = 0;
+    CGRect f = cell.pkgTitle.frame;
+    NSInteger alignX = 40;
+    if (IS_IPAD) {
+        cell.pkgTitle.frame = CGRectMake(alignX + f.origin.x, f.origin.y, f.size.width, f.size.height);
+    }
+    NSInteger fromX = IS_IPAD ? alignX : 0;
+    NSInteger dx = fromX;
     NSInteger dy = 0;
-    NSInteger w = MAIN_COURSE_GRID_W;
-    NSInteger h = MAIN_COURSE_GRID_H;
+    NSInteger w =  (IS_IPAD ? MAIN_COURSE_GRID_W_IPAD : MAIN_COURSE_GRID_W);
+    NSInteger h =  (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
+    NSInteger seperator = IS_IPAD ? 10 : 1;
+    NSInteger count = IS_IPAD ? 5 : 3;
     NSInteger r = 1;
 	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
         FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
@@ -116,21 +125,32 @@
         [cell.pkgCourseBGView addSubview:bt];
         [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
         [bt release];
-        if ((i >= 2) && (r * (i + 1)) % 3 == 0 ) {
+        if ((i >= 2) && (r * (i + 1)) % count == 0 ) {
             // next row
             r++;
-            dy = h + 1;
-            dx = 0;
+            dy = h + seperator;
+            dx = fromX;
         } else {
-            dx += w + 1;
+            dx += w + seperator;
             dy = 0;
         }
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
-    newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
-    [cell addSubview:newCourse];
-    [newCourse release];
+    if (IS_IPAD) {
+        UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
+        UIImage* im = [UIImage imageNamed:@"Icon_New_L@2x.png"];
+        UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
+        newCourse.image = newIm;
+        [cell addSubview:newCourse];
+        [newCourse release];
+
+    } else {
+        UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
+        newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
+        [cell addSubview:newCourse];
+        [newCourse release];
+
+    }
       // Configure the cell...
     return cell;
 }
