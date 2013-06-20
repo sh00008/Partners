@@ -23,9 +23,11 @@
 {
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:@"CollapseClickCell" owner:nil options:nil];
     CGRect rcHeader = headerView.frame;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    headerView.frame = CGRectMake(rcHeader.origin.x, rcHeader.origin.y, width, rcHeader.size.height);
     CollapseClickCell *cell = [[CollapseClickCell alloc] initWithFrame:CGRectMake(0, 0, rcHeader.size.width, rcHeader.size.height + content.frame.size.height)];
     cell = [views objectAtIndex:0];
-    cell.frame = CGRectMake(0, 0, rcHeader.size.width, rcHeader.size.height + content.frame.size.height );
+    cell.frame = CGRectMake(0, 0, width , rcHeader.size.height + content.frame.size.height );
     // Initialization Here
     [cell.TitleView addSubview:headerView];
     [cell bringSubviewToFront:headerView];
@@ -34,8 +36,15 @@
     cell.index = index;
     cell.TitleButton.tag = index;
     cell.TitleButton.frame = headerView.frame;
-    cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.TitleView.frame.origin.y + cell.TitleView.frame.size.height, cell.ContentView.frame.size.width, content.frame.size.height);
+     cell.ContentView.frame = CGRectMake(cell.ContentView.frame.origin.x, cell.TitleView.frame.origin.y + cell.TitleView.frame.size.height, width, content.frame.size.height);
     content.tag = 102;
+    NSArray* waveViews = content.subviews;
+    if (waveViews != nil) {
+        for (NSInteger i = 0; i < waveViews.count; i ++) {
+            UIView* sub = [waveViews objectAtIndex:i];
+            sub.frame = CGRectMake(sub.frame.origin.x, sub.frame.origin.y, width, sub.frame.size.height);
+        }
+    }
     [cell.ContentView addSubview:content];
     [cell bringSubviewToFront:cell.TitleButton];
    
@@ -44,7 +53,7 @@
     } else {
         cell.backgroundColor = [UIColor whiteColor];
     }
-    return cell;
+     return cell;
 
 }
 
