@@ -132,6 +132,8 @@
 
 - (void)initMembers;
 {
+    lastClickIndex = -1;
+    clickindex = -1;
     NSString* backString = STRING_BACK;
     _bDownloadedXAT = NO;
     _bDownloadedISB = NO;
@@ -804,7 +806,11 @@
 
 -(void)didClickCollapseClickCellAtIndex:(int)index isNowOpen:(BOOL)open {
     if (open) {
-        clickindex = index;
+        if ((lastClickIndex != -1) && (lastClickIndex != index)) {
+            [self.collpaseLesson closeCollapseClickCellAtIndex:lastClickIndex animated:NO];
+        }
+       lastClickIndex = clickindex;
+       clickindex = index;
         CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
         
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
@@ -832,6 +838,7 @@
             }
             
         }
+         [self.collpaseLesson scrollToCollapseClickCellAtIndex:index animated:YES];
    }
     
 

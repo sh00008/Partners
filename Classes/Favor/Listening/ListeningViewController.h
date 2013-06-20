@@ -80,6 +80,7 @@ typedef enum {
     NSInteger didSection;
     BOOL ifOpen;
     NSInteger clickindex;
+    NSInteger lastClickIndex;
     ButtonPlayObject* _buttonPlay;
     
 }

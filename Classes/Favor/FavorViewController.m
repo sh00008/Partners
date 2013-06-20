@@ -62,7 +62,7 @@
 {
     NSInteger index = indexPath.row;
     NSInteger nHeight = 44.0f;
-    NSInteger nSpace = IS_IPAD ? 20 : 0;
+    NSInteger nSpace = IS_IPAD ? 20 : 10;
     NSInteger count = IS_IPAD ? 5 : 3;
    if (index < [_pkgArray count]) {
         VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:index];
