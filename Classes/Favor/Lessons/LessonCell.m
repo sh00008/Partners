@@ -121,7 +121,7 @@
         [path release];*/
    }
     if (self.lessonLabel == nil) {
-           CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE];
+           CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2];
         UILabel* txtLabel = [[UILabel alloc] initWithFrame:CGRectMake(MAGIN_OF_LESSON_TITLE, 10, size.width, size.height)];
         txtLabel.lineBreakMode   = UILineBreakModeWordWrap;
         txtLabel.numberOfLines   = 0;

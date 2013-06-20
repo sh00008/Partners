@@ -228,11 +228,11 @@
         [self.progressBar setMaximumValue:maxValue];
         [self.progressBar setMinimumValue:1];
         self.progressBar.enabled = YES;
+        didSection = -1;
+        [self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
 //        [self.listeningToolbar enableToolbar:YES];
     }
     
-    didSection = -1;
-    [self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
 }
 
 - (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
@@ -370,6 +370,8 @@
     [self.progressBar setMinimumValue:1];
    // [self.listeningToolbar enableToolbar:YES];
     self.progressBar.enabled = YES;
+    didSection = -1;
+    [self performSelector:@selector(firstOneClicked) withObject:self afterDelay:0.2f];
 }
 
 - (void)viewDidUnload
