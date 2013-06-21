@@ -15,6 +15,7 @@
 #import "Word.h"
 #import "VoiceDef.h"
 
+#import "isaybiosscroe.h"
 #import "IsaybEncrypt.h"
 
 @implementation CourseParser
@@ -45,6 +46,20 @@
 }
 */
 
+static bool bLoadModel = NO;
+- (void)loadModel
+{
+    if (!bLoadModel) {
+        // NSRange r = [resourcePath rangeOfString:@"/Data"];
+        // NSString* dataPath = [resourcePath substringToIndex:(r.location + r.length)];
+        //        NSLog([NSString stringWithFormat:@"%@/model.dat", dataPath]);
+        [isaybios ISAYB_SetModel:[[NSString stringWithFormat:@"%@/model.dat", resourcePath] cStringUsingEncoding:NSUTF8StringEncoding]];
+        
+        bLoadModel = YES;
+    }
+    
+}
+
 - (void)getMirrorRessourcePath
 {
     if (wavePath == nil) {
@@ -60,7 +75,9 @@
 }
 
 - (void)loadCourses:(NSString*)filename
-{
+{    
+    [self loadModel];
+
 	// Load and parse the index.xml file
     NSString* fullFilename = [resourcePath stringByAppendingPathComponent:filename];
     //NSLog(@"%@", fullFilename);
@@ -172,6 +189,11 @@
 //            xatFile = [xatFile stringByAppendingPathExtension:@"xat"];
 //            [IsaybEncrypt DecodeFile:xatFile to:mirrorFullFilename];
 //        }
+        
+        // Load Lesson
+        NSString *les = [NSString stringWithFormat:@"%@.les", fullFilename];
+        NSLog(les);
+        [isaybios ISAYB_SetLesson:[les cStringUsingEncoding:NSUTF8StringEncoding]];
         
         // 读取加密xml
         NSString* xatFile = [fullFilename substringToIndex:[fullFilename length] - 4];
