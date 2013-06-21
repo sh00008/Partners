@@ -14,6 +14,7 @@
     VoiceDataPkgObject* _deleteObject;
     NSMutableArray* _pkgArray;
     BOOL _bEdit;
+    NSString* _deleteTitle;
 
 }
 @property (nonatomic, retain) DMCustomModalViewController *modal;

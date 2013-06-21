@@ -12,4 +12,5 @@
 
 @property (nonatomic, retain) IBOutlet UILabel* pkgTitle;
 @property (nonatomic, retain) IBOutlet UIView* pkgCourseBGView;
+@property (nonatomic, retain) IBOutlet UIButton* deletePkg;
 @end

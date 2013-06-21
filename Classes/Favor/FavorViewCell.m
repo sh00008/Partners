@@ -11,6 +11,7 @@
 @implementation FavorViewCell
 @synthesize pkgTitle;
 @synthesize pkgCourseBGView;
+@synthesize deletePkg;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

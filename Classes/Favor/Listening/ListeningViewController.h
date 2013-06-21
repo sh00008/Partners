@@ -75,6 +75,7 @@ typedef enum {
     BOOL                            bParseWAV;
     BOOL                            _bDownloadedXAT;
     BOOL                            _bDownloadedISB;
+    BOOL                            _bDownloadedLES;
     
     NSInteger endSection;
     NSInteger didSection;
@@ -116,6 +117,7 @@ typedef enum {
 - (void)removeDownloadingView;
 - (void)addDownloadingFailedView;
 - (BOOL)downloadLesson;
+- (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
 - (void)downloadXATByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex;
 - (void)downloadISBByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
 - (void)displayLesson;

@@ -13,7 +13,7 @@
 
 #endif
 
-#ifdef DEBUGX
+#ifdef DEBUG_
 #define V_NSLog(format, ...)		NSLog(format, ##__VA_ARGS__)
 #else
 #define V_NSLog(format, ...)

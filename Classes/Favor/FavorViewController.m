@@ -105,9 +105,12 @@
     cell.pkgTitle.text = pkgObject.dataTitle;
     CGRect f = cell.pkgTitle.frame;
     NSInteger alignX = 40;
-    if (IS_IPAD) {
+    //if (IS_IPAD) {
         cell.pkgTitle.frame = CGRectMake(alignX + f.origin.x, f.origin.y, f.size.width, f.size.height);
-    }
+    /*} else {
+        cell.pkgTitle.frame = CGRectMake(20 + f.origin.x, f.origin.y, f.size.width, f.size.height);
+        
+    }*/
     NSInteger fromX = IS_IPAD ? alignX : 0;
     NSInteger dx = fromX;
     NSInteger dy = 0;
@@ -136,7 +139,7 @@
         }
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (IS_IPAD) {
+    //if (IS_IPAD) {
         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
         UIImage* im = [UIImage imageNamed:@"Icon_New_L@2x.png"];
         UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
@@ -144,14 +147,15 @@
         [cell addSubview:newCourse];
         [newCourse release];
 
-    } else {
+    /*} else {
         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
         newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
         [cell addSubview:newCourse];
         [newCourse release];
 
-    }
+    }*/
       // Configure the cell...
+    [cell.deletePkg addTarget:self action:@selector(deletePkg:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -331,17 +335,19 @@
     }
 }
 
-- (void)deletePkg:(id)cell;
+- (void)deletePkg:(id)sender;
 {
-    /*NSInteger index = cell.index;
-    _deleteObject = [_pkgArray objectAtIndex:index];
-    NSString *message = [NSString stringWithFormat:STRING_DELETEBOOK_ALERT_MESSAGE, _deleteObject.dataTitle];
+    UIButton* b = (UIButton*)sender;
+    FavorViewCell *cell = (FavorViewCell*)[[b superview] superview];
+    _deleteTitle = cell.pkgTitle.text;
+    [_deleteTitle retain];
+    NSString *message = [NSString stringWithFormat:STRING_DELETEBOOK_ALERT_MESSAGE, _deleteTitle];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_DELETEBOOK_ALERT_TITLE
 													message:message
 												   delegate:self
 										  cancelButtonTitle:STRING_DELETEBOOK_BUTTON_CONFIRM otherButtonTitles:STRING_DELETEBOOK_BUTTON_CANCEL, nil];
 	[alert show];
-	[alert release];*/
+	[alert release];
 }
 
 
@@ -350,28 +356,28 @@
     if (buttonIndex == 0) {
         // confirm
         Database* db = [Database sharedDatabase];
-        VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:_deleteObject.dataTitle];
+        VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:_deleteTitle];
         if (info != nil) {
             NSFileManager* fm = [NSFileManager defaultManager];
             [fm removeItemAtPath:info.dataPath error:nil];
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
             NSString *docsDir = [paths objectAtIndex:0];
-            NSString *waveDir = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR,_deleteObject.dataTitle];
+            NSString *waveDir = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR,_deleteTitle];
             if ([fm fileExistsAtPath:waveDir]) {
                 [fm removeItemAtPath:waveDir error:nil];
             }
             
         }
         
-        [db deleteVoicePkgInfoByTitle:_deleteObject.dataTitle];
+        [db deleteVoicePkgInfoByTitle:_deleteTitle];
         [self reloadPkgTable];
     } else {
         // cancel
         _bEdit = NO;
  		[[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_EDIT_VOICE_PKG object: [NSNumber numberWithBool:NO]];
     }
-    _deleteObject = nil;
+    _deleteTitle = nil;
 }
 
 - (void)addNewPKGNotification:(NSNotification*)aNotification;
