@@ -169,9 +169,9 @@ static bool bLoadModel = NO;
 	if (lessonindex < [course.lessons count]) {
 		// load file
         NSString* fullFilename = [resourcePath stringByAppendingPathComponent:lesson.path];
-        fullFilename = [fullFilename stringByAppendingPathComponent:lesson.file];
-    
-       // NSLog(@"%@", fullFilename);
+        
+        fullFilename = [fullFilename stringByAppendingPathComponent:lesson.lessonid];
+        NSLog(@"%@", fullFilename);
         
         // 解压xml文件
         // 判断目标xml文件是否存在
@@ -196,8 +196,7 @@ static bool bLoadModel = NO;
         [isaybios ISAYB_SetLesson:[les cStringUsingEncoding:NSUTF8StringEncoding]];
         
         // 读取加密xml
-        NSString* xatFile = [fullFilename substringToIndex:[fullFilename length] - 4];
-        xatFile = [xatFile stringByAppendingPathExtension:@"xat"];
+        NSString* xatFile = [fullFilename stringByAppendingPathExtension:@"xat"];
         unsigned char* filedata = nil;
         long nLen = [IsaybEncrypt LoadDecodeBuffer:xatFile to:&filedata];
 
