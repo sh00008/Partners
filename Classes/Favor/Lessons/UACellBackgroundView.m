@@ -42,7 +42,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     
     CGContextRef c = UIGraphicsGetCurrentContext();	
     
-    int lineWidth = 1;
+    CGFloat lineWidth = 0.5;
     
     CGRect rect = [self bounds];
     if (bDark) {
@@ -53,10 +53,10 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     }
     
     CGContextFillRect(c, rect);
-    CGContextSetStrokeColorWithColor(c, [[UIColor colorWithRed:66.0/255.0 green:168.0/255.0 blue:250.0/255.0 alpha:0.5] CGColor]);
+    CGContextSetStrokeColorWithColor(c, [[UIColor colorWithRed:66.0/255.0 green:168.0/255.0 blue:250.0/255.0 alpha:1.0] CGColor]);
     CGContextSetLineWidth(c, 1);
-    CGContextMoveToPoint(c, 0, rect.size.height);
-    CGContextAddLineToPoint(c, rect.size.width, rect.size.height);
+    CGContextMoveToPoint(c, 10, rect.size.height);
+    CGContextAddLineToPoint(c, rect.size.width - 10, rect.size.height);
     CGContextStrokePath(c);
     return;
     CGFloat minx = CGRectGetMinX(rect), midx = CGRectGetMidX(rect), maxx = CGRectGetMaxX(rect);
