@@ -50,10 +50,8 @@ static bool bLoadModel = NO;
 - (void)loadModel
 {
     if (!bLoadModel) {
-        // NSRange r = [resourcePath rangeOfString:@"/Data"];
-        // NSString* dataPath = [resourcePath substringToIndex:(r.location + r.length)];
-        //        NSLog([NSString stringWithFormat:@"%@/model.dat", dataPath]);
-        [isaybios ISAYB_SetModel:[[NSString stringWithFormat:@"%@/model.dat", resourcePath] cStringUsingEncoding:NSUTF8StringEncoding]];
+         NSString* strModel = [NSString stringWithFormat:@"%@/model.dat", [[NSBundle mainBundle] resourcePath]];
+        [isaybios ISAYB_SetModel:[strModel cStringUsingEncoding:NSUTF8StringEncoding]];
         
         bLoadModel = YES;
     }
@@ -192,7 +190,6 @@ static bool bLoadModel = NO;
         
         // Load Lesson
         NSString *les = [NSString stringWithFormat:@"%@.les", fullFilename];
-        NSLog(les);
         [isaybios ISAYB_SetLesson:[les cStringUsingEncoding:NSUTF8StringEncoding]];
         
         // 读取加密xml

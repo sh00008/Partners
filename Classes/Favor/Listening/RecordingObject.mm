@@ -38,7 +38,7 @@ char *OSTypeToStr(char *buf, OSType t)
     ISAYB5WORD * pWord;
     int nWord;
     int score;
-   FILE* file = fopen([filename cStringUsingEncoding:NSUTF8StringEncoding], "rb");
+    FILE* file = fopen([filename cStringUsingEncoding:NSUTF8StringEncoding], "rb");
     
     fseeko(file, 0, SEEK_END);
     long fileLength = ftell(file);
