@@ -197,7 +197,7 @@
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
 		0DDD8828176413E90078D6B7 /* CollapseClickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */; };
-		9501D73F1773CF35008A2003 /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9501D73E1773CF35008A2003 /* model.dat */; };
+		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -491,7 +491,7 @@
 		0DDD8822176413E90078D6B7 /* CollapseClickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickCell.h; sourceTree = "<group>"; };
 		0DDD8823176413E90078D6B7 /* CollapseClickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClickCell.m; sourceTree = "<group>"; };
 		0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollapseClickCell.xib; sourceTree = "<group>"; };
-		9501D73E1773CF35008A2003 /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = model.dat; sourceTree = "<group>"; };
+		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -800,7 +800,7 @@
 		0DA1486717511555004EBCFF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				9501D73E1773CF35008A2003 /* model.dat */,
+				9579A39B1773DAAB0014D1DC /* model.dat */,
 				0DA149A417519715004EBCFF /* Database */,
 				0DA148F2175116A5004EBCFF /* Imges */,
 				0DA148A11751159A004EBCFF /* Other */,
@@ -1313,7 +1313,7 @@
 				0D039AED1771EDB10006EA85 /* Icon_New_S@2x.png in Resources */,
 				0D039AF017734E430006EA85 /* icon_clear.png in Resources */,
 				0D039AF117734E430006EA85 /* icon_clear@2x.png in Resources */,
-				9501D73F1773CF35008A2003 /* model.dat in Resources */,
+				9579A39C1773DAAB0014D1DC /* model.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
