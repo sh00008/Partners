@@ -463,7 +463,7 @@ static Database* _database;
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %d = %d", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, nID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, nID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
