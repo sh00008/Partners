@@ -42,6 +42,7 @@
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;
+- (BOOL)deleteCourseInfoByTitle:(NSString*)title;
 - (NSString*)getAbsolutelyPath:(NSString*)path;
 
 @end
