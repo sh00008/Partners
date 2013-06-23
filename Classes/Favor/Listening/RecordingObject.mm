@@ -74,26 +74,26 @@ char *OSTypeToStr(char *buf, OSType t)
     if (pWord == nil) {
         return 0;
     }
-    NSString* tempString = [NSString stringWithFormat:@"<%@>得分：\n", sentence.orintext];
+//    NSString* tempString = [NSString stringWithFormat:@"<%@>得分：\n", sentence.orintext];
     score = 0;
+    NSLog(@"%d -> %d", [sentence.words count], nWord);
     for(int i = 0;i < [sentence.words count]; i++)
     {
         Word* word = [sentence.words objectAtIndex:i];
+        NSLog(@"%@", word.text);
         NSComparisonResult cr = [[word text] compare:[NSString stringWithCString:pWord[i].text encoding:NSUTF8StringEncoding] options:NSCaseInsensitiveSearch];
         if (cr == NSOrderedSame) {
             double time = [word.endtime doubleValue] - [word.starttime doubleValue];
             double per = time - (pWord[i].fTimeEd - pWord[i].fTimeSt) / time;
-            score += (30 * (1 - fabs(per)) + 70) / nWord;
+            score += (30 * (1 - fabs(per)) + 70) / [sentence.words count];
             //printf("%f %f %s\n",pWord[i].fTimeSt - pWord[i].fTimeEd, time, pWord[i].text);
             //printf("%d \n", score);
         }
-        tempString = [tempString stringByAppendingFormat:@"%f -> %f : %s\n", pWord[i].fTimeSt,pWord[i].fTimeEd, pWord[i].text];
+//        tempString = [tempString stringByAppendingFormat:@"%f -> %f : %s\n", pWord[i].fTimeSt,pWord[i].fTimeEd, pWord[i].text];
     }
-    
-    //tempString = [tempString stringByAppendingFormat:@"Score: %d", score];
-    //ALERT(tempString);
-    [scoreDictionary setObject:@(score) forKey:@"score"];
     NSLog(@"%d", score);
+    
+    [scoreDictionary setObject:@(score) forKey:@"score"];
     return score;
 }
 #pragma mark AudioSession listeners
