@@ -1031,12 +1031,13 @@
     if (header != nil) {
         header.scoreImageView.layer.cornerRadius = 18;
        if (score < 60) {
-            header.scoreImageView.image = [UIImage imageNamed:@"Icon_Bad@2x.png"];
-            header.scoreImageView.backgroundColor = [UIColor redColor];
+           header.scoreImageView.image = [UIImage imageNamed:@"Icon_Bad@2x.png"];
+           header.scoreImageView.backgroundColor = [UIColor redColor];
+           header.scroeLabel.text = nil;
         } else {
-            header.scoreImageView.image = nil;
-            header.scoreImageView.backgroundColor = [UIColor greenColor];
-            header.scroeLabel.text = [NSString stringWithFormat:@"%d", score];
+           header.scoreImageView.image = nil;
+           header.scoreImageView.backgroundColor = [UIColor greenColor];
+           header.scroeLabel.text = [NSString stringWithFormat:@"%d", score];
            
         }
     }
@@ -1050,6 +1051,7 @@
         header.scoreImageView.layer.cornerRadius = 18;
         header.scoreImageView.backgroundColor = [UIColor clearColor];
         header.scoreImageView.image = nil;
+        header.scroeLabel.text = nil;
     }
 
 }
