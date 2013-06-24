@@ -93,8 +93,9 @@
 - (void)loadLib {
     
     // photo url
-    id photosDir = @"http://bigpaua.com/images/MGBox";
-    id fullPath = [NSString stringWithFormat:@"%@/%d.jpg", photosDir, self.tag];
+    NSString* path = [[NSBundle mainBundle] resourcePath];
+   //id photosDir = @"http://bigpaua.com/images/MGBox";
+    id fullPath = [NSString stringWithFormat:@"%@/%d.jpg", path, 23];
     NSURL *url = [NSURL URLWithString:fullPath];
     
     // fetch the remote photo

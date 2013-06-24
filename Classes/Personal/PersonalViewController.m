@@ -26,13 +26,13 @@
 #define IPHONE_PORTRAIT_GRID   (CGSize){312, 0}
 #define IPHONE_LANDSCAPE_GRID  (CGSize){160, 0}
 #define IPHONE_TABLES_GRID     (CGSize){320, 0}
+ 
+//#define IPAD_PORTRAIT_PHOTO    (CGSize){128, 128}
+//#define IPAD_LANDSCAPE_PHOTO   (CGSize){122, 122}
 
-#define IPAD_PORTRAIT_PHOTO    (CGSize){128, 128}
-#define IPAD_LANDSCAPE_PHOTO   (CGSize){122, 122}
-
-#define IPAD_PORTRAIT_GRID     (CGSize){136, 0}
-#define IPAD_LANDSCAPE_GRID    (CGSize){390, 0}
-#define IPAD_TABLES_GRID       (CGSize){624, 0}
+//#define IPAD_PORTRAIT_GRID     (CGSize){136, 0}
+//#define IPAD_LANDSCAPE_GRID    (CGSize){390, 0}
+#define IPAD_TABLES_GRID       (CGSize){1924, 0}
 
 #define HEADER_FONT            [UIFont fontWithName:@"HelveticaNeue" size:18]
 
@@ -60,7 +60,7 @@
     self.scroller.bottomPadding = 8;
     
     // iPhone or iPad grid?
-    CGSize photosGridSize = phone ? IPHONE_PORTRAIT_GRID : IPAD_PORTRAIT_GRID;
+    CGSize photosGridSize = IPHONE_PORTRAIT_GRID ;
     
     // the photos grid
     photosGrid = [MGBox boxWithSize:photosGridSize];
@@ -69,22 +69,22 @@
     [self.scroller.boxes addObject:photosGrid];
     
     // the tables grid
-    CGSize tablesGridSize = phone ? IPHONE_TABLES_GRID : IPAD_TABLES_GRID;
+    /*CGSize tablesGridSize = phone? IPHONE_TABLES_GRID : IPAD_TABLES_GRID;
     tablesGrid = [MGBox boxWithSize:tablesGridSize];
     tablesGrid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
-    [self.scroller.boxes addObject:tablesGrid];
+    //[self.scroller.boxes addObject:tablesGrid];
     
     // the features table
-    table1 = MGBox.box;
+    /*table1 = MGBox.box;
     [tablesGrid.boxes addObject:table1];
     table1.sizingMode = MGResizingShrinkWrap;
     
     // the subsections table
     table2 = MGBox.box;
     [tablesGrid.boxes addObject:table2];
-    table2.sizingMode = MGResizingShrinkWrap;
+    table2.sizingMode = MGResizingShrinkWrap;*/
     // add photo boxes to the grid
-    int initialImages = phone ? IPHONE_INITIAL_IMAGES : IPAD_INITIAL_IMAGES;
+    int initialImages = phone? IPHONE_INITIAL_IMAGES : IPAD_INITIAL_IMAGES;
     for (int i = 1; i <= initialImages; i++) {
         int photo = [self randomMissingPhoto];
         [photosGrid.boxes addObject:[self libBoxFor:photo]];
@@ -94,12 +94,12 @@
     [photosGrid.boxes addObject:self.libAddBox];
     
     // load some table sections
-    if (phone) {
+    //if (phone) {
         [self loadIntroSection];
-    } else {
-        [self loadLayoutFeaturesSection:NO];
-        [self loadConviniFeaturesSection:NO];
-    }
+    //} else {
+    //    [self loadLayoutFeaturesSection:NO];
+     //   [self loadConviniFeaturesSection:NO];
+    //}
     [tablesGrid layout];
     [self willAnimateRotationToInterfaceOrientation:self.interfaceOrientation
                                            duration:1];
@@ -125,16 +125,12 @@
     BOOL portrait = UIInterfaceOrientationIsPortrait(orient);
     
     // grid size
-    photosGrid.size = phone ? portrait
+    photosGrid.size =  portrait
     ? IPHONE_PORTRAIT_GRID
-    : IPHONE_LANDSCAPE_GRID : portrait
-    ? IPAD_PORTRAIT_GRID
-    : IPAD_LANDSCAPE_GRID;
+    : IPHONE_LANDSCAPE_GRID ;
     
     // photo sizes
-    CGSize size = phone
-    ? portrait ? IPHONE_PORTRAIT_PHOTO : IPHONE_LANDSCAPE_PHOTO
-    : portrait ? IPAD_PORTRAIT_PHOTO : IPAD_LANDSCAPE_PHOTO;
+    CGSize size = portrait ? IPHONE_PORTRAIT_PHOTO : IPHONE_LANDSCAPE_PHOTO;
     
     // apply to each photo
     if (photosGrid.boxes != nil) {
@@ -163,9 +159,7 @@
     BOOL portrait = UIInterfaceOrientationIsPortrait(self.interfaceOrientation);
     
     // what size plz?
-    return phone
-    ? portrait ? IPHONE_PORTRAIT_PHOTO : IPHONE_LANDSCAPE_PHOTO
-    : portrait ? IPAD_PORTRAIT_PHOTO : IPAD_LANDSCAPE_PHOTO;
+    return portrait ? IPHONE_PORTRAIT_PHOTO : IPHONE_LANDSCAPE_PHOTO;
 }
 
 - (MGBox *)libBoxFor:(int)i {
@@ -312,7 +306,7 @@
 }
 
 - (void)loadLayoutFeaturesSection:(BOOL)animated {
-    if (phone && table1.boxes.count > 1) {
+    if ( table1.boxes.count > 1) {
         [table1.boxes removeObject:table1.boxes.lastObject];
     }
     
@@ -376,7 +370,7 @@
 }
 
 - (void)loadConviniFeaturesSection:(BOOL)animated {
-    if (phone && table1.boxes.count > 1) {
+    if (table1.boxes.count > 1) {
         [table1.boxes removeObject:table1.boxes.lastObject];
     }
     
