@@ -16,7 +16,7 @@
 
 #define TOTAL_IMAGES           28
 #define IPHONE_INITIAL_IMAGES  3
-#define IPAD_INITIAL_IMAGES    11
+#define IPAD_INITIAL_IMAGES    4
 
 #define ROW_SIZE               (CGSize){304, 44}
 
@@ -32,7 +32,7 @@
 
 //#define IPAD_PORTRAIT_GRID     (CGSize){136, 0}
 //#define IPAD_LANDSCAPE_GRID    (CGSize){390, 0}
-#define IPAD_TABLES_GRID       (CGSize){1924, 0}
+#define IPAD_TABLES_GRID       (CGSize){624, 0}
 
 #define HEADER_FONT            [UIFont fontWithName:@"HelveticaNeue" size:18]
 

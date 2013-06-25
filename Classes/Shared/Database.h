@@ -24,6 +24,9 @@
 #define STRING_DB_TABLENAME_PKG_DOWNLOADINFO @"VoicePkgDownloadInfo"
 #define STRING_DB_VOICE_PKG_DOWNLOAD_FLAG    @"Flag"
 
+#define STRING_DB_TABLENAME_LIB_INFO  @"LibaryInfo"
+#define STRING_DB_LIBARY_ID         @"LibaryID"
+
 @interface Database : NSObject {
  	Database* _database;
     NSLock *databaseLock; //mutex used to create our Critical Section
@@ -33,12 +36,16 @@
 - (BOOL)createTable;
 - (BOOL)createVoicePkgInfoTable;
 - (BOOL)createVoicePkgcCourseTable;
+- (BOOL)createLibInfoTable;
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
+- (BOOL)insertLibaryInfo:(LibaryInfo*)info;
+
 - (NSInteger)getVoicePkgInfoID:(NSString*)title;
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
+- (NSMutableArray*)loadLibaryInfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;

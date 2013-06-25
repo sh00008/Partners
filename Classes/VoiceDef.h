@@ -162,7 +162,7 @@
 #define PS_CHAR_ARRAY @"ah ih,ah uh,eh ex,ii,aa,oo,uu,ih,eh,ae,ex,ah,oh,uh,th,sh,tg,tr,zh,dr,ng,dh,pp,tt,kk,ff,ss,hh,bb,dd,gg,vv,dd,zz,rr,ww,mm,nn,ll"
 #define DAYBYDY_TITLE                   @"每日一句"
 
-#define PERSONAL_INFO                   @"您的口语训练历史信息"
+#define PERSONAL_INFO                   @"个人信息"
 #define MAIN_COURSE_GRID_W              90
 #define MAIN_COURSE_GRID_H              60
 #define MAIN_COURSE_GRID_W_IPAD         120

@@ -40,6 +40,7 @@
     
     // add the add image
     UIImage *add = [UIImage imageNamed:@"add"];
+    
     UIImageView *addView = [[UIImageView alloc] initWithImage:add];
     [box addSubview:addView];
     addView.center = (CGPoint){box.width / 2, box.height / 2};
@@ -48,7 +49,7 @@
     | UIViewAutoresizingFlexibleRightMargin
     | UIViewAutoresizingFlexibleBottomMargin
     | UIViewAutoresizingFlexibleLeftMargin;
-    
+    NSLog(@"%f %f %f %f", addView.frame.origin.x, addView.frame.origin.y, addView.frame.size.width, addView.frame.size.height);
     return box;
 }
 

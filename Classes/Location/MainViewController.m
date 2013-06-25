@@ -13,6 +13,7 @@
 #import "VoiceDef.h"
 #import "StoreVoiceDataListParser.h"
 #import "GTMHTTPFetcher.h"
+#import "PersonalMainViewController.h"
 
 @interface MainViewController ()
 
@@ -36,7 +37,11 @@
     if (_scrollview == nil) {
          _scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         [self.view addSubview:_scrollview];
-        PersonalViewController* persnoal = [[PersonalViewController alloc] initWithNibName:@"PersonalViewController" bundle:nil];
+        /*PersonalViewController* persnoal = [[PersonalViewController alloc] initWithNibName:@"PersonalViewController" bundle:nil];
+        [_scrollview addSubview:persnoal.view];
+        persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        */
+        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] initWithStyle:UITableViewStyleGrouped];
         [_scrollview addSubview:persnoal.view];
         persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         

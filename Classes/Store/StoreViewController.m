@@ -18,6 +18,7 @@
 @end
 
 @implementation StoreViewController
+@synthesize storeURL;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,8 +61,11 @@
     [shadowView release];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:VALUE_TITLEBAR_COLOR_R green:VALUE_TITLEBAR_COLOR_G blue:VALUE_TITLEBAR_COLOR_B alpha:1.0];
 
-    
-    NSURL* url = [NSURL URLWithString:STRING_STORE_URL_ADDRESS];
+    NSString* urlstr = STRING_STORE_URL_ADDRESS;
+    if (self.storeURL != nil) {
+        urlstr = self.storeURL;
+    }
+    NSURL* url = [NSURL URLWithString:urlstr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:@"MyApp" forHTTPHeaderField:@"User-Agent"];
     

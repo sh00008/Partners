@@ -24,6 +24,7 @@
 @end
 
 @interface DownloadDataPkgInfo :NSObject
+@property (nonatomic, assign, readwrite) NSInteger libID;
 @property (nonatomic, retain, readwrite) NSString* title;
 @property (nonatomic, assign, readwrite) NSInteger count;
 @property (nonatomic, retain, readwrite) NSString* coverURL;
@@ -47,3 +48,16 @@
 @property (nonatomic, retain) NSString* createTime;
 
 @end
+
+@interface LibaryInfo : NSObject
+@property (nonatomic, assign, readwrite) NSInteger libID;
+@property (nonatomic, retain, readwrite) NSString* title;
+@property (nonatomic, retain, readwrite) NSString* path;
+@property (nonatomic, retain, readwrite) NSString* file;
+@property (nonatomic, retain, readwrite) NSString* cover;
+@property (nonatomic, retain, readwrite) NSString* url;
+@property (nonatomic, retain) NSString* createTime;
+
+@end
+
+

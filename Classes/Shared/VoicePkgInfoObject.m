@@ -76,6 +76,7 @@ static DownloadServerInfo* _serverInfo;
 @synthesize url;
 @synthesize intro;
 @synthesize dataPkgCourseInfoArray;
+@synthesize libID;
 
 - (void)dealloc
 {
@@ -86,4 +87,25 @@ static DownloadServerInfo* _serverInfo;
     [self.dataPkgCourseInfoArray release];
     [super dealloc];
 }
+@end
+
+@implementation LibaryInfo
+
+@synthesize title;
+@synthesize path;
+@synthesize file;
+@synthesize url;
+@synthesize cover;
+@synthesize libID;
+@synthesize createTime;
+- (void)dealloc
+{
+    [self.title release];
+    [self.path release];
+    [self.file release];
+    [self.url release];
+    [self.createTime release];
+    [super dealloc];
+}
+
 @end

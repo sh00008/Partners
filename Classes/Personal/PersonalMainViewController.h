@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PersonalMainViewController : UITableViewController
-
+{
+    NSMutableArray* _dataArray;
+}
+- (void)loadLibaryInfo;
 @end
