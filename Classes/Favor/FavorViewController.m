@@ -135,7 +135,7 @@
             dx = fromX;
         } else {
             dx += w + seperator;
-            dy = 0;
+            //dy = 0;
         }
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

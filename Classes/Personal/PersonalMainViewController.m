@@ -131,11 +131,11 @@
             if ((libIndex >= 2) && (r * (libIndex + 1)) % count == 0 ) {
                 // next row
                 r++;
-                dy = h + seperator;
+                dy = h + seperator + 20;
                 dx = fromX;
             } else {
                 dx += w + seperator;
-                dy = 20;
+                //dy = 20;
             }
     }
     UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
@@ -236,6 +236,7 @@
 {
     Database* db = [Database sharedDatabase];
     _dataArray = [db loadLibaryInfo];
+    NSLog(@"lib count %d", [_dataArray count]);
 }
 
 - (void)reloadInfo
