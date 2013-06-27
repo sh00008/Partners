@@ -45,6 +45,11 @@
 		0D1531CC1740C5D900633FA0 /* Globle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CB1740C5D900633FA0 /* Globle.m */; };
 		0D1531D01740C65F00633FA0 /* ConfigData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CF1740C65F00633FA0 /* ConfigData.m */; };
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
+		0D2F1B78177C0CEB009A8A87 /* SSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2F1B75177C0CEB009A8A87 /* SSTextView.m */; };
+		0D2F1B79177C0CEB009A8A87 /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2F1B77177C0CEB009A8A87 /* YIPopupTextView.m */; };
+		0D2F1B7D177C163F009A8A87 /* library.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7A177C163F009A8A87 /* library.png */; };
+		0D2F1B7E177C163F009A8A87 /* NEW.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7B177C163F009A8A87 /* NEW.png */; };
+		0D2F1B7F177C163F009A8A87 /* newICON.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7C177C163F009A8A87 /* newICON.png */; };
 		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
@@ -271,6 +276,13 @@
 		0D1531CF1740C65F00633FA0 /* ConfigData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigData.m; sourceTree = "<group>"; };
 		0D1531D21740C84F00633FA0 /* FavorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavorViewController.h; path = Classes/Favor/FavorViewController.h; sourceTree = SOURCE_ROOT; };
 		0D1531D31740C84F00633FA0 /* FavorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewController.m; path = Classes/Favor/FavorViewController.m; sourceTree = SOURCE_ROOT; };
+		0D2F1B74177C0CEB009A8A87 /* SSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTextView.h; sourceTree = "<group>"; };
+		0D2F1B75177C0CEB009A8A87 /* SSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTextView.m; sourceTree = "<group>"; };
+		0D2F1B76177C0CEB009A8A87 /* YIPopupTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIPopupTextView.h; sourceTree = "<group>"; };
+		0D2F1B77177C0CEB009A8A87 /* YIPopupTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIPopupTextView.m; sourceTree = "<group>"; };
+		0D2F1B7A177C163F009A8A87 /* library.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = library.png; sourceTree = "<group>"; };
+		0D2F1B7B177C163F009A8A87 /* NEW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NEW.png; sourceTree = "<group>"; };
+		0D2F1B7C177C163F009A8A87 /* newICON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newICON.png; sourceTree = "<group>"; };
 		0D50AA9F176A022E00873CF8 /* RecordingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingObject.h; sourceTree = "<group>"; };
 		0D50AAA0176A022E00873CF8 /* RecordingObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RecordingObject.mm; sourceTree = "<group>"; };
 		0D50AAA3176A036500873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
@@ -721,6 +733,25 @@
 			name = Main;
 			sourceTree = "<group>";
 		};
+		0D2F1B72177C0CEB009A8A87 /* SSTextView */ = {
+			isa = PBXGroup;
+			children = (
+				0D2F1B73177C0CEB009A8A87 /* SSTextView */,
+				0D2F1B76177C0CEB009A8A87 /* YIPopupTextView.h */,
+				0D2F1B77177C0CEB009A8A87 /* YIPopupTextView.m */,
+			);
+			path = SSTextView;
+			sourceTree = "<group>";
+		};
+		0D2F1B73177C0CEB009A8A87 /* SSTextView */ = {
+			isa = PBXGroup;
+			children = (
+				0D2F1B74177C0CEB009A8A87 /* SSTextView.h */,
+				0D2F1B75177C0CEB009A8A87 /* SSTextView.m */,
+			);
+			path = SSTextView;
+			sourceTree = "<group>";
+		};
 		0D50AAA2176A036500873CF8 /* VoiceScore */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +946,9 @@
 		0DA14941175116A5004EBCFF /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				0D2F1B7A177C163F009A8A87 /* library.png */,
+				0D2F1B7B177C163F009A8A87 /* NEW.png */,
+				0D2F1B7C177C163F009A8A87 /* newICON.png */,
 				0DBE67A01778889F00AA9B57 /* 23.jpg */,
 				0DBE67A11778889F00AA9B57 /* 24.jpg */,
 				0DA14942175116A5004EBCFF /* bg_cell.png */,
@@ -1047,6 +1081,7 @@
 		0DC0D52217509BEA00684ED2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0D2F1B72177C0CEB009A8A87 /* SSTextView */,
 				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
 				0DA148301750FAE4004EBCFF /* MGBox */,
 				0DC0D52317509BEA00684ED2 /* Database.h */,
@@ -1327,6 +1362,9 @@
 				9579A39C1773DAAB0014D1DC /* model.dat in Resources */,
 				0DBE67A21778889F00AA9B57 /* 23.jpg in Resources */,
 				0DBE67A31778889F00AA9B57 /* 24.jpg in Resources */,
+				0D2F1B7D177C163F009A8A87 /* library.png in Resources */,
+				0D2F1B7E177C163F009A8A87 /* NEW.png in Resources */,
+				0D2F1B7F177C163F009A8A87 /* newICON.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1441,6 +1479,8 @@
 				0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */,
 				0D039AE91771DA440006EA85 /* DMCustomModalViewController.m in Sources */,
 				0DBE679F177883BE00AA9B57 /* PersonalMainViewController.m in Sources */,
+				0D2F1B78177C0CEB009A8A87 /* SSTextView.m in Sources */,
+				0D2F1B79177C0CEB009A8A87 /* YIPopupTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

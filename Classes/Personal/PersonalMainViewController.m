@@ -11,6 +11,7 @@
 #import "VoicePkgInfoObject.h"
 #import "Database.h"
 #import "StoreViewController.h"
+#import "YIPopupTextView.h"
 
 @interface PersonalMainViewController ()
 
@@ -121,7 +122,8 @@
     for (NSInteger libIndex = 0; libIndex < [_dataArray count]; libIndex++) {
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:libIndex];
             UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-        bt.backgroundColor = [UIColor blueColor];
+        //bt.backgroundColor = [UIColor blueColor];
+        [bt setImage:[UIImage imageNamed:@"library.png"] forState:UIControlStateNormal];
             bt.tag = pkgObject.libID;
         [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:bt];
@@ -139,7 +141,7 @@
     UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
     [bt setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     bt.backgroundColor = [UIColor blueColor];
-    [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
+    [bt addTarget:self action:@selector(addNewLib) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:bt];
     [bt release];
 
@@ -163,7 +165,7 @@
         NSInteger nSpace = IS_IPAD ? 20 : 10;
         NSInteger count = IS_IPAD ? 5 : 3;
         NSInteger nTotalCount = [_dataArray count] + 1;
-            NSInteger nMod = [_dataArray count] % count;
+            NSInteger nMod = nTotalCount % count;
             if (nMod == 0) {
                 NSInteger nCount = nTotalCount / count;
                 nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
@@ -172,7 +174,7 @@
                 nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
                 
             }
-        return nHeight + nSpace;
+        return nHeight + 2*nSpace;
     } else {
         return 44;
     }
@@ -236,6 +238,16 @@
     _dataArray = [db loadLibaryInfo];
 }
 
+- (void)reloadInfo
+{
+    if (_dataArray != nil) {
+        [_dataArray release];
+        _dataArray = nil;
+    }
+    [self loadLibaryInfo];
+    [self.tableView reloadData];
+}
+
 - (void)openLib:(id)sender
 {
     UIButton* button = (UIButton*)sender;
@@ -259,4 +271,32 @@
        
     }
 }
+
+- (void)addNewLib
+{
+    YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:STRING_ENTER_LIB_ADDRESS maxCount:300];
+    popupTextView.delegate = (id)self;
+    [popupTextView showInView:self.view];
+
+}
+
+#pragma mark YIPopupTextViewDelegate
+
+- (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text
+{
+    if (text != nil) {
+        Database* db = [Database sharedDatabase];
+        LibaryInfo* info = [[LibaryInfo alloc] init];
+        info.url = STRING_STORE_URL_ADDRESS;
+        [db insertLibaryInfo:info];
+        [info release];
+        [self reloadInfo];
+    }
+}
+
+- (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
+{
+    NSLog(@"didDismissWithText");
+}
+
 @end

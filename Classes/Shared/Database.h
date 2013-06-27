@@ -51,5 +51,5 @@
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;
 - (BOOL)deleteCourseInfoByTitle:(NSString*)title;
 - (NSString*)getAbsolutelyPath:(NSString*)path;
-
+- (NSInteger)getlastRecordID:(NSString*)tableName;
 @end
