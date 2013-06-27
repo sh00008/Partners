@@ -116,7 +116,25 @@
         [StoreNetworkConnectionView removeConnectionView:self.view];
         NSString* xmlPath =  [NSString stringWithFormat:@"%@voice.xml", NSTemporaryDirectory()];
         [data writeToFile:xmlPath atomically:YES];
+        
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *documentDirectory = [paths objectAtIndex:0];
+        documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+        
+        // create pkg
+        if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+            [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        
+        documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.view.tag];
+        if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+            [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+       
+         documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
+        [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
+        
         StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
+        dataParser.libID = self.view.tag;
         [dataParser loadWithData:data];
         if ([dataParser.pkgsArray count] > 0) {
             StoreRootViewController* rootViewController = [[StoreRootViewController alloc] init];

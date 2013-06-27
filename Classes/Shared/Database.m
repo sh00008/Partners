@@ -79,6 +79,7 @@ static Database* _database;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
 	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_PKG_ID];
+	[sql appendFormat:@",[%@] integer",STRING_DB_LIBARY_ID];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
@@ -231,19 +232,23 @@ static Database* _database;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
 
-    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_ID, STRING_DB_LIBARY_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
 	//NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
 		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
 		NSInteger i = 2;
         
+        sqlite3_bind_int(statement, i, info.libID);
+        i++;
+        
         // title
 		sqlite3_bind_text(statement, i, [info.title UTF8String], -1, SQLITE_TRANSIENT);
 		i++;
         
         // path
-		sqlite3_bind_text(statement, i, [info.title UTF8String], -1, SQLITE_TRANSIENT);
+        NSString* path = [NSString stringWithFormat:@"%d/%@", info.libID, info.title ] ;
+		sqlite3_bind_text(statement, i, [path UTF8String], -1, SQLITE_TRANSIENT);
 		i++;
         
 
@@ -403,7 +408,7 @@ static Database* _database;
                 pkgObject.dataCover = [NSString stringWithFormat:@"%@/cover", [self getAbsolutelyPath:path]] ;
             }
             if (titleChars != nil) {
-                NSString *title = [NSString stringWithUTF8String:pathChars];
+                NSString *title = [NSString stringWithUTF8String:titleChars];
                 pkgObject.dataTitle = [NSString stringWithFormat:@"%@",title];
                 NSInteger nID = [self getVoicePkgInfoID:title];
                 if (nID != -1) {
@@ -466,6 +471,7 @@ static Database* _database;
                 NSString *title = [NSString stringWithUTF8String:timeChars];
                 object.createTime = [NSString stringWithFormat:@"%@",title];
             }
+            object.libID = libID;
             [arrResult addObject:object];
             [object release];
             break;

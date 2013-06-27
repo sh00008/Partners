@@ -12,6 +12,7 @@
 @implementation StoreVoiceDataListParser
 @synthesize pkgsArray;
 @synthesize serverlistArray;
+@synthesize libID;
 
 - (void)loadWithPath:(NSString*)path
 {
@@ -118,6 +119,7 @@
             
         }
         pkgInfo.dataPkgCourseInfoArray = pkgCourseArray;
+        pkgInfo.libID = self.libID;
         [pkgCourseArray release];
         [array addObject:pkgInfo];
         [pkgInfo release];

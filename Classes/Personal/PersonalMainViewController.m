@@ -122,7 +122,7 @@
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:libIndex];
             UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         bt.backgroundColor = [UIColor blueColor];
-            bt.tag = pkgObject.libID;
+        bt.tag = libIndex;
         [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:bt];
             [bt release];
@@ -244,6 +244,7 @@
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:index];
         StoreViewController* store = [[StoreViewController alloc] initWithNibName:@"StoreViewController" bundle:nil];
         store.storeURL = pkgObject.url;
+        store.view.tag = pkgObject.libID;
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
         UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;

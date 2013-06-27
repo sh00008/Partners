@@ -79,7 +79,7 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
 
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", self.info.title];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d/%@", self.info.libID, self.info.title];
 
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];

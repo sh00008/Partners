@@ -219,50 +219,6 @@
     _pkgArray = [db loadVoicePkgInfo];
 }
 
-- (void)checkPkgfromFolder;
-{
-    NSFileManager *fm = [NSFileManager defaultManager];
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *documentDirectory = [paths objectAtIndex:0];
-	if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-		[fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    
-    // create pkg
-    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    
-    NSMutableArray* array = [[NSMutableArray alloc] init];
-    
-    NSDirectoryEnumerator *dirEnum = [fm enumeratorAtPath:documentDirectory];
-    [dirEnum skipDescendants];
-    NSString* file = [dirEnum nextObject];
-    while (file) {
-        V_NSLog(@"%@", file);
-        NSRange range = [file rangeOfString:@"/" options:NSBackwardsSearch];
-        if (range.location != NSNotFound) {
-            file = [dirEnum nextObject];
-            continue;
-        }
-        
-        if ([[file pathExtension] length] == 0) {
-            if (_pkgArray == nil) {
-                _pkgArray = [[NSMutableArray alloc] init];
-            }
-            VoiceDataPkgObject* pkg = [[VoiceDataPkgObject alloc] init];
-            pkg.dataPath = [NSString stringWithFormat:@"%@/%@",documentDirectory, file];
-            pkg.dataTitle = file;
-            [_pkgArray addObject:pkg];
-            [pkg release];
-        }
-        file = [dirEnum nextObject];
-    }
-    
-    [array release];
-    
-}
-
 - (void)openSences:(id)sender
 {
     
@@ -363,7 +319,7 @@
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
             NSString *docsDir = [paths objectAtIndex:0];
-            NSString *waveDir = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR,_deleteTitle];
+            NSString *waveDir = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR, info.dataPath];
             if ([fm fileExistsAtPath:waveDir]) {
                 [fm removeItemAtPath:waveDir error:nil];
             }
