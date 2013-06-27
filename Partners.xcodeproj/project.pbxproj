@@ -164,6 +164,9 @@
 		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */; };
 		0DBE67A21778889F00AA9B57 /* 23.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A01778889F00AA9B57 /* 23.jpg */; };
 		0DBE67A31778889F00AA9B57 /* 24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A11778889F00AA9B57 /* 24.jpg */; };
+		0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */; };
+		0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */; };
+		0DBE67AD177CE0A400AA9B57 /* UIImageView+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67AA177CE0A400AA9B57 /* UIImageView+Curled.m */; };
 		0DC0D52717509BEB00684ED2 /* GTMGatherInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */; };
 		0DC0D52817509BEB00684ED2 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D4FF17509BEA00684ED2 /* GTMHTTPFetcher.m */; };
 		0DC0D52917509BEB00684ED2 /* GTMHTTPFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D50117509BEA00684ED2 /* GTMHTTPFetcherLogging.m */; };
@@ -431,6 +434,12 @@
 		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalMainViewController.m; path = Classes/Personal/PersonalMainViewController.m; sourceTree = SOURCE_ROOT; };
 		0DBE67A01778889F00AA9B57 /* 23.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 23.jpg; sourceTree = "<group>"; };
 		0DBE67A11778889F00AA9B57 /* 24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 24.jpg; sourceTree = "<group>"; };
+		0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurledViewBase.h; sourceTree = "<group>"; };
+		0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurledViewBase.m; sourceTree = "<group>"; };
+		0DBE67A7177CE0A400AA9B57 /* UIButton+Curled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Curled.h"; sourceTree = "<group>"; };
+		0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Curled.m"; sourceTree = "<group>"; };
+		0DBE67A9177CE0A400AA9B57 /* UIImageView+Curled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Curled.h"; sourceTree = "<group>"; };
+		0DBE67AA177CE0A400AA9B57 /* UIImageView+Curled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Curled.m"; sourceTree = "<group>"; };
 		0DC0D4FC17509BEA00684ED2 /* GTMGatherInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGatherInputStream.h; sourceTree = "<group>"; };
 		0DC0D4FD17509BEA00684ED2 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMGatherInputStream.m; sourceTree = "<group>"; };
 		0DC0D4FE17509BEA00684ED2 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
@@ -1022,6 +1031,19 @@
 			path = Classes/Favor/ProgressView;
 			sourceTree = SOURCE_ROOT;
 		};
+		0DBE67A4177CE0A400AA9B57 /* curledView */ = {
+			isa = PBXGroup;
+			children = (
+				0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */,
+				0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */,
+				0DBE67A7177CE0A400AA9B57 /* UIButton+Curled.h */,
+				0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */,
+				0DBE67A9177CE0A400AA9B57 /* UIImageView+Curled.h */,
+				0DBE67AA177CE0A400AA9B57 /* UIImageView+Curled.m */,
+			);
+			path = curledView;
+			sourceTree = "<group>";
+		};
 		0DC0D4FA17509BEA00684ED2 /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -1081,6 +1103,7 @@
 		0DC0D52217509BEA00684ED2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0DBE67A4177CE0A400AA9B57 /* curledView */,
 				0D2F1B72177C0CEB009A8A87 /* SSTextView */,
 				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
 				0DA148301750FAE4004EBCFF /* MGBox */,
@@ -1481,6 +1504,9 @@
 				0DBE679F177883BE00AA9B57 /* PersonalMainViewController.m in Sources */,
 				0D2F1B78177C0CEB009A8A87 /* SSTextView.m in Sources */,
 				0D2F1B79177C0CEB009A8A87 /* YIPopupTextView.m in Sources */,
+				0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */,
+				0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */,
+				0DBE67AD177CE0A400AA9B57 /* UIImageView+Curled.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,7 +41,7 @@
         [_scrollview addSubview:persnoal.view];
         persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         */
-        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] initWithStyle:UITableViewStylePlain];
         [_scrollview addSubview:persnoal.view];
         persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         

@@ -10,6 +10,8 @@
 #import "VoiceDef.h"
 #import "VoicePkgInfoObject.h"
 #import "Database.h"
+#import "UIButton+Curled.h"
+#import "YIPopupTextView.h"
 #import "StoreViewController.h"
 
 @interface PersonalMainViewController ()
@@ -99,9 +101,12 @@
             subView = nil;
         }
     }
+    
     if (section != 0) {
         return cell;
     }
+    
+    cell.contentView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     CGRect f = cell.contentView.frame;
     NSInteger alignX = 40;
     //if (IS_IPAD) {
@@ -120,8 +125,11 @@
     NSInteger r = 1;
     for (NSInteger libIndex = 0; libIndex < [_dataArray count]; libIndex++) {
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:libIndex];
-            UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-        bt.backgroundColor = [UIColor blueColor];
+        UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
+        [bt setContentMode:UIViewContentModeScaleToFill];
+        [bt setImage:[UIImage imageNamed:@"library.png"] borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
+        [bt setImage:[UIImage imageNamed:@"library.png"] borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateHighlighted];
+        
         bt.tag = libIndex;
         [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:bt];
@@ -137,9 +145,10 @@
             }
     }
     UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
+    [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
+    [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateHighlighted];
     [bt setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    bt.backgroundColor = [UIColor blueColor];
-    [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
+    [bt addTarget:self action:@selector(addNew) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:bt];
     [bt release];
 
@@ -260,4 +269,22 @@
        
     }
 }
+
+
+- (void)addNew
+{
+    YIPopupTextView * pop = [[YIPopupTextView alloc] initWithPlaceHolder:STRING_LISTENING maxCount:300];
+    [pop showInView:self.navigationController.view];
+}
+
+- (void)popupTextView:(YIPopupTextView*)textView willDismissWithText:(NSString*)text
+{
+
+}
+
+- (void)popupTextView:(YIPopupTextView*)textView didDismissWithText:(NSString*)text
+{
+    
+}
+
 @end
