@@ -13,4 +13,5 @@
     NSMutableArray* _dataArray;
 }
 - (void)loadLibaryInfo;
+- (void)reloadInfo;
 @end

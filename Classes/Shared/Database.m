@@ -163,7 +163,6 @@ static Database* _database;
 	[databaseLock unlock];
 
     LibaryInfo* info = [[LibaryInfo alloc] init];
-    info.libID = 1;
     info.url = STRING_STORE_URL_ADDRESS;
     [self insertLibaryInfo:info];
     [info release];
@@ -386,6 +385,7 @@ static Database* _database;
 		return NO;
 	}
     
+    info.libID = [self getlastRecordID:STRING_DB_TABLENAME_LIB_INFO];
     return YES;
 }
 
@@ -474,8 +474,6 @@ static Database* _database;
             object.libID = libID;
             [arrResult addObject:object];
             [object release];
-            break;
- 			
 		}
     } else {
 	}
@@ -668,5 +666,30 @@ static Database* _database;
     
     NSString* absolutePath = [NSString stringWithFormat:@"%@", documentDirectory];
     return absolutePath;
+}
+
+- (NSInteger)getlastRecordID:(NSString*)tableName {
+	BOOL bResult = YES;
+	NSInteger nID = -1;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	NSString *sql = [[NSString alloc] initWithFormat:@"SELECT last_insert_rowid() FROM %@ ",tableName ];
+    int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		nID =  sqlite3_column_int(statement, 0);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			bResult = NO;
+			nID = -1;
+		}
+    } else {
+		[databaseLock unlock];
+		bResult = NO;
+		nID = -1;
+	}
+	[sql release];
+	return nID;
 }
 @end
