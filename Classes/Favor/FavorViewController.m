@@ -41,7 +41,8 @@
     
     self.tableView = v;
     [v release];
-    
+
+
     self.tableView.delegate = (id)self;
     self.tableView.dataSource = (id)self;
     [self loadPkgArray];

@@ -208,6 +208,7 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = lesson.title;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont fontWithName:@"Arial" size:16];
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];

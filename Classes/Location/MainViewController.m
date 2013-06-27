@@ -60,6 +60,14 @@
         [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0)];
     }
     
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.text = STRING_MY_RES;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:16];
+    self.navigationItem.titleView = titleLabel;
+    [titleLabel release];
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
  	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_OPEN_LESSONS object:nil];
     
