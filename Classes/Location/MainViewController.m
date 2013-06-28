@@ -70,8 +70,15 @@
     [titleLabel release];
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
  	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_OPEN_LESSONS object:nil];
+  	[center addObserver:self selector:@selector(openPkg:) name:NOTIFICATION_OPEN_PKG object:nil];
+   
     
 	// Do any additional setup after loading the view.
+}
+
+- (void)openPkg:(NSNotification*)aNotification;
+{
+    [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0)];
 }
 
 - (void)openLessonsNotification:(NSNotification*)aNotification;
@@ -86,6 +93,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:NOTIFICATION_OPEN_PKG object:nil];
+    [super dealloc];
 }
 
 @end

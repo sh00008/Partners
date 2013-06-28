@@ -144,7 +144,7 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     //if (IS_IPAD) {
         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
-        UIImage* im = [UIImage imageNamed:@"Icon_New_L@2x.png"];
+        UIImage* im = [UIImage imageNamed:@"NEW.png"];
         UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
         newCourse.image = newIm;
         [cell addSubview:newCourse];
