@@ -117,14 +117,15 @@
      }*/
     NSInteger fromX = IS_IPAD ? alignX : 0;
     NSInteger dx = fromX;
-    NSInteger dy = 20;
+    NSInteger yspace = 20;
+    NSInteger dy = yspace;
     NSInteger w =  (IS_IPAD ? MAIN_COURSE_GRID_W_IPAD : MAIN_COURSE_GRID_W);
     NSInteger h =  (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
     NSInteger seperator = IS_IPAD ? 10 : 1;
     NSInteger count = IS_IPAD ? 5 : 3;
     NSInteger r = 1;
+    NSInteger c = 1;
     for (NSInteger libIndex = 0; libIndex < [_dataArray count]; libIndex++) {
-        LibaryInfo* pkgObject = [_dataArray objectAtIndex:libIndex];
         UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         [bt setContentMode:UIViewContentModeScaleToFill];
         [bt setImage:[UIImage imageNamed:@"library.png"] borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
@@ -132,23 +133,25 @@
         
         bt.tag = libIndex;
         [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:bt];
-            [bt release];
-            if ((libIndex >= 2) && (r * (libIndex + 1)) % count == 0 ) {
-                // next row
-                r++;
-                dy = h + seperator;
-                dx = fromX;
-            } else {
-                dx += w + seperator;
-                dy = 20;
-            }
+        [cell.contentView addSubview:bt];
+        [bt release];
+        // change 
+        if (c % count == 0) {
+            // next row
+            r++;
+            dy = h * (r - 1) + r * yspace;
+            dx = fromX;
+            c = 1;
+        } else {
+            c++;
+            dx += w + seperator + yspace;
+        }
     }
     UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
     [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
     [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateHighlighted];
     [bt setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    [bt addTarget:self action:@selector(addNew) forControlEvents:UIControlEventTouchUpInside];
+    [bt addTarget:self action:@selector(addNewLib) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:bt];
     [bt release];
 
@@ -172,15 +175,11 @@
         NSInteger nSpace = IS_IPAD ? 20 : 10;
         NSInteger count = IS_IPAD ? 5 : 3;
         NSInteger nTotalCount = [_dataArray count] + 1;
-            NSInteger nMod = [_dataArray count] % count;
-            if (nMod == 0) {
-                NSInteger nCount = nTotalCount / count;
-                nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
-            } else {
-                NSInteger nCount = (nTotalCount / count + 1);
-                nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
-                
-            }
+        NSInteger nMod = nTotalCount % count;
+        NSInteger nQ = nTotalCount / count;
+        NSInteger r = (nMod == 0) ? nQ : (nQ + 1);
+        NSInteger h = (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
+        nHeight = h * r + r * 20;
         return nHeight + nSpace;
     } else {
         return 44;
@@ -270,21 +269,42 @@
     }
 }
 
-
-- (void)addNew
+- (void)addNewLib
 {
-    YIPopupTextView * pop = [[YIPopupTextView alloc] initWithPlaceHolder:STRING_LISTENING maxCount:300];
-    [pop showInView:self.navigationController.view];
-}
-
-- (void)popupTextView:(YIPopupTextView*)textView willDismissWithText:(NSString*)text
-{
-
-}
-
-- (void)popupTextView:(YIPopupTextView*)textView didDismissWithText:(NSString*)text
-{
+    YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:STRING_ENTER_LIB_ADDRESS maxCount:300];
+    popupTextView.delegate = (id)self;
+    [popupTextView showInView:self.tableView];
     
+}
+
+- (void)reloadInfo
+{
+    if (_dataArray != nil) {
+        [_dataArray release];
+        _dataArray = nil;
+    }
+    Database* db = [Database sharedDatabase];
+    _dataArray = [db loadLibaryInfo];
+    [self.tableView reloadData];
+}
+
+#pragma mark YIPopupTextViewDelegate
+
+- (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text
+{
+    if (text != nil) {
+        Database* db = [Database sharedDatabase];
+        LibaryInfo* info = [[LibaryInfo alloc] init];
+        info.url = STRING_STORE_URL_ADDRESS;
+        [db insertLibaryInfo:info];
+        [info release];
+        [self reloadInfo];
+    }
+}
+
+- (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
+{
+    NSLog(@"didDismissWithText");
 }
 
 @end

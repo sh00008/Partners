@@ -61,23 +61,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSInteger index = indexPath.row;
-    NSInteger nHeight = 44.0f;
-    NSInteger nSpace = IS_IPAD ? 20 : 10;
-    NSInteger count = IS_IPAD ? 5 : 3;
-   if (index < [_pkgArray count]) {
-        VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:index];
-        NSInteger nMod = [pkgObject.dataPkgCourseTitleArray count] % count;
-        if (nMod == 0) {
-            NSInteger nCount = [pkgObject.dataPkgCourseTitleArray count] / count;
-            nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
-        } else {
-            NSInteger nCount = ([pkgObject.dataPkgCourseTitleArray count] / count + 1);
-            nHeight = 44.0 + nCount * (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H) + (nCount - 1) * 1;
-           
-        }
+    if (indexPath.section == 0) {
+        NSInteger nHeight = 44.0f;
+        NSInteger nSpace = IS_IPAD ? 20 : 10;
+        NSInteger count = IS_IPAD ? 5 : 3;
+        NSInteger nTotalCount = [_pkgArray count];
+        NSInteger nMod = nTotalCount % count;
+        NSInteger nQ = nTotalCount / count;
+        NSInteger r = (nMod == 0) ? nQ : (nQ + 1);
+        NSInteger h = (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
+        nHeight = h * r + r * 20 + nSpace;
+        return nHeight + nSpace;
+    } else {
+        return 44;
     }
-    return nHeight + nSpace;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -120,6 +117,7 @@
     NSInteger seperator = IS_IPAD ? 10 : 1;
     NSInteger count = IS_IPAD ? 5 : 3;
     NSInteger r = 1;
+    NSInteger c = 1;
 	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
         FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
@@ -129,14 +127,15 @@
         [cell.pkgCourseBGView addSubview:bt];
         [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
         [bt release];
-        if ((i >= 2) && (r * (i + 1)) % count == 0 ) {
+        if (c % count == 0) {
             // next row
             r++;
-            dy = h + seperator;
+            dy = h * (r - 1) + r * seperator;
             dx = fromX;
+            c = 1;
         } else {
-            dx += w + seperator;
-            //dy = 0;
+            c++;
+            dx += w + seperator ;
         }
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
