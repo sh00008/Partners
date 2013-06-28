@@ -292,7 +292,7 @@
 
 - (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text
 {
-    if (text != nil) {
+    if (text.length > 1) {
         Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];
         info.url = STRING_STORE_URL_ADDRESS;
