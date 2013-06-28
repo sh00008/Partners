@@ -121,8 +121,10 @@
 - (void)setVoiceData:(DownloadDataPkgInfo*)info
 {
     [self setButtomImage];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    info.libID = lib.libID;
     Database* db = [Database sharedDatabase];
-    if ([db loadVoicePkgInfoByTitle:info.title] != nil) {
+    if ([db loadVoicePkgInfo:info] != nil) {
         [self.downloadButton setTitle:STRING_DOWNLOADED forState:UIControlStateNormal];
         [self.downloadButton setEnabled:NO];
         [self.downloadButton setHidden:YES];

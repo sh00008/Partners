@@ -10,6 +10,29 @@
 #import <sqlite3.h>
 #import "VoiceDef.h"
 
+static CurrentLibrary* _currentLibrary;
+
+@implementation CurrentLibrary
+@synthesize libID, dataPath, dataTitle;
++ (CurrentLibrary*)sharedCurrentLibrary
+{
+	if (_currentLibrary == nil) {
+		_currentLibrary = [[CurrentLibrary alloc] init];
+	}
+	
+	return _currentLibrary;
+}
+
++ (void)releaseCurrentLibrary
+{
+    if (_currentLibrary != nil) {
+        [_currentLibrary release];
+        _currentLibrary = nil;
+    }
+}
+@end;
+
+
 @implementation Database
 
 static Database* _database;
@@ -502,6 +525,61 @@ static Database* _database;
 	return uniqueId;
 }
 
+- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
+{
+    NSString* title = downloadinfo.title;
+    
+    [databaseLock lock];
+	VoiceDataPkgObjectFullInfo* info = nil;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_LIBARY_ID, downloadinfo.libID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            info = [[VoiceDataPkgObjectFullInfo alloc] init];
+            char *titleChars = (char *) sqlite3_column_text(statement, 0);
+            char *pathChars = (char *) sqlite3_column_text(statement, 1);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            // coverChars;
+            char *urlChars = (char *) sqlite3_column_text(statement, 3);
+            char *timeChars = (char *) sqlite3_column_text(statement, 4);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            if (pathChars != nil) {
+                NSString *path = [NSString stringWithUTF8String:pathChars];
+                info.dataPath = [NSString stringWithFormat:@"%@", [self getAbsolutelyPath:path]];
+                info.dataCover = [NSString stringWithFormat:@"%@/cover", [self getAbsolutelyPath:path]] ;
+            }
+            if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.dataTitle = [NSString stringWithFormat:@"%@",title];
+            }
+            if (urlChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:urlChars];
+                info.url = [NSString stringWithFormat:@"%@",title];
+            }
+            if (timeChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:timeChars];
+                info.createTime = [NSString stringWithFormat:@"%@",title];
+            }
+            break;
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    NSInteger nID = [self getVoicePkgInfoID:title];
+    if (nID != -1) {
+        NSMutableArray* courseTitleArray = [self getCourseTitleByID:nID];
+        if ([courseTitleArray count] > 0) {
+            info.dataPkgCourseTitleArray = courseTitleArray ;
+        }
+    }
+	return [info autorelease];
+    
+}
+
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
 {
     [databaseLock lock];
@@ -555,6 +633,58 @@ static Database* _database;
 
 }
 
+- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;
+{
+    [databaseLock lock];
+	VoiceDataPkgObjectFullInfo* info = nil;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_VOICE_PKG_TITLE , STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_PATH, path];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    NSString* title = nil;
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            info = [[VoiceDataPkgObjectFullInfo alloc] init];
+            char *titleChars = (char *) sqlite3_column_text(statement, 0);
+            char *pathChars = (char *) sqlite3_column_text(statement, 1);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            // coverChars;
+            char *urlChars = (char *) sqlite3_column_text(statement, 3);
+            char *timeChars = (char *) sqlite3_column_text(statement, 4);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            if (pathChars != nil) {
+                NSString *path = [NSString stringWithUTF8String:pathChars];
+                info.dataPath = [NSString stringWithFormat:@"%@", [self getAbsolutelyPath:path]];
+                info.dataCover = [NSString stringWithFormat:@"%@/cover", [self getAbsolutelyPath:path]] ;
+            }
+            if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.dataTitle = [NSString stringWithFormat:@"%@",title];
+            }
+            if (urlChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:urlChars];
+                info.url = [NSString stringWithFormat:@"%@",title];
+            }
+            if (timeChars != nil) {
+                title = [NSString stringWithUTF8String:timeChars];
+                info.createTime = [NSString stringWithFormat:@"%@",title];
+            }
+            break;
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    NSInteger nID = [self getVoicePkgInfoID:title];
+    if (nID != -1) {
+        NSMutableArray* courseTitleArray = [self getCourseTitleByID:nID];
+        if ([courseTitleArray count] > 0) {
+            info.dataPkgCourseTitleArray = courseTitleArray ;
+        }
+    }
+	return [info autorelease];
+}
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 {
    // [databaseLock lock];

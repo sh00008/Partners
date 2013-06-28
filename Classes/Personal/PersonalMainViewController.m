@@ -249,10 +249,15 @@
     UIButton* button = (UIButton*)sender;
     NSInteger index = button.tag;
     if (index < [_dataArray count]) {
+        
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:index];
         StoreViewController* store = [[StoreViewController alloc] initWithNibName:@"StoreViewController" bundle:nil];
         store.storeURL = pkgObject.url;
         store.view.tag = pkgObject.libID;
+        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+        if (lib != nil) {
+            lib.libID = pkgObject.libID;
+        }
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
         UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;

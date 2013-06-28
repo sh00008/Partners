@@ -26,6 +26,15 @@
 
 #define STRING_DB_TABLENAME_LIB_INFO  @"LibaryInfo"
 #define STRING_DB_LIBARY_ID         @"LibaryID"
+@interface CurrentLibrary: NSObject {
+    
+}
++ (CurrentLibrary*)sharedCurrentLibrary;
+
+@property (nonatomic, assign) NSInteger libID;
+@property (nonatomic, retain) NSString* dataPath;
+@property (nonatomic, retain) NSString*  dataTitle;
+@end
 
 @interface Database : NSObject {
  	Database* _database;
@@ -46,7 +55,9 @@
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
 - (NSMutableArray*)loadLibaryInfo;
+- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
+- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;
 - (BOOL)deleteCourseInfoByTitle:(NSString*)title;

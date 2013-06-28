@@ -226,6 +226,14 @@
     LessonsViewController* lessons = [[LessonsViewController alloc] initWithNibName:@"LessonsViewController" bundle:nil];
     lessons.dataPath = button.pkgPath;
     lessons.scenesName = button.pkgTitle;
+    NSRange r = [button.pkgPath rangeOfString:STRING_VOICE_PKG_DIR];
+    if (r.location != NSNotFound) {
+        NSString* path = [button.pkgPath substringFromIndex:(r.location + r.length + 1)];
+        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+        lib.dataPath = path;
+        lib.dataTitle = button.pkgTitle;
+       
+    }
     NSLog(@"%@", button.pkgPath);
     NSLog(@"%@", button.pkgTitle);
     lessons.scenesName = button.pkgTitle;

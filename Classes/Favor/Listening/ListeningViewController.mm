@@ -488,7 +488,8 @@
 {
    Database* db = [Database sharedDatabase];
     
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:[self.delegate getPkgTitle]];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
     if (info == nil) {
         return NO;
     }
@@ -505,8 +506,8 @@
 {
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
-    
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:[self.delegate getPkgTitle]];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
     if (info == nil) {
         return;
     }
@@ -525,7 +526,7 @@
         NSString* xatFile = [dataFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XAT];
         NSString* xatURLpath = [NSString stringWithFormat:@"%@/%@/%@", url, lesson.path, xatFile];
         
-        NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, [self.delegate getCourseTitle], lesson.path, xatFile];
+        NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, lib.dataTitle, lesson.path, xatFile];
         V_NSLog(@"xatURLPath:  %@", xatURLpath);
         V_NSLog(@"xatDataPath:  %@", xatDatafile);
         
@@ -555,7 +556,8 @@
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
     
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:[self.delegate getPkgTitle]];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
     if (info == nil) {
         return;
     }
@@ -598,7 +600,8 @@
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
     
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:[self.delegate getPkgTitle]];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
     if (info == nil) {
         return;
     }
