@@ -61,19 +61,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.section == 0) {
+    NSInteger nRow = indexPath.row;
+    if (nRow < [_pkgArray count]) {
+        VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
         NSInteger nHeight = 44.0f;
         NSInteger nSpace = IS_IPAD ? 20 : 10;
         NSInteger count = IS_IPAD ? 5 : 3;
-        NSInteger nTotalCount = [_pkgArray count];
+        NSInteger nTotalCount = [pkgObject.dataPkgCourseTitleArray count];
         NSInteger nMod = nTotalCount % count;
         NSInteger nQ = nTotalCount / count;
         NSInteger r = (nMod == 0) ? nQ : (nQ + 1);
         NSInteger h = (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
-        nHeight = h * r + r * 20 + nSpace;
+        nHeight = h * r + r * 20 + 20;
         return nHeight + nSpace;
+
     } else {
-        return 44;
+        return 44.0f;
     }
 }
 
