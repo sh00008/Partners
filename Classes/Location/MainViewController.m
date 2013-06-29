@@ -78,7 +78,13 @@
 
 - (void)openPkg:(NSNotification*)aNotification;
 {
-    [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0)];
+    [self performSelector:@selector(setFavorViewPosition) withObject:nil afterDelay:1.0];
+}
+
+- (void)setFavorViewPosition
+{
+    [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0) animated:YES];
+ 
 }
 
 - (void)openLessonsNotification:(NSNotification*)aNotification;
