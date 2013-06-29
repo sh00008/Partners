@@ -49,7 +49,11 @@
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
  }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -121,6 +125,17 @@
     NSInteger count = IS_IPAD ? 5 : 3;
     NSInteger r = 1;
     NSInteger c = 1;
+    NSInteger libID = 0;
+    NSRange range = [pkgObject.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
+    if (range.location != NSNotFound) {
+        NSString* path = [pkgObject.dataPath substringFromIndex:(range.location + range.length + 1)];
+        range = [path rangeOfString:@"/"];
+        if (range.location != NSNotFound) {
+            libID = [[path substringToIndex:(range.location + range.length)] intValue] ;;
+            cell.tag = libID;
+        }
+        
+    }
 	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
         FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
         NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
@@ -143,12 +158,15 @@
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     //if (IS_IPAD) {
+    BOOL bListened = [[Database sharedDatabase] getPkgIsListened:pkgObject.dataTitle withLibID:libID];
+    if (!bListened) {
         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
         UIImage* im = [UIImage imageNamed:@"NEW.png"];
         UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
         newCourse.image = newIm;
         [cell addSubview:newCourse];
         [newCourse release];
+    }
 
     /*} else {
         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
@@ -307,6 +325,7 @@
     UIButton* b = (UIButton*)sender;
     FavorViewCell *cell = (FavorViewCell*)[[b superview] superview];
     _deleteTitle = cell.pkgTitle.text;
+    _deleteLibID = cell.tag;
     [_deleteTitle retain];
     NSString *message = [NSString stringWithFormat:STRING_DELETEBOOK_ALERT_MESSAGE, _deleteTitle];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_DELETEBOOK_ALERT_TITLE
@@ -323,7 +342,7 @@
     if (buttonIndex == 0) {
         // confirm
         Database* db = [Database sharedDatabase];
-        VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:_deleteTitle];
+        VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByTitle:_deleteTitle withLibID:_deleteLibID];
         if (info != nil) {
             NSFileManager* fm = [NSFileManager defaultManager];
             [fm removeItemAtPath:info.dataPath error:nil];
@@ -337,7 +356,7 @@
             
         }
         
-        [db deleteVoicePkgInfoByTitle:_deleteTitle];
+        [db deleteVoicePkgInfoByTitle:_deleteTitle withLibID:_deleteLibID];
         [self reloadPkgTable];
     } else {
         // cancel

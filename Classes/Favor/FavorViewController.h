@@ -15,6 +15,7 @@
     NSMutableArray* _pkgArray;
     BOOL _bEdit;
     NSString* _deleteTitle;
+    NSInteger _deleteLibID;
 
 }
 @property (nonatomic, retain) DMCustomModalViewController *modal;

@@ -133,6 +133,9 @@
 
 - (void)initMembers;
 {
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    Database* db = [Database sharedDatabase];
+    [db setPkgListendwithPath:lib.dataPath];
     lastClickIndex = -1;
     clickindex = -1;
     NSString* backString = STRING_BACK;

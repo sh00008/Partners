@@ -20,6 +20,7 @@
 #define STRING_DB_VOICE_PKG_COVER      @"Cover"
 #define STRING_DB_VOICE_PKG_URL        @"URL"
 #define STRING_DB_VOICE_PKG_CREATEDATE @"CreateDate"
+#define STRING_DB_VOICE_IS_LISTENED    @"IsListened"
 
 #define STRING_DB_TABLENAME_PKG_DOWNLOADINFO @"VoicePkgDownloadInfo"
 #define STRING_DB_VOICE_PKG_DOWNLOAD_FLAG    @"Flag"
@@ -51,16 +52,19 @@
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
 - (BOOL)insertLibaryInfo:(LibaryInfo*)info;
 
-- (NSInteger)getVoicePkgInfoID:(NSString*)title;
+- (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
 - (NSMutableArray*)loadLibaryInfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
-- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title;
+- (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
-- (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title;
-- (BOOL)deleteCourseInfoByTitle:(NSString*)title;
+- (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
+- (BOOL)deleteCourseInfoByTitle:(NSString*)title withPath:(NSString*)path;
 - (NSString*)getAbsolutelyPath:(NSString*)path;
 - (NSInteger)getlastRecordID:(NSString*)tableName;
+- (BOOL)setPkgListend:(NSString*)title withLibID:(NSInteger)libID;
+- (BOOL)setPkgListendwithPath:(NSString*)path;
+- (BOOL)getPkgIsListened:(NSString*)title withLibID:(NSInteger)libID;
 @end
