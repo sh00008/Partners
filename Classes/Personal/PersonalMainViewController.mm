@@ -257,8 +257,12 @@
         store.view.tag = pkgObject.libID;
         CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
         if (lib != nil) {
-            lib.libID = pkgObject.libID;
-            [self getDeviceID];
+            NSInteger libid = pkgObject.libID;
+            if (libid != lib.libID) {
+                lib.libID = pkgObject.libID;
+                [self getDeviceID];
+
+            }
         }
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
