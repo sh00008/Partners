@@ -45,8 +45,7 @@
 #define STRING_KEY_LESSONPATH @"lessonPath"
 #define STRING_KEY_TRYSERVERLIST @"tryServerListIndex"
 #define STRING_KEY_FILETYPE @"fileType"
-#define STRING_KEY_FILETYPE_XAT @"xat"
-#define STRING_KEY_FILETYPE_SIN @"sin"
+#define STRING_KEY_FILETYPE_XIN @"xin"
 #define STRING_KEY_FILETYPE_ISB @"isb"
 #define STRING_KEY_FILETYPE_LES @"les"
 
@@ -497,7 +496,7 @@
     if (info == nil) {
         return NO;
     }
-    [self downloadXATByURL:info.url withTryIndex:-1];
+    [self downloadXINByURL:info.url withTryIndex:-1];
     [self downloadISBByURL:info.url withTryIndex:-1];
     [self downloadLESByURL:info.url withTryIndex:-1];
     if (!_bDownloadedISB || !_bDownloadedXAT) {
@@ -506,7 +505,7 @@
     return YES;
 }
 
-- (void)downloadXATByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex
+- (void)downloadXINByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex
 {
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
@@ -527,7 +526,7 @@
     V_NSLog(@"try list xat %d", tryIndex);
     NSString* dataFile = [lesson.file substringToIndex:[lesson.file length] - 4];
     {
-        NSString* xatFile = [dataFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XAT];
+        NSString* xatFile = [dataFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XIN];
         NSString* xatURLpath = [NSString stringWithFormat:@"%@/%@/%@", url, lesson.path, xatFile];
         
         NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, lib.dataTitle, lesson.path, xatFile];
@@ -537,9 +536,9 @@
         if (![fileManager fileExistsAtPath:xatDatafile]) {
             NSURL* url = [NSURL URLWithString:xatURLpath];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            [request setValue:STRING_KEY_FILETYPE_XAT forHTTPHeaderField:@"User-Agent"];
+            [request setValue:STRING_KEY_FILETYPE_XIN forHTTPHeaderField:@"User-Agent"];
             NSMutableDictionary* userDic = [[[NSMutableDictionary alloc] initWithDictionary:dic] autorelease];
-            [userDic setObject:STRING_KEY_FILETYPE_XAT forKey:STRING_KEY_FILETYPE];
+            [userDic setObject:STRING_KEY_FILETYPE_XIN forKey:STRING_KEY_FILETYPE];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
@@ -663,8 +662,8 @@
                      if (index < [serverlist count]) {
                         NSString* url = [serverlist objectAtIndex:index];
                         NSString* fileType = [dic objectForKey:STRING_KEY_FILETYPE];
-                        if ([fileType isEqualToString:STRING_KEY_FILETYPE_XAT]) {
-                            [self downloadXATByURL:url withTryIndex:index];
+                        if ([fileType isEqualToString:STRING_KEY_FILETYPE_XIN]) {
+                            [self downloadXINByURL:url withTryIndex:index];
                          } else if ([fileType isEqualToString:STRING_KEY_FILETYPE_ISB]) {
                             [self downloadISBByURL:url withTryIndex:index];
                         }
@@ -690,8 +689,8 @@
         //V_NSLog(@"try list %d", [indexNumber integerValue]);
         
         NSString* fileType = [dic objectForKey:STRING_KEY_FILETYPE];
-        if ([fileType isEqualToString:STRING_KEY_FILETYPE_XAT]) {
-            xatFile = [xatFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XAT];
+        if ([fileType isEqualToString:STRING_KEY_FILETYPE_XIN]) {
+            xatFile = [xatFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XIN];
             _bDownloadedXAT = YES;
          } else if ([fileType isEqualToString:STRING_KEY_FILETYPE_ISB]) {
             xatFile = [xatFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_ISB];

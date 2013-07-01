@@ -194,11 +194,11 @@ static bool bLoadModel = NO;
         [isaybios ISAYB_SetLesson:[les cStringUsingEncoding:NSUTF8StringEncoding]];
         
         // 读取加密xml
-        NSString* xatFile = [fullFilename stringByAppendingPathExtension:@"xat"];
+        NSString* xatFile = [fullFilename stringByAppendingPathExtension:@"xin"];
         const char* infile = [xatFile cStringUsingEncoding:NSUTF8StringEncoding];
         unsigned char* filedata = nil;
 
-        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)"jialidingliyangx", 16);
+        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)"71a9d877-9772-4cde-8e14-59e2e70a408f", 36);
 
         tbxml = [[TBXML tbxmlWithXMLData:[NSData dataWithBytes:filedata length:nLen]] retain];
         FreeBuffer(&filedata);

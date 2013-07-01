@@ -106,10 +106,10 @@ long LoadDecodeBuffer(const char * infile, unsigned char** fileData, const unsig
     fread(buffer, 1, filelen, fid);
     fclose(fid);
     
+    SetEncryptKeyEx(decodeKey, keyLen);
     long fileDecodeLen = filelen;
     *fileData = new unsigned char[fileDecodeLen];
-    DecodeFunction((const unsigned char *)buffer, filelen,(unsigned char const*)decodeKey, keyLen,
-                   (unsigned char const*)decodeKey, keyLen, *fileData, fileDecodeLen, BLOCK_CIPHER_AES_128_AND_CTR);
+    SmartDecode((const unsigned char *)buffer, filelen, *fileData, fileDecodeLen);
     return fileDecodeLen;
 }
 
