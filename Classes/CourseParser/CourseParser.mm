@@ -16,7 +16,8 @@
 #import "VoiceDef.h"
 
 #import "isaybiosscroe.h"
-#import "IsaybEncrypt.h"
+#import "ISaybEncrypt2.h"
+#import "SmartEncrypt.h"
 
 @implementation CourseParser
 
@@ -194,11 +195,13 @@ static bool bLoadModel = NO;
         
         // 读取加密xml
         NSString* xatFile = [fullFilename stringByAppendingPathExtension:@"xat"];
+        const char* infile = [xatFile cStringUsingEncoding:NSUTF8StringEncoding];
         unsigned char* filedata = nil;
-        long nLen = [IsaybEncrypt LoadDecodeBuffer:xatFile to:&filedata];
+
+        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)"jialidingliyangx", 16);
 
         tbxml = [[TBXML tbxmlWithXMLData:[NSData dataWithBytes:filedata length:nLen]] retain];
-        [IsaybEncrypt FreeBuffer:&filedata];
+        FreeBuffer(&filedata);
 		
 		TBXMLElement* root = tbxml.rootXMLElement;
 		if (root) {

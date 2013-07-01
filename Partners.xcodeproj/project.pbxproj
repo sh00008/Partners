@@ -52,7 +52,6 @@
 		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
-		0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */; };
 		0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAD176A11C600873CF8 /* AQPlayer.mm */; };
 		0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAF176A11C600873CF8 /* AQRecorder.mm */; };
 		0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAB2176A11C600873CF8 /* libisayscore.a */; };
@@ -178,7 +177,6 @@
 		0DC0D53C17509BEB00684ED2 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D52417509BEA00684ED2 /* Database.m */; };
 		0DC0D53D17509BEB00684ED2 /* VoicePkgInfoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D52617509BEB00684ED2 /* VoicePkgInfoObject.m */; };
 		0DC0D55D17509D0100684ED2 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D54117509D0100684ED2 /* Course.m */; };
-		0DC0D55E17509D0100684ED2 /* CourseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D54317509D0100684ED2 /* CourseParser.m */; };
 		0DC0D55F17509D0100684ED2 /* DayParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D54517509D0100684ED2 /* DayParser.m */; };
 		0DC0D56017509D0100684ED2 /* Lesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D54717509D0100684ED2 /* Lesson.m */; };
 		0DC0D56117509D0100684ED2 /* NSPhoneticSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D54917509D0100684ED2 /* NSPhoneticSymbol.m */; };
@@ -195,6 +193,18 @@
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
 		0DDD8828176413E90078D6B7 /* CollapseClickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */; };
+		9539609F1780592900546B92 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 953960921780592900546B92 /* base64.cpp */; };
+		953960A01780592900546B92 /* encryp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 953960951780592900546B92 /* encryp.cpp */; };
+		953960A11780592900546B92 /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960971780592900546B92 /* md5_dgst.c */; };
+		953960A21780592900546B92 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960991780592900546B92 /* md5_one.c */; };
+		953960A31780592900546B92 /* SmartEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9539609C1780592900546B92 /* SmartEncrypt.cpp */; };
+		953960A6178059F900546B92 /* ISaybEncrypt2.mm in Sources */ = {isa = PBXBuildFile; fileRef = 953960A5178059F900546B92 /* ISaybEncrypt2.mm */; };
+		953960A717805AAB00546B92 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 953960921780592900546B92 /* base64.cpp */; };
+		953960A817805AAB00546B92 /* encryp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 953960951780592900546B92 /* encryp.cpp */; };
+		953960A917805AAB00546B92 /* SmartEncrypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9539609C1780592900546B92 /* SmartEncrypt.cpp */; };
+		953960AB17805ACF00546B92 /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960971780592900546B92 /* md5_dgst.c */; };
+		953960AC17805ACF00546B92 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960991780592900546B92 /* md5_one.c */; };
+		953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 953960AD1781B0AA00546B92 /* CourseParser.mm */; };
 		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
 /* End PBXBuildFile section */
 
@@ -277,7 +287,6 @@
 		0D50AAA4176A036500873CF8 /* libisayscore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayscore.a; sourceTree = "<group>"; };
 		0D50AAA6176A05BD00873CF8 /* isaybioDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybioDecode.h; sourceTree = "<group>"; };
 		0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayioDecode.a; sourceTree = "<group>"; };
-		0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIsaybEncrypt.a; sourceTree = "<group>"; };
 		0D50AAAC176A11C600873CF8 /* AQPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQPlayer.h; sourceTree = "<group>"; };
 		0D50AAAD176A11C600873CF8 /* AQPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQPlayer.mm; sourceTree = "<group>"; };
 		0D50AAAE176A11C600873CF8 /* AQRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecorder.h; sourceTree = "<group>"; };
@@ -445,7 +454,6 @@
 		0DC0D54017509D0100684ED2 /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		0DC0D54117509D0100684ED2 /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		0DC0D54217509D0100684ED2 /* CourseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseParser.h; sourceTree = "<group>"; };
-		0DC0D54317509D0100684ED2 /* CourseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseParser.m; sourceTree = "<group>"; };
 		0DC0D54417509D0100684ED2 /* DayParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayParser.h; sourceTree = "<group>"; };
 		0DC0D54517509D0100684ED2 /* DayParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayParser.m; sourceTree = "<group>"; };
 		0DC0D54617509D0100684ED2 /* Lesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lesson.h; sourceTree = "<group>"; };
@@ -471,7 +479,6 @@
 		0DC0D55C17509D0100684ED2 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		0DC0D56D17509D8800684ED2 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaveFile.cpp; sourceTree = "<group>"; };
 		0DC0D56E17509D8800684ED2 /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveFile.h; sourceTree = "<group>"; };
-		0DC0D57017509D8800684ED2 /* IsaybEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsaybEncrypt.h; sourceTree = "<group>"; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -479,6 +486,21 @@
 		0DDD8822176413E90078D6B7 /* CollapseClickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickCell.h; sourceTree = "<group>"; };
 		0DDD8823176413E90078D6B7 /* CollapseClickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClickCell.m; sourceTree = "<group>"; };
 		0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollapseClickCell.xib; sourceTree = "<group>"; };
+		9539605C177FDBE600546B92 /* ISaybEncrypt2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISaybEncrypt2.h; sourceTree = "<group>"; };
+		953960921780592900546B92 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64.cpp; path = SmartEncryt/base64.cpp; sourceTree = "<group>"; };
+		953960931780592900546B92 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SmartEncryt/base64.h; sourceTree = "<group>"; };
+		953960941780592900546B92 /* e_os2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = e_os2.h; path = SmartEncryt/e_os2.h; sourceTree = "<group>"; };
+		953960951780592900546B92 /* encryp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encryp.cpp; path = SmartEncryt/encryp.cpp; sourceTree = "<group>"; };
+		953960961780592900546B92 /* encryp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encryp.h; path = SmartEncryt/encryp.h; sourceTree = "<group>"; };
+		953960971780592900546B92 /* md5_dgst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5_dgst.c; path = SmartEncryt/md5_dgst.c; sourceTree = "<group>"; };
+		953960981780592900546B92 /* md5_locl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5_locl.h; path = SmartEncryt/md5_locl.h; sourceTree = "<group>"; };
+		953960991780592900546B92 /* md5_one.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5_one.c; path = SmartEncryt/md5_one.c; sourceTree = "<group>"; };
+		9539609A1780592900546B92 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = SmartEncryt/md5.h; sourceTree = "<group>"; };
+		9539609B1780592900546B92 /* md32_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md32_common.h; path = SmartEncryt/md32_common.h; sourceTree = "<group>"; };
+		9539609C1780592900546B92 /* SmartEncrypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmartEncrypt.cpp; path = SmartEncryt/SmartEncrypt.cpp; sourceTree = "<group>"; };
+		9539609D1780592900546B92 /* SmartEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartEncrypt.h; path = SmartEncryt/SmartEncrypt.h; sourceTree = "<group>"; };
+		953960A5178059F900546B92 /* ISaybEncrypt2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ISaybEncrypt2.mm; sourceTree = "<group>"; };
+		953960AD1781B0AA00546B92 /* CourseParser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CourseParser.mm; sourceTree = "<group>"; };
 		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -496,7 +518,6 @@
 				0D1531691740B20000633FA0 /* CoreGraphics.framework in Frameworks */,
 				0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */,
 				0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */,
-				0D50AAAA176A062B00873CF8 /* libIsaybEncrypt.a in Frameworks */,
 				0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1031,7 +1052,7 @@
 				0DC0D54017509D0100684ED2 /* Course.h */,
 				0DC0D54117509D0100684ED2 /* Course.m */,
 				0DC0D54217509D0100684ED2 /* CourseParser.h */,
-				0DC0D54317509D0100684ED2 /* CourseParser.m */,
+				953960AD1781B0AA00546B92 /* CourseParser.mm */,
 				0DC0D54417509D0100684ED2 /* DayParser.h */,
 				0DC0D54517509D0100684ED2 /* DayParser.m */,
 				0DC0D54617509D0100684ED2 /* Lesson.h */,
@@ -1093,8 +1114,9 @@
 		0DC0D56F17509D8800684ED2 /* XMLDecrypt */ = {
 			isa = PBXGroup;
 			children = (
-				0D50AAA9176A062B00873CF8 /* libIsaybEncrypt.a */,
-				0DC0D57017509D8800684ED2 /* IsaybEncrypt.h */,
+				9539606117803AAF00546B92 /* SmartEncrypt */,
+				953960A5178059F900546B92 /* ISaybEncrypt2.mm */,
+				9539605C177FDBE600546B92 /* ISaybEncrypt2.h */,
 			);
 			name = XMLDecrypt;
 			path = Classes/XMLDecrypt;
@@ -1123,6 +1145,25 @@
 				0DDD8824176413E90078D6B7 /* CollapseClickCell.xib */,
 			);
 			path = Collapse;
+			sourceTree = "<group>";
+		};
+		9539606117803AAF00546B92 /* SmartEncrypt */ = {
+			isa = PBXGroup;
+			children = (
+				953960921780592900546B92 /* base64.cpp */,
+				953960931780592900546B92 /* base64.h */,
+				953960941780592900546B92 /* e_os2.h */,
+				953960951780592900546B92 /* encryp.cpp */,
+				953960961780592900546B92 /* encryp.h */,
+				953960971780592900546B92 /* md5_dgst.c */,
+				953960981780592900546B92 /* md5_locl.h */,
+				953960991780592900546B92 /* md5_one.c */,
+				9539609A1780592900546B92 /* md5.h */,
+				9539609B1780592900546B92 /* md32_common.h */,
+				9539609C1780592900546B92 /* SmartEncrypt.cpp */,
+				9539609D1780592900546B92 /* SmartEncrypt.h */,
+			);
+			name = SmartEncrypt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1330,6 +1371,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				953960AB17805ACF00546B92 /* md5_dgst.c in Sources */,
+				953960AC17805ACF00546B92 /* md5_one.c in Sources */,
+				953960A717805AAB00546B92 /* base64.cpp in Sources */,
+				953960A817805AAB00546B92 /* encryp.cpp in Sources */,
+				953960A917805AAB00546B92 /* SmartEncrypt.cpp in Sources */,
 				0D1531711740B20000633FA0 /* main.m in Sources */,
 				0D1531751740B20000633FA0 /* AppDelegate.m in Sources */,
 				0D15317E1740B20000633FA0 /* ViewController.m in Sources */,
@@ -1363,7 +1409,6 @@
 				0DC0D53C17509BEB00684ED2 /* Database.m in Sources */,
 				0DC0D53D17509BEB00684ED2 /* VoicePkgInfoObject.m in Sources */,
 				0DC0D55D17509D0100684ED2 /* Course.m in Sources */,
-				0DC0D55E17509D0100684ED2 /* CourseParser.m in Sources */,
 				0DC0D55F17509D0100684ED2 /* DayParser.m in Sources */,
 				0DC0D56017509D0100684ED2 /* Lesson.m in Sources */,
 				0DC0D56117509D0100684ED2 /* NSPhoneticSymbol.m in Sources */,
@@ -1403,6 +1448,8 @@
 				0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */,
 				0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */,
 				0DBE67AD177CE0A400AA9B57 /* UIImageView+Curled.m in Sources */,
+				953960A6178059F900546B92 /* ISaybEncrypt2.mm in Sources */,
+				953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1411,6 +1458,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D1531991740B20000633FA0 /* PartnersTests.m in Sources */,
+				9539609F1780592900546B92 /* base64.cpp in Sources */,
+				953960A01780592900546B92 /* encryp.cpp in Sources */,
+				953960A11780592900546B92 /* md5_dgst.c in Sources */,
+				953960A21780592900546B92 /* md5_one.c in Sources */,
+				953960A31780592900546B92 /* SmartEncrypt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

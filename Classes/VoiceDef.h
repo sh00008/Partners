@@ -27,7 +27,8 @@
 #define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
 #define NOTIFICATION_OPEN_A_STORE @"OpenStoreNotification"
 #define NOTIFICATION_OPEN_LESSONS @"OpenLessonsNotification"
-#define STRING_STORE_URL_ADDRESS @"http://isaybox.b0.upaiyun.com/index_ios.xml"
+#define STRING_STORE_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"
+//#define STRING_STORE_URL_ADDRESS @"http://isaybox.b0.upaiyun.com/index_ios.xml"
 #define STRING_MY_DATA_CENTER @"我的资料库"
 #define STRING_DATA_CENTER @"在线资料"
 #define VALUE_TITLEBAR_COLOR_R 51.0/255.0

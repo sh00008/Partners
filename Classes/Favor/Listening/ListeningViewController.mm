@@ -46,6 +46,7 @@
 #define STRING_KEY_TRYSERVERLIST @"tryServerListIndex"
 #define STRING_KEY_FILETYPE @"fileType"
 #define STRING_KEY_FILETYPE_XAT @"xat"
+#define STRING_KEY_FILETYPE_SIN @"sin"
 #define STRING_KEY_FILETYPE_ISB @"isb"
 #define STRING_KEY_FILETYPE_LES @"les"
 
