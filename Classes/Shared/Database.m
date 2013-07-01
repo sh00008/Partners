@@ -13,7 +13,7 @@
 static CurrentLibrary* _currentLibrary;
 
 @implementation CurrentLibrary
-@synthesize libID, dataPath, dataTitle;
+@synthesize libID, dataPath, dataTitle, deviceID;
 + (CurrentLibrary*)sharedCurrentLibrary
 {
 	if (_currentLibrary == nil) {
@@ -29,6 +29,14 @@ static CurrentLibrary* _currentLibrary;
         [_currentLibrary release];
         _currentLibrary = nil;
     }
+}
+
+- (void)dealloc
+{
+    [self.dataPath release];
+    [self.dataTitle release];
+    [self.deviceID release];
+    [super dealloc];
 }
 @end;
 

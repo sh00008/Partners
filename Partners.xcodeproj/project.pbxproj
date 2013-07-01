@@ -147,7 +147,7 @@
 		0DB36282176CBC67007FDB60 /* CERoundProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3627F176CBC67007FDB60 /* CERoundProgressLayer.m */; };
 		0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36281176CBC67007FDB60 /* CERoundProgressView.m */; };
 		0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */; };
-		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */; };
+		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */; };
 		0DBE67A21778889F00AA9B57 /* 23.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A01778889F00AA9B57 /* 23.jpg */; };
 		0DBE67A31778889F00AA9B57 /* 24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A11778889F00AA9B57 /* 24.jpg */; };
 		0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */; };
@@ -400,7 +400,7 @@
 		0DB36284176CC0A7007FDB60 /* ButtonPlayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonPlayObject.h; sourceTree = "<group>"; };
 		0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonPlayObject.m; sourceTree = "<group>"; };
 		0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalMainViewController.h; path = Classes/Personal/PersonalMainViewController.h; sourceTree = SOURCE_ROOT; };
-		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalMainViewController.m; path = Classes/Personal/PersonalMainViewController.m; sourceTree = SOURCE_ROOT; };
+		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PersonalMainViewController.mm; path = Classes/Personal/PersonalMainViewController.mm; sourceTree = SOURCE_ROOT; };
 		0DBE67A01778889F00AA9B57 /* 23.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 23.jpg; sourceTree = "<group>"; };
 		0DBE67A11778889F00AA9B57 /* 24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 24.jpg; sourceTree = "<group>"; };
 		0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurledViewBase.h; sourceTree = "<group>"; };
@@ -642,7 +642,7 @@
 			isa = PBXGroup;
 			children = (
 				0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */,
-				0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */,
+				0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */,
 			);
 			name = Personal;
 			sourceTree = "<group>";
@@ -1442,7 +1442,7 @@
 				0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */,
 				0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */,
 				0D039AE91771DA440006EA85 /* DMCustomModalViewController.m in Sources */,
-				0DBE679F177883BE00AA9B57 /* PersonalMainViewController.m in Sources */,
+				0DBE679F177883BE00AA9B57 /* PersonalMainViewController.mm in Sources */,
 				0D2F1B78177C0CEB009A8A87 /* SSTextView.m in Sources */,
 				0D2F1B79177C0CEB009A8A87 /* YIPopupTextView.m in Sources */,
 				0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */,

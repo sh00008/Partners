@@ -34,7 +34,8 @@
 
 @property (nonatomic, assign) NSInteger libID;
 @property (nonatomic, retain) NSString* dataPath;
-@property (nonatomic, retain) NSString*  dataTitle;
+@property (nonatomic, retain) NSString* dataTitle;
+@property (nonatomic, retain) NSString* deviceID;
 @end
 
 @interface Database : NSObject {

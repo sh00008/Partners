@@ -13,6 +13,7 @@
 #import "UIButton+Curled.h"
 #import "YIPopupTextView.h"
 #import "StoreViewController.h"
+#import "ISaybEncrypt2.h"
 
 @interface PersonalMainViewController ()
 
@@ -257,6 +258,7 @@
         CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
         if (lib != nil) {
             lib.libID = pkgObject.libID;
+            [self getDeviceID];
         }
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
@@ -266,6 +268,21 @@
         [store release];
         [nav release];
        
+    }
+}
+
+- (void)getDeviceID
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    if ([fm fileExistsAtPath:documentDirectory]) {
+        // parse
+        //ParseServerUserLicense(<#unsigned char *pLicenseData#>, <#int nLength#>, <#char *szUserName#>, <#unsigned char **pDeviceInfo#>, <#int &nDeviceLength#>);
     }
 }
 

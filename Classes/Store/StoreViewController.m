@@ -12,6 +12,7 @@
 #import "StoreRootViewController.h"
 #import "StoreNetworkConnectionView.h"
 #import "VoiceDef.h"
+#import "Database.h"
 
 @interface StoreViewController ()
 {
@@ -68,10 +69,11 @@
     }
     NSURL* url = [NSURL URLWithString:urlstr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"MyApp" forHTTPHeaderField:@"User-Agent"];
+    [request setValue:@"voice" forHTTPHeaderField:@"User-Agent"];
     
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+    fetcher.userData = @"voicexml";
     [fetcher beginFetchWithDelegate:self
                   didFinishSelector:@selector(fetcher:finishedWithData:error:)];
 }
@@ -106,6 +108,76 @@
     [UIView commitAnimations];
 }
 
+- (void)finishVoiceXMLData:(NSData*)data
+{
+    [StoreNetworkConnectionView removeConnectionView:self.view];
+    NSString* xmlPath =  [NSString stringWithFormat:@"%@voice.xml", NSTemporaryDirectory()];
+    [data writeToFile:xmlPath atomically:YES];
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    
+    // create pkg
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
+    [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
+    
+    StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
+    dataParser.libID = lib.libID;
+    [dataParser loadWithData:data];
+    if ([dataParser.pkgsArray count] > 0) {
+        StoreRootViewController* rootViewController = [[StoreRootViewController alloc] init];
+        rootViewController.pkgArray = dataParser.pkgsArray;
+        rootViewController.delegate = (id)self;
+        CGRect rc = self.view.frame;
+        rootViewController.view.frame = CGRectMake(0, 0, rc.size.width, rc.size.height);
+        rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:rootViewController.view];
+    }
+    
+
+    if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
+        if ([dataParser.serverlistArray count] > 0) {
+            NSString* urlstr = [NSString stringWithFormat:@"%@/ServerRequest.dat", [dataParser.serverlistArray objectAtIndex:0]];
+            NSURL* url = [NSURL URLWithString:urlstr];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            [request setValue:@"device" forHTTPHeaderField:@"User-Agent"];
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+            fetcher.userData = @"device";
+            [fetcher beginFetchWithDelegate:self
+                          didFinishSelector:@selector(fetcher:finishedWithData:error:)];
+        }
+    }
+    [dataParser release];
+    
+    UIView* shadowView = [self.view viewWithTag:101];
+    [self.view bringSubviewToFront:shadowView];
+
+}
+
+- (void)finishDeviceData:(NSData*)data
+{
+    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    //NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    [data writeToFile:documentDirectory atomically:YES];
+}
 
 - (void)fetcher:(GTMHTTPFetcher*)fecther finishedWithData:(NSData*)data error:(id)error
 {
@@ -116,43 +188,11 @@
         [StoreNetworkConnectionView stopAnimation:STRING_LOADINGDATA_ERROR withSuperView:self.view];
 
     } else {
-        
-        [StoreNetworkConnectionView removeConnectionView:self.view];
-        NSString* xmlPath =  [NSString stringWithFormat:@"%@voice.xml", NSTemporaryDirectory()];
-        [data writeToFile:xmlPath atomically:YES];
-        
-        NSFileManager *fm = [NSFileManager defaultManager];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *documentDirectory = [paths objectAtIndex:0];
-        documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-        
-        // create pkg
-        if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-            [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-        
-        documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.view.tag];
-        if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-            [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-       
-         documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
-        [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
-        
-        StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
-        dataParser.libID = self.view.tag;
-        [dataParser loadWithData:data];
-        if ([dataParser.pkgsArray count] > 0) {
-            StoreRootViewController* rootViewController = [[StoreRootViewController alloc] init];
-            rootViewController.pkgArray = dataParser.pkgsArray;
-            rootViewController.delegate = (id)self;
-            CGRect rc = self.view.frame;
-            rootViewController.view.frame = CGRectMake(0, 0, rc.size.width, rc.size.height);
-            rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-           [self.view addSubview:rootViewController.view];
+        if ([fecther.userData isEqualToString:@"voicexml"]) {
+            [self finishVoiceXMLData:data];
+        } else {
+            [self finishDeviceData:data];
         }
-        [dataParser release];
-        
-        UIView* shadowView = [self.view viewWithTag:101];
-        [self.view bringSubviewToFront:shadowView];
     }
 }
 
