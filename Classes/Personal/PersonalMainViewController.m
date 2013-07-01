@@ -260,14 +260,9 @@
         }
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
-        UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
-        [UIView beginAnimations: nil context: nil];
-        [UIView setAnimationDuration:0.5];
-        [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
-        [self presentModalViewController:nav animated:NO];
-        [UIView commitAnimations];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OPEN_A_STORE object:nav];
         
-        //CATransition *
+         //CATransition *
         [store release];
         [nav release];
        

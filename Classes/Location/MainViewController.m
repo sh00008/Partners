@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import "SettingViewController.h"
-#import "PersonalViewController.h"
 #import "FavorViewController.h"
 #import "VoiceDef.h"
 #import "StoreVoiceDataListParser.h"
@@ -71,7 +70,8 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
  	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_OPEN_LESSONS object:nil];
   	[center addObserver:self selector:@selector(openPkg:) name:NOTIFICATION_OPEN_PKG object:nil];
-   
+    [center addObserver:self selector:@selector(openStore:) name:NOTIFICATION_OPEN_A_STORE object:nil];
+ 
     
 	// Do any additional setup after loading the view.
 }
@@ -79,6 +79,17 @@
 - (void)openPkg:(NSNotification*)aNotification;
 {
     [self performSelector:@selector(setFavorViewPosition) withObject:nil afterDelay:1.0];
+}
+
+- (void)openStore:(NSNotification*)aNotification;
+{
+    UIViewController* ob = aNotification.object;
+    UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
+    [UIView beginAnimations: nil context: nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
+    [self presentModalViewController:ob animated:NO];
+    [UIView commitAnimations];
 }
 
 - (void)setFavorViewPosition

@@ -30,7 +30,6 @@
 		0D1531961740B20000633FA0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1531941740B20000633FA0 /* InfoPlist.strings */; };
 		0D1531991740B20000633FA0 /* PartnersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531981740B20000633FA0 /* PartnersTests.m */; };
 		0D1531A81740B60100633FA0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531A71740B60100633FA0 /* MainViewController.m */; };
-		0D1531AB1740B68400633FA0 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531AA1740B68400633FA0 /* PersonalViewController.m */; };
 		0D1531BD1740C4A900633FA0 /* SettingAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531AD1740C4A900633FA0 /* SettingAboutViewController.m */; };
 		0D1531BE1740C4A900633FA0 /* SettingAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1531AE1740C4A900633FA0 /* SettingAboutViewController.xib */; };
 		0D1531BF1740C4A900633FA0 /* SettingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531B01740C4A900633FA0 /* SettingData.m */; };
@@ -75,19 +74,7 @@
 		0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */; };
 		0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D97C3E1175AB68E0070E696 /* CourseViewController.m */; };
 		0DA1482F1750D44B004EBCFF /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */; };
-		0DA148481750FAE4004EBCFF /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */; };
-		0DA148491750FAE4004EBCFF /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148351750FAE4004EBCFF /* UIView+MGEasyFrame.m */; };
-		0DA1484A1750FAE4004EBCFF /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148381750FAE4004EBCFF /* MGBlockWrapper.m */; };
-		0DA1484B1750FAE4004EBCFF /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA1483A1750FAE4004EBCFF /* MGBox.m */; };
-		0DA1484C1750FAE4004EBCFF /* MGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA1483C1750FAE4004EBCFF /* MGButton.m */; };
-		0DA1484D1750FAE4004EBCFF /* MGLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA1483F1750FAE4004EBCFF /* MGLayoutManager.m */; };
-		0DA1484E1750FAE4004EBCFF /* MGLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148411750FAE4004EBCFF /* MGLine.m */; };
-		0DA1484F1750FAE4004EBCFF /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148431750FAE4004EBCFF /* MGScrollView.m */; };
-		0DA148501750FAE4004EBCFF /* MGTableBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148451750FAE4004EBCFF /* MGTableBox.m */; };
-		0DA148511750FAE4004EBCFF /* MGTableBoxStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148471750FAE4004EBCFF /* MGTableBoxStyled.m */; };
-		0DA148551750FB60004EBCFF /* PersonalLibary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA148541750FB60004EBCFF /* PersonalLibary.m */; };
 		0DA148571750FC57004EBCFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DA148561750FC57004EBCFF /* QuartzCore.framework */; };
-		0DA148591750FF1D004EBCFF /* PersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DA148581750FF1D004EBCFF /* PersonalViewController.xib */; };
 		0DA1485F17510248004EBCFF /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DA1485B17510248004EBCFF /* add.png */; };
 		0DA1486017510248004EBCFF /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DA1485C17510248004EBCFF /* add@2x.png */; };
 		0DA1486117510248004EBCFF /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DA1485D17510248004EBCFF /* arrow.png */; };
@@ -253,8 +240,6 @@
 		0D1531981740B20000633FA0 /* PartnersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PartnersTests.m; sourceTree = "<group>"; };
 		0D1531A61740B60100633FA0 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Classes/Location/MainViewController.h; sourceTree = SOURCE_ROOT; };
 		0D1531A71740B60100633FA0 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Classes/Location/MainViewController.m; sourceTree = SOURCE_ROOT; };
-		0D1531A91740B68400633FA0 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalViewController.h; path = Classes/Personal/PersonalViewController.h; sourceTree = SOURCE_ROOT; };
-		0D1531AA1740B68400633FA0 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalViewController.m; path = Classes/Personal/PersonalViewController.m; sourceTree = SOURCE_ROOT; };
 		0D1531AC1740C4A900633FA0 /* SettingAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingAboutViewController.h; path = Classes/Setting/SettingAboutViewController.h; sourceTree = SOURCE_ROOT; };
 		0D1531AD1740C4A900633FA0 /* SettingAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingAboutViewController.m; path = Classes/Setting/SettingAboutViewController.m; sourceTree = SOURCE_ROOT; };
 		0D1531AE1740C4A900633FA0 /* SettingAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingAboutViewController.xib; path = Classes/Setting/SettingAboutViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -322,32 +307,7 @@
 		0D97C3E0175AB68E0070E696 /* CourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CourseViewController.h; path = Classes/CoursesView/CourseViewController.h; sourceTree = SOURCE_ROOT; };
 		0D97C3E1175AB68E0070E696 /* CourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CourseViewController.m; path = Classes/CoursesView/CourseViewController.m; sourceTree = SOURCE_ROOT; };
 		0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		0DA148321750FAE4004EBCFF /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
-		0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
-		0DA148341750FAE4004EBCFF /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
-		0DA148351750FAE4004EBCFF /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
-		0DA148361750FAE4004EBCFF /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
-		0DA148371750FAE4004EBCFF /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
-		0DA148381750FAE4004EBCFF /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
-		0DA148391750FAE4004EBCFF /* MGBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBox.h; sourceTree = "<group>"; };
-		0DA1483A1750FAE4004EBCFF /* MGBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBox.m; sourceTree = "<group>"; };
-		0DA1483B1750FAE4004EBCFF /* MGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGButton.h; sourceTree = "<group>"; };
-		0DA1483C1750FAE4004EBCFF /* MGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGButton.m; sourceTree = "<group>"; };
-		0DA1483D1750FAE4004EBCFF /* MGLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutBox.h; sourceTree = "<group>"; };
-		0DA1483E1750FAE4004EBCFF /* MGLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutManager.h; sourceTree = "<group>"; };
-		0DA1483F1750FAE4004EBCFF /* MGLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLayoutManager.m; sourceTree = "<group>"; };
-		0DA148401750FAE4004EBCFF /* MGLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLine.h; sourceTree = "<group>"; };
-		0DA148411750FAE4004EBCFF /* MGLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLine.m; sourceTree = "<group>"; };
-		0DA148421750FAE4004EBCFF /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
-		0DA148431750FAE4004EBCFF /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
-		0DA148441750FAE4004EBCFF /* MGTableBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBox.h; sourceTree = "<group>"; };
-		0DA148451750FAE4004EBCFF /* MGTableBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBox.m; sourceTree = "<group>"; };
-		0DA148461750FAE4004EBCFF /* MGTableBoxStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBoxStyled.h; sourceTree = "<group>"; };
-		0DA148471750FAE4004EBCFF /* MGTableBoxStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBoxStyled.m; sourceTree = "<group>"; };
-		0DA148531750FB60004EBCFF /* PersonalLibary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalLibary.h; path = Classes/Personal/Libary/PersonalLibary.h; sourceTree = SOURCE_ROOT; };
-		0DA148541750FB60004EBCFF /* PersonalLibary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalLibary.m; path = Classes/Personal/Libary/PersonalLibary.m; sourceTree = SOURCE_ROOT; };
 		0DA148561750FC57004EBCFF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0DA148581750FF1D004EBCFF /* PersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalViewController.xib; sourceTree = "<group>"; };
 		0DA1485B17510248004EBCFF /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		0DA1485C17510248004EBCFF /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		0DA1485D17510248004EBCFF /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -660,10 +620,6 @@
 		0D1531A31740B52D00633FA0 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
-				0DA148521750FAF1004EBCFF /* Libary */,
-				0D1531A91740B68400633FA0 /* PersonalViewController.h */,
-				0DA148581750FF1D004EBCFF /* PersonalViewController.xib */,
-				0D1531AA1740B68400633FA0 /* PersonalViewController.m */,
 				0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */,
 				0DBE679E177883BE00AA9B57 /* PersonalMainViewController.m */,
 			);
@@ -798,52 +754,6 @@
 				0D97C3E1175AB68E0070E696 /* CourseViewController.m */,
 			);
 			name = CoursesView;
-			sourceTree = "<group>";
-		};
-		0DA148301750FAE4004EBCFF /* MGBox */ = {
-			isa = PBXGroup;
-			children = (
-				0DA148311750FAE4004EBCFF /* Categories */,
-				0DA148361750FAE4004EBCFF /* MGBase.h */,
-				0DA148371750FAE4004EBCFF /* MGBlockWrapper.h */,
-				0DA148381750FAE4004EBCFF /* MGBlockWrapper.m */,
-				0DA148391750FAE4004EBCFF /* MGBox.h */,
-				0DA1483A1750FAE4004EBCFF /* MGBox.m */,
-				0DA1483B1750FAE4004EBCFF /* MGButton.h */,
-				0DA1483C1750FAE4004EBCFF /* MGButton.m */,
-				0DA1483D1750FAE4004EBCFF /* MGLayoutBox.h */,
-				0DA1483E1750FAE4004EBCFF /* MGLayoutManager.h */,
-				0DA1483F1750FAE4004EBCFF /* MGLayoutManager.m */,
-				0DA148401750FAE4004EBCFF /* MGLine.h */,
-				0DA148411750FAE4004EBCFF /* MGLine.m */,
-				0DA148421750FAE4004EBCFF /* MGScrollView.h */,
-				0DA148431750FAE4004EBCFF /* MGScrollView.m */,
-				0DA148441750FAE4004EBCFF /* MGTableBox.h */,
-				0DA148451750FAE4004EBCFF /* MGTableBox.m */,
-				0DA148461750FAE4004EBCFF /* MGTableBoxStyled.h */,
-				0DA148471750FAE4004EBCFF /* MGTableBoxStyled.m */,
-			);
-			path = MGBox;
-			sourceTree = "<group>";
-		};
-		0DA148311750FAE4004EBCFF /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				0DA148321750FAE4004EBCFF /* NSObject+MGEvents.h */,
-				0DA148331750FAE4004EBCFF /* NSObject+MGEvents.m */,
-				0DA148341750FAE4004EBCFF /* UIView+MGEasyFrame.h */,
-				0DA148351750FAE4004EBCFF /* UIView+MGEasyFrame.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
-		0DA148521750FAF1004EBCFF /* Libary */ = {
-			isa = PBXGroup;
-			children = (
-				0DA148531750FB60004EBCFF /* PersonalLibary.h */,
-				0DA148541750FB60004EBCFF /* PersonalLibary.m */,
-			);
-			name = Libary;
 			sourceTree = "<group>";
 		};
 		0DA1486717511555004EBCFF /* Resource */ = {
@@ -1106,7 +1016,6 @@
 				0DBE67A4177CE0A400AA9B57 /* curledView */,
 				0D2F1B72177C0CEB009A8A87 /* SSTextView */,
 				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
-				0DA148301750FAE4004EBCFF /* MGBox */,
 				0DC0D52317509BEA00684ED2 /* Database.h */,
 				0DC0D52417509BEA00684ED2 /* Database.m */,
 				0DC0D52517509BEA00684ED2 /* VoicePkgInfoObject.h */,
@@ -1302,7 +1211,6 @@
 				0DC0D53417509BEB00684ED2 /* StorePkgDetailTableViewCell.xib in Resources */,
 				0DC0D53717509BEB00684ED2 /* StorePkgTableViewCell.xib in Resources */,
 				0DC0D53A17509BEB00684ED2 /* StoreViewController.xib in Resources */,
-				0DA148591750FF1D004EBCFF /* PersonalViewController.xib in Resources */,
 				0DA1485F17510248004EBCFF /* add.png in Resources */,
 				0DA1486017510248004EBCFF /* add@2x.png in Resources */,
 				0DA1486117510248004EBCFF /* arrow.png in Resources */,
@@ -1426,7 +1334,6 @@
 				0D1531751740B20000633FA0 /* AppDelegate.m in Sources */,
 				0D15317E1740B20000633FA0 /* ViewController.m in Sources */,
 				0D1531A81740B60100633FA0 /* MainViewController.m in Sources */,
-				0D1531AB1740B68400633FA0 /* PersonalViewController.m in Sources */,
 				0D1531BD1740C4A900633FA0 /* SettingAboutViewController.m in Sources */,
 				0D1531BF1740C4A900633FA0 /* SettingData.m in Sources */,
 				0D1531C01740C4A900633FA0 /* SettingShowTranslationCell.m in Sources */,
@@ -1469,17 +1376,6 @@
 				0DC0D56817509D0100684ED2 /* CAStreamBasicDescription.cpp in Sources */,
 				0DC0D56917509D0100684ED2 /* CAXException.cpp in Sources */,
 				0DC0D57417509D8800684ED2 /* WaveFile.cpp in Sources */,
-				0DA148481750FAE4004EBCFF /* NSObject+MGEvents.m in Sources */,
-				0DA148491750FAE4004EBCFF /* UIView+MGEasyFrame.m in Sources */,
-				0DA1484A1750FAE4004EBCFF /* MGBlockWrapper.m in Sources */,
-				0DA1484B1750FAE4004EBCFF /* MGBox.m in Sources */,
-				0DA1484C1750FAE4004EBCFF /* MGButton.m in Sources */,
-				0DA1484D1750FAE4004EBCFF /* MGLayoutManager.m in Sources */,
-				0DA1484E1750FAE4004EBCFF /* MGLine.m in Sources */,
-				0DA1484F1750FAE4004EBCFF /* MGScrollView.m in Sources */,
-				0DA148501750FAE4004EBCFF /* MGTableBox.m in Sources */,
-				0DA148511750FAE4004EBCFF /* MGTableBoxStyled.m in Sources */,
-				0DA148551750FB60004EBCFF /* PersonalLibary.m in Sources */,
 				0D97C3DB1759030D0070E696 /* FavorViewCell.m in Sources */,
 				0D97C3DE175AB40B0070E696 /* FavorCourseButton.m in Sources */,
 				0D97C3E2175AB68E0070E696 /* CourseViewController.m in Sources */,
@@ -1576,7 +1472,7 @@
 				CLANG_WARN_ENUM_CONVERSION = NO;
 				CLANG_WARN_INT_CONVERSION = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: d l (K9W6WWC9B9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wang Yi (SHC58C4T94)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1591,7 +1487,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ED8AD162-8E05-4775-A459-23EE6A604C4E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF50579-CF04-423D-8E65-E0C59793C31E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
@@ -1610,7 +1506,7 @@
 				CLANG_WARN_ENUM_CONVERSION = NO;
 				CLANG_WARN_INT_CONVERSION = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: d l (K9W6WWC9B9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wang Yi (SHC58C4T94)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_VERSION = "";
@@ -1621,7 +1517,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ED8AD162-8E05-4775-A459-23EE6A604C4E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF50579-CF04-423D-8E65-E0C59793C31E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;

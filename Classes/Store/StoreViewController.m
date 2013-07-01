@@ -14,7 +14,9 @@
 #import "VoiceDef.h"
 
 @interface StoreViewController ()
-
+{
+    BOOL bInit;
+}
 @end
 
 @implementation StoreViewController
@@ -25,14 +27,26 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        bInit = NO;
     }
     return self;
 }
-
-- (void)viewDidLoad
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    
+    [super viewDidAppear:animated];
+    if (!bInit) {
+        [self initMembers];
+        bInit = YES;
+    }
+}
+
+- (void) initMembers
+{
+    /*if([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        [self.navigationController.navigationBar
+         setBackgroundImage:[UIImage imageNamed:@"4-light-menu-bar.png"]
+         forBarMetrics:UIBarMetricsDefault];
+    }*/
 
     // backgroundColor
     NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
@@ -41,26 +55,13 @@
     UIImage* bgImage = [UIImage imageWithContentsOfFile:imagePath];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     [StoreNetworkConnectionView startAnimation:self.view];
-
+    
     self.title = STRING_DATA_CENTER;
     // Do any additional setup after loading the view from its nib.
     UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithTitle:STRING_MY_DATA_CENTER style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
     self.navigationItem.rightBarButtonItem = box;
     [box release];
-
-    // shadowView
-    UIView* shadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 53 )];
-    shadowView.tag = 101;
-    shadowView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-    NSString* shadowImageName = @"bookshelf_titlebar_shadow.png";
-    NSString* shadowPath = [NSString stringWithFormat:@"%@/%@", resourcePath, shadowImageName];
-    UIImage* shadowimage = [UIImage imageWithContentsOfFile:shadowPath];
-    shadowView.backgroundColor = [UIColor colorWithPatternImage:shadowimage];
-    shadowView.userInteractionEnabled = YES;
-    //[self.view addSubview:shadowView];
-    [shadowView release];
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:VALUE_TITLEBAR_COLOR_R green:VALUE_TITLEBAR_COLOR_G blue:VALUE_TITLEBAR_COLOR_B alpha:1.0];
-
+    
     NSString* urlstr = STRING_STORE_URL_ADDRESS;
     if (self.storeURL != nil) {
         urlstr = self.storeURL;
@@ -73,7 +74,10 @@
     GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
     [fetcher beginFetchWithDelegate:self
                   didFinishSelector:@selector(fetcher:finishedWithData:error:)];
-
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 - (void)viewDidUnload

@@ -23,13 +23,6 @@
        _mainViewController = [[MainViewController alloc] init];
         _mainViewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
          UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
-        // set navigation bar backgroundImage
-        if([nav.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-            [nav.navigationBar
-             setBackgroundImage:[UIImage imageNamed:@"4-light-menu-bar.png"]
-             forBarMetrics:UIBarMetricsDefault];
-        }
-
         [self.view addSubview:nav.view];
     }
 }
