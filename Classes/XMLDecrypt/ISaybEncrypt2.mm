@@ -27,16 +27,16 @@ const unsigned char SERVER_LIC_ENCRYPTKEY[]	= "yanghaolin2008ji";
 #define BLOCK_CIPHER_AES_128_AND_CTR		(SYMMETRIC_CIPHER_AES_128 | CHAIN_MODE_CTR)
 
 // 解析证书证书信息，加密euf（encry user xml file）文件调用
-bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char  szUserName[256], unsigned char **pDeviceInfo, int &nDeviceLength)
+bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char szUserName[256], unsigned char **pDeviceInfo, int &nDeviceLength)
 {
-	if (pLicenseData == NULL || nLength == 0)
+	if (pLicenseData == nil || nLength == 0)
 		return false;
     
 	// 第一步，反Base64编码
-	unsigned char *pDestKey = NULL;
+	unsigned char *pDestKey = nil;
 	long lOutLen = 0;
 	SmartBase64Decode(pLicenseData, nLength, &pDestKey, lOutLen);
-	if (pDestKey == NULL || lOutLen <= 0)
+	if (pDestKey == nil || lOutLen <= 0)
 		return false;
     
 	// 第二步，加密证书信息

@@ -523,15 +523,15 @@
     [dic setObject:[self.delegate getCourseTitle] forKey:STRING_KEY_COURSETITLE];
     [dic setObject:lesson.path forKey:STRING_KEY_LESSONPATH];
     [dic setObject:[NSNumber numberWithInteger:tryIndex] forKey:STRING_KEY_TRYSERVERLIST];
-    V_NSLog(@"try list xat %d", tryIndex);
+    V_NSLog(@"try list xin %d", tryIndex);
     NSString* dataFile = [lesson.file substringToIndex:[lesson.file length] - 4];
     {
         NSString* xatFile = [dataFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XIN];
         NSString* xatURLpath = [NSString stringWithFormat:@"%@/%@/%@", url, lesson.path, xatFile];
         
         NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, lib.dataTitle, lesson.path, xatFile];
-        V_NSLog(@"xatURLPath:  %@", xatURLpath);
-        V_NSLog(@"xatDataPath:  %@", xatDatafile);
+        V_NSLog(@"xinURLPath:  %@", xatURLpath);
+        V_NSLog(@"xinDataPath:  %@", xatDatafile);
         
         if (![fileManager fileExistsAtPath:xatDatafile]) {
             NSURL* url = [NSURL URLWithString:xatURLpath];

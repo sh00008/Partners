@@ -21,7 +21,7 @@
 @end
 
 @interface LessonsViewController : UITableViewController {
-     NSString* _scenesName;
+    NSString* _scenesName;
     CourseParser* _courseParser;
     NSInteger nSelectedPage;
     NSInteger nPageCount;
