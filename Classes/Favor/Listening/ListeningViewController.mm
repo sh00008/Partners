@@ -414,11 +414,13 @@
         self.player.currentTime = [sentence startTime];
         [self updateUI];
     }
-    [super viewWillDisappear:animated];
+    
+   [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CLOSE_LESSONS object:nil];
     [super viewDidDisappear:animated];
 }
 

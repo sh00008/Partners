@@ -14,7 +14,8 @@
 #import "CourseViewController.h"
 #import "LessonsViewController.h"
 @interface FavorViewController ()
-
+{
+}
 @end
 
 @implementation FavorViewController
@@ -48,7 +49,14 @@
     [self loadPkgArray];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
+ 	[center addObserver:self selector:@selector(closeLessonsNotification:) name:NOTIFICATION_CLOSE_LESSONS object:nil];
  }
+
+- (void)closeLessonsNotification:(NSNotification*)aNotification;
+{
+    [self performSelector:@selector(openFavor) withObject:nil afterDelay:0.5];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
@@ -267,20 +275,26 @@
 		}
     }
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:lessons];
-    navController.navigationBar.hidden = YES;
+     navController.navigationBar.hidden = YES;
     DMCustomModalViewController* modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
                                                        parentViewController:self];
     self.modal = modal;
+    [self openFavor];
+ }
+
+- (void)openFavor
+{
+    
     [self.modal setRootViewControllerHeight:self.view.bounds.size.height * 0.8];
     [self.modal setParentViewYPath:self.view.bounds.size.height * 0.2];
-  
+    
     [self.modal setDelegate:self];
     [self.modal presentRootViewControllerWithPresentationStyle:DMCustomModalViewControllerPresentPartScreen
                                           controllercompletion:^{
                                               
                                           }];
- }
 
+}
 - (void)reloadPkgTable;
 {
      if (_pkgArray != nil) {
