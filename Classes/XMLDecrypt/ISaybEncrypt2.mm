@@ -42,7 +42,7 @@ bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char  szUs
 	// 第二步，加密证书信息
 	SetEncryptKey(SERVER_LIC_ENCRYPTKEY, SERVER_LIC_ENCRYPTKEY_LENGTH);
 	long nSrcLength = lOutLen;
-	unsigned char *pLicSrcData = new unsigned char[nSrcLength];
+	unsigned char *pLicSrcData = new unsigned char[nSrcLength + 1];
     if (!SmartDecode(pDestKey, lOutLen, pLicSrcData, nSrcLength))
 	{
 		free(pDestKey);
@@ -53,13 +53,13 @@ bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char  szUs
     
 	// 第三步，字节转换为证书信息
 	string strInfo;
-    strInfo.append((const char*)pLicSrcData, nLength);
+    strInfo.append((const char*)pLicSrcData, nSrcLength);
     
 	// 第四步，解析证书
 	// 1、版本号
-	size_t nStartIndex = strInfo.find("&Version=");
-	if (nStartIndex == string::npos)
-		return false;
+//	size_t nStartIndex = strInfo.find("&Version=");
+//	if (nStartIndex == string::npos)
+//		return false;
     
 //	CString strVersion = strInfo.Mid(nStartIndex+9, 1);
 //	int nVersion = _ttoi(strVersion);
@@ -76,7 +76,7 @@ bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char  szUs
 //		return false;
 //    
 	// 用户信息
-	nStartIndex = strInfo.find("&User=");
+	size_t nStartIndex = strInfo.find("&User=");
 	size_t nEndIndex = strInfo.find("&Device=");
 	if (nStartIndex == string::npos || nEndIndex == string::npos)
 		return false;
@@ -86,7 +86,8 @@ bool ParseServerUserLicense(unsigned char *pLicenseData, int nLength, char  szUs
     memcpy(szUserName, strUserName.c_str(), 256 > strUserName.size() ? 256 : strUserName.size());
     
 	// 密钥
-	string strDevice = strInfo.substr(nStartIndex+8, strInfo.size()-nStartIndex);
+    nEndIndex += 8;
+	string strDevice = strInfo.substr(nEndIndex, strInfo.size() - nEndIndex - 1);
     
 	nDeviceLength = strDevice.size();
 	*pDeviceInfo = new unsigned char[nDeviceLength + 1];

@@ -293,15 +293,15 @@
         int length = ftell(file);
         fseek(file, 0, SEEK_SET);
         unsigned char* fileData = new unsigned char[length];
-        fread(file, 0, length, file);
-        char userName[256] = { 0 };
+        fread(fileData, 1, length, file);
+        char userName[256] = { '\0' };
         unsigned char* deviceID = nil;
         int lenDevceID = 0;
         ParseServerUserLicense(fileData, length, userName, &deviceID, lenDevceID);
         CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
         if (lib != nil) {
-                 lib.userName = [NSString stringWithUTF8String:userName];
-                 lib.deviceID = [NSString stringWithUTF8String:(const char*)deviceID];
+                 lib.userName = [[NSString alloc] initWithCString:userName encoding:-2147482062];
+                 lib.deviceID = [[NSString alloc] initWithBytes:deviceID length:lenDevceID encoding:NSUTF8StringEncoding];
                  lib.lDeviceID = lenDevceID;
              }
         
