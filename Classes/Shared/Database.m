@@ -181,7 +181,8 @@ static Database* _database;
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
+	//[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_LISENCE];
+  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
 	[sql appendString:@");"];
 	
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
@@ -401,6 +402,8 @@ static Database* _database;
         sqlite3_bind_text(statement, i, [info.url UTF8String], -1, SQLITE_TRANSIENT);
 		i++;
         
+        sqlite3_bind_text(statement, i, [info.lisence UTF8String], -1, SQLITE_TRANSIENT);
+		i++;
         // createTime
         NSDate* d = [NSDate date];
         sqlite3_bind_text(statement, i, [[d description] UTF8String], -1, SQLITE_TRANSIENT);
@@ -423,6 +426,28 @@ static Database* _database;
     return YES;
 }
 
+- (BOOL)updateLibaryInfo:(LibaryInfo*)info;
+{
+    BOOL bResult = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = '%@',%@ = '%@' , %@ = '%@',%@ = '%@'  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_INFO,  STRING_DB_VOICE_PKG_TITLE, info.title, STRING_DB_VOICE_PKG_PATH, info.path,STRING_DB_VOICE_PKG_COVER, info.cover, STRING_DB_VOICE_PKG_URL, info.url, STRING_DB_VOICE_LISENCE, info.lisence, STRING_DB_LIBARY_ID, info.libID];
+    int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			bResult = NO;
+		}
+    } else {
+		[databaseLock unlock];
+		bResult = NO;
+    }
+	[sql release];
+	return bResult;
+
+}
 - (NSMutableArray*)loadVoicePkgInfo;
 {
    	[databaseLock lock];
@@ -486,6 +511,8 @@ static Database* _database;
             // coverChars;
             char *urlChars = (char *) sqlite3_column_text(statement, index);
             index++;
+            //char *lisenceChars = (char *) sqlite3_column_text(statement, index);
+            //index++;
             char *timeChars = (char *) sqlite3_column_text(statement, index);
             index++;
             //char *coverChars = (char *) sqlite3_column_text(statement, 2);
@@ -502,6 +529,10 @@ static Database* _database;
                 NSString *title = [NSString stringWithUTF8String:urlChars];
                 object.url = [NSString stringWithFormat:@"%@",title];
             }
+            /*if (lisenceChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:lisenceChars];
+                object.lisence = [NSString stringWithFormat:@"%@",title];
+            }*/
             if (timeChars != nil) {
                 NSString *title = [NSString stringWithUTF8String:timeChars];
                 object.createTime = [NSString stringWithFormat:@"%@",title];

@@ -56,6 +56,7 @@
 @property (nonatomic, retain, readwrite) NSString* file;
 @property (nonatomic, retain, readwrite) NSString* cover;
 @property (nonatomic, retain, readwrite) NSString* url;
+@property (nonatomic, retain, readwrite) NSString* lisence;
 @property (nonatomic, retain) NSString* createTime;
 
 @end

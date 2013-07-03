@@ -21,16 +21,20 @@
 #define STRING_DB_VOICE_PKG_URL        @"URL"
 #define STRING_DB_VOICE_PKG_CREATEDATE @"CreateDate"
 #define STRING_DB_VOICE_IS_LISTENED    @"IsListened"
-
+#define STRING_DB_VOICE_LISENCE        @"Lisence"
+#define STRING_DB_VOICE_LISENCE_LEN     @"LisenceLength"
 #define STRING_DB_TABLENAME_PKG_DOWNLOADINFO @"VoicePkgDownloadInfo"
 #define STRING_DB_VOICE_PKG_DOWNLOAD_FLAG    @"Flag"
 
 #define STRING_DB_TABLENAME_LIB_INFO  @"LibaryInfo"
+#define STRING_DB_TABLENAME_LIB_LISENCE_INFO  @"LibaryLisenceInfo"
 #define STRING_DB_LIBARY_ID         @"LibaryID"
 @interface CurrentLibrary: NSObject {
     
 }
 + (CurrentLibrary*)sharedCurrentLibrary;
+
+- (void)parseLisence;
 
 @property (nonatomic, assign) NSInteger libID;
 @property (nonatomic, retain) NSString* dataPath;
@@ -54,7 +58,7 @@
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
 - (BOOL)insertLibaryInfo:(LibaryInfo*)info;
-
+- (BOOL)updateLibaryInfo:(LibaryInfo*)info;
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;

@@ -97,6 +97,7 @@ static DownloadServerInfo* _serverInfo;
 @synthesize url;
 @synthesize cover;
 @synthesize libID;
+@synthesize lisence;
 @synthesize createTime;
 - (void)dealloc
 {
@@ -104,6 +105,7 @@ static DownloadServerInfo* _serverInfo;
     [self.path release];
     [self.file release];
     [self.url release];
+    [self.lisence release];
     [self.createTime release];
     [super dealloc];
 }
