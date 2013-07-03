@@ -117,8 +117,6 @@ typedef enum {
 - (void)removeDownloadingView;
 - (void)addDownloadingFailedView;
 - (BOOL)downloadLesson;
-// 下载证书文件：ServerRequest.dat
-- (void)downloadLicenseByURL:(NSString *)url;
 - (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
 - (void)downloadXINByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex;
 - (void)downloadISBByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;

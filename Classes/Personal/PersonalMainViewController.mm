@@ -287,6 +287,27 @@
     if ([fm fileExistsAtPath:documentDirectory]) {
         // parse
         //ParseServerUserLicense(<#unsigned char *pLicenseData#>, <#int nLength#>, <#char *szUserName#>, <#unsigned char **pDeviceInfo#>, <#int &nDeviceLength#>);
+        const char* licenseFile = [documentDirectory cStringUsingEncoding:NSUTF8StringEncoding];
+        FILE* file = fopen(licenseFile, "rb");
+        fseek(file, 0, SEEK_END);
+        int length = ftell(file);
+        fseek(file, 0, SEEK_SET);
+        unsigned char* fileData = new unsigned char[length];
+        fread(file, 0, length, file);
+        char userName[256] = { 0 };
+        unsigned char* deviceID = nil;
+        int lenDevceID = 0;
+        ParseServerUserLicense(fileData, length, userName, &deviceID, lenDevceID);
+        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+        if (lib != nil) {
+                 lib.userName = [NSString stringWithUTF8String:userName];
+                 lib.deviceID = [NSString stringWithUTF8String:(const char*)deviceID];
+                 lib.lDeviceID = lenDevceID;
+             }
+        
+        fclose(file);
+        delete[] fileData;
+        delete[] deviceID;
     }
 }
 

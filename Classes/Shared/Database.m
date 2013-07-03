@@ -13,7 +13,7 @@
 static CurrentLibrary* _currentLibrary;
 
 @implementation CurrentLibrary
-@synthesize libID, dataPath, dataTitle, deviceID;
+@synthesize libID, dataPath, dataTitle, deviceID, userName, lDeviceID;
 + (CurrentLibrary*)sharedCurrentLibrary
 {
 	if (_currentLibrary == nil) {
