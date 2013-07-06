@@ -24,7 +24,7 @@
 #import "RecordingWaveCell.h"
 #import "RecordingObject.h"
 #import "ButtonPlayObject.h"
-
+#import "CurrentInfo.h"
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
 #define DOWNLOADINGVIEWTAG  20936
@@ -133,9 +133,9 @@
 
 - (void)initMembers;
 {
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     Database* db = [Database sharedDatabase];
-    [db setPkgListendwithPath:lib.dataPath];
+    [db setPkgListendwithPath:lib.currentPkgDataPath];
     lastClickIndex = -1;
     clickindex = -1;
     NSString* backString = STRING_BACK;
@@ -493,8 +493,8 @@
 {
    Database* db = [Database sharedDatabase];
     
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.currentPkgDataPath];
     if (info == nil) {
         return NO;
     }
@@ -511,8 +511,8 @@
 {
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.currentPkgDataPath];
     if (info == nil) {
         return;
     }
@@ -531,7 +531,7 @@
         NSString* xatFile = [dataFile stringByAppendingPathExtension:STRING_KEY_FILETYPE_XIN];
         NSString* xatURLpath = [NSString stringWithFormat:@"%@/%@/%@", url, lesson.path, xatFile];
         
-        NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, lib.dataTitle, lesson.path, xatFile];
+        NSString* xatDatafile = [NSString stringWithFormat:@"%@/%@/%@/%@",info.dataPath, lib.currentPkgDataTitle, lesson.path, xatFile];
         V_NSLog(@"xatURLPath:  %@", xatURLpath);
         V_NSLog(@"xatDataPath:  %@", xatDatafile);
         
@@ -561,8 +561,8 @@
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
     
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.currentPkgDataPath];
     if (info == nil) {
         return;
     }
@@ -605,8 +605,8 @@
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
     
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.dataPath];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    VoiceDataPkgObjectFullInfo* info = [db loadVoicePkgInfoByPath:lib.currentPkgDataPath];
     if (info == nil) {
         return;
     }

@@ -14,6 +14,8 @@
 #import "YIPopupTextView.h"
 #import "StoreViewController.h"
 #import "ISaybEncrypt2.h"
+#import "CurrentInfo.h"
+
 
 @interface PersonalMainViewController ()
 
@@ -255,14 +257,9 @@
         StoreViewController* store = [[StoreViewController alloc] initWithNibName:@"StoreViewController" bundle:nil];
         store.storeURL = pkgObject.url;
         store.view.tag = pkgObject.libID;
-        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
+        CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
         if (lib != nil) {
-            NSInteger libid = pkgObject.libID;
-            if (libid != lib.libID) {
-                lib.libID = pkgObject.libID;
-                [self getDeviceID];
-
-            }
+            lib.currentLibID = pkgObject.libID;
         }
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:store];
         
@@ -272,42 +269,6 @@
         [store release];
         [nav release];
        
-    }
-}
-
-- (void)getDeviceID
-{
-    NSFileManager *fm = [NSFileManager defaultManager];
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
-    if ([fm fileExistsAtPath:documentDirectory]) {
-        // parse
-        //ParseServerUserLicense(<#unsigned char *pLicenseData#>, <#int nLength#>, <#char *szUserName#>, <#unsigned char **pDeviceInfo#>, <#int &nDeviceLength#>);
-        const char* licenseFile = [documentDirectory cStringUsingEncoding:NSUTF8StringEncoding];
-        FILE* file = fopen(licenseFile, "rb");
-        fseek(file, 0, SEEK_END);
-        int length = ftell(file);
-        fseek(file, 0, SEEK_SET);
-        unsigned char* fileData = new unsigned char[length];
-        fread(fileData, 1, length, file);
-        char userName[256] = { '\0' };
-        unsigned char* deviceID = nil;
-        int lenDevceID = 0;
-        ParseServerUserLicense(fileData, length, userName, &deviceID, lenDevceID);
-        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-        if (lib != nil) {
-                 lib.userName = [[NSString alloc] initWithCString:userName encoding:-2147482062];
-                 lib.deviceID = [[NSString alloc] initWithBytes:deviceID length:lenDevceID encoding:NSUTF8StringEncoding];
-                 lib.lDeviceID = lenDevceID;
-             }
-        
-        fclose(file);
-        delete[] fileData;
-        delete[] deviceID;
     }
 }
 

@@ -60,6 +60,7 @@
 		0D3B75DF178335CE002224DC /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D3B75D4178335CE002224DC /* Icon-Small-50@2x.png */; };
 		0D3B75E0178335CE002224DC /* icon_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D3B75D5178335CE002224DC /* icon_small.png */; };
 		0D3B75E1178335CE002224DC /* icon_144.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D3B75D6178335CE002224DC /* icon_144.png */; };
+		0D3B75E417870E95002224DC /* CurrentInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B75E317870E94002224DC /* CurrentInfo.mm */; };
 		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
@@ -300,6 +301,8 @@
 		0D3B75D4178335CE002224DC /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		0D3B75D5178335CE002224DC /* icon_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_small.png; sourceTree = "<group>"; };
 		0D3B75D6178335CE002224DC /* icon_144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_144.png; sourceTree = "<group>"; };
+		0D3B75E217870E94002224DC /* CurrentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentInfo.h; sourceTree = "<group>"; };
+		0D3B75E317870E94002224DC /* CurrentInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CurrentInfo.mm; sourceTree = "<group>"; };
 		0D50AA9F176A022E00873CF8 /* RecordingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingObject.h; sourceTree = "<group>"; };
 		0D50AAA0176A022E00873CF8 /* RecordingObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RecordingObject.mm; sourceTree = "<group>"; };
 		0D50AAA3176A036500873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
@@ -1061,6 +1064,8 @@
 				0DBE67A4177CE0A400AA9B57 /* curledView */,
 				0D2F1B72177C0CEB009A8A87 /* SSTextView */,
 				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
+				0D3B75E217870E94002224DC /* CurrentInfo.h */,
+				0D3B75E317870E94002224DC /* CurrentInfo.mm */,
 				0DC0D52317509BEA00684ED2 /* Database.h */,
 				0DC0D52417509BEA00684ED2 /* Database.m */,
 				0DC0D52517509BEA00684ED2 /* VoicePkgInfoObject.h */,
@@ -1482,6 +1487,7 @@
 				0DBE67AD177CE0A400AA9B57 /* UIImageView+Curled.m in Sources */,
 				953960A6178059F900546B92 /* ISaybEncrypt2.mm in Sources */,
 				953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */,
+				0D3B75E417870E95002224DC /* CurrentInfo.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

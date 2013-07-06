@@ -18,6 +18,8 @@
 #import "isaybiosscroe.h"
 #import "ISaybEncrypt2.h"
 #import "SmartEncrypt.h"
+#import "Database.h"
+#import "CurrentInfo.h"
 
 @implementation CourseParser
 
@@ -197,9 +199,15 @@ static bool bLoadModel = NO;
         NSString* xatFile = [fullFilename stringByAppendingPathExtension:@"xin"];
         const char* infile = [xatFile cStringUsingEncoding:NSUTF8StringEncoding];
         unsigned char* filedata = nil;
-
-        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)"71a9d877-9772-4cde-8e14-59e2e70a408f", 36);
-
+        Database* base = [Database sharedDatabase];
+        CurrentInfo* info = [CurrentInfo sharedCurrentInfo];
+        LibaryInfo* libinfo = [base getLibaryInfoByID:info.currentLibID];
+        if (!(libinfo.lisence != nil  && libinfo.lisenceLen != 0) || libinfo == nil) {
+            return;
+        }
+        
+        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)[libinfo.lisence cString], libinfo.lisenceLen);
+                                                         
         tbxml = [[TBXML tbxmlWithXMLData:[NSData dataWithBytes:filedata length:nLen]] retain];
         FreeBuffer(&filedata);
 		

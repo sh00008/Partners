@@ -12,6 +12,7 @@
 #import "StoreRootViewController.h"
 #import "StoreNetworkConnectionView.h"
 #import "VoiceDef.h"
+#import "CurrentInfo.h"
 #import "Database.h"
 
 @interface StoreViewController ()
@@ -123,8 +124,8 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.currentLibID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
@@ -133,7 +134,7 @@
     [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
     
     StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
-    dataParser.libID = lib.libID;
+    dataParser.libID = lib.currentLibID;
     [dataParser loadWithData:data];
     if ([dataParser.pkgsArray count] > 0) {
         StoreRootViewController* rootViewController = [[StoreRootViewController alloc] init];
@@ -148,16 +149,7 @@
 
     if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
         if ([dataParser.serverlistArray count] > 0) {
-            NSString* urlstr = [NSString stringWithFormat:@"%@/ServerRequest.dat", [dataParser.serverlistArray objectAtIndex:0]];
-            NSURL* url = [NSURL URLWithString:urlstr];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            [request setValue:@"device" forHTTPHeaderField:@"User-Agent"];
-            
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-            fetcher.userData = @"device";
-            [fetcher beginFetchWithDelegate:self
-                          didFinishSelector:@selector(fetcher:finishedWithData:error:)];
+            [lib checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
         }
     }
     [dataParser release];
@@ -167,17 +159,6 @@
 
 }
 
-- (void)finishDeviceData:(NSData*)data
-{
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    //NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.libID];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
-    [data writeToFile:documentDirectory atomically:YES];
-}
 
 - (void)fetcher:(GTMHTTPFetcher*)fecther finishedWithData:(NSData*)data error:(id)error
 {
@@ -190,8 +171,6 @@
     } else {
         if ([fecther.userData isEqualToString:@"voicexml"]) {
             [self finishVoiceXMLData:data];
-        } else {
-            [self finishDeviceData:data];
         }
     }
 }

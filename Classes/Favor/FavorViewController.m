@@ -13,6 +13,8 @@
 #import "FavorCourseButton.h"
 #import "CourseViewController.h"
 #import "LessonsViewController.h"
+#import "CurrentInfo.h"
+
 @interface FavorViewController ()
 {
 }
@@ -258,9 +260,14 @@
     NSRange r = [button.pkgPath rangeOfString:STRING_VOICE_PKG_DIR];
     if (r.location != NSNotFound) {
         NSString* path = [button.pkgPath substringFromIndex:(r.location + r.length + 1)];
-        CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-        lib.dataPath = path;
-        lib.dataTitle = button.pkgTitle;
+        CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+        lib.currentPkgDataPath = path;
+        lib.currentPkgDataTitle = button.pkgTitle;
+        r = [path rangeOfString:@"/"];
+        if (r.location != NSNotFound) {
+            lib.currentLibID = [[path substringToIndex:r.location] intValue];
+        }
+
        
     }
     NSLog(@"%@", button.pkgPath);

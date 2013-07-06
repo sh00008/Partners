@@ -9,6 +9,7 @@
 #import "StorePkgDetailTableViewCell.h"
 #import "GTMHTTPFetcher.h"
 #import "StoreDownloadPkg.h"
+#import "CurrentInfo.h"
 #import "Database.h"
 #import "VoiceDef.h"
 
@@ -121,8 +122,8 @@
 - (void)setVoiceData:(DownloadDataPkgInfo*)info
 {
     [self setButtomImage];
-    CurrentLibrary* lib = [CurrentLibrary sharedCurrentLibrary];
-    info.libID = lib.libID;
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
     if ([db loadVoicePkgInfo:info] != nil) {
         [self.downloadButton setTitle:STRING_DOWNLOADED forState:UIControlStateNormal];

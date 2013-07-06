@@ -10,37 +10,6 @@
 #import <sqlite3.h>
 #import "VoiceDef.h"
 
-static CurrentLibrary* _currentLibrary;
-
-@implementation CurrentLibrary
-@synthesize libID, dataPath, dataTitle, deviceID, userName, lDeviceID;
-+ (CurrentLibrary*)sharedCurrentLibrary
-{
-	if (_currentLibrary == nil) {
-		_currentLibrary = [[CurrentLibrary alloc] init];
-	}
-	
-	return _currentLibrary;
-}
-
-+ (void)releaseCurrentLibrary
-{
-    if (_currentLibrary != nil) {
-        [_currentLibrary release];
-        _currentLibrary = nil;
-    }
-}
-
-- (void)dealloc
-{
-    [self.dataPath release];
-    [self.dataTitle release];
-    [self.deviceID release];
-    [super dealloc];
-}
-@end;
-
-
 @implementation Database
 
 static Database* _database;
@@ -195,11 +164,42 @@ static Database* _database;
 	[sql release];
 	[databaseLock unlock];
 
-    LibaryInfo* info = [[LibaryInfo alloc] init];
+    [self createLibLisenceTable];
+   LibaryInfo* info = [[LibaryInfo alloc] init];
     info.url = STRING_STORE_URL_ADDRESS;
     [self insertLibaryInfo:info];
-    [info release];
+    
+     [info release];
 
+    return bSuccess;
+}
+
+- (BOOL)createLibLisenceTable;
+{
+    NSString* tableName = STRING_DB_TABLENAME_LIB_LISENCE_INFO  ;
+    if ([self isExistsTable:tableName]) {
+        return NO;
+	}
+	
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	BOOL bSuccess = NO;
+	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
+	[sql appendString:@"("];
+	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_LIBARY_ID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_LISENCE];
+	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_LISENCE_LEN];
+	[sql appendString:@");"];
+	
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+	} else {
+		
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
     return bSuccess;
 }
 
@@ -379,7 +379,6 @@ static Database* _database;
 	sqlite3_stmt *statement;
     
     NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID,STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
-	//NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
 		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
@@ -402,8 +401,6 @@ static Database* _database;
         sqlite3_bind_text(statement, i, [info.url UTF8String], -1, SQLITE_TRANSIENT);
 		i++;
         
-        sqlite3_bind_text(statement, i, [info.lisence UTF8String], -1, SQLITE_TRANSIENT);
-		i++;
         // createTime
         NSDate* d = [NSDate date];
         sqlite3_bind_text(statement, i, [[d description] UTF8String], -1, SQLITE_TRANSIENT);
@@ -423,6 +420,7 @@ static Database* _database;
 	}
     
     info.libID = [self getlastRecordID:STRING_DB_TABLENAME_LIB_INFO];
+    [self insertLibaryLisenceInfo:info];
     return YES;
 }
 
@@ -431,7 +429,65 @@ static Database* _database;
     BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = '%@',%@ = '%@' , %@ = '%@',%@ = '%@'  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_INFO,  STRING_DB_VOICE_PKG_TITLE, info.title, STRING_DB_VOICE_PKG_PATH, info.path,STRING_DB_VOICE_PKG_COVER, info.cover, STRING_DB_VOICE_PKG_URL, info.url, STRING_DB_VOICE_LISENCE, info.lisence, STRING_DB_LIBARY_ID, info.libID];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = '%@',%@ = '%@' ,%@ = '%@'  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_INFO,  STRING_DB_VOICE_PKG_TITLE, info.title, STRING_DB_VOICE_PKG_PATH, info.path,STRING_DB_VOICE_PKG_COVER, info.cover, STRING_DB_VOICE_PKG_URL, info.url,  STRING_DB_LIBARY_ID, info.libID];
+    int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			bResult = NO;
+		}
+    } else {
+		[databaseLock unlock];
+		bResult = NO;
+    }
+	[sql release];
+    [self updateLibaryLisenceInfo:info];
+	return bResult;
+
+}
+
+- (BOOL)insertLibaryLisenceInfo:(LibaryInfo *)info
+{
+    [databaseLock lock];
+	sqlite3_stmt *statement;
+    
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@) VALUES(?,?,?)", STRING_DB_TABLENAME_LIB_LISENCE_INFO, STRING_DB_LIBARY_ID,STRING_DB_VOICE_LISENCE, STRING_DB_VOICE_LISENCE_LEN];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
+		NSInteger i = 1;
+        sqlite3_bind_int(statement, i, info.libID);
+        
+		sqlite3_bind_text(statement, i, [info.lisence UTF8String], -1, SQLITE_TRANSIENT);
+		i++;
+        
+
+		sqlite3_bind_int(statement, i, info.lisenceLen);
+		i++;
+        
+        success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+			return NO;
+		}
+	} else {
+		[databaseLock unlock];
+		V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+		return NO;
+	}
+    return YES;
+
+}
+- (BOOL)updateLibaryLisenceInfo:(LibaryInfo *)info
+{
+    BOOL bResult = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = %ld  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_LISENCE_INFO,  STRING_DB_VOICE_LISENCE, info.lisence, STRING_DB_VOICE_LISENCE_LEN, info.lisenceLen,  STRING_DB_LIBARY_ID, info.libID];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -447,6 +503,80 @@ static Database* _database;
 	[sql release];
 	return bResult;
 
+}
+
+
+- (LibaryInfo*)getLibaryInfoByID:(NSInteger)libID;
+{
+     [databaseLock lock];
+	LibaryInfo* info = nil;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID, libID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    NSString* path = nil;
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            info = [[LibaryInfo alloc] init];
+            char *titleChars = (char *) sqlite3_column_text(statement, 0);
+            char *pathChars = (char *) sqlite3_column_text(statement, 1);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            // coverChars;
+            char *urlChars = (char *) sqlite3_column_text(statement, 3);
+            char *timeChars = (char *) sqlite3_column_text(statement, 4);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            if (pathChars != nil) {
+                path = [NSString stringWithUTF8String:pathChars];
+                info.path = [NSString stringWithFormat:@"%@", [self getAbsolutelyPath:path]];
+                info.cover = [NSString stringWithFormat:@"%@/cover", [self getAbsolutelyPath:path]] ;
+            }
+            if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.title = [NSString stringWithFormat:@"%@",title];
+            }
+            if (urlChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:urlChars];
+                info.url = [NSString stringWithFormat:@"%@",title];
+            }
+            if (timeChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:timeChars];
+                info.createTime = [NSString stringWithFormat:@"%@",title];
+            }
+            break;
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    info.libID = libID;
+    [self getLisenceInfo:info];
+	return [info autorelease];
+}
+
+- (void)getLisenceInfo:(LibaryInfo*)info;
+{
+    [databaseLock lock];
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@ FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_LISENCE, STRING_DB_VOICE_LISENCE_LEN, STRING_DB_TABLENAME_LIB_LISENCE_INFO, STRING_DB_LIBARY_ID, info.libID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            char *lisenceChars = (char *) sqlite3_column_text(statement, 0);
+            long length = sqlite3_column_int64(statement, 1);
+            if (lisenceChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:lisenceChars];
+                info.lisence  = [NSString stringWithFormat:@"%@",title];
+            }
+            info.lisenceLen = length;
+            break;
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
 }
 - (NSMutableArray*)loadVoicePkgInfo;
 {

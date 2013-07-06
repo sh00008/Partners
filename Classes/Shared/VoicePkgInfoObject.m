@@ -99,6 +99,8 @@ static DownloadServerInfo* _serverInfo;
 @synthesize libID;
 @synthesize lisence;
 @synthesize createTime;
+@synthesize lisenceLen;
+
 - (void)dealloc
 {
     [self.title release];

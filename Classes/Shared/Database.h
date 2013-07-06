@@ -29,20 +29,6 @@
 #define STRING_DB_TABLENAME_LIB_INFO  @"LibaryInfo"
 #define STRING_DB_TABLENAME_LIB_LISENCE_INFO  @"LibaryLisenceInfo"
 #define STRING_DB_LIBARY_ID         @"LibaryID"
-@interface CurrentLibrary: NSObject {
-    
-}
-+ (CurrentLibrary*)sharedCurrentLibrary;
-
-- (void)parseLisence;
-
-@property (nonatomic, assign) NSInteger libID;
-@property (nonatomic, retain) NSString* dataPath;
-@property (nonatomic, retain) NSString* dataTitle;
-@property (nonatomic, retain) NSString* userName;
-@property (nonatomic, retain) NSString* deviceID;
-@property (nonatomic) long lDeviceID;
-@end
 
 @interface Database : NSObject {
  	Database* _database;
@@ -54,11 +40,18 @@
 - (BOOL)createVoicePkgInfoTable;
 - (BOOL)createVoicePkgcCourseTable;
 - (BOOL)createLibInfoTable;
+- (BOOL)createLibLisenceTable;
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
+
 - (BOOL)insertLibaryInfo:(LibaryInfo*)info;
 - (BOOL)updateLibaryInfo:(LibaryInfo*)info;
+- (BOOL)insertLibaryLisenceInfo:(LibaryInfo *)info;
+- (BOOL)updateLibaryLisenceInfo:(LibaryInfo *)info;
+- (LibaryInfo*)getLibaryInfoByID:(NSInteger)libID;
+- (void)getLisenceInfo:(LibaryInfo*)info;
+
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
