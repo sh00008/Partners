@@ -206,7 +206,7 @@ static bool bLoadModel = NO;
             return;
         }
         
-        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)[libinfo.lisence cString], libinfo.lisenceLen);
+        long nLen = LoadDecodeBuffer(infile, &filedata, (const unsigned char*)[libinfo.lisence cStringUsingEncoding:NSASCIIStringEncoding], libinfo.lisenceLen);
                                                          
         tbxml = [[TBXML tbxmlWithXMLData:[NSData dataWithBytes:filedata length:nLen]] retain];
         FreeBuffer(&filedata);
