@@ -141,7 +141,6 @@
         self.ratingView = rating;
         [rating release];
         
-        /*
         UILabel* scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.ratingView.frame.origin.x + self.ratingView.frame.size.width, self.ratingView.frame.origin.y, 60, 14)];
         scoreLabel.font = [UIFont systemFontOfSize:11];
         scoreLabel.textAlignment = UITextAlignmentCenter;

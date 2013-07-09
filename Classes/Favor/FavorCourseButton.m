@@ -17,8 +17,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setFont:[UIFont systemFontOfSize:12]];
-        self.lineBreakMode = NSLineBreakByWordWrapping;
+        self.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.tintColor = [UIColor whiteColor];
         [self setBackgroundColor:[UIColor colorWithRed:66.0/255.0 green:168.0/255.0 blue:250.0/255.0 alpha:1.0]];// forState:UIControlStateNormal];
    }

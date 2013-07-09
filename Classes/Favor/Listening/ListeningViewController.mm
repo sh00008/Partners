@@ -409,10 +409,10 @@
     timeStart = 0.0;
     
     if (ePlayStatus == PLAY_STATUS_PLAYING) {
-        [self setStatusPause];
+//        [self setStatusPause];
         Sentence* sentence = [self.sentencesArray objectAtIndex:nPosition];
         self.player.currentTime = [sentence startTime];
-        [self updateUI];
+//        [self updateUI];
     }
     
    [super viewWillDisappear:animated];

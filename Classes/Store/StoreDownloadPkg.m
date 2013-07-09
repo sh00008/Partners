@@ -41,7 +41,7 @@
 {
  	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
    if (error != nil) {
-       NSLog([error description]);
+       NSLog(@"%@", [error description]);
     } else {
              NSString* xmlPath =  [NSString stringWithFormat:@"%@/index.xml", self.pkgPath];
             [data writeToFile:xmlPath atomically:YES];

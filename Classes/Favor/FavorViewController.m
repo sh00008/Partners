@@ -235,7 +235,7 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     <DetailViewController> *detailViewController = [[<DetailViewController> alloc] initWithNibName:@"<Nib name>" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
@@ -283,9 +283,8 @@
     }
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:lessons];
      navController.navigationBar.hidden = YES;
-    DMCustomModalViewController* modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
+    self.modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
                                                        parentViewController:self];
-    self.modal = modal;
     [self openFavor];
  }
 
@@ -295,7 +294,7 @@
     [self.modal setRootViewControllerHeight:self.view.bounds.size.height * 0.8];
     [self.modal setParentViewYPath:self.view.bounds.size.height * 0.2];
     
-    [self.modal setDelegate:self];
+    [self.modal setDelegate:(id<DMCustomViewControllerDelegate>)self];
     [self.modal presentRootViewControllerWithPresentationStyle:DMCustomModalViewControllerPresentPartScreen
                                           controllercompletion:^{
                                               
