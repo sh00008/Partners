@@ -16,11 +16,12 @@
 
 @class RecordingObject;
 #define VOLUMNVIEW_TAG  50001
+#define READYRECORDINGVIEW_TAG  50002
 
 enum {
     PLAY_LESSON_TYPE_NONE = 0,
     PLAY_LESSON = 1,
-    PLAY_SENTENCE = 2,
+    PLAY_READING_FLOWME = 2,
 };
 typedef NSInteger PLAY_LESSON_TYPE;
 
@@ -83,7 +84,7 @@ typedef enum {
     NSInteger clickindex;
     NSInteger lastClickIndex;
     ButtonPlayObject* _buttonPlay;
-    
+    BOOL          _bReadFlowMe;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;

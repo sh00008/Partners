@@ -161,6 +161,7 @@
 #define STRING_SETTING                  @"设置"
 #define STRING_PRE_PAGE                 @"上一页"
 #define STRING_NEXT_PAGE                @"下一页"
+#define STRING_READY_RECORDING          @"准备录音..."
 #define PS_ARRAY	@"ai,au,εə,i:,a:,ɔ:,u:,i,e,æ,ə,ʌ,ɔ,u,θ,ʃ,tʃ,tr,dʒ,dr,ŋ,ð,p,t,k,f,s,h,b,d,g,v,d,z,r,w,m,n,l"
 #define PS_CHAR_ARRAY @"ah ih,ah uh,eh ex,ii,aa,oo,uu,ih,eh,ae,ex,ah,oh,uh,th,sh,tg,tr,zh,dr,ng,dh,pp,tt,kk,ff,ss,hh,bb,dd,gg,vv,dd,zz,rr,ww,mm,nn,ll"
 #define DAYBYDY_TITLE                   @"每日一句"

@@ -87,7 +87,7 @@
         settingData = [[SettingData alloc] init];
         [settingData loadSettingData];
         nCurrentReadingCount = 1;
-        nLesson = settingData.eReadingMode == READING_MODE_WHOLE_TEXT ?  PLAY_LESSON : PLAY_SENTENCE;
+        nLesson = settingData.eReadingMode == READING_MODE_WHOLE_TEXT ?  PLAY_LESSON : PLAY_READING_FLOWME;
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 		[center addObserver:self selector:@selector(willEnterToBackground:) name:NOTI_WILLENTERFOREGROUND object:nil]; 
         bAlReadyPaused = NO;
@@ -97,6 +97,7 @@
         resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Image"]];
         _recording = [[RecordingObject alloc] init];
         [_recording setAddInView:self.view];
+        _bReadFlowMe = NO;
     }
     return self;
 }
@@ -1130,25 +1131,20 @@
         } 
     } else {
         [self.player pause];
-        self.player.currentTime = [sentence startTime];
-        if (nCurrentReadingCount < settingData.nReadingCount) {
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
-            
-        } else {
-            nCurrentReadingCount = 0;
-            if (nPosition < ([_sentencesArray count] - 1)) {
-                nPosition++;
-                sentence = [_sentencesArray objectAtIndex:nPosition];
-                self.player.currentTime = [sentence startTime];
-                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
-                
-            } else {
-                ePlayStatus = PLAY_STATUS_NONE;
-                [self updateUI];
-            }
-            
+        if (clickindex < ([_sentencesArray count] - 1)) {
+            clickindex++;
+            sentence = [_sentencesArray objectAtIndex:clickindex];
+            self.player.currentTime = [sentence startTime];
+            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
         }
     }
 }
 
+- (void)showReadyRecording
+{
+    UILabel* ready = [[UILabel alloc] initWithFrame:self.view.bounds];
+    ready.backgroundColor = [UIColor clearColor];
+    ready.tag = READYRECORDINGVIEW_TAG;
+    
+}
 @end
