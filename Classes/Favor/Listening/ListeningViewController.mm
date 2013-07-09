@@ -1071,7 +1071,7 @@
         [self.player stop];
         self.player = nil;
     }
-    
+    ePlayStatus = PLAY_STATUS_PLAYING;
     NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
     AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
     [fileURL release];
@@ -1082,7 +1082,73 @@
     [newPlayer release];
     self.player.currentTime = 0;
     self.player.volume = 5.0;
-    [self.player play];
+    clickindex = 0;
+    [self playfromCurrentPos];
+}
+
+- (IBAction)practicewholelesson:(id)sender;
+{
+    
+}
+
+- (void)playfromCurrentPos
+{
+    if (clickindex < [_sentencesArray count]) {
+        [self updateUI];
+        Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+        NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
+        UInt32 doChangeDefaultRoute = 1;
+        AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
+                                 sizeof (doChangeDefaultRoute),
+                                 &doChangeDefaultRoute);
+        [self.player play];
+        [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
+    }
+}
+
+- (void)updateUI
+{
+    [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+
+}
+
+- (void)pauseintime;
+{
+    if (ePlayStatus != PLAY_STATUS_PLAYING) {
+        return;
+    }
+    
+    Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+    NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+    if (nLesson == PLAY_LESSON) {
+        [self.player pause];
+        if (clickindex < ([_sentencesArray count] - 1)) {
+            clickindex++;
+            sentence = [_sentencesArray objectAtIndex:clickindex];
+            self.player.currentTime = [sentence startTime];
+            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
+        } 
+    } else {
+        [self.player pause];
+        self.player.currentTime = [sentence startTime];
+        if (nCurrentReadingCount < settingData.nReadingCount) {
+            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
+            
+        } else {
+            nCurrentReadingCount = 0;
+            if (nPosition < ([_sentencesArray count] - 1)) {
+                nPosition++;
+                sentence = [_sentencesArray objectAtIndex:nPosition];
+                self.player.currentTime = [sentence startTime];
+                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:inter];
+                
+            } else {
+                ePlayStatus = PLAY_STATUS_NONE;
+                [self updateUI];
+            }
+            
+        }
+    }
 }
 
 @end
