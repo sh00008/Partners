@@ -1066,13 +1066,12 @@
 
 }
 
-- (IBAction)readwholelesson:(id)sender;
+- (void)playWholeLesson
 {
     if (self.player != nil) {
         [self.player stop];
         self.player = nil;
     }
-    ePlayStatus = PLAY_STATUS_PLAYING;
     NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
     AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
     [fileURL release];
@@ -1085,11 +1084,22 @@
     self.player.volume = 5.0;
     clickindex = 0;
     [self playfromCurrentPos];
+
+}
+- (IBAction)readwholelesson:(id)sender;
+{
+    ePlayStatus = PLAY_STATUS_PLAYING;
+    nLesson = PLAY_LESSON;
+    
+    [self playWholeLesson];
 }
 
 - (IBAction)practicewholelesson:(id)sender;
 {
-    
+    ePlayStatus = PLAY_STATUS_PLAYING;
+    nLesson = PLAY_READING_FLOWME;
+    [self playWholeLesson];
+
 }
 
 - (void)playfromCurrentPos
@@ -1135,7 +1145,7 @@
             clickindex++;
             sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
+            [self performSelector:@selector(showReadyRecording) withObject:self afterDelay:settingData.dTimeInterval];
         }
     }
 }
@@ -1144,7 +1154,31 @@
 {
     UILabel* ready = [[UILabel alloc] initWithFrame:self.view.bounds];
     ready.backgroundColor = [UIColor clearColor];
+    ready.font = [UIFont fontWithName:@"Arial" size:60];
+    ready.textAlignment = NSTextAlignmentCenter;
     ready.tag = READYRECORDINGVIEW_TAG;
+    [self.view addSubview:ready];
+    [ready release];
+    
+    for (NSInteger i = 0; i < 3; i++) {
+        ready.tag= i;
+        [self performSelector:@selector(playRecordingAnimationWithView:) withObject:ready afterDelay:(i+1)];
+    }
     
 }
+
+- (void)playRecordingAnimationWithView:(UILabel*)viewWillAnimation
+{
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    theAnimation.duration = 0.3;
+    theAnimation.autoreverses = NO;
+    viewWillAnimation.text = [NSString stringWithFormat:@"%d", viewWillAnimation.tag];
+    
+    theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
+    theAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    [viewWillAnimation.layer addAnimation:theAnimation forKey:nil];
+}
+
+
 @end
