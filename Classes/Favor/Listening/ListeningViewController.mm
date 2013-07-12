@@ -1137,7 +1137,7 @@
             clickindex++;
             sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:settingData.dTimeInterval];
+            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(settingData.dTimeInterval+inter)];
         } 
     } else {
         [self.player pause];
@@ -1145,7 +1145,7 @@
             clickindex++;
             sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(showReadyRecording) withObject:self afterDelay:settingData.dTimeInterval];
+            [self performSelector:@selector(showReadyRecording) withObject:self afterDelay:(settingData.dTimeInterval+inter)];
         }
     }
 }
@@ -1157,27 +1157,44 @@
     ready.font = [UIFont fontWithName:@"Arial" size:60];
     ready.textAlignment = NSTextAlignmentCenter;
     ready.tag = READYRECORDINGVIEW_TAG;
+    ready.text = STRING_READY_RECORDING;
     [self.view addSubview:ready];
     [ready release];
     
-    for (NSInteger i = 0; i < 3; i++) {
-        ready.tag= i;
-        [self performSelector:@selector(playRecordingAnimationWithView:) withObject:ready afterDelay:(i+1)];
-    }
+    NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
+    [dicValue setObject:ready forKey:@"view"];
+    [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:1];
+    
+    /*int j = 3;
+    for (NSInteger i = 3; i > 0; i--) {
+        NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
+        [dicValue setObject:ready forKey:@"view"];
+        [dicValue setObject:[NSNumber numberWithInt:j] forKey:@"number"];
+        NSLog(@"%d", j);
+        [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:(4 - i)];
+        j--;
+    }*/
     
 }
 
-- (void)playRecordingAnimationWithView:(UILabel*)viewWillAnimation
+- (void)playRecordingAnimationWithView:(NSMutableDictionary*)dicValue
 {
+    if (dicValue == nil) {
+        return;
+    }
+    
+    UILabel* viewWillAnimation = [dicValue objectForKey:@"view"];
+    NSNumber* number = [dicValue objectForKey:@"showNumber"];
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     theAnimation.duration = 0.3;
     theAnimation.autoreverses = NO;
-    viewWillAnimation.text = [NSString stringWithFormat:@"%d", viewWillAnimation.tag];
-    
+    viewWillAnimation.text = STRING_RECORDING_TEXT;
+    //viewWillAnimation.text = [NSString stringWithFormat:@"%d", [number integerValue]];
     theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
     theAnimation.toValue = [NSNumber numberWithFloat:1.0];
     [viewWillAnimation.layer addAnimation:theAnimation forKey:nil];
+    [dicValue release];
 }
 
 
