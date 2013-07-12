@@ -33,21 +33,25 @@
         GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
         [fetcher beginFetchWithDelegate:self
                       didFinishSelector:@selector(fetcher:finishedWithData:error:)];
-    
-
 }
 
 - (void)fetcher:(GTMHTTPFetcher*)fecther finishedWithData:(NSData*)data error:(id)error
 {
  	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
    if (error != nil) {
-       NSLog(@"%@", [error description]);
+       V_NSLog(@"%@", [error description]);
     } else {
-             NSString* xmlPath =  [NSString stringWithFormat:@"%@/index.xml", self.pkgPath];
-            [data writeToFile:xmlPath atomically:YES];
+        NSString* xmlPath =  [NSString stringWithFormat:@"%@/index.xml", self.pkgPath];
+        NSDate* date = [NSDate date];
+        V_NSLog(@"%@", [date description]);
+        NSData* dateData = [[date description] dataUsingEncoding: NSASCIIStringEncoding];
+        NSMutableData* outputData = [NSMutableData alloc];
+        [outputData appendData:dateData];
+        [outputData appendData:data];
+        [outputData writeToFile:xmlPath atomically:YES];
+        [outputData release];
     }
 }
-
 
 - (void)didDownloaded;
 {

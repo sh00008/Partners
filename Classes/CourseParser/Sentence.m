@@ -70,6 +70,9 @@
 	}
     [self.words release];
     
+    for (int i = 0; i < [self.psDict count]; i++) {
+        [[self.psDict objectAtIndex:i] release];
+    }
     [self.psDict release];
 
     [super dealloc];

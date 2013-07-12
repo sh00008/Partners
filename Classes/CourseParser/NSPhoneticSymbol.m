@@ -9,6 +9,12 @@
 #import "NSPhoneticSymbol.h"
 #import "VoiceDef.h"
 
+@implementation WordPhonetic
+
+@synthesize word, phonetic;
+
+@end
+
 @implementation NSPhoneticSymbol
 
 - (id)init

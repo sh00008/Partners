@@ -75,6 +75,37 @@ static bool bLoadModel = NO;
     }
 }
 
+- (NSString *)stringFromDate:(NSDate *)date{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    //zzz表示时区，zzz可以删除，这样返回的日期字符将不包含时区信息 +0000。
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+    
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    
+    [dateFormatter release];
+    
+    return destDateString;
+    
+}
+
+- (NSDate *)dateFromString:(NSString *)dateString{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    
+    
+    NSDate *destDate= [dateFormatter dateFromString:dateString];
+    
+    [dateFormatter release];
+    
+    return destDate;
+    
+}
+
 - (void)loadCourses:(NSString*)filename
 {    
     [self loadModel];
@@ -83,7 +114,17 @@ static bool bLoadModel = NO;
     NSString* fullFilename = [resourcePath stringByAppendingPathComponent:filename];
     //NSLog(@"%@", fullFilename);
     NSData* filedata = [NSData dataWithContentsOfFile:fullFilename];
-	tbxml = [[TBXML tbxmlWithXMLData:filedata] retain];
+    NSString* strFind = @"<?xml";
+    NSString* strData = [[NSString alloc] initWithData:filedata encoding:NSUTF8StringEncoding];
+    
+    NSRange range = [strData rangeOfString:strFind];
+    NSString* strDate = [strData substringToIndex:range.location];
+    NSDate* genDate = [self dateFromString:strDate];
+    
+    NSString* strXML = [strData substringFromIndex:range.location];
+    NSData* xmlData = [strXML dataUsingEncoding:NSUTF8StringEncoding];
+    
+	tbxml = [[TBXML tbxmlWithXMLData:xmlData] retain];
 	
 	// Obtain root element
 	TBXMLElement * root = tbxml.rootXMLElement;
@@ -295,12 +336,13 @@ static bool bLoadModel = NO;
 #else
                             //strPS = [self convertpsChar:strPS];
 #endif
-                            NSDictionary* dictTemp = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                      [psTemp substringToIndex:colon.location], strPS, nil];
+                            WordPhonetic* wordPhonetic = [[WordPhonetic alloc] init];
+                            wordPhonetic.word = [psTemp substringToIndex:colon.location];
+                            wordPhonetic.phonetic = strPS;
 #ifdef PRE_TRANSFER_PS
                             [strPS release];
 #endif
-                            [sentence.psDict addObject:dictTemp];
+                            [sentence.psDict addObject:wordPhonetic];
                         }
                         // next
                         if (separat.length == 0) {

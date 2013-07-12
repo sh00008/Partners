@@ -11,6 +11,8 @@
 #import "Word.h"
 #import "isaybiosscroe.h"
 #import "VoiceDef.h"
+#import "NSPhoneticSymbol.h"
+
 //弹出信息
 #define ALERT(msg) [[[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show]
 char *OSTypeToStr(char *buf, OSType t)
@@ -63,7 +65,14 @@ char *OSTypeToStr(char *buf, OSType t)
     
     NSLog(@"%d, %d", n, nOffset);
     
-    [isaybios ISAYB_Recognition:[sentence.orintext cStringUsingEncoding:NSUTF8StringEncoding]
+    NSMutableString* orintext = [[NSMutableString alloc] init];
+    for (int i = 0; i < [sentence.psDict count]; i++) {
+        WordPhonetic* temp = [sentence.psDict objectAtIndex:i];
+        [orintext appendString:@" "];
+        [orintext appendString:temp.word];
+    }
+    
+    [isaybios ISAYB_Recognition:[orintext cStringUsingEncoding:NSUTF8StringEncoding]
                            From:&buffer[nOffset]
                          Length:(n / 2) - nOffset
                              To: &pWord
@@ -74,24 +83,21 @@ char *OSTypeToStr(char *buf, OSType t)
     if (pWord == nil) {
         return 0;
     }
-//    NSString* tempString = [NSString stringWithFormat:@"<%@>得分：\n", sentence.orintext];
-    score = 0;
-    NSLog(@"%d -> %d", [sentence.words count], nWord);
-    for(int i = 0;i < [sentence.words count]; i++)
-    {
-        Word* word = [sentence.words objectAtIndex:i];
-        NSLog(@"%@", word.text);
-        NSComparisonResult cr = [[word text] compare:[NSString stringWithCString:pWord[i].text encoding:NSUTF8StringEncoding] options:NSCaseInsensitiveSearch];
-        if (cr == NSOrderedSame) {
-            double time = [word.endtime doubleValue] - [word.starttime doubleValue];
-            double per = time - (pWord[i].fTimeEd - pWord[i].fTimeSt) / time;
-            score += (30 * (1 - fabs(per)) + 70) / [sentence.words count];
-            //printf("%f %f %s\n",pWord[i].fTimeSt - pWord[i].fTimeEd, time, pWord[i].text);
-            //printf("%d \n", score);
-        }
-//        tempString = [tempString stringByAppendingFormat:@"%f -> %f : %s\n", pWord[i].fTimeSt,pWord[i].fTimeEd, pWord[i].text];
-    }
-    NSLog(@"%d", score);
+    V_NSLog(@"分数：%d", score);
+
+//    V_NSLog(@"%d -> %d", [sentence.words count], nWord);
+//    for(int i = 0;i < [sentence.words count]; i++)
+//    {
+//        Word* word = [sentence.words objectAtIndex:i];
+//        NSLog(@"%@", word.text);
+//        NSComparisonResult cr = [[word text] compare:[NSString stringWithCString:pWord[i].text encoding:NSUTF8StringEncoding] options:NSCaseInsensitiveSearch];
+//        if (cr == NSOrderedSame) {
+//            double time = [word.endtime doubleValue] - [word.starttime doubleValue];
+//            double per = time - (pWord[i].fTimeEd - pWord[i].fTimeSt) / time;
+//            score += (30 * (1 - fabs(per)) + 70) / [sentence.words count];
+//        }
+//    }
+//    V_NSLog(@"%d", score);
     
     [scoreDictionary setObject:@(score) forKey:@"score"];
     return score;

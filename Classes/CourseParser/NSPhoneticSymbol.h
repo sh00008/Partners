@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface WordPhonetic : NSObject
+{
+    NSString* word;
+    NSString* phonetic;
+}
+
+@property(nonatomic, retain) NSString* word;
+@property(nonatomic, retain) NSString* phonetic;
+
+@end
+
 @interface NSPhoneticSymbol : NSObject
 {
     NSDictionary* psDict;
