@@ -98,8 +98,9 @@ char *OSTypeToStr(char *buf, OSType t)
 //        }
 //    }
 //    V_NSLog(@"%d", score);
-    
-    [scoreDictionary setObject:@(score) forKey:@"score"];
+    if (scoreDictionary != nil) {
+        [scoreDictionary setObject:@(score) forKey:@"score"];
+    }
     return score;
 }
 #pragma mark AudioSession listeners

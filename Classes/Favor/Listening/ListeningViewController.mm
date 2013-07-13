@@ -1164,17 +1164,6 @@
     NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
     [dicValue setObject:ready forKey:@"view"];
     [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:1];
-    
-    /*int j = 3;
-    for (NSInteger i = 3; i > 0; i--) {
-        NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
-        [dicValue setObject:ready forKey:@"view"];
-        [dicValue setObject:[NSNumber numberWithInt:j] forKey:@"number"];
-        NSLog(@"%d", j);
-        [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:(4 - i)];
-        j--;
-    }*/
-    
 }
 
 - (void)playRecordingAnimationWithView:(NSMutableDictionary*)dicValue
@@ -1184,7 +1173,6 @@
     }
     
     UILabel* viewWillAnimation = [dicValue objectForKey:@"view"];
-    NSNumber* number = [dicValue objectForKey:@"showNumber"];
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     theAnimation.duration = 0.3;
@@ -1195,7 +1183,29 @@
     theAnimation.toValue = [NSNumber numberWithFloat:1.0];
     [viewWillAnimation.layer addAnimation:theAnimation forKey:nil];
     [dicValue release];
+    
+    // start recording
+    CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+    
+    UIView* contentView = [wholeCell.ContentView viewWithTag:102];
+    CGFloat animationTime = 0.1;
+    if (contentView != nil) {
+        RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
+        Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+        [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
+        NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+        if (clickindex+1 < [self.sentencesArray count]) {
+            clickindex++;
+            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
+     }
+    }
 }
 
-
+- (void)startNextPractice
+{
+    UIView* t = [self.view viewWithTag:READYRECORDINGVIEW_TAG];
+    [t removeFromSuperview];
+    [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+    [self practicewholelesson:nil];
+}
 @end
