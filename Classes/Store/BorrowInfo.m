@@ -67,28 +67,30 @@
         return 0;
     }
     NSRange versionRange = [filedata rangeOfString:InfoSeparator];
-    if (versionRange.location != NSNotFound) {
-        version = [filedata substringToIndex:versionRange.location];        
+    if (versionRange.location == NSNotFound) {
+        return 0;
     }
-    
+    version = [filedata substringToIndex:versionRange.location];
+
     // date
     NSRange dateRange = [filedata rangeOfString:InfoSeparator
                                        options:NSCaseInsensitiveSearch
                                          range:NSMakeRange(versionRange.location+1, [filedata length] - (versionRange.location + versionRange.length))];
-    if (dateRange.location != NSNotFound) {
-        NSString* dateString = [filedata substringWithRange:NSMakeRange(versionRange.location + versionRange.length, dateRange.location - versionRange.location - 1)];
-        date = [self dateFromString:dateString];
+    if (dateRange.location == NSNotFound) {
+        return 0;
     }
+    NSString* dateString = [filedata substringWithRange:NSMakeRange(versionRange.location + versionRange.length, dateRange.location - versionRange.location - 1)];
+    date = [self dateFromString:dateString];
     
     // extern data
     NSString* strFind = @"<?xml";
     NSRange edataRange = [filedata rangeOfString:strFind
                                         options:NSCaseInsensitiveSearch
                                           range:NSMakeRange(dateRange.location+1, [filedata length] -(dateRange.location + dateRange.length))];
-    if (edataRange.location != NSNotFound) {
-        externData = [filedata substringWithRange:NSMakeRange(dateRange.location + dateRange.length, edataRange.location - dateRange.location - 1)];
+    if (edataRange.location == NSNotFound) {
         return 0;
     }
+    externData = [filedata substringWithRange:NSMakeRange(dateRange.location + dateRange.length, edataRange.location - dateRange.location - 1)];
     return edataRange.location;
 }
 

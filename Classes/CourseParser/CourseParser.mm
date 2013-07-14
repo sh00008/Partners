@@ -95,6 +95,7 @@ static bool bLoadModel = NO;
     NSTimeInterval time = [[NSDate date] timeIntervalSinceDate:[borrowInfo date]];
     
     V_NSLog(@"%@, 距离借阅时间：%f 小时", [borrowInfo.date description], time /3600);
+    [borrowInfo release];
     
     NSString* strXML = [strData substringFromIndex:loc];
     NSData* xmlData = [strXML dataUsingEncoding:NSUTF8StringEncoding];
