@@ -1181,29 +1181,39 @@
     //viewWillAnimation.text = [NSString stringWithFormat:@"%d", [number integerValue]];
     theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
     theAnimation.toValue = [NSNumber numberWithFloat:1.0];
-    [viewWillAnimation.layer addAnimation:theAnimation forKey:nil];
+    theAnimation.delegate = (id)self;
+    [theAnimation setValue:@"practiceforready" forKey:@"id"];
+    viewWillAnimation.tag = READYRECORDINGVIEW_TAG;
+   [viewWillAnimation.layer addAnimation:theAnimation forKey:@"transform.scale"];
     [dicValue release];
     
-    // start recording
-    CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
-    
-    UIView* contentView = [wholeCell.ContentView viewWithTag:102];
-    CGFloat animationTime = 0.1;
-    if (contentView != nil) {
-        RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
-        Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-        [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
-        NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-        if (clickindex+1 < [self.sentencesArray count]) {
-            clickindex++;
-            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
-     }
-    }
 }
 
+
+- (void)animationDidStop:(CAAnimation *)theAnimation2 finished:(BOOL)flag {
+    CABasicAnimation *theAnimation = (CABasicAnimation*)theAnimation2;
+    NSString* valueKey = [theAnimation valueForKey:@"id"];
+    if([valueKey isEqual:@"practiceforready"]) {
+        
+        // start recording
+        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+        
+        UIView* contentView = [wholeCell.ContentView viewWithTag:102];
+        if (contentView != nil) {
+            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
+            Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+            [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+            if (clickindex+1 < [self.sentencesArray count]) {
+                clickindex++;
+                [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
+            }
+        }
+    }
+}
 - (void)startNextPractice
 {
-    UIView* t = [self.view viewWithTag:READYRECORDINGVIEW_TAG];
+    UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
     [t removeFromSuperview];
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
     [self practicewholelesson:nil];

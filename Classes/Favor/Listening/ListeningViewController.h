@@ -16,7 +16,7 @@
 
 @class RecordingObject;
 #define VOLUMNVIEW_TAG  50001
-#define READYRECORDINGVIEW_TAG  50002
+#define READYRECORDINGVIEW_TAG  50102
 
 enum {
     PLAY_LESSON_TYPE_NONE = 0,
