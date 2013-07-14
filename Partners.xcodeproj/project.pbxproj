@@ -198,6 +198,8 @@
 		953960AC17805ACF00546B92 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960991780592900546B92 /* md5_one.c */; };
 		953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 953960AD1781B0AA00546B92 /* CourseParser.mm */; };
 		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
+		95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
+		95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -477,7 +479,7 @@
 		952223F9178C65BE0068EE70 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Icon@2x.png"; sourceTree = "<group>"; };
 		952223FB178C65D10068EE70 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		952223FD178C65EF0068EE70 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
-		952223FF178C68560068EE70 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		952223FF178C68560068EE70 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		9539605C177FDBE600546B92 /* ISaybEncrypt2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISaybEncrypt2.h; sourceTree = "<group>"; };
 		953960921780592900546B92 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64.cpp; path = SmartEncryt/base64.cpp; sourceTree = "<group>"; };
 		953960931780592900546B92 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SmartEncryt/base64.h; sourceTree = "<group>"; };
@@ -494,6 +496,8 @@
 		953960A5178059F900546B92 /* ISaybEncrypt2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ISaybEncrypt2.mm; sourceTree = "<group>"; };
 		953960AD1781B0AA00546B92 /* CourseParser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CourseParser.mm; sourceTree = "<group>"; };
 		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
+		95C0669917928755008E39C6 /* BorrowInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorrowInfo.h; sourceTree = "<group>"; };
+		95C0669A17928755008E39C6 /* BorrowInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorrowInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -539,9 +543,6 @@
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
-				952223FF178C68560068EE70 /* Default-568h@2x.png */,
-				0DAA1417175F771500E51620 /* AudioToolbox.framework */,
-				0DAA1415175F770E00E51620 /* AVFoundation.framework */,
 				0D15316A1740B20000633FA0 /* Partners */,
 				0D1531911740B20000633FA0 /* PartnersTests */,
 				0D1531631740B20000633FA0 /* Frameworks */,
@@ -561,6 +562,8 @@
 		0D1531631740B20000633FA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA1417175F771500E51620 /* AudioToolbox.framework */,
+				0DAA1415175F770E00E51620 /* AVFoundation.framework */,
 				0DA148561750FC57004EBCFF /* QuartzCore.framework */,
 				0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */,
 				0D1531641740B20000633FA0 /* UIKit.framework */,
@@ -787,6 +790,7 @@
 			isa = PBXGroup;
 			children = (
 				952223F7178C65750068EE70 /* Icon.png */,
+				952223FF178C68560068EE70 /* Default-568h@2x.png */,
 				952223FD178C65EF0068EE70 /* Default@2x.png */,
 				952223FB178C65D10068EE70 /* Default.png */,
 				952223F9178C65BE0068EE70 /* Icon@2x.png */,
@@ -961,6 +965,8 @@
 			isa = PBXGroup;
 			children = (
 				0DC0D4FB17509BEA00684ED2 /* GTMHTTPFetcher */,
+				95C0669917928755008E39C6 /* BorrowInfo.h */,
+				95C0669A17928755008E39C6 /* BorrowInfo.m */,
 				0DC0D50C17509BEA00684ED2 /* StoreAdTableViewCell.xib */,
 				0DC0D50D17509BEA00684ED2 /* StoreCourceTableViewCell.h */,
 				0DC0D50E17509BEA00684ED2 /* StoreCourceTableViewCell.m */,
@@ -1346,6 +1352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */,
 				953960AB17805ACF00546B92 /* md5_dgst.c in Sources */,
 				953960AC17805ACF00546B92 /* md5_one.c in Sources */,
 				953960A717805AAB00546B92 /* base64.cpp in Sources */,
@@ -1439,6 +1446,7 @@
 				953960A11780592900546B92 /* md5_dgst.c in Sources */,
 				953960A21780592900546B92 /* md5_one.c in Sources */,
 				953960A31780592900546B92 /* SmartEncrypt.cpp in Sources */,
+				95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

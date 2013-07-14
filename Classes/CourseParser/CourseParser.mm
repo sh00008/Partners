@@ -20,6 +20,7 @@
 #import "SmartEncrypt.h"
 #import "Database.h"
 #import "CurrentInfo.h"
+#import "BorrowInfo.h"
 
 @implementation CourseParser
 
@@ -75,36 +76,7 @@ static bool bLoadModel = NO;
     }
 }
 
-- (NSString *)stringFromDate:(NSDate *)date{
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    //zzz表示时区，zzz可以删除，这样返回的日期字符将不包含时区信息 +0000。
-    
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
-    
-    NSString *destDateString = [dateFormatter stringFromDate:date];
-    
-    [dateFormatter release];
-    
-    return destDateString;
-    
-}
 
-- (NSDate *)dateFromString:(NSString *)dateString{
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-    
-    
-    NSDate *destDate= [dateFormatter dateFromString:dateString];
-    
-    [dateFormatter release];
-    
-    return destDate;
-    
-}
 
 - (void)loadCourses:(NSString*)filename
 {    
@@ -114,14 +86,17 @@ static bool bLoadModel = NO;
     NSString* fullFilename = [resourcePath stringByAppendingPathComponent:filename];
     //NSLog(@"%@", fullFilename);
     NSData* filedata = [NSData dataWithContentsOfFile:fullFilename];
-    NSString* strFind = @"<?xml";
     NSString* strData = [[NSString alloc] initWithData:filedata encoding:NSUTF8StringEncoding];
     
-    NSRange range = [strData rangeOfString:strFind];
-    NSString* strDate = [strData substringToIndex:range.location];
-    NSDate* genDate = [self dateFromString:strDate];
+    // 解析借阅信息
+    BorrowInfo* borrowInfo = [[BorrowInfo alloc]init];
+    NSInteger loc = [borrowInfo parseInfo:strData];
     
-    NSString* strXML = [strData substringFromIndex:range.location];
+    NSTimeInterval time = [[NSDate date] timeIntervalSinceDate:[borrowInfo date]];
+    
+    V_NSLog(@"%@, 距离借阅时间：%f 小时", [borrowInfo.date description], time /3600);
+    
+    NSString* strXML = [strData substringFromIndex:loc];
     NSData* xmlData = [strXML dataUsingEncoding:NSUTF8StringEncoding];
     
 	tbxml = [[TBXML tbxmlWithXMLData:xmlData] retain];

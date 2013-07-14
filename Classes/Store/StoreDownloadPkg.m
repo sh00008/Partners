@@ -9,6 +9,7 @@
 #import "StoreDownloadPkg.h"
 #import "Database.h"
 #import "GTMHTTPFetcher.h"
+#import "BorrowInfo.h"
 #import "VoiceDef.h"
 
 @implementation StoreDownloadCourse
@@ -42,14 +43,17 @@
        V_NSLog(@"%@", [error description]);
     } else {
         NSString* xmlPath =  [NSString stringWithFormat:@"%@/index.xml", self.pkgPath];
-        NSDate* date = [NSDate date];
-        V_NSLog(@"%@", [date description]);
-        NSData* dateData = [[date description] dataUsingEncoding: NSASCIIStringEncoding];
+        
+        // 向Index的头写入日期等限制
+        BorrowInfo* borrowInfo = [[BorrowInfo alloc]init];
+        NSData* dateData = [borrowInfo makeBorrowinfoData];
         NSMutableData* outputData = [NSMutableData alloc];
         [outputData appendData:dateData];
         [outputData appendData:data];
         [outputData writeToFile:xmlPath atomically:YES];
         [outputData release];
+        [dateData release];
+        [borrowInfo release];
     }
 }
 
