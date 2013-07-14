@@ -85,19 +85,21 @@ char *OSTypeToStr(char *buf, OSType t)
     }
     V_NSLog(@"分数：%d", score);
 
-//    V_NSLog(@"%d -> %d", [sentence.words count], nWord);
-//    for(int i = 0;i < [sentence.words count]; i++)
-//    {
-//        Word* word = [sentence.words objectAtIndex:i];
-//        NSLog(@"%@", word.text);
-//        NSComparisonResult cr = [[word text] compare:[NSString stringWithCString:pWord[i].text encoding:NSUTF8StringEncoding] options:NSCaseInsensitiveSearch];
-//        if (cr == NSOrderedSame) {
-//            double time = [word.endtime doubleValue] - [word.starttime doubleValue];
-//            double per = time - (pWord[i].fTimeEd - pWord[i].fTimeSt) / time;
-//            score += (30 * (1 - fabs(per)) + 70) / [sentence.words count];
-//        }
-//    }
-//    V_NSLog(@"%d", score);
+    // 对分数进行调整，以时间为准，调整20分。
+    double time = 0.0;
+    for(int i = 0;i < [sentence.words count]; i++)
+    {
+        Word* word = [sentence.words objectAtIndex:i];
+        time += [word.endtime doubleValue] - [word.starttime doubleValue];
+    }
+    double rgTime = 0.0;
+    for (int i = 0; i < nWord; i++) {
+        rgTime += pWord[i].fTimeEd - pWord[i].fTimeSt;
+    }
+    score = score - fabs(time - rgTime) / time * 20;
+    
+    V_NSLog(@"调整后的分数：%d", score);
+    
     if (scoreDictionary != nil) {
         [scoreDictionary setObject:@(score) forKey:@"score"];
     }
