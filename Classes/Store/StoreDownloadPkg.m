@@ -52,7 +52,7 @@
         [outputData appendData:data];
         [outputData writeToFile:xmlPath atomically:YES];
         [outputData release];
-        [dateData release];
+        //[dateData release]; outorelease ,not need to release
         [borrowInfo release];
     }
 }
