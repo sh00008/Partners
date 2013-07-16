@@ -56,7 +56,8 @@
 
 - (void)closeLessonsNotification:(NSNotification*)aNotification;
 {
-    [self performSelector:@selector(openFavor) withObject:nil afterDelay:0.5];
+    [self openFavor];
+    //[self performSelector:@selector(openFavor) withObject:nil afterDelay:0.5];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -290,7 +291,7 @@
 
 - (void)openFavor
 {
-    
+    self.modal.animationSpeed = 0.2;
     [self.modal setRootViewControllerHeight:self.view.bounds.size.height * 0.8];
     [self.modal setParentViewYPath:self.view.bounds.size.height * 0.2];
     

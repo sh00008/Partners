@@ -153,6 +153,7 @@
         [scoreLabel release];*/
         
     }
+    [super layoutSubviews];
 }
 
 @end

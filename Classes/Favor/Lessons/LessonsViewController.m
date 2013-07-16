@@ -30,6 +30,7 @@
     
     ConfigData* configData = [ConfigData sharedConfigData];
     nPageCount = IS_IPAD ?configData.nPageCountOfiPad :configData.nPageCountOfiPhone;
+    _lastRow = nil;
     return self;
 }
 
@@ -261,8 +262,13 @@
         cell.lessonTitle = lesson.title;
         cell.useDarkBackground = (nPostion % 2 == 0);
         cell.nIndex = nPostion;
-        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        if (_lastRow != nil && _lastRow.row == indexPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+
+        }
     } else {
         UITableViewCell * cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LessonCellBlank"] autorelease];
         return cell;
@@ -336,6 +342,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_lastRow != nil) {
+        UITableViewCell* cell = [self tableView:tableView cellForRowAtIndexPath:_lastRow];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
+    }
+    UITableViewCell* cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+
+    _lastRow = indexPath;
+    [_lastRow retain];
     [self dismissModal];
     ListeningViewController *detailViewController = [[ListeningViewController alloc] initWithNibName:@"ListeningViewController" bundle:nil];
     // ...

@@ -208,7 +208,15 @@ BOOL AQRecorder::StartRecord(CFStringRef inRecordFile)
 	UInt32 size;
 	CFURLRef url;
 	
-	try {		
+	try {
+        /*
+         NSString* recordFileName = (NSString*)recordFile;
+         NSRange r = [recordFileName rangeOfString:@"/" options:NSBackwardsSearch];
+         if (r.location != NSNotFound) {
+         <#statements#>
+         }
+         mFileName = CFStringCreateCopy(kCFAllocatorDefault, inRecordFile);
+*/
 		mFileName = CFStringCreateCopy(kCFAllocatorDefault, inRecordFile);
 
 		// specify the recording format

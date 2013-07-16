@@ -26,6 +26,7 @@
     NSInteger nSelectedPage;
     NSInteger nPageCount;
     UISegmentedControl* _pageSegment;
+    NSIndexPath* _lastRow;
 //    DayByDayObject* _daybayday;
 }
 
