@@ -18,3 +18,5 @@ DerivedData
 
 *.xcbkptlist
 
+
+Classes/Shared/.DS_Store

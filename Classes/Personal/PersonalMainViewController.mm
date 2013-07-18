@@ -15,7 +15,7 @@
 #import "StoreViewController.h"
 #import "ISaybEncrypt2.h"
 #import "CurrentInfo.h"
-
+#import "UACellBackgroundView.h"
 
 @interface PersonalMainViewController ()
 
@@ -69,125 +69,46 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return [_dataArray count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"LibCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-    NSInteger section = indexPath.section;
-    if (section == 0) {
-        // library
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultLib"];
-        }
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
+   }
+    NSInteger nRow = indexPath.row;
+    if (nRow < [_dataArray count]) {
+        LibaryInfo* object = [_dataArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = object.title;
+        cell.tag = object.libID;
     } else {
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"personalcell"];
-        }
-       
+        cell.textLabel.text = STRING_ADD_NEW_LIB;
     }
-    
-    while ([cell.contentView.subviews count] > 0) {
-        UIView* subView = [[cell.contentView subviews] objectAtIndex:0];
-        if (subView != nil) {
-            [subView removeFromSuperview];
-            subView = nil;
-        }
-    }
-    
-    if (section != 0) {
-        return cell;
-    }
-    
-    cell.contentView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-    CGRect f = cell.contentView.frame;
-    NSInteger alignX = 40;
-    //if (IS_IPAD) {
-    cell.contentView.frame = CGRectMake(alignX + f.origin.x, f.origin.y, f.size.width, f.size.height);
-    /*} else {
-     cell.pkgTitle.frame = CGRectMake(20 + f.origin.x, f.origin.y, f.size.width, f.size.height);
-     
-     }*/
-    NSInteger fromX = IS_IPAD ? alignX : 0;
-    NSInteger dx = fromX;
-    NSInteger yspace = 20;
-    NSInteger dy = yspace;
-    NSInteger w =  (IS_IPAD ? MAIN_COURSE_GRID_W_IPAD : MAIN_COURSE_GRID_W);
-    NSInteger h =  (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
-    NSInteger seperator = IS_IPAD ? 10 : 1;
-    NSInteger count = IS_IPAD ? 5 : 3;
-    NSInteger r = 1;
-    NSInteger c = 1;
-    for (NSInteger libIndex = 0; libIndex < [_dataArray count]; libIndex++) {
-        UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-        [bt setContentMode:UIViewContentModeScaleToFill];
-        [bt setImage:[UIImage imageNamed:@"library.png"] borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
-        [bt setImage:[UIImage imageNamed:@"library.png"] borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateHighlighted];
-        
-        bt.tag = libIndex;
-        [bt addTarget:self action:@selector(openLib:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:bt];
-        [bt release];
-        // change 
-        if (c % count == 0) {
-            // next row
-            r++;
-            dy = h * (r - 1) + r * yspace;
-            dx = fromX;
-            c = 1;
-        } else {
-            c++;
-            dx += w + seperator + yspace;
-        }
-    }
-    UIButton* bt = [[UIButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-    [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateNormal];
-    [bt setImage:nil borderWidth:5.0 shadowDepth:10.0 controlPointXOffset:30.0 controlPointYOffset:70.0 forState:UIControlStateHighlighted];
-    [bt setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    [bt addTarget:self action:@selector(addNewLib) forControlEvents:UIControlEventTouchUpInside];
-    [cell.contentView addSubview:bt];
-    [bt release];
+    [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:14]];
+    UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
+    b.position = UACellBackgroundViewPositionMiddle;
+    cell.backgroundView = b;
+    [b release];
+   [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
 
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-    /*} else {
-     UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
-     newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
-     [cell addSubview:newCourse];
-     [newCourse release];
-     
-     }*/
-    // Configure the cell...
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.section == 0) {
-        NSInteger nHeight = 44.0f;
-        NSInteger nSpace = IS_IPAD ? 20 : 10;
-        NSInteger count = IS_IPAD ? 5 : 3;
-        NSInteger nTotalCount = [_dataArray count] + 1;
-        NSInteger nMod = nTotalCount % count;
-        NSInteger nQ = nTotalCount / count;
-        NSInteger r = (nMod == 0) ? nQ : (nQ + 1);
-        NSInteger h = (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
-        nHeight = h * r + r * 20;
-        return nHeight + nSpace;
-    } else {
-        return 44;
-    }
-}
+    return 44.0;
+ }
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,9 +152,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row < [_dataArray count]) {
+        [self openLib:indexPath.row];
+    } else {
+        [self addNewLib];
+    }
     // Navigation logic may go here. Create and push another view controller.
     /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     ; *detailViewController = [[; alloc] initWithNibName:@";" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
@@ -247,12 +173,9 @@
     _dataArray = [db loadLibaryInfo];
 }
 
-- (void)openLib:(id)sender
+- (void)openLib:(NSInteger)index
 {
-    UIButton* button = (UIButton*)sender;
-    NSInteger index = button.tag;
-    if (index < [_dataArray count]) {
-        
+      if (index < [_dataArray count]) {
         LibaryInfo* pkgObject = [_dataArray objectAtIndex:index];
         StoreViewController* store = [[StoreViewController alloc] initWithNibName:@"StoreViewController" bundle:nil];
         store.storeURL = pkgObject.url;

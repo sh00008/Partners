@@ -162,21 +162,18 @@
         [_home setSelected:NO];
         [_settingBar setSelected:NO];
         _titleLabel.text = STRING_LIBS;
-        [_titleLabel sizeToFit];
-    } else if (pt.x > self.view.bounds.size.width) {
+     } else if (pt.x > self.view.bounds.size.width) {
         [_store setSelected:NO];
         [_home setSelected:NO];
         [_settingBar setSelected:YES];
         _titleLabel.text = STRING_SETTING_INTITLE;
-        [_titleLabel sizeToFit];
-        
-    } else {
+     } else {
         [_store setSelected:NO];
         [_home setSelected:YES];
         [_settingBar setSelected:NO];
         _titleLabel.text = STRING_MY_RES;
-        [_titleLabel sizeToFit];
-      
     }
+    [_titleLabel sizeToFit];
+    
 }
 @end
