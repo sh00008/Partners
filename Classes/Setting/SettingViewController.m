@@ -122,12 +122,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 5;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    ConfigData* configData = [ConfigData sharedConfigData];
+    return 1;
+    /*ConfigData* configData = [ConfigData sharedConfigData];
     // Return the number of rows in the section.
     if (section == 0) {
         return 2;
@@ -143,12 +144,13 @@
         return 1;
     } else {
         return 1;
-    }
+    }*/
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;    // fixed font style. use custom view (UILabel) if 
 {
-    if (section == 0) {
+    return STRING_ABOUT_US;
+    /*if (section == 0) {
         return STRING_TRANING_MODE;
     } else if (section == 1){
         return STRING_CONTROL_SETTING;
@@ -160,22 +162,33 @@
         return STRING_ABOUT_US;
     } else {
         return STRING_OTHER;
-    }
+    }*/
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
+    return 44;
+    /*
     if (indexPath.section == 0) {
         return 85; 
     } else {
         return 44;
         
-    }
+    }*/
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger nRow = indexPath.row;
+    UITableViewCell * cell =  (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"otherAbout"];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"otherAbout"] autorelease];
+    }
+    cell.textLabel.text = STRING_ABOUT_US;
+    cell.textLabel.font = [UIFont systemFontOfSize:17];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+
+    /*NSInteger nRow = indexPath.row;
 	NSInteger nSection = indexPath.section;
     if (nSection == 0) {
         if (nRow == 0) {
@@ -327,7 +340,7 @@
     }
     // Configure the cell...
     UITableViewCell * cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"] autorelease];
-    return cell;
+    return cell;*/
 }
 
 /*
@@ -373,7 +386,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    SettingAboutViewController* about = [[SettingAboutViewController alloc] initWithNibName:@"SettingAboutViewController" bundle:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_ADDNEWNAVI object:about];
+    //[self.navigationController pushViewController:about animated:YES];
+    [about release];
+   /*if (indexPath.section == 0) {
         NSInteger nRow = indexPath.row;
         if (nRow != (NSInteger)self.pathReadingMode.row) {
             SettingTrainingModeCell* cellOld = (SettingTrainingModeCell*)[self.tableView cellForRowAtIndexPath:self.pathReadingMode];
@@ -415,7 +433,7 @@
         SettingAboutViewController* about = [[SettingAboutViewController alloc] initWithNibName:@"SettingAboutViewController" bundle:nil];
         [self.navigationController pushViewController:about animated:YES];
         [about release];
-    }
+    }*/
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

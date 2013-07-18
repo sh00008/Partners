@@ -26,7 +26,7 @@
 #define NOTIFICATION_ADD_VOICE_PKG @"ADDPkgNotification"
 #define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
 #define NOTIFICATION_OPEN_A_STORE @"OpenStoreNotification"
-#define NOTIFICATION_OPEN_LESSONS @"OpenLessonsNotification"
+#define NOTIFICATION_ADDNEWNAVI @"AddNewNavigationNotification"
 #define NOTIFICATION_MODEL_LESSONS @"ModalLessonsNotification"
 #define NOTIFICATION_CLOSE_LESSONS @"CloseLessonsNotification"
 #define STRING_STORE_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"

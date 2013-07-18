@@ -135,8 +135,6 @@
 		0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36281176CBC67007FDB60 /* CERoundProgressView.m */; };
 		0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */; };
 		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */; };
-		0DBE67A21778889F00AA9B57 /* 23.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A01778889F00AA9B57 /* 23.jpg */; };
-		0DBE67A31778889F00AA9B57 /* 24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DBE67A11778889F00AA9B57 /* 24.jpg */; };
 		0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */; };
 		0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */; };
 		0DBE67AD177CE0A400AA9B57 /* UIImageView+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67AA177CE0A400AA9B57 /* UIImageView+Curled.m */; };
@@ -396,8 +394,6 @@
 		0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonPlayObject.m; sourceTree = "<group>"; };
 		0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalMainViewController.h; path = Classes/Personal/PersonalMainViewController.h; sourceTree = SOURCE_ROOT; };
 		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PersonalMainViewController.mm; path = Classes/Personal/PersonalMainViewController.mm; sourceTree = SOURCE_ROOT; };
-		0DBE67A01778889F00AA9B57 /* 23.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 23.jpg; sourceTree = "<group>"; };
-		0DBE67A11778889F00AA9B57 /* 24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 24.jpg; sourceTree = "<group>"; };
 		0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurledViewBase.h; sourceTree = "<group>"; };
 		0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurledViewBase.m; sourceTree = "<group>"; };
 		0DBE67A7177CE0A400AA9B57 /* UIButton+Curled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Curled.h"; sourceTree = "<group>"; };
@@ -893,8 +889,6 @@
 				0D2F1B7A177C163F009A8A87 /* library.png */,
 				0D2F1B7B177C163F009A8A87 /* NEW.png */,
 				0D2F1B7C177C163F009A8A87 /* newICON.png */,
-				0DBE67A01778889F00AA9B57 /* 23.jpg */,
-				0DBE67A11778889F00AA9B57 /* 24.jpg */,
 				0DA14942175116A5004EBCFF /* bg_cell.png */,
 				0DA14943175116A5004EBCFF /* bg_webview.png */,
 				0DA14944175116A5004EBCFF /* button_green_normal.png */,
@@ -1326,8 +1320,6 @@
 				0D039AF017734E430006EA85 /* icon_clear.png in Resources */,
 				0D039AF117734E430006EA85 /* icon_clear@2x.png in Resources */,
 				9579A39C1773DAAB0014D1DC /* model.dat in Resources */,
-				0DBE67A21778889F00AA9B57 /* 23.jpg in Resources */,
-				0DBE67A31778889F00AA9B57 /* 24.jpg in Resources */,
 				0D2F1B7D177C163F009A8A87 /* library.png in Resources */,
 				0D2F1B7E177C163F009A8A87 /* NEW.png in Resources */,
 				0D2F1B7F177C163F009A8A87 /* newICON.png in Resources */,

@@ -367,7 +367,7 @@
         detailViewController.nPositionInCourse = nPostion;
         detailViewController.courseParser = _courseParser;
         detailViewController.delegate = (id)self;
-  		[[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_OPEN_LESSONS object: detailViewController];
+  		[[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_ADDNEWNAVI object: detailViewController];
         [detailViewController release];
     }
 

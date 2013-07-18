@@ -26,9 +26,9 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
         fromRed = 1.0;
         fromGreen = 1.0;
         fromBlue = 1.0;
-        toRed = 0.966;
-        toGreen = 0.966;
-        toBlue = 0.966;
+        toRed = 0.926;
+        toGreen = 0.926;
+        toBlue = 0.926;
     }
     return self;
 }
@@ -37,9 +37,45 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     return NO;
 }
 
--(void)drawRect:(CGRect)aRect {
+-(void)drawRect:(CGRect)rect {
     // Drawing code
-    
+	CGContextRef graphicContext = UIGraphicsGetCurrentContext();
+	CGColorSpaceRef colors_pace;
+	
+	size_t num_locations = 3;
+	CGFloat locations[3] = { 0.0, 0.2, 1.0};
+	CGFloat components[12] = { 0.92, 0.92, 0.92, 1.0,
+		0.96, 0.96, 0.96, 1.0,  0.92, 0.92, 0.920, 1.0};
+	
+	
+	colors_pace =  CGColorSpaceCreateDeviceRGB();;
+	CGGradientRef gradientRef = CGGradientCreateWithColorComponents (colors_pace, components,
+																	 locations, num_locations);
+	
+	CGPoint ptStart, ptEnd;
+	ptStart.x = 0.0;
+	ptStart.y = 0.0;
+	ptEnd.x = 0.0;
+	ptEnd.y = rect.size.height;
+	CGContextDrawLinearGradient (graphicContext, gradientRef, ptStart, ptEnd, kCGGradientDrawsAfterEndLocation);
+	
+	CGPoint ptLine1 = CGPointMake(0, 1);
+	CGPoint ptLine2 = CGPointMake(self.frame.size.width, 1);
+	/*CGContextSetRGBStrokeColor(graphicContext, 1.0, 1.0, 1.0, 1.0);
+	CGContextMoveToPoint(graphicContext, ptLine1.x, ptLine1.y);
+	CGContextSetLineWidth(graphicContext, 0.5);
+	CGContextAddLineToPoint(graphicContext, ptLine2.x, ptLine2.y);
+	CGContextStrokePath(graphicContext);
+	*/
+	ptLine1 = CGPointMake(0, 0);
+	ptLine2 = CGPointMake(self.frame.size.width, 1);
+	CGContextSetRGBStrokeColor(graphicContext, 0.8, 0.8, 0.8, 0.3);
+	CGContextMoveToPoint(graphicContext, ptLine1.x, ptLine1.y);
+	CGContextAddLineToPoint(graphicContext, ptLine2.x, ptLine2.y);
+	CGContextStrokePath(graphicContext);
+	
+	CGColorSpaceRelease(colors_pace);
+    /*
     CGContextRef c = UIGraphicsGetCurrentContext();	
     
     CGFloat lineWidth = 0.5;
@@ -173,7 +209,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     
     CGColorSpaceRelease(myColorspace);
     CGGradientRelease(myGradient);
-    return;
+    return;*/
 }
 
 - (void)dealloc {

@@ -73,7 +73,7 @@
         [_scrollview addSubview:persnoal.view];
         persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         */
-        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] initWithStyle:UITableViewStylePlain];
+        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] init];
         [_scrollview addSubview:persnoal.view];
         persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         
@@ -104,7 +104,7 @@
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
- 	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_OPEN_LESSONS object:nil];
+ 	[center addObserver:self selector:@selector(openLessonsNotification:) name:NOTIFICATION_ADDNEWNAVI object:nil];
   	[center addObserver:self selector:@selector(openPkg:) name:NOTIFICATION_OPEN_PKG object:nil];
     [center addObserver:self selector:@selector(openStore:) name:NOTIFICATION_OPEN_A_STORE object:nil];
  

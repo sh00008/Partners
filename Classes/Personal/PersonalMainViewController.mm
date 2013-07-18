@@ -75,7 +75,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_dataArray count] + 1;
+    return [_dataArray count] + 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -86,28 +86,29 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
+        UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
+        cell.backgroundView = b;
+        [b release];
    }
     NSInteger nRow = indexPath.row;
     if (nRow < [_dataArray count]) {
         LibaryInfo* object = [_dataArray objectAtIndex:indexPath.row];
         cell.textLabel.text = object.title;
         cell.tag = object.libID;
-    } else {
+    } else if (nRow == [_dataArray count]) {
         cell.textLabel.text = STRING_ADD_NEW_LIB;
     }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
     [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:14]];
-    UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
-    b.position = UACellBackgroundViewPositionMiddle;
-    cell.backgroundView = b;
-    [b release];
-   [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+    cell.imageView.image = [UIImage imageNamed:@"add"];
+   [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 44.0;
+    return 58.0;
  }
 /*
 // Override to support conditional editing of the table view.
@@ -154,7 +155,7 @@
 {
     if (indexPath.row < [_dataArray count]) {
         [self openLib:indexPath.row];
-    } else {
+    } else if (indexPath.row == [_dataArray count]) {
         [self addNewLib];
     }
     // Navigation logic may go here. Create and push another view controller.
