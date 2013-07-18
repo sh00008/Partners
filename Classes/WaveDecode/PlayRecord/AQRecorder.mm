@@ -202,22 +202,22 @@ void AQRecorder::SetupAudioFormat(UInt32 inFormatID)
 
 }
 
-BOOL AQRecorder::StartRecord(CFStringRef inRecordFile)
+BOOL AQRecorder::StartRecord(CFStringRef recordFile)
 {
 	int i, bufferByteSize;
 	UInt32 size;
 	CFURLRef url;
 	
 	try {
-        /*
+        
          NSString* recordFileName = (NSString*)recordFile;
          NSRange r = [recordFileName rangeOfString:@"/" options:NSBackwardsSearch];
          if (r.location != NSNotFound) {
-         <#statements#>
+             NSString* fm = [recordFileName substringFromIndex:(r.location+1)];
+             mFileName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)fm);
+        } else {
+             return NO;
          }
-         mFileName = CFStringCreateCopy(kCFAllocatorDefault, inRecordFile);
-*/
-		mFileName = CFStringCreateCopy(kCFAllocatorDefault, inRecordFile);
 
 		// specify the recording format
 		SetupAudioFormat(kAudioFormatLinearPCM);
@@ -238,9 +238,6 @@ BOOL AQRecorder::StartRecord(CFStringRef inRecordFile)
 		XThrowIfError(AudioQueueGetProperty(mQueue, kAudioQueueProperty_StreamDescription,	
 										 &mRecordFormat, &size), "couldn't get queue's format");
 			
-		NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent: (NSString*)inRecordFile];	
-        NSLog(@"%@", recordFile);
-        
         CFStringRef fileName = (CFStringRef) recordFile;
         CFStringRef fileNameEscaped = CFURLCreateStringByAddingPercentEscapes(NULL, fileName, NULL, NULL, kCFStringEncodingUTF8);
         

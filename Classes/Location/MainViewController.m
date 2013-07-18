@@ -34,6 +34,24 @@
 {
     [super viewDidLoad];
     if (_scrollview == nil) {
+        UIView* customview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 30)];
+        UIButton* store = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [store setImage:[UIImage imageNamed:@"Indicator_Store@2x.png"] forState:UIControlStateNormal];
+        [customview addSubview:store];
+        [store release];
+        
+        
+        UIButton* home = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [store setImage:[UIImage imageNamed:@"Indicator_Home@2x.png"] forState:UIControlStateNormal];
+        [customview addSubview:store];
+        [store release];
+       
+        NSArray* imArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"Indicator_Store@2x.png"], [UIImage imageNamed:@"Indicator_Home@2x.png"], [UIImage imageNamed:@"Indicator_Setting@2x.png"], nil];
+        UISegmentedControl* seg = [[UISegmentedControl alloc] initWithItems:imArray];
+        seg.frame = CGRectMake(0 , 0, 90, 30);
+        seg.segmentedControlStyle = UISegmentedControlStyleBezeled;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:seg];
+        [seg release];
          _scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         [self.view addSubview:_scrollview];
         /*PersonalViewController* persnoal = [[PersonalViewController alloc] initWithNibName:@"PersonalViewController" bundle:nil];

@@ -176,6 +176,9 @@
 		0DC0D56817509D0100684ED2 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D55917509D0100684ED2 /* CAStreamBasicDescription.cpp */; };
 		0DC0D56917509D0100684ED2 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D55B17509D0100684ED2 /* CAXException.cpp */; };
 		0DC0D57417509D8800684ED2 /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC0D56D17509D8800684ED2 /* WaveFile.cpp */; };
+		0DC93B8A1796F14D00080975 /* Indicator_Home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93B871796F14D00080975 /* Indicator_Home@2x.png */; };
+		0DC93B8B1796F14D00080975 /* Indicator_Setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93B881796F14D00080975 /* Indicator_Setting@2x.png */; };
+		0DC93B8C1796F14D00080975 /* Indicator_Store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93B891796F14D00080975 /* Indicator_Store@2x.png */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -468,6 +471,9 @@
 		0DC0D55C17509D0100684ED2 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		0DC0D56D17509D8800684ED2 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaveFile.cpp; sourceTree = "<group>"; };
 		0DC0D56E17509D8800684ED2 /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveFile.h; sourceTree = "<group>"; };
+		0DC93B871796F14D00080975 /* Indicator_Home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indicator_Home@2x.png"; sourceTree = "<group>"; };
+		0DC93B881796F14D00080975 /* Indicator_Setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indicator_Setting@2x.png"; sourceTree = "<group>"; };
+		0DC93B891796F14D00080975 /* Indicator_Store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indicator_Store@2x.png"; sourceTree = "<group>"; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -823,6 +829,9 @@
 		0DA1492E175116A5004EBCFF /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				0DC93B871796F14D00080975 /* Indicator_Home@2x.png */,
+				0DC93B881796F14D00080975 /* Indicator_Setting@2x.png */,
+				0DC93B891796F14D00080975 /* Indicator_Store@2x.png */,
 				0D039AEE17734E430006EA85 /* icon_clear.png */,
 				0D039AEF17734E430006EA85 /* icon_clear@2x.png */,
 				0D039AEA1771EDB10006EA85 /* Icon_New_L@2x.png */,
@@ -1318,6 +1327,9 @@
 				952223FC178C65D10068EE70 /* Default.png in Resources */,
 				952223FE178C65EF0068EE70 /* Default@2x.png in Resources */,
 				95222400178C68570068EE70 /* Default-568h@2x.png in Resources */,
+				0DC93B8A1796F14D00080975 /* Indicator_Home@2x.png in Resources */,
+				0DC93B8B1796F14D00080975 /* Indicator_Setting@2x.png in Resources */,
+				0DC93B8C1796F14D00080975 /* Indicator_Store@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
