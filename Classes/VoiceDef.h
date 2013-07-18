@@ -170,6 +170,8 @@
 #define PERSONAL_INFO                   @"个人信息"
 #define STRING_ENTER_LIB_ADDRESS        @"请输入图书馆地址"
 #define STRING_MY_RES                   @"我的资源"
+#define STRING_LIBS                     @"在线图书馆"
+#define STRING_SETTING_INTITLE            @"设置"
 #define MAIN_COURSE_GRID_W              90
 #define MAIN_COURSE_GRID_H              60
 #define MAIN_COURSE_GRID_W_IPAD         120
