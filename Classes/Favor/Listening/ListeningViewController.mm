@@ -90,8 +90,7 @@
         nCurrentReadingCount = 1;
         nLesson = settingData.eReadingMode == READING_MODE_WHOLE_TEXT ?  PLAY_LESSON : PLAY_READING_FLOWME;
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-		[center addObserver:self selector:@selector(willEnterToBackground:) name:NOTI_WILLENTERFOREGROUND object:nil]; 
-        bAlReadyPaused = NO;
+		[center addObserver:self selector:@selector(willEnterToBackground:) name:NOTI_WILLENTERFOREGROUND object:nil];
         nLastScrollPos = 0;
         bInit = NO;
         bParseWAV = NO;
@@ -336,6 +335,7 @@
         [fileURL release];
         
         self.player = newPlayer;
+        bOrinWave = YES;
         [player prepareToPlay];
         [player setDelegate:(id<AVAudioPlayerDelegate>)self];
         [newPlayer release];
@@ -928,6 +928,7 @@
             [fileURL release];
             
             self.player = newPlayer;
+            bOrinWave = YES;
             [player prepareToPlay];
             [player setDelegate:(id<AVAudioPlayerDelegate>)self];
             [newPlayer release];
@@ -978,6 +979,7 @@
                 AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
                 [fileURL release];
                 self.player = newPlayer;
+                bOrinWave = NO;
                 [player prepareToPlay];
                 [player setDelegate:(id<AVAudioPlayerDelegate>)self];
                 [newPlayer release];
@@ -1069,24 +1071,39 @@
 
 - (void)playWholeLesson
 {
-    if (self.player != nil) {
-        [self.player stop];
-        self.player = nil;
+    if (self.player == nil) {
+        return;
     }
-    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
-    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
-    [fileURL release];
     
-    self.player = newPlayer;
-    [player prepareToPlay];
-    [player setDelegate:(id<AVAudioPlayerDelegate>)self];
-    [newPlayer release];
-    self.player.currentTime = 0;
-    self.player.volume = 5.0;
-    clickindex = 0;
-    [self playfromCurrentPos];
-
+    if (bOrinWave) {
+        if (nLesson == PLAY_LESSON) {
+            [self playfromCurrentPos];
+        }
+        else {
+            self.player.currentTime = 0;
+            self.player.volume = 5.0;
+            clickindex = 0;
+            [self playfromCurrentPos];
+        }
+    }
+    else
+    {
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
+        AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
+        [fileURL release];
+        
+        self.player = newPlayer;
+        bOrinWave = YES;
+        [player prepareToPlay];
+        [player setDelegate:(id<AVAudioPlayerDelegate>)self];
+        [newPlayer release];
+        self.player.currentTime = 0;
+        self.player.volume = 5.0;
+        clickindex = 0;
+        [self playfromCurrentPos];
+    }
 }
+
 - (IBAction)readwholelesson:(id)sender;
 {
     [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
@@ -1144,6 +1161,11 @@
 
 - (void)playfromCurrentPos
 {
+    if (ePlayStatus != PLAY_STATUS_PLAYING) {
+        [self.player pause];
+        return;
+    }
+    
     if (clickindex < [_sentencesArray count]) {
         [self updateUI];
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
@@ -1155,12 +1177,27 @@
         [self.player play];
         [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
     }
+    else {
+        [self.player play];
+    }
 }
 
 - (void)updateUI
 {
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
 
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)myplayer successfully:(BOOL)flag
+{
+    if (flag) {
+        if (nLesson == PLAY_LESSON || nLesson == PLAY_READING_FLOWME) {
+            ePlayStatus = PLAY_STATUS_PLAYING;
+            myplayer.currentTime = 0;
+            [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+            [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];           
+        }
+    }
 }
 
 - (void)pauseintime;

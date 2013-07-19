@@ -38,7 +38,7 @@ typedef enum {
 
 @end
 
-@interface ListeningViewController : UIViewController {
+@interface ListeningViewController : UIViewController <AVAudioPlayerDelegate> {
     NSMutableArray*                 _sentencesArray;
     NSMutableArray*                 _teachersArray;
     UITableView*                    _sentencesTableView;
@@ -70,7 +70,6 @@ typedef enum {
     PLAY_STATUS                     ePlayStatus;
     SettingData*                    settingData;
     NSInteger                       nCurrentReadingCount;
-    BOOL                            bAlReadyPaused;
     NSInteger                       nLastScrollPos;
     BOOL                            bInit;
     BOOL                            bParseWAV;
@@ -86,6 +85,7 @@ typedef enum {
     ButtonPlayObject*               _buttonPlay;
     BOOL                            _bReadFlowMe;
     
+    BOOL                            bOrinWave;
     UIButton*                       readeButton;
     UIButton*                       practiceButton;
 }
@@ -136,4 +136,7 @@ typedef enum {
 - (void)playAnimationWithView:(UIView*)viewWillAnimation;
 - (void)playfromCurrentPos;
 - (void)updateUI;
+
+// player AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
 @end
