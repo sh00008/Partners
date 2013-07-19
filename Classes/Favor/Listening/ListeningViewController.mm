@@ -67,6 +67,7 @@
 @synthesize delegate;
 @synthesize adView;
 @synthesize collpaseLesson;
+@synthesize readeButton, practiceButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -1088,18 +1089,57 @@
 }
 - (IBAction)readwholelesson:(id)sender;
 {
-    ePlayStatus = PLAY_STATUS_PLAYING;
+    [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+    switch (ePlayStatus) {
+        case PLAY_STATUS_NONE:
+            ePlayStatus = PLAY_STATUS_PLAYING;
+            [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [self playWholeLesson];
+            break;
+        case PLAY_STATUS_PAUSING:
+            ePlayStatus = PLAY_STATUS_PLAYING;
+            [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [self playWholeLesson];
+            break;
+        case PLAY_STATUS_PLAYING:
+            ePlayStatus = PLAY_STATUS_PAUSING;
+            [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+            if (self.player) {
+                [self.player pause];
+            }
+            break;
+        default:
+            break;
+    }
     nLesson = PLAY_LESSON;
-    
-    [self playWholeLesson];
 }
 
 - (IBAction)practicewholelesson:(id)sender;
 {
-    ePlayStatus = PLAY_STATUS_PLAYING;
-    nLesson = PLAY_READING_FLOWME;
-    [self playWholeLesson];
+    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+    switch (ePlayStatus) {
+        case PLAY_STATUS_NONE:
+            ePlayStatus = PLAY_STATUS_PLAYING;
+            [practiceButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [self playWholeLesson];
+            break;
+        case PLAY_STATUS_PAUSING:
+            ePlayStatus = PLAY_STATUS_PLAYING;
+            [practiceButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [self playWholeLesson];
+            break;
+        case PLAY_STATUS_PLAYING:
+            ePlayStatus = PLAY_STATUS_PAUSING;
+            [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+            if (self.player) {
+                [self.player pause];
+            }
+            break;
+        default:
+            break;
+    }
 
+    nLesson = PLAY_READING_FLOWME;
 }
 
 - (void)playfromCurrentPos

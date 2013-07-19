@@ -78,13 +78,16 @@ typedef enum {
     BOOL                            _bDownloadedISB;
     BOOL                            _bDownloadedLES;
     
-    NSInteger endSection;
-    NSInteger didSection;
-    BOOL ifOpen;
-    NSInteger clickindex;
-    NSInteger lastClickIndex;
-    ButtonPlayObject* _buttonPlay;
-    BOOL          _bReadFlowMe;
+    NSInteger                       endSection;
+    NSInteger                       didSection;
+    BOOL                            ifOpen;
+    NSInteger                       clickindex;
+    NSInteger                       lastClickIndex;
+    ButtonPlayObject*               _buttonPlay;
+    BOOL                            _bReadFlowMe;
+    
+    UIButton*                       readeButton;
+    UIButton*                       practiceButton;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;
@@ -106,6 +109,9 @@ typedef enum {
 @property (nonatomic, assign) id<ListeningViewControllerDelegate>delegate;
 @property (nonatomic, retain) IBOutlet UIView* adView;
 @property (nonatomic, retain) IBOutlet CollapseClick* collpaseLesson;
+
+@property (nonatomic, retain) IBOutlet UIButton* readeButton;
+@property (nonatomic, retain) IBOutlet UIButton* practiceButton;
 
 - (void)initMembers;
 - (void)initDownload;
