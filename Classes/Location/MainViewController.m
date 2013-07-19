@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
     if (_scrollview == nil) {
-        UIView* customview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 30)];
+        UIView* customview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 99, 30)];
         UIButton* store = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         [store setImage:[UIImage imageNamed:@"Indicator_Store@2x.png"] forState:UIControlStateNormal];
         [store setImage:[UIImage imageNamed:@"Indicator_Store_Hit@2x.png"] forState:UIControlStateSelected];
@@ -49,7 +49,7 @@
         [store release];
         
         
-        UIButton* home = [[UIButton alloc] initWithFrame:CGRectMake(store.frame.origin.x + store.frame.size.width, 0, 30, 30)];
+        UIButton* home = [[UIButton alloc] initWithFrame:CGRectMake(store.frame.origin.x + store.frame.size.width + 3, 0, 30, 30)];
         [home setImage:[UIImage imageNamed:@"Indicator_Home@2x.png"] forState:UIControlStateNormal];
         [home setImage:[UIImage imageNamed:@"Indicator_Home_Hit@2x.png"] forState:UIControlStateSelected];
         [customview addSubview:home];
@@ -57,7 +57,7 @@
         [home release];
        
         
-        UIButton* settingbar = [[UIButton alloc] initWithFrame:CGRectMake(home.frame.origin.x + home.frame.size.width, 0, 30, 30)];
+        UIButton* settingbar = [[UIButton alloc] initWithFrame:CGRectMake(home.frame.origin.x + home.frame.size.width + 3, 0, 30, 30)];
         [settingbar setImage:[UIImage imageNamed:@"Indicator_Setting@2x.png"] forState:UIControlStateNormal];
         [settingbar setImage:[UIImage imageNamed:@"Indicator_Setting_Hit@2x.png"] forState:UIControlStateSelected];
         [customview addSubview:settingbar];
