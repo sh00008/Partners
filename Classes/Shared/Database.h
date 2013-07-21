@@ -51,6 +51,8 @@
 - (BOOL)updateLibaryLisenceInfo:(LibaryInfo *)info;
 - (LibaryInfo*)getLibaryInfoByID:(NSInteger)libID;
 - (void)getLisenceInfo:(LibaryInfo*)info;
+- (BOOL)deleteLibaryInfo:(NSInteger)libID;
+- (BOOL)deleteLibaryLisenceInfo:(NSInteger)libID;
 
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object

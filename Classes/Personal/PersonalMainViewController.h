@@ -11,6 +11,7 @@
 @interface PersonalMainViewController : UITableViewController
 {
     NSMutableArray* _dataArray;
+    BOOL _edit;
 }
 - (void)loadLibaryInfo;
 - (void)reloadInfo;

@@ -578,6 +578,49 @@ static Database* _database;
 	[sql release];
 	[databaseLock unlock];
 }
+
+- (BOOL)deleteLibaryInfo:(NSInteger)libID {
+    BOOL bOK = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE  %@ = %d", STRING_DB_TABLENAME_LIB_INFO,STRING_DB_LIBARY_ID, libID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		if (success == SQLITE_ERROR) {
+			bOK = NO;
+		}
+    } else {
+		bOK = NO;
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    [self deleteLibaryLisenceInfo:libID];
+	return bOK;
+}
+
+- (BOOL)deleteLibaryLisenceInfo:(NSInteger)libID {
+    BOOL bOK = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE  %@ = %d", STRING_DB_TABLENAME_LIB_LISENCE_INFO,STRING_DB_LIBARY_ID, libID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		if (success == SQLITE_ERROR) {
+			bOK = NO;
+		}
+    } else {
+		bOK = NO;
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+	return bOK;
+
+}
+
 - (NSMutableArray*)loadVoicePkgInfo;
 {
    	[databaseLock lock];

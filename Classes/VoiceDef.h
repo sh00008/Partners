@@ -177,3 +177,4 @@
 #define MAIN_COURSE_GRID_H              60
 #define MAIN_COURSE_GRID_W_IPAD         120
 #define MAIN_COURSE_GRID_H_IPAD          90
+#define STRING_EDIT                     @"编辑"

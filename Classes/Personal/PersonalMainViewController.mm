@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    _edit = NO;
     [self performSelector:@selector(setControllerTitle) withObject:nil afterDelay:0.5];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -56,6 +56,7 @@
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];
    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -232,6 +233,31 @@
 - (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
 {
     NSLog(@"didDismissWithText");
+}
+
+- (void)edit
+{
+    _edit = !_edit;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
+
+{
+    if (indexPath.row < [_dataArray count]) {
+        LibaryInfo* object = [_dataArray objectAtIndex:indexPath.row];
+        Database* db = [Database sharedDatabase];
+        [db deleteLibaryInfo:object.libID];
+        [_dataArray release];
+        _dataArray = [db loadLibaryInfo];
+        [self.tableView reloadData];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 @end

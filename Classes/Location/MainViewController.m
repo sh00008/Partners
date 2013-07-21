@@ -13,6 +13,7 @@
 #import "StoreVoiceDataListParser.h"
 #import "GTMHTTPFetcher.h"
 #import "PersonalMainViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
 {
@@ -20,7 +21,10 @@
     UIButton* _store;
     UIButton* _home;
     UIButton* _settingBar;
+    UIButton* _editingLib;
     UILabel* _titleLabel;
+    PersonalMainViewController* _persnoal;
+    BOOL _edit;
 }
 @end
 
@@ -40,8 +44,17 @@
 {
     [super viewDidLoad];
     if (_scrollview == nil) {
-        UIView* customview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 99, 30)];
-        UIButton* store = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        NSInteger iconSize = 36;
+        _edit = NO;
+        _editingLib = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, iconSize, iconSize)];
+        [_editingLib addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
+        [_editingLib setImage:[UIImage imageNamed:@"Icon_edit.png"] forState:UIControlStateNormal];
+         UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithCustomView:_editingLib];
+        self.navigationItem.leftBarButtonItem = box;
+        [box release];
+      
+        UIView* customview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, iconSize*3 + 9, iconSize)];
+        UIButton* store = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, iconSize, iconSize)];
         [store setImage:[UIImage imageNamed:@"Indicator_Store@2x.png"] forState:UIControlStateNormal];
         [store setImage:[UIImage imageNamed:@"Indicator_Store_Hit@2x.png"] forState:UIControlStateSelected];
        [customview addSubview:store];
@@ -49,7 +62,7 @@
         [store release];
         
         
-        UIButton* home = [[UIButton alloc] initWithFrame:CGRectMake(store.frame.origin.x + store.frame.size.width + 3, 0, 30, 30)];
+        UIButton* home = [[UIButton alloc] initWithFrame:CGRectMake(store.frame.origin.x + store.frame.size.width + 3, 0, iconSize, iconSize)];
         [home setImage:[UIImage imageNamed:@"Indicator_Home@2x.png"] forState:UIControlStateNormal];
         [home setImage:[UIImage imageNamed:@"Indicator_Home_Hit@2x.png"] forState:UIControlStateSelected];
         [customview addSubview:home];
@@ -57,7 +70,7 @@
         [home release];
        
         
-        UIButton* settingbar = [[UIButton alloc] initWithFrame:CGRectMake(home.frame.origin.x + home.frame.size.width + 3, 0, 30, 30)];
+        UIButton* settingbar = [[UIButton alloc] initWithFrame:CGRectMake(home.frame.origin.x + home.frame.size.width + 3, 0, iconSize, iconSize)];
         [settingbar setImage:[UIImage imageNamed:@"Indicator_Setting@2x.png"] forState:UIControlStateNormal];
         [settingbar setImage:[UIImage imageNamed:@"Indicator_Setting_Hit@2x.png"] forState:UIControlStateSelected];
         [customview addSubview:settingbar];
@@ -69,17 +82,14 @@
          _scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         [self.view addSubview:_scrollview];
         _scrollview.delegate = (id)self;
-        /*PersonalViewController* persnoal = [[PersonalViewController alloc] initWithNibName:@"PersonalViewController" bundle:nil];
-        [_scrollview addSubview:persnoal.view];
-        persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        */
-        PersonalMainViewController* persnoal = [[PersonalMainViewController alloc] init];
-        [_scrollview addSubview:persnoal.view];
-        persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        
+        _persnoal = [[PersonalMainViewController alloc] init];
+        [_scrollview addSubview:_persnoal.view];
+        _persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         
         FavorViewController* favor = [[FavorViewController alloc] init];
         [_scrollview addSubview:favor.view];
-        favor.view.frame = CGRectMake(persnoal.view.frame.origin.x + persnoal.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        favor.view.frame = CGRectMake(_persnoal.view.frame.origin.x + _persnoal.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         
         SettingViewController* setting = [[SettingViewController alloc] init];
         [_scrollview addSubview:setting.view];
@@ -91,7 +101,7 @@
         [_scrollview setPagingEnabled:YES];
         [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0)];
         
-        [home setSelected:YES];
+        [_home setSelected:YES];
     }
     
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
@@ -162,18 +172,26 @@
         [_home setSelected:NO];
         [_settingBar setSelected:NO];
         _titleLabel.text = STRING_LIBS;
+        _editingLib.hidden = NO;
      } else if (pt.x > self.view.bounds.size.width) {
         [_store setSelected:NO];
         [_home setSelected:NO];
         [_settingBar setSelected:YES];
         _titleLabel.text = STRING_SETTING_INTITLE;
+         _editingLib.hidden = YES;
      } else {
         [_store setSelected:NO];
         [_home setSelected:YES];
         [_settingBar setSelected:NO];
         _titleLabel.text = STRING_MY_RES;
+         _editingLib.hidden = YES;
     }
     [_titleLabel sizeToFit];
     
+}
+
+- (void)edit {
+    _edit = !_edit;
+    [_persnoal setEditing:_edit animated:YES];
 }
 @end
