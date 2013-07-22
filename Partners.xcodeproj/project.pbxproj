@@ -207,6 +207,9 @@
 		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
 		95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
 		95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
+		95FC642C179D66FC009990EF /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FC642B179D66FC009990EF /* IAPHelper.m */; };
+		95FC6430179D6861009990EF /* PartnerIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FC642F179D6861009990EF /* PartnerIAPHelper.m */; };
+		95FC6432179D79D0009990EF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FC6431179D79CF009990EF /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -512,6 +515,11 @@
 		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
 		95C0669917928755008E39C6 /* BorrowInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorrowInfo.h; sourceTree = "<group>"; };
 		95C0669A17928755008E39C6 /* BorrowInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorrowInfo.m; sourceTree = "<group>"; };
+		95FC642A179D66FC009990EF /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		95FC642B179D66FC009990EF /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		95FC642E179D6861009990EF /* PartnerIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnerIAPHelper.h; sourceTree = "<group>"; };
+		95FC642F179D6861009990EF /* PartnerIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartnerIAPHelper.m; sourceTree = "<group>"; };
+		95FC6431179D79CF009990EF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -519,6 +527,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95FC6432179D79D0009990EF /* StoreKit.framework in Frameworks */,
 				0DAA1418175F771500E51620 /* AudioToolbox.framework in Frameworks */,
 				0DAA1416175F770E00E51620 /* AVFoundation.framework in Frameworks */,
 				0DA148571750FC57004EBCFF /* QuartzCore.framework in Frameworks */,
@@ -576,6 +585,7 @@
 		0D1531631740B20000633FA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				95FC6431179D79CF009990EF /* StoreKit.framework */,
 				0DAA1417175F771500E51620 /* AudioToolbox.framework */,
 				0DAA1415175F770E00E51620 /* AVFoundation.framework */,
 				0DA148561750FC57004EBCFF /* QuartzCore.framework */,
@@ -985,6 +995,7 @@
 		0DC0D4FA17509BEA00684ED2 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				95FC642D179D683C009990EF /* IAP */,
 				0DC0D4FB17509BEA00684ED2 /* GTMHTTPFetcher */,
 				95C0669917928755008E39C6 /* BorrowInfo.h */,
 				95C0669A17928755008E39C6 /* BorrowInfo.m */,
@@ -1175,6 +1186,17 @@
 				9539609D1780592900546B92 /* SmartEncrypt.h */,
 			);
 			name = SmartEncrypt;
+			sourceTree = "<group>";
+		};
+		95FC642D179D683C009990EF /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				95FC642A179D66FC009990EF /* IAPHelper.h */,
+				95FC642B179D66FC009990EF /* IAPHelper.m */,
+				95FC642E179D6861009990EF /* PartnerIAPHelper.h */,
+				95FC642F179D6861009990EF /* PartnerIAPHelper.m */,
+			);
+			name = IAP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1461,6 +1483,8 @@
 				953960A6178059F900546B92 /* ISaybEncrypt2.mm in Sources */,
 				953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */,
 				0D3B75E417870E95002224DC /* CurrentInfo.mm in Sources */,
+				95FC642C179D66FC009990EF /* IAPHelper.m in Sources */,
+				95FC6430179D6861009990EF /* PartnerIAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
