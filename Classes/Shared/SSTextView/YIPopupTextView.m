@@ -26,12 +26,56 @@
 @interface UIImage (YIPopupTextView)
 
 + (UIImage*)closeButtonImageWithSize:(CGSize)size strokeColor:(UIColor*)strokeColor fillColor:(UIColor*)fillColor shadow:(BOOL)hasShadow;
++ (UIImage*)confirmButtonImageWithSize:(CGSize)size strokeColor:(UIColor*)strokeColor fillColor:(UIColor*)fillColor shadow:(BOOL)hasShadow;
+
 
 @end
 
 
 @implementation UIImage (YIPopupTextView)
 
++ (UIImage*)confirmButtonImageWithSize:(CGSize)size strokeColor:(UIColor*)strokeColor fillColor:(UIColor*)fillColor shadow:(BOOL)hasShadow;
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextClearRect(context, CGRectMake(0, 0, size.width, size.height));
+    
+    float cx = size.width/2;
+    float cy = size.height/2;
+    
+    float radius = size.width > size.height ? size.height/2 : size.height/2;
+    radius -= IS_IPAD ? 8 : 4;
+    
+    CGRect rectEllipse = CGRectMake(cx - radius, cy - radius, radius*2, radius*2);
+    
+    if (fillColor) {
+        [fillColor setFill];
+        CGContextFillEllipseInRect(context, rectEllipse);
+    }
+    
+    if (strokeColor) {
+        [strokeColor setStroke];
+        CGContextSetLineWidth(context, IS_IPAD ? 6.0 : 3.0);
+        CGFloat lineLength  = radius/2.5;
+        CGContextMoveToPoint(context, cx-lineLength, cy);
+        CGContextAddLineToPoint(context, cx, cy+lineLength);
+        CGContextAddLineToPoint(context, cx+lineLength, cy-lineLength);
+        CGContextDrawPath(context, kCGPathFillStroke);
+    }
+    
+    if (hasShadow) {
+        CGContextSetShadow(context, CGSizeMake(IS_IPAD ? 6 : 3, IS_IPAD ? 6 : 3), IS_IPAD ? 4 : 2);
+    }
+    
+    if (strokeColor) {
+        CGContextStrokeEllipseInRect(context, rectEllipse);
+    }
+    
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 + (UIImage*)closeButtonImageWithSize:(CGSize)size strokeColor:(UIColor*)strokeColor fillColor:(UIColor*)fillColor shadow:(BOOL)hasShadow
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
@@ -96,7 +140,7 @@
 
 
 @implementation YIPopupTextView
-
+@synthesize bCanceled;
 @dynamic delegate;
 @synthesize showCloseButton = _showCloseButton;
 
@@ -106,7 +150,7 @@
     if (self) {
         _shouldAnimate = YES;
         _maxCount = maxCount;
-        
+        self.bCanceled = YES;
         _backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
         _backgroundView.backgroundColor = [UIColor blackColor];
         _backgroundView.alpha = 0;
@@ -156,7 +200,7 @@
         _closeButton.showsTouchWhenHighlighted = YES;
         _closeButton.titleLabel.font = [UIFont systemFontOfSize:COUNT_SIZE];
         [_closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
-        _closeButton.frame = CGRectMake(_popupView.bounds.size.width-TEXTVIEW_INSETS.right-CLOSE_IMAGE_WIDTH, 
+        _closeButton.frame = CGRectMake(_popupView.bounds.size.width-3*TEXTVIEW_INSETS.right-CLOSE_IMAGE_WIDTH,
                                         0,
                                         CLOSE_BUTTON_WIDTH, 
                                         CLOSE_BUTTON_WIDTH);
@@ -164,7 +208,25 @@
         [_popupView addSubview:_closeButton];
         
         self.showCloseButton = YES;
+
         
+        _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_confirmButton setImage:[UIImage confirmButtonImageWithSize:CGSizeMake(CLOSE_IMAGE_WIDTH, CLOSE_IMAGE_WIDTH)
+                                                     strokeColor:[UIColor whiteColor]
+                                                       fillColor:[UIColor blackColor]
+                                                          shadow:NO]
+                      forState:UIControlStateNormal];
+        _confirmButton.frame = CGRectMake(0, 0, CLOSE_IMAGE_WIDTH, CLOSE_IMAGE_WIDTH);
+        _confirmButton.showsTouchWhenHighlighted = YES;
+        _confirmButton.titleLabel.font = [UIFont systemFontOfSize:COUNT_SIZE];
+        [_confirmButton addTarget:self action:@selector(handleConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
+        _confirmButton.frame = CGRectMake(_popupView.bounds.size.width-TEXTVIEW_INSETS.right-CLOSE_IMAGE_WIDTH,
+                                        0,
+                                        CLOSE_BUTTON_WIDTH,
+                                        CLOSE_BUTTON_WIDTH);
+        _confirmButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+        [_popupView addSubview:_confirmButton];
+
     }
     return self;
 }
@@ -383,7 +445,13 @@
 
 - (void)handleCloseButton:(UIButton*)sender
 {
+    self.bCanceled = YES;
     [self dismiss];
 }
 
+- (void)handleConfirmButton:(UIButton*)sender
+{
+    self.bCanceled = NO;
+    [self dismiss];
+}
 @end

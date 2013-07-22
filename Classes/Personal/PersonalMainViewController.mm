@@ -292,6 +292,10 @@
 
 - (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text
 {
+    if (textView.bCanceled) {
+        return;
+    }
+    
     if (text.length > 1) {
         Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];

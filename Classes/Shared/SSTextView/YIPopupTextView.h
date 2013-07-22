@@ -27,12 +27,14 @@
     UIView*     _popupView;
     UILabel*    _countLabel;
     UIButton*   _closeButton;
-    
+    UIButton*   _confirmButton;
+   
     BOOL        _shouldAnimate;
 }
 
 @property (nonatomic, assign) id <YIPopupTextViewDelegate> delegate;
 @property (nonatomic, assign) BOOL showCloseButton;
+@property (nonatomic, assign) BOOL bCanceled;
 
 - (id)initWithPlaceHolder:(NSString*)placeHolder maxCount:(NSUInteger)maxCount;
 - (void)showInView:(UIView*)view;
