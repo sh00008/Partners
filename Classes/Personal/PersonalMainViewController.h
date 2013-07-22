@@ -12,6 +12,9 @@
 {
     NSMutableArray* _dataArray;
     BOOL _edit;
+    
+    NSArray *_products;
+    NSNumberFormatter * _priceFormatter;
 }
 - (void)loadLibaryInfo;
 - (void)reloadInfo;
