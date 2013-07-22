@@ -315,13 +315,15 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 
 {
-    if (indexPath.row < [_dataArray count]) {
-        LibaryInfo* object = [_dataArray objectAtIndex:indexPath.row];
-        Database* db = [Database sharedDatabase];
-        [db deleteLibaryInfo:object.libID];
-        [_dataArray release];
-        _dataArray = [db loadLibaryInfo];
-        [self.tableView reloadData];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (indexPath.row < [_dataArray count]) {
+            LibaryInfo* object = [_dataArray objectAtIndex:indexPath.row];
+            Database* db = [Database sharedDatabase];
+            [db deleteLibaryInfo:object.libID];
+            [_dataArray release];
+            _dataArray = [db loadLibaryInfo];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
     }
 }
 
@@ -332,4 +334,12 @@
     return UITableViewCellEditingStyleNone;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
+        return YES;
+    }
+    return NO;
+}
 @end

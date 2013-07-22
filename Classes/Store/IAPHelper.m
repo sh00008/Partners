@@ -36,7 +36,9 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
-    
+    if (completionHandler == nil) {
+        return;
+    }
     _completionHandler = [completionHandler copy];
     
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
