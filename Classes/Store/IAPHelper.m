@@ -8,9 +8,12 @@
 
 #import "IAPHelper.h"
 
-@implementation IAPHelper
-
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
+
+@interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@end
+
+@implementation IAPHelper
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     

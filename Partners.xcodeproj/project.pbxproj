@@ -239,9 +239,6 @@
 		0D1531721740B20000633FA0 /* Partners-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partners-Prefix.pch"; sourceTree = "<group>"; };
 		0D1531731740B20000633FA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0D1531741740B20000633FA0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0D1531761740B20000633FA0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		0D1531781740B20000633FA0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		0D15317A1740B20000633FA0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0D15317C1740B20000633FA0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0D15317D1740B20000633FA0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0D1531801740B20000633FA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -323,10 +320,6 @@
 		0D97C3E1175AB68E0070E696 /* CourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CourseViewController.m; path = Classes/CoursesView/CourseViewController.m; sourceTree = SOURCE_ROOT; };
 		0DA1482E1750D44B004EBCFF /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		0DA148561750FC57004EBCFF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0DA1485B17510248004EBCFF /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
-		0DA1485C17510248004EBCFF /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
-		0DA1485D17510248004EBCFF /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
-		0DA1485E17510248004EBCFF /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		0DA14863175114FB004EBCFF /* StoreCourceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreCourceTableViewCell.xib; path = ../StoreCourceTableViewCell.xib; sourceTree = "<group>"; };
 		0DA14864175114FB004EBCFF /* StoreCourseTableCellHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreCourseTableCellHeader.xib; path = ../StoreCourseTableCellHeader.xib; sourceTree = "<group>"; };
 		0DA148681751157A004EBCFF /* DaybyDay */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DaybyDay; path = Resources/DaybyDay; sourceTree = SOURCE_ROOT; };
@@ -624,17 +617,10 @@
 		0D15316B1740B20000633FA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0DA1485B17510248004EBCFF /* add.png */,
-				0DA1485C17510248004EBCFF /* add@2x.png */,
-				0DA1485D17510248004EBCFF /* arrow.png */,
-				0DA1485E17510248004EBCFF /* arrow@2x.png */,
 				0D15316C1740B20000633FA0 /* Partners-Info.plist */,
 				0D15316D1740B20000633FA0 /* InfoPlist.strings */,
 				0D1531701740B20000633FA0 /* main.m */,
 				0D1531721740B20000633FA0 /* Partners-Prefix.pch */,
-				0D1531761740B20000633FA0 /* Default.png */,
-				0D1531781740B20000633FA0 /* Default@2x.png */,
-				0D15317A1740B20000633FA0 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

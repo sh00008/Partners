@@ -15,7 +15,7 @@
     static PartnerIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"com.story.voice.xxx",
+                                      @"com.story.partners.unlockdefaultlibrary",
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

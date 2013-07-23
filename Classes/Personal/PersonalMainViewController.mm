@@ -143,10 +143,10 @@
         [_priceFormatter setLocale:[NSLocale currentLocale]]; // product.priceLocale];
         cell.detailTextLabel.text = @"0.99"; // [_priceFormatter stringFromNumber:product.price];
         
-//        if ([[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-//            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//            cell.accessoryView = nil;
-//        } else {
+        if (product != nil && [[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.accessoryView = nil;
+        } else {
             UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             buyButton.frame = CGRectMake(0, 0, 72, 37);
             [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
@@ -154,7 +154,7 @@
             [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView = buyButton;
-//        }
+        }
     }
 
     return cell;
