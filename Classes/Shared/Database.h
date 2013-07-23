@@ -30,6 +30,9 @@
 #define STRING_DB_TABLENAME_LIB_LISENCE_INFO  @"LibaryLisenceInfo"
 #define STRING_DB_LIBARY_ID         @"LibaryID"
 
+#define STRING_DB_TABLENAME_DOWNLOAD_INFO @"PKGDownloadInfo"
+#define STRING_DB_VOICE_PROCESS @"DownloadProcess"
+#define STRING_DB_VOICE_DOWNLOAD_FLAG @"DownloadFlag"
 @interface Database : NSObject {
  	Database* _database;
     NSLock *databaseLock; //mutex used to create our Critical Section
@@ -41,6 +44,8 @@
 - (BOOL)createVoicePkgcCourseTable;
 - (BOOL)createLibInfoTable;
 - (BOOL)createLibLisenceTable;
+- (BOOL)createDownloadPkgTable;
+
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
@@ -53,6 +58,10 @@
 - (void)getLisenceInfo:(LibaryInfo*)info;
 - (BOOL)deleteLibaryInfo:(NSInteger)libID;
 - (BOOL)deleteLibaryLisenceInfo:(NSInteger)libID;
+
+- (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path;
+- (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+- (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path;
 
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object

@@ -62,6 +62,7 @@ static Database* _database;
         [self createVoicePkgInfoTable];
         [self createVoicePkgcCourseTable];
         [self createLibInfoTable];
+        [self createDownloadPkgTable];
 	}
 	return self;
 }
@@ -203,6 +204,35 @@ static Database* _database;
     return bSuccess;
 }
 
+- (BOOL)createDownloadPkgTable;
+{
+    NSString* tableName = STRING_DB_TABLENAME_DOWNLOAD_INFO  ;
+    if ([self isExistsTable:tableName]) {
+        return NO;
+	}
+	
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	BOOL bSuccess = NO;
+	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
+	[sql appendString:@"("];
+	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_PKG_ID];
+	[sql appendFormat:@",[%@] float",STRING_DB_VOICE_PROCESS];
+	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_DOWNLOAD_FLAG];
+	[sql appendString:@");"];
+	
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+	} else {
+		
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    return bSuccess;
+
+}
 - (BOOL)createTable;
 {
     return YES;
@@ -739,6 +769,21 @@ static Database* _database;
 	[sql release];
 	//[databaseLock unlock];
 	return uniqueId;
+}
+
+- (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path
+{
+    
+}
+
+- (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path
+{
+    
+}
+
+- (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path
+{
+    
 }
 
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
