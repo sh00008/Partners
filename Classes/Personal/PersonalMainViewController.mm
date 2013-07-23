@@ -17,8 +17,12 @@
 #import "CurrentInfo.h"
 #import "UACellBackgroundView.h"
 #import "PartnerIAPHelper.h"
-
+#import "GTMHTTPFetcher.h"
+#import "StoreVoiceDataListParser.h"
 @interface PersonalMainViewController ()
+{
+    YIPopupTextView* _popAddLibView;
+}
 
 @end
 
@@ -46,7 +50,7 @@
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    
+    _isCloseAddLibView = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Restore" style:UIBarButtonItemStyleBordered target:self action:@selector(restoreTapped:)];
 }
 
@@ -265,6 +269,8 @@
     YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:STRING_ENTER_LIB_ADDRESS maxCount:300];
     popupTextView.delegate = (id)self;
     [popupTextView showInView:self.tableView];
+    _popAddLibView = popupTextView;
+    _isCloseAddLibView = NO;
     
 }
 
@@ -297,18 +303,37 @@
     }
     
     if (text.length > 1) {
-        Database* db = [Database sharedDatabase];
+        
+         /*Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];
         info.url = STRING_STORE_URL_ADDRESS;
         [db insertLibaryInfo:info];
         [info release];
-        [self reloadInfo];
+        [self reloadInfo];*/
     }
+}
+
+- (void)confirmText:(YIPopupTextView*)textView didDismissWithText:(NSString*)text;
+{
+    NSURL* url = [NSURL URLWithString:text];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
+    GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+    [fetcher beginFetchWithDelegate:self
+                  didFinishSelector:@selector(fetcher:finishedWithData:error:)];
+    
+
 }
 
 - (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
 {
     NSLog(@"didDismissWithText");
+    _popAddLibView = nil;
+}
+
+- (BOOL)canDismiss;
+{
+    return _isCloseAddLibView;
 }
 
 - (void)edit
@@ -346,4 +371,110 @@
     }
     return NO;
 }
+
+- (void)fetcher:(GTMHTTPFetcher*)fecther finishedWithData:(NSData*)data error:(id)error
+{
+    if (error != nil) {
+        [self addWaitingView:120 withText:STRING_ADDLIB_ADDRESS_ERROR withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:120] afterDelay:2];
+    } else {
+        Database* db = [Database sharedDatabase];
+        LibaryInfo* info = [[LibaryInfo alloc] init];
+        info.url = STRING_STORE_URL_ADDRESS;
+        [db insertLibaryInfo:info];
+        [info release];
+        [self reloadInfo];
+        [self finishVoiceXMLData:data];
+        [self addWaitingView:130 withText:STRING_ADDLIB_ADDRESS_SUCCEED withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:130] afterDelay:2];
+        [_popAddLibView performSelector:@selector(dismiss) withObject:nil afterDelay:2];
+    }
+}
+
+- (void)removeWatingView:(NSNumber*)tagNum {
+    NSInteger tag = [tagNum integerValue];
+    UIView* subView = [self.view viewWithTag:tag];
+    if (subView != nil) {
+        [subView removeFromSuperview];
+    }
+}
+
+- (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
+{
+    UIView *loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 80)];
+    loadingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    loadingView.layer.cornerRadius = 8;
+    loadingView.tag = tag;
+    loadingView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    UIActivityIndicatorView* activeView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activeView.center = CGPointMake(loadingView.center.x, loadingView.center.y - 10) ;
+    [loadingView addSubview:activeView];
+    if (animated) {
+        [activeView startAnimating];
+    } else {
+        [activeView stopAnimating];
+    }
+    [activeView release];
+    
+    CGRect rcLoadingText;
+    if (animated) {
+        rcLoadingText = CGRectMake(0, loadingView.frame.size.height - 30, loadingView.frame.size.width, 20);
+    } else {
+        rcLoadingText = CGRectMake(0, (loadingView.frame.size.height - 20) / 2, loadingView.frame.size.width, 20);
+    }
+    UILabel* loadingText = [[UILabel alloc] initWithFrame:rcLoadingText];
+    loadingText.textColor = [UIColor whiteColor];
+    loadingText.text = text;
+    loadingText.font = [UIFont systemFontOfSize:14];
+    loadingText.backgroundColor = [UIColor clearColor];
+    loadingText.textAlignment  = NSTextAlignmentCenter;
+    [loadingView addSubview:loadingText];
+    [loadingText release];
+    loadingView.center = CGPointMake(self.view.center.x, self.view.center.y - 50);
+    [self.view addSubview:loadingView];
+    [loadingView release];
+    
+}
+
+- (void)finishVoiceXMLData:(NSData*)data
+{
+     NSString* xmlPath =  [NSString stringWithFormat:@"%@voice.xml", NSTemporaryDirectory()];
+    [data writeToFile:xmlPath atomically:YES];
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    
+    // create pkg
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.currentLibID];
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
+    [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
+    
+    StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
+    dataParser.libID = lib.currentLibID;
+    [dataParser loadWithData:data];
+
+    
+    
+    if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
+        if ([dataParser.serverlistArray count] > 0) {
+            [lib checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
+        }
+    }
+    [dataParser release];
+    
+    UIView* shadowView = [self.view viewWithTag:101];
+    [self.view bringSubviewToFront:shadowView];
+    
+}
+
 @end

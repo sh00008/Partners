@@ -178,3 +178,5 @@
 #define MAIN_COURSE_GRID_W_IPAD         120
 #define MAIN_COURSE_GRID_H_IPAD          90
 #define STRING_EDIT                     @"编辑"
+#define STRING_ADDLIB_ADDRESS_ERROR     @"图书馆地址错误"
+#define STRING_ADDLIB_ADDRESS_SUCCEED   @"成功添加图书馆！"

@@ -452,6 +452,9 @@
 - (void)handleConfirmButton:(UIButton*)sender
 {
     self.bCanceled = NO;
-    [self dismiss];
+    [self.delegate confirmText:self didDismissWithText:_countLabel.text];
+    if ([self.delegate canDismiss]) {
+        [self dismiss];
+    }
 }
 @end

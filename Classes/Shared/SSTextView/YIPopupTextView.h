@@ -17,6 +17,9 @@
 @optional
 - (void)popupTextView:(YIPopupTextView*)textView willDismissWithText:(NSString*)text;
 - (void)popupTextView:(YIPopupTextView*)textView didDismissWithText:(NSString*)text;
+- (BOOL)canDismiss;
+- (void)confirmText:(YIPopupTextView*)textView didDismissWithText:(NSString*)text;
+
 @end
 
 
