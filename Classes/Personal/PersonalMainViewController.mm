@@ -282,8 +282,6 @@
     }
     Database* db = [Database sharedDatabase];
     _dataArray = [db loadLibaryInfo];
-    [self.tableView reloadData];
-    
     _products = nil;
     [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
@@ -292,6 +290,7 @@
         }
         [self.refreshControl endRefreshing];
     }];
+    [self.tableView reloadData];
 }
 
 #pragma mark YIPopupTextViewDelegate
@@ -321,8 +320,6 @@
     GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
     [fetcher beginFetchWithDelegate:self
                   didFinishSelector:@selector(fetcher:finishedWithData:error:)];
-    
-
 }
 
 - (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
