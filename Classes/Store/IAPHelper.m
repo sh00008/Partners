@@ -13,7 +13,13 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
-@implementation IAPHelper
+@implementation IAPHelper {
+    SKProductsRequest * _productsRequest;
+    RequestProductsCompletionHandler _completionHandler;
+    
+    NSSet * _productIdentifiers;
+    NSMutableSet * _purchasedProductIdentifiers;
+}
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     
