@@ -163,11 +163,11 @@
 - (void)fetcher:(GTMHTTPFetcher*)fecther finishedWithData:(NSData*)data error:(id)error
 {
  	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-   V_NSLog(@"fecther : %@", [fecther description]);
+    V_NSLog(@"fecther : %@", [fecther description]);
     V_NSLog(@"error : %@", [error description]);
     if (error != nil) {
         [StoreNetworkConnectionView stopAnimation:STRING_LOADINGDATA_ERROR withSuperView:self.view];
-
+        
     } else {
         if ([fecther.userData isEqualToString:@"voicexml"]) {
             [self finishVoiceXMLData:data];

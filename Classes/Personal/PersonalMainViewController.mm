@@ -318,6 +318,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
     GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+    [fetcher setUserData:text];
     [fetcher beginFetchWithDelegate:self
                   didFinishSelector:@selector(fetcher:finishedWithData:error:)];
 }
@@ -377,14 +378,14 @@
     } else {
         Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];
-        info.url = STRING_STORE_URL_ADDRESS;
+        info.url = (NSString*)[fecther userData];
         [db insertLibaryInfo:info];
-        [info release];
-        [self reloadInfo];
         [self finishVoiceXMLData:data];
+        [self reloadInfo];
         [self addWaitingView:130 withText:STRING_ADDLIB_ADDRESS_SUCCEED withAnimation:YES];
         [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:130] afterDelay:2];
         [_popAddLibView performSelector:@selector(dismiss) withObject:nil afterDelay:2];
+        [info release];
     }
 }
 
