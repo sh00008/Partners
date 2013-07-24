@@ -416,6 +416,9 @@
         self.player.currentTime = [sentence startTime];
 //        [self updateUI];
     }
+    if (self.player) {
+        [self.player stop];
+    }
     
    [super viewWillDisappear:animated];
 }

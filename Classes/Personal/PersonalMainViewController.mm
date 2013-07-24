@@ -143,7 +143,7 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
-        SKProduct * product = (SKProduct *) _products[0];
+        SKProduct * product = nil; // (SKProduct *) _products[0];
         [_priceFormatter setLocale:[NSLocale currentLocale]]; // product.priceLocale];
         cell.detailTextLabel.text = @"0.99"; // [_priceFormatter stringFromNumber:product.price];
         
