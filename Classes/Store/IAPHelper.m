@@ -13,20 +13,16 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
-@implementation IAPHelper {
-    SKProductsRequest * _productsRequest;
-    RequestProductsCompletionHandler _completionHandler;
-    
-    NSSet * _productIdentifiers;
-    NSMutableSet * _purchasedProductIdentifiers;
-}
+@implementation IAPHelper
+
+@synthesize _productIdentifiers;
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     
     if ((self = [super init])) {
         
         // Store product identifiers
-        _productIdentifiers = productIdentifiers;
+        self._productIdentifiers = productIdentifiers;
         
         // Check for previously purchased products
         _purchasedProductIdentifiers = [NSMutableSet set];
@@ -53,7 +49,6 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = (id <SKProductsRequestDelegate>)self;
     [_productsRequest start];
-    
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {
