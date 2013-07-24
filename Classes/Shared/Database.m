@@ -168,6 +168,7 @@ static Database* _database;
     [self createLibLisenceTable];
    LibaryInfo* info = [[LibaryInfo alloc] init];
     info.url = STRING_STORE_URL_ADDRESS;
+    info.title = STRING_DEFAULT_LIB_NAME;
     [self insertLibaryInfo:info];
     
      [info release];
@@ -773,17 +774,39 @@ static Database* _database;
 
 - (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path
 {
-    
+    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
+    if (pkgID == -1) {
+        return NO;
+    }
+	sqlite3_stmt *statement;
+    int flag = 0;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = %d",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, pkgID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSInteger index = 0;
+            flag = sqlite3_column_int(statement, index);
+        }
+    }
+    return flag;
 }
 
 - (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path
 {
-    
+    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
+    if (pkgID == -1) {
+        return NO;
+    }
+ 
 }
 
 - (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path
 {
-    
+    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
+    if (pkgID == -1) {
+        return NO;
+    }
+
 }
 
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;

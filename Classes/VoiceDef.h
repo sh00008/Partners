@@ -180,3 +180,4 @@
 #define STRING_EDIT                     @"编辑"
 #define STRING_ADDLIB_ADDRESS_ERROR     @"图书馆地址错误"
 #define STRING_ADDLIB_ADDRESS_SUCCEED   @"成功添加图书馆！"
+#define STRING_DEFAULT_LIB_NAME         @"我爱读书"
