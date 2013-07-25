@@ -62,6 +62,7 @@
 - (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path;
 - (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path;
 - (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+- (BOOL)updateDownloadedInfo:(NSString*)title withPath:(NSString*)path;
 
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object

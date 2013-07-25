@@ -798,6 +798,39 @@ static Database* _database;
         return NO;
     }
  
+    sqlite3_stmt *statement;
+    
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@) VALUES(?,?,?)", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PROCESS, STRING_DB_VOICE_DOWNLOAD_FLAG];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
+		NSInteger i = 1;
+        
+        sqlite3_bind_int(statement, i, pkgID);
+        i++;
+        
+        // title
+		sqlite3_bind_int(statement, i, 0);
+		i++;
+        
+        // path
+		sqlite3_bind_int(statement, i, 0);
+		i++;
+        
+         success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			V_NSLog(@"Error: failed to %@", @"insertDownloadedInfo");
+			return NO;
+		}
+	} else {
+		[databaseLock unlock];
+		V_NSLog(@"Error: failed to %@", @"insertDownloadedInfo");
+		return NO;
+	}
+    
+    return YES;
 }
 
 - (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path
@@ -806,6 +839,50 @@ static Database* _database;
     if (pkgID == -1) {
         return NO;
     }
+    BOOL bOK = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, pkgID];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		if (success == SQLITE_ERROR) {
+			bOK = NO;
+		}
+    } else {
+		bOK = NO;
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+	return bOK;
+
+}
+
+- (BOOL)updateDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+{
+    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
+    if (pkgID == -1) {
+        return NO;
+    }
+	BOOL bResult = YES;
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = %d",STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_PKG_DOWNLOAD_FLAG, 1, STRING_DB_VOICE_PKG_ID, pkgID];
+    int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			bResult = NO;
+		}
+    } else {
+		[databaseLock unlock];
+		bResult = NO;
+    }
+	[sql release];
+	return bResult;
 
 }
 

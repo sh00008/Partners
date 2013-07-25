@@ -183,6 +183,8 @@
 		0DC93B9B179AD8C300080975 /* 4-light-menu-barPad_P.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93B9A179AD8C300080975 /* 4-light-menu-barPad_P.png */; };
 		0DC93BA3179C920100080975 /* Icon_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BA2179C920000080975 /* Icon_BG.png */; };
 		0DC93BA5179C93A600080975 /* Icon_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BA4179C93A500080975 /* Icon_edit.png */; };
+		0DC93BAB17A15EFD00080975 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BA817A15EFD00080975 /* MJPopupBackgroundView.m */; };
+		0DC93BAC17A15EFD00080975 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BAA17A15EFD00080975 /* UIViewController+MJPopupViewController.m */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -478,6 +480,10 @@
 		0DC93B9A179AD8C300080975 /* 4-light-menu-barPad_P.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4-light-menu-barPad_P.png"; sourceTree = "<group>"; };
 		0DC93BA2179C920000080975 /* Icon_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_BG.png; sourceTree = "<group>"; };
 		0DC93BA4179C93A500080975 /* Icon_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_edit.png; sourceTree = "<group>"; };
+		0DC93BA717A15EFD00080975 /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		0DC93BA817A15EFD00080975 /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		0DC93BA917A15EFD00080975 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		0DC93BAA17A15EFD00080975 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -1040,6 +1046,7 @@
 		0DC0D52217509BEA00684ED2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0DC93BA617A15EFD00080975 /* MJPopView */,
 				0DBE67A4177CE0A400AA9B57 /* curledView */,
 				0D2F1B72177C0CEB009A8A87 /* SSTextView */,
 				0D039AE61771DA440006EA85 /* DMCustomModalViewController */,
@@ -1139,6 +1146,17 @@
 				0DC0D55517509D0100684ED2 /* iPublicUtility */,
 			);
 			name = VoiceBase;
+			sourceTree = "<group>";
+		};
+		0DC93BA617A15EFD00080975 /* MJPopView */ = {
+			isa = PBXGroup;
+			children = (
+				0DC93BA717A15EFD00080975 /* MJPopupBackgroundView.h */,
+				0DC93BA817A15EFD00080975 /* MJPopupBackgroundView.m */,
+				0DC93BA917A15EFD00080975 /* UIViewController+MJPopupViewController.h */,
+				0DC93BAA17A15EFD00080975 /* UIViewController+MJPopupViewController.m */,
+			);
+			path = MJPopView;
 			sourceTree = "<group>";
 		};
 		0DDD881D176413E90078D6B7 /* Collapse */ = {
@@ -1471,6 +1489,8 @@
 				0D3B75E417870E95002224DC /* CurrentInfo.mm in Sources */,
 				95FC642C179D66FC009990EF /* IAPHelper.m in Sources */,
 				95FC6430179D6861009990EF /* PartnerIAPHelper.m in Sources */,
+				0DC93BAB17A15EFD00080975 /* MJPopupBackgroundView.m in Sources */,
+				0DC93BAC17A15EFD00080975 /* UIViewController+MJPopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
