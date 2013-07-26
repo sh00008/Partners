@@ -15,10 +15,10 @@
 #import "LessonsViewController.h"
 #import "CurrentInfo.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "DownloadWholeLessonViewController.h"
+#import "DownloadWholeViewController.h"
 @interface FavorViewController ()
 {
-    DownloadWholeLessonViewController* _downloadViewController;
+    DownloadWholeViewController* _downloadViewController;
 }
 @end
 
@@ -292,7 +292,7 @@
     if ([db isPkgDownloaded:lib.currentPkgDataTitle withPath:lib.currentPkgDataPath]) {
         [self openFavor];
     } else {
-        _downloadViewController = [[DownloadWholeLessonViewController alloc] initWithNibName:@"DownloadWholeLessonViewController" bundle:nil];
+        _downloadViewController = [[DownloadWholeViewController alloc] initWithNibName:@"DownloadWholeViewController" bundle:nil];
         _downloadViewController.dataPath = button.pkgPath;
         _downloadViewController.scenesName = button.pkgTitle;
         _downloadViewController.delegate = (id)self;
@@ -442,14 +442,14 @@
     
 }
 
-- (void)cancelButtonClicked:(DownloadWholeLessonViewController*)secondDetailViewController;
+- (void)cancelButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     _downloadViewController = nil;
     [self openFavor];
 }
 
-- (void)doneButtonClicked:(DownloadWholeLessonViewController*)secondDetailViewController;
+- (void)doneButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     _downloadViewController = nil;
