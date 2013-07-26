@@ -13,6 +13,7 @@
 #import "VoiceDef.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DACircularProgressView.h"
+#import "DownloadLesson.h"
 
 @interface DownloadWholeViewController ()
 {
@@ -123,8 +124,49 @@
 
 - (void)startDownload
 {
+    [self loadCourses];
+    _progressview.hidden = NO;
     for (NSInteger i = 0; i < [_courseParser.course.lessons count]; i++) {
         // download
+        DownloadLesson* download = [[[DownloadLesson alloc] init] autorelease];
+        download.nPositionInCourse = i;
+        download.courseParser = _courseParser;
+        if (![download checkIsNeedDownload]) {
+            _progressview.progress = (CGFloat)i/(CGFloat)[_courseParser.course.lessons count];
+            
+        }
     }
 }
+
+- (void)startDownloadingXinFile:(DownloadLesson*)download {
+    
+}
+
+- (void)endDownloadingXinFile:(DownloadLesson*)download {
+    
+}
+
+- (void)startDownloadingLesFile:(DownloadLesson*)download {
+    
+}
+
+- (void)endDownloadingLesFile:(DownloadLesson*)download {
+    
+}
+
+- (void)startDownloadingIsbFile:(DownloadLesson*)download {
+    
+}
+- (void)endDownloadingIsbFile:(DownloadLesson*)download {
+    
+}
+
+- (void)downloadSucceed:(DownloadLesson*)download {
+    _progressview.progress = (CGFloat)download.nPositionInCourse/(CGFloat)[_courseParser.course.lessons count];
+}
+
+- (void)downloadfailed:(DownloadLesson*)download {
+     
+}
+
 @end

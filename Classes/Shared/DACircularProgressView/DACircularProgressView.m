@@ -97,7 +97,8 @@
 {
     if (!_trackTintColor)
     {
-        _trackTintColor = [UIColor lightGrayColor]; //[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.3f];
+        _trackTintColor =[UIColor colorWithRed:0.8f green:0.8f blue:0.8 alpha:1.0f];
+        [_trackTintColor retain];
     }
     return _trackTintColor;
 }
@@ -106,7 +107,7 @@
 {
     if (!_progressTintColor)
     {
-        _progressTintColor = [UIColor grayColor];//[UIColor whiteColor];
+        _progressTintColor = [UIColor lightGrayColor];//[UIColor whiteColor];
     }
     return _progressTintColor;
 }
