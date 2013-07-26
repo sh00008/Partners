@@ -189,6 +189,7 @@
 		0DC93BAC17A15EFD00080975 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BAA17A15EFD00080975 /* UIViewController+MJPopupViewController.m */; };
 		0DC93BAE17A2A74700080975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BAD17A2A74700080975 /* SIAlertView.bundle */; };
 		0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB117A2B52100080975 /* DACircularProgressView.m */; };
+		0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB417A3173800080975 /* DownloadLesson.m */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -494,6 +495,8 @@
 		0DC93BAD17A2A74700080975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
 		0DC93BB017A2B52100080975 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		0DC93BB117A2B52100080975 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		0DC93BB317A3173800080975 /* DownloadLesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadLesson.h; path = Classes/Favor/DownloadLesson.h; sourceTree = SOURCE_ROOT; };
+		0DC93BB417A3173800080975 /* DownloadLesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadLesson.m; path = Classes/Favor/DownloadLesson.m; sourceTree = SOURCE_ROOT; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -720,6 +723,8 @@
 				0DAA13D2175E208C00E51620 /* Lessons */,
 				0D1531D21740C84F00633FA0 /* FavorViewController.h */,
 				0D1531D31740C84F00633FA0 /* FavorViewController.m */,
+				0DC93BB317A3173800080975 /* DownloadLesson.h */,
+				0DC93BB417A3173800080975 /* DownloadLesson.m */,
 				0D97C3D7175902C00070E696 /* FavorViewCell.xib */,
 				0D97C3D91759030D0070E696 /* FavorViewCell.h */,
 				0D97C3DA1759030D0070E696 /* FavorViewCell.m */,
@@ -1519,6 +1524,7 @@
 				0DC93BAC17A15EFD00080975 /* UIViewController+MJPopupViewController.m in Sources */,
 				0D71252D17A249D700C206AE /* DownloadWholeViewController.m in Sources */,
 				0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */,
+				0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

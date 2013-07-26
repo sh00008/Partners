@@ -14,6 +14,7 @@
 - (void)cancelButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
 - (void)doneButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
 @end
+
 @interface DownloadWholeViewController : UIViewController
 @property (assign, nonatomic) id <MJSecondPopupDelegate>delegate;
 @property (nonatomic, retain) NSString* scenesName;

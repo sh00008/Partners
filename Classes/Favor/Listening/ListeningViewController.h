@@ -13,6 +13,7 @@
 #import "CourseParser.h"
 #import "CollapseClick.h"
 #import "ButtonPlayObject.h"
+#import "DownloadLesson.h"
 
 @class RecordingObject;
 #define VOLUMNVIEW_TAG  50001
@@ -73,9 +74,6 @@ typedef enum {
     NSInteger                       nLastScrollPos;
     BOOL                            bInit;
     BOOL                            bParseWAV;
-    BOOL                            _bDownloadedXAT;
-    BOOL                            _bDownloadedISB;
-    BOOL                            _bDownloadedLES;
     
     NSInteger                       endSection;
     NSInteger                       didSection;
@@ -88,6 +86,7 @@ typedef enum {
     BOOL                            bOrinWave;
     UIButton*                       readeButton;
     UIButton*                       practiceButton;
+    DownloadLesson*                 _downloadLessonObj;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;
