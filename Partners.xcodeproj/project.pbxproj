@@ -53,6 +53,8 @@
 		0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAD176A11C600873CF8 /* AQPlayer.mm */; };
 		0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAF176A11C600873CF8 /* AQRecorder.mm */; };
 		0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAB2176A11C600873CF8 /* libisayscore.a */; };
+		0D71252D17A249D700C206AE /* DownloadWholeLessonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D71252B17A249D600C206AE /* DownloadWholeLessonViewController.m */; };
+		0D71252E17A249D700C206AE /* DownloadWholeLessonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D71252C17A249D700C206AE /* DownloadWholeLessonViewController.xib */; };
 		0D954035176230BE00A616D8 /* Btn_Pause_Avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */; };
 		0D954036176230BE00A616D8 /* Btn_Pause_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */; };
 		0D954037176230BE00A616D8 /* Btn_Pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */; };
@@ -298,6 +300,9 @@
 		0D50AAAF176A11C600873CF8 /* AQRecorder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AQRecorder.mm; sourceTree = "<group>"; };
 		0D50AAB1176A11C600873CF8 /* isaybiosscroe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isaybiosscroe.h; sourceTree = "<group>"; };
 		0D50AAB2176A11C600873CF8 /* libisayscore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libisayscore.a; sourceTree = "<group>"; };
+		0D71252A17A249D600C206AE /* DownloadWholeLessonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadWholeLessonViewController.h; path = Classes/Favor/DownloadWholeLessonViewController.h; sourceTree = SOURCE_ROOT; };
+		0D71252B17A249D600C206AE /* DownloadWholeLessonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadWholeLessonViewController.m; path = Classes/Favor/DownloadWholeLessonViewController.m; sourceTree = SOURCE_ROOT; };
+		0D71252C17A249D700C206AE /* DownloadWholeLessonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadWholeLessonViewController.xib; path = Classes/Favor/DownloadWholeLessonViewController.xib; sourceTree = SOURCE_ROOT; };
 		0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_Avatar@2x.png"; sourceTree = "<group>"; };
 		0D95402C176230BE00A616D8 /* Btn_Pause_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause_S@2x.png"; sourceTree = "<group>"; };
 		0D95402D176230BE00A616D8 /* Btn_Pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Btn_Pause@2x.png"; sourceTree = "<group>"; };
@@ -715,6 +720,9 @@
 				0D97C3DA1759030D0070E696 /* FavorViewCell.m */,
 				0D97C3DC175AB40B0070E696 /* FavorCourseButton.h */,
 				0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */,
+				0D71252A17A249D600C206AE /* DownloadWholeLessonViewController.h */,
+				0D71252B17A249D600C206AE /* DownloadWholeLessonViewController.m */,
+				0D71252C17A249D700C206AE /* DownloadWholeLessonViewController.xib */,
 			);
 			name = Favor;
 			sourceTree = "<group>";
@@ -1372,6 +1380,7 @@
 				0DC93B9B179AD8C300080975 /* 4-light-menu-barPad_P.png in Resources */,
 				0DC93BA3179C920100080975 /* Icon_BG.png in Resources */,
 				0DC93BA5179C93A600080975 /* Icon_edit.png in Resources */,
+				0D71252E17A249D700C206AE /* DownloadWholeLessonViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1491,6 +1500,7 @@
 				95FC6430179D6861009990EF /* PartnerIAPHelper.m in Sources */,
 				0DC93BAB17A15EFD00080975 /* MJPopupBackgroundView.m in Sources */,
 				0DC93BAC17A15EFD00080975 /* UIViewController+MJPopupViewController.m in Sources */,
+				0D71252D17A249D700C206AE /* DownloadWholeLessonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,9 +14,11 @@
 #import "CourseViewController.h"
 #import "LessonsViewController.h"
 #import "CurrentInfo.h"
-
+#import "UIViewController+MJPopupViewController.h"
+#import "DownloadWholeLessonViewController.h"
 @interface FavorViewController ()
 {
+    DownloadWholeLessonViewController* _downloadViewController;
 }
 @end
 
@@ -253,15 +255,14 @@
 
 - (void)openSences:(id)sender
 {
-    
     FavorCourseButton* button = (FavorCourseButton*)sender;
     LessonsViewController* lessons = [[LessonsViewController alloc] initWithNibName:@"LessonsViewController" bundle:nil];
     lessons.dataPath = button.pkgPath;
     lessons.scenesName = button.pkgTitle;
     NSRange r = [button.pkgPath rangeOfString:STRING_VOICE_PKG_DIR];
+    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     if (r.location != NSNotFound) {
         NSString* path = [button.pkgPath substringFromIndex:(r.location + r.length + 1)];
-        CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
         lib.currentPkgDataPath = path;
         lib.currentPkgDataTitle = button.pkgTitle;
         r = [path rangeOfString:@"/"];
@@ -286,7 +287,17 @@
      navController.navigationBar.hidden = YES;
     self.modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
                                                        parentViewController:self];
-    [self openFavor];
+   
+    Database* db = [Database sharedDatabase];
+    if ([db isPkgDownloaded:lib.currentPkgDataTitle withPath:lib.currentPkgDataPath]) {
+        [self openFavor];
+    } else {
+        _downloadViewController = [[DownloadWholeLessonViewController alloc] initWithNibName:@"DownloadWholeLessonViewController" bundle:nil];
+        _downloadViewController.dataPath = button.pkgPath;
+        _downloadViewController.scenesName = button.pkgTitle;
+        _downloadViewController.delegate = (id)self;
+        [self presentPopupViewController:_downloadViewController animationType:MJPopupViewAnimationFade];
+    }
  }
 
 - (void)openFavor
@@ -428,8 +439,21 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    
 }
 
+- (void)cancelButtonClicked:(DownloadWholeLessonViewController*)secondDetailViewController;
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    _downloadViewController = nil;
+    [self openFavor];
+}
 
+- (void)doneButtonClicked:(DownloadWholeLessonViewController*)secondDetailViewController;
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+    _downloadViewController = nil;
+    [self openFavor];
+}
 
 @end
