@@ -17,6 +17,10 @@
     NSNumberFormatter * _priceFormatter;
     BOOL _isCloseAddLibView;
 }
+
+@property (nonatomic, retain) NSArray *_products;
+
 - (void)loadLibaryInfo;
 - (void)reloadInfo;
+
 @end

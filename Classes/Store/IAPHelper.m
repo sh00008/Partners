@@ -16,6 +16,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 @implementation IAPHelper
 
 @synthesize _productIdentifiers;
+@synthesize _purchasedProductIdentifiers;
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
     
@@ -25,7 +26,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         self._productIdentifiers = productIdentifiers;
         
         // Check for previously purchased products
-        _purchasedProductIdentifiers = [NSMutableSet set];
+        _purchasedProductIdentifiers = [[NSMutableSet alloc] initWithCapacity:1];
         for (NSString * productIdentifier in _productIdentifiers) {
             BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey:productIdentifier];
             if (productPurchased) {
@@ -150,6 +151,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _completionHandler(NO, nil);
     _completionHandler = nil;
     
+}
+
+- (void)dealloc
+{
+    [self._productIdentifiers release];
+    [super dealloc];
 }
 
 @end

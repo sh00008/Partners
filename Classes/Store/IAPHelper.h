@@ -22,6 +22,7 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 }
 
 @property (nonatomic, retain) NSSet * _productIdentifiers;
+@property (nonatomic, retain) NSMutableSet * _purchasedProductIdentifiers;
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
@@ -30,4 +31,6 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 - (BOOL)productPurchased:(NSString *)productIdentifier;
 
 - (void)restoreCompletedTransactions;
+
+- (void)dealloc;
 @end

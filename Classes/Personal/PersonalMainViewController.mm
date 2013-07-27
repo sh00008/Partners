@@ -28,11 +28,20 @@
 
 @implementation PersonalMainViewController
 
+@synthesize _products;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+            if (success) {
+                self._products = products;
+                [self.tableView reloadData];
+            }
+            [self.refreshControl endRefreshing];
+        }];
     }
     return self;
 }
@@ -143,9 +152,9 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
-        SKProduct * product = nil; // (SKProduct *) _products[0];
-        [_priceFormatter setLocale:[NSLocale currentLocale]]; // product.priceLocale];
-        cell.detailTextLabel.text = @"0.99"; // [_priceFormatter stringFromNumber:product.price];
+        SKProduct * product = (SKProduct *)_products[0];
+        [_priceFormatter setLocale:product.priceLocale];
+        cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
         
         if (product != nil && [[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -285,7 +294,7 @@
     _products = nil;
     [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
-            _products = products;
+            self._products = products;
             [self.tableView reloadData];
         }
         [self.refreshControl endRefreshing];
