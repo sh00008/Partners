@@ -180,7 +180,7 @@
     
     NSLog(@"Buying %@...", product.productIdentifier);
     [[PartnerIAPHelper sharedInstance] buyProduct:product];
-    
+    [self reloadInfo];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
