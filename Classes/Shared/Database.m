@@ -218,6 +218,8 @@ static Database* _database;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
 	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_PKG_ID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURCETILE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURCEPATH];
 	[sql appendFormat:@",[%@] float",STRING_DB_VOICE_PROCESS];
 	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_DOWNLOAD_FLAG];
 	[sql appendString:@");"];
@@ -774,13 +776,9 @@ static Database* _database;
 
 - (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path
 {
-    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
-    if (pkgID == -1) {
-        return NO;
-    }
 	sqlite3_stmt *statement;
     int flag = 0;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = %d",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, pkgID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -793,27 +791,25 @@ static Database* _database;
 
 - (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path
 {
-    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
-    if (pkgID == -1) {
-        return NO;
-    }
  
     sqlite3_stmt *statement;
-    
-    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@) VALUES(?,?,?)", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PROCESS, STRING_DB_VOICE_DOWNLOAD_FLAG];
+    [databaseLock lock];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@) VALUES(?,?,?,?,?)", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_COURCETILE, STRING_DB_VOICE_COURCEPATH, STRING_DB_VOICE_PROCESS, STRING_DB_VOICE_DOWNLOAD_FLAG];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
 		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
-		NSInteger i = 1;
+		NSInteger i = 2;
         
-        sqlite3_bind_int(statement, i, pkgID);
+        sqlite3_bind_text(statement, i, [title UTF8String], -1, SQLITE_TRANSIENT);
         i++;
         
-        // title
+        sqlite3_bind_text(statement, i, [path UTF8String], -1, SQLITE_TRANSIENT);
+        i++;
+        
 		sqlite3_bind_int(statement, i, 0);
 		i++;
         
-        // path
+        
 		sqlite3_bind_int(statement, i, 0);
 		i++;
         
@@ -833,16 +829,12 @@ static Database* _database;
     return YES;
 }
 
-- (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path
+- (BOOL)deleteDownloadedInfo:(NSString*)path
 {
-    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
-    if (pkgID == -1) {
-        return NO;
-    }
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, pkgID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@'", STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_COURCEPATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -859,16 +851,29 @@ static Database* _database;
 
 }
 
+- (BOOL)isExistDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+{
+    sqlite3_stmt *statement;
+    BOOL bExist = NO;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            bExist = YES;
+        }
+    }
+    return bExist;
+
+}
 - (BOOL)updateDownloadedInfo:(NSString*)title withPath:(NSString*)path;
 {
-    NSInteger pkgID = [self getVoicePkgInfoID:title withPath:path];
-    if (pkgID == -1) {
-        return NO;
+    if (![self isExistDownloadedInfo:title withPath:path]) {
+        [self insertDownloadedInfo:title withPath:path];
     }
 	BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = %d",STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_PKG_DOWNLOAD_FLAG, 1, STRING_DB_VOICE_PKG_ID, pkgID];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@' AND %@ = '%@'",STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_DOWNLOAD_FLAG, 1,  STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -1077,6 +1082,7 @@ static Database* _database;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 {
     [self deleteCourseInfoByTitle:title withPath:[NSString stringWithFormat:@"%d/%@",libID, title ]];
+    [self deleteDownloadedInfo:[NSString stringWithFormat:@"%d/%@", libID, title]];
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;

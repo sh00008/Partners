@@ -14,11 +14,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "DACircularProgressView.h"
 #import "DownloadLesson.h"
+#import "Database.h"
 
 @interface DownloadWholeViewController ()
 {
     CourseParser* _courseParser;
     DACircularProgressView* _progressview;
+    NSInteger _downloadCount;
+    BOOL _isStop;
 
 }
 @end
@@ -77,7 +80,8 @@
         highlightedImage = [highlightedImage resizableImageWithCapInsets:insets];
         [self.buttonDownload setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.buttonDownload setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
-        
+        _downloadCount= 0;
+        _isStop = NO;
     }
     [super viewDidLoad];
 }
@@ -114,6 +118,7 @@
 
 - (IBAction)cancel:(id)sender
 {
+    _isStop = YES;
     [self.delegate cancelButtonClicked:self];
 }
 
@@ -125,15 +130,33 @@
 - (void)startDownload
 {
     [self loadCourses];
+    _progressview.progress = 0;
     _progressview.hidden = NO;
+    [self.buttonDownload setTitle:STRING_DOWNLOADINGALL forState:UIControlStateNormal];
+    self.buttonDownload.enabled = NO;
     for (NSInteger i = 0; i < [_courseParser.course.lessons count]; i++) {
         // download
+        if (_isStop) {
+            return;
+        }
         DownloadLesson* download = [[[DownloadLesson alloc] init] autorelease];
+        download.delegate = (id)self;
         download.nPositionInCourse = i;
         download.courseParser = _courseParser;
         if (![download checkIsNeedDownload]) {
-            _progressview.progress = (CGFloat)i/(CGFloat)[_courseParser.course.lessons count];
+            _downloadCount++;
+           // _progressview.progress = (CGFloat)i/(CGFloat)[_courseParser.course.lessons count];
             
+        }
+    }
+    if (_downloadCount == [_courseParser.course.lessons count]) {
+        Database* db = [Database sharedDatabase];
+        NSRange r = [self.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
+        if (r.location != NSNotFound) {
+            NSString* path = [self.dataPath substringFromIndex:(r.location + r.length + 1)];
+            [db updateDownloadedInfo:self.scenesName withPath:path];
+            [self.delegate cancelButtonClicked:self];
+           
         }
     }
 }
@@ -162,11 +185,32 @@
 }
 
 - (void)downloadSucceed:(DownloadLesson*)download {
-    _progressview.progress = (CGFloat)download.nPositionInCourse/(CGFloat)[_courseParser.course.lessons count];
+    _downloadCount++;
+    _progressview.progress = (CGFloat)_downloadCount/(CGFloat)[_courseParser.course.lessons count];
+    if (_downloadCount == [_courseParser.course.lessons count]) {
+        Database* db = [Database sharedDatabase];
+        NSRange r = [self.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
+        if (r.location != NSNotFound) {
+            NSString* path = [self.dataPath substringFromIndex:(r.location + r.length + 1)];
+            [db updateDownloadedInfo:self.scenesName withPath:path];
+            [self.delegate cancelButtonClicked:self];
+            
+        }
+    }
 }
 
 - (void)downloadfailed:(DownloadLesson*)download {
-     
+    _downloadCount++;
+    if (_downloadCount == [_courseParser.course.lessons count]) {
+        Database* db = [Database sharedDatabase];
+        NSRange r = [self.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
+        if (r.location != NSNotFound) {
+            NSString* path = [self.dataPath substringFromIndex:(r.location + r.length + 1)];
+            [db updateDownloadedInfo:self.scenesName withPath:path];
+            [self.delegate cancelButtonClicked:self];
+            
+        }
+    }
 }
 
 @end

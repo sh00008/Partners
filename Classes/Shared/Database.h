@@ -33,6 +33,8 @@
 #define STRING_DB_TABLENAME_DOWNLOAD_INFO @"PKGDownloadInfo"
 #define STRING_DB_VOICE_PROCESS @"DownloadProcess"
 #define STRING_DB_VOICE_DOWNLOAD_FLAG @"DownloadFlag"
+#define STRING_DB_VOICE_COURCETILE @"Title"
+#define STRING_DB_VOICE_COURCEPATH @"Path"
 @interface Database : NSObject {
  	Database* _database;
     NSLock *databaseLock; //mutex used to create our Critical Section
@@ -61,8 +63,9 @@
 
 - (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path;
 - (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path;
-- (BOOL)deleteDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+- (BOOL)deleteDownloadedInfo:(NSString*)path;
 - (BOOL)updateDownloadedInfo:(NSString*)title withPath:(NSString*)path;
+- (BOOL)isExistDownloadedInfo:(NSString*)title withPath:(NSString*)path;
 
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 // return VoiceDataPkgObject object

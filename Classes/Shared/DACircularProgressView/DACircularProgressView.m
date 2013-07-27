@@ -97,8 +97,8 @@
 {
     if (!_trackTintColor)
     {
-        _trackTintColor =[UIColor colorWithRed:0.8f green:0.8f blue:0.8 alpha:1.0f];
-        [_trackTintColor retain];
+        _trackTintColor =[UIColor whiteColor];
+        //[_trackTintColor retain];
     }
     return _trackTintColor;
 }
