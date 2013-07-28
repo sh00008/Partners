@@ -85,6 +85,7 @@
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+            fetcher.delegate =self;
             fetcher.userData = userDic;
             [fetcher beginFetchWithDelegate:self
                           didFinishSelector:@selector(fetcher:finishedWithData:error:)];
@@ -133,6 +134,7 @@
         [request setValue:STRING_KEY_FILETYPE_ISB forHTTPHeaderField:@"User-Agent"];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+        fetcher.delegate =self;
         NSMutableDictionary* userDic = [[[NSMutableDictionary alloc] initWithDictionary:dic] autorelease];
         [userDic setObject:STRING_KEY_FILETYPE_ISB forKey:STRING_KEY_FILETYPE];
         fetcher.userData = userDic;
@@ -180,6 +182,7 @@
         NSMutableDictionary* userDic = [[[NSMutableDictionary alloc] initWithDictionary:dic] autorelease];
         [userDic setObject:STRING_KEY_FILETYPE_LES forKey:STRING_KEY_FILETYPE];
         fetcher.userData = userDic;
+        fetcher.delegate =self;
         [fetcher beginFetchWithDelegate:self
                       didFinishSelector:@selector(fetcher:finishedWithData:error:)];
         _bDownloadedLES = NO;
