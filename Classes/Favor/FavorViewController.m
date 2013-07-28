@@ -269,12 +269,8 @@
         if (r.location != NSNotFound) {
             lib.currentLibID = [[path substringToIndex:r.location] intValue];
         }
-
-       
     }
-    NSLog(@"%@", button.pkgPath);
-    NSLog(@"%@", button.pkgTitle);
-    lessons.scenesName = button.pkgTitle;
+     lessons.scenesName = button.pkgTitle;
     NSRange range = [button.pkgPath rangeOfString:@"/" options:NSBackwardsSearch];
     if (range.location != NSNotFound) {
         
@@ -288,6 +284,19 @@
     self.modal = [[DMCustomModalViewController alloc]initWithRootViewController:navController
                                                        parentViewController:self];
    
+    // do sth;
+    // expired
+   /* CourseParser* courseParser = [[CourseParser alloc] init];
+    
+    NSString* resourcePath;
+    if (lessons.scenesName != nil) {
+        resourcePath = [NSString stringWithFormat:@"/%@/%@",  button.pkgPath, lessons.scenesName];
+    }
+    NSString* indexString = STRING_LESSONS_INDEX_XML;
+    courseParser.resourcePath = resourcePath;
+
+    */
+    // all
     Database* db = [Database sharedDatabase];
     if ([db isPkgDownloaded:lib.currentPkgDataTitle withPath:lib.currentPkgDataPath]) {
         [self openFavor];
