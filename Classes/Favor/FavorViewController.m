@@ -16,6 +16,7 @@
 #import "CurrentInfo.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "DownloadWholeViewController.h"
+
 @interface FavorViewController ()
 {
     DownloadWholeViewController* _downloadViewController;
@@ -286,7 +287,7 @@
    
     // do sth;
     // expired
-   /* CourseParser* courseParser = [[CourseParser alloc] init];
+   CourseParser* courseParser = [[CourseParser alloc] init];
     
     NSString* resourcePath;
     if (lessons.scenesName != nil) {
@@ -294,18 +295,27 @@
     }
     NSString* indexString = STRING_LESSONS_INDEX_XML;
     courseParser.resourcePath = resourcePath;
-
-    */
-    // all
-    Database* db = [Database sharedDatabase];
-    if ([db isPkgDownloaded:lib.currentPkgDataTitle withPath:lib.currentPkgDataPath]) {
-        [self openFavor];
+    BOOL isExpired = [courseParser isExpired:indexString];
+    if (isExpired) {
+        DownloadWholeViewController* renewViewController = [[DownloadWholeViewController alloc] initWithNibName:@"DownloadWholeViewController" bundle:nil];
+        renewViewController.eViewType = POPVIEW_TYPE_BORROW;
+        renewViewController.dataPath = button.pkgPath;
+        renewViewController.scenesName = button.pkgTitle;
+        renewViewController.delegate = (id)self;
+        [self presentPopupViewController:renewViewController animationType:MJPopupViewAnimationSlideBottomTop];
+        
     } else {
-        _downloadViewController = [[DownloadWholeViewController alloc] initWithNibName:@"DownloadWholeViewController" bundle:nil];
-        _downloadViewController.dataPath = button.pkgPath;
-        _downloadViewController.scenesName = button.pkgTitle;
-        _downloadViewController.delegate = (id)self;
-        [self presentPopupViewController:_downloadViewController animationType:MJPopupViewAnimationFade];
+        // all
+        Database* db = [Database sharedDatabase];
+        if ([db isPkgDownloaded:lib.currentPkgDataTitle withPath:lib.currentPkgDataPath]) {
+            [self openFavor];
+        } else {
+            _downloadViewController = [[DownloadWholeViewController alloc] initWithNibName:@"DownloadWholeViewController" bundle:nil];
+            _downloadViewController.dataPath = button.pkgPath;
+            _downloadViewController.scenesName = button.pkgTitle;
+            _downloadViewController.delegate = (id)self;
+            [self presentPopupViewController:_downloadViewController animationType:MJPopupViewAnimationFade];
+        }       
     }
  }
 

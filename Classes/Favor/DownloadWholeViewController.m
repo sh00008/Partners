@@ -30,7 +30,9 @@
 @synthesize scenesName, pkgName, dataPath;
 @synthesize delegate;
 @synthesize buttonCancel,buttonDownload;
-
+@synthesize eViewType;
+@synthesize viewTitle;
+@synthesize buttonRenew;
 - (void)loadCourses
 {
     if (_courseParser != nil) {
@@ -50,6 +52,7 @@
 - (void)viewDidLoad
 {
     if (_progressview == nil) {
+        self.viewTitle.text = self.eViewType == POPVIEW_TYPE_BORROW ? STRING_PROMPT_EXPIRED : STRING_PROMPT_DOWNLOADALL;
         _progressview = [[DACircularProgressView alloc] initWithFrame:CGRectMake(140.0f, 20.0f, 40.0f, 40.0f)];
         _progressview.center = self.view.center;
         [self.view addSubview:_progressview];
@@ -80,7 +83,16 @@
         highlightedImage = [highlightedImage resizableImageWithCapInsets:insets];
         [self.buttonDownload setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.buttonDownload setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
-        _downloadCount= 0;
+
+         [self.buttonRenew setTitleColor:[UIColor colorWithWhite:0.4 alpha:1] forState:UIControlStateNormal];
+        [self.buttonRenew setTitleColor:[UIColor colorWithWhite:0.4 alpha:0.8] forState:UIControlStateHighlighted];
+        [self.buttonRenew setBackgroundImage:normalImage forState:UIControlStateNormal];
+        [self.buttonRenew setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+
+        self.buttonRenew.hidden = self.eViewType == POPVIEW_TYPE_BORROW ? NO: YES;
+        self.buttonDownload.hidden = !self.buttonRenew.hidden;
+        self.buttonCancel.hidden = !self.buttonRenew.hidden;
+       _downloadCount= 0;
         _isStop = NO;
     }
     [super viewDidLoad];
@@ -107,6 +119,7 @@
     _courseParser = nil;
     self.buttonCancel = nil;
     self.buttonDownload = nil;
+    self.viewTitle = nil;
     [super dealloc];
 }
 
@@ -125,6 +138,11 @@
 - (IBAction)downAll:(id)sender
 {
     [self startDownload];
+}
+
+- (IBAction)renew:(id)sender
+{
+    
 }
 
 - (void)startDownload

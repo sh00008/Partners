@@ -182,3 +182,5 @@
 #define STRING_ADDLIB_ADDRESS_SUCCEED   @"成功添加图书馆！"
 #define STRING_DEFAULT_LIB_NAME         @"我爱读书"
 #define STRING_DOWNLOADINGALL           @"正在下载"
+#define STRING_PROMPT_DOWNLOADALL       @"下载本课程全部资源"
+#define STRING_PROMPT_EXPIRED           @"本资源已过期，请重新下载"

@@ -190,8 +190,6 @@
 		0DC93BAE17A2A74700080975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BAD17A2A74700080975 /* SIAlertView.bundle */; };
 		0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB117A2B52100080975 /* DACircularProgressView.m */; };
 		0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB417A3173800080975 /* DownloadLesson.m */; };
-		0DC93BB917A5B7A600080975 /* BrowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB717A5B7A200080975 /* BrowViewController.m */; };
-		0DC93BBA17A5B7A600080975 /* BrowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BB817A5B7A400080975 /* BrowViewController.xib */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -499,9 +497,6 @@
 		0DC93BB117A2B52100080975 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		0DC93BB317A3173800080975 /* DownloadLesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadLesson.h; path = Classes/Favor/DownloadLesson.h; sourceTree = SOURCE_ROOT; };
 		0DC93BB417A3173800080975 /* DownloadLesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadLesson.m; path = Classes/Favor/DownloadLesson.m; sourceTree = SOURCE_ROOT; };
-		0DC93BB617A5B7A000080975 /* BrowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrowViewController.h; path = Classes/Favor/BrowViewController.h; sourceTree = SOURCE_ROOT; };
-		0DC93BB717A5B7A200080975 /* BrowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BrowViewController.m; path = Classes/Favor/BrowViewController.m; sourceTree = SOURCE_ROOT; };
-		0DC93BB817A5B7A400080975 /* BrowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BrowViewController.xib; path = Classes/Favor/BrowViewController.xib; sourceTree = SOURCE_ROOT; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -735,9 +730,6 @@
 				0D97C3DA1759030D0070E696 /* FavorViewCell.m */,
 				0D97C3DC175AB40B0070E696 /* FavorCourseButton.h */,
 				0D97C3DD175AB40B0070E696 /* FavorCourseButton.m */,
-				0DC93BB617A5B7A000080975 /* BrowViewController.h */,
-				0DC93BB717A5B7A200080975 /* BrowViewController.m */,
-				0DC93BB817A5B7A400080975 /* BrowViewController.xib */,
 				0D71252A17A249D600C206AE /* DownloadWholeViewController.h */,
 				0D71252B17A249D600C206AE /* DownloadWholeViewController.m */,
 				0D71252C17A249D700C206AE /* DownloadWholeViewController.xib */,
@@ -1411,7 +1403,6 @@
 				0DC93BA5179C93A600080975 /* Icon_edit.png in Resources */,
 				0D71252E17A249D700C206AE /* DownloadWholeViewController.xib in Resources */,
 				0DC93BAE17A2A74700080975 /* SIAlertView.bundle in Resources */,
-				0DC93BBA17A5B7A600080975 /* BrowViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1534,7 +1525,6 @@
 				0D71252D17A249D700C206AE /* DownloadWholeViewController.m in Sources */,
 				0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */,
 				0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */,
-				0DC93BB917A5B7A600080975 /* BrowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

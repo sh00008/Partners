@@ -32,7 +32,7 @@
 
 // Load course by filename  "index.xml"
 - (void) loadCourses:(NSString*)filename;
-- (void) loadBorrowInfo:(NSString*)filename;
+- (BOOL) isExpired:(NSString*)filename;
 - (void) loadMetadata:(TBXMLElement*)element;
 - (void) loadLessons:(TBXMLElement*)element;
 // Load in ....xml

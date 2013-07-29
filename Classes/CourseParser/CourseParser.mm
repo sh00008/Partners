@@ -124,6 +124,43 @@ static bool bLoadModel = NO;
 	
 }
 
+- (BOOL) isExpired:(NSString*)filename {
+    [self loadModel];
+    
+	// Load and parse the index.xml file
+    NSString* fullFilename = [resourcePath stringByAppendingPathComponent:filename];
+    //NSLog(@"%@", fullFilename);
+    NSData* filedata = [NSData dataWithContentsOfFile:fullFilename];
+    NSString* strData = [[NSString alloc] initWithData:filedata encoding:NSUTF8StringEncoding];
+    
+    // 解析借阅信息
+    BorrowInfo* borrowInfo = [[BorrowInfo alloc]init];
+    [borrowInfo parseInfo:strData];
+    
+    //NSTimeInterval time = [[NSDate date] timeIntervalSinceDate:[borrowInfo date]];
+    
+    //V_NSLog(@"%@, 距离借阅时间：%f 小时", [borrowInfo.date description], time /3600);
+    if ([borrowInfo date]  == nil ) {
+        return NO;
+        
+    }
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorianCalendar components: (NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit )
+                                                        fromDate:[borrowInfo date]
+                                                          toDate:[NSDate date]
+                                                         options:0];
+    
+    
+    NSLog(@"%d YEAR", [components year]);
+    NSLog(@"%d MONTH", [components month]);
+    NSLog(@"%d DAY", [components day]);
+    NSLog(@"%d HOUR", [components hour]);
+    NSLog(@"%d MINUTE", [components minute]);
+    NSLog(@"%d HOUR", [components hour]);
+    [borrowInfo release];
+    return ([components year] > 0 || [components month] > 0 || [components day] > 30);
+}
+
 - (void)loadMetadata:(TBXMLElement*)element
 {
 	if (element) {
