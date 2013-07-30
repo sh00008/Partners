@@ -146,10 +146,12 @@
         [self.view addSubview:rootViewController.view];
     }
     
+    DownloadLicense* download = [[[DownloadLicense alloc] init] autorelease];
+    download.libID = lib.currentLibID;
 
     if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
         if ([dataParser.serverlistArray count] > 0) {
-            [lib checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
+            [download checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
         }
     }
     [dataParser release];

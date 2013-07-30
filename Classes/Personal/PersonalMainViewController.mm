@@ -385,15 +385,20 @@
         [self addWaitingView:120 withText:STRING_ADDLIB_ADDRESS_ERROR withAnimation:YES];
         [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:120] afterDelay:2];
     } else {
+        // insert libaryinfo
         Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];
         info.url = (NSString*)[fecther userData];
         [db insertLibaryInfo:info];
-        [self finishVoiceXMLData:data];
-        [self reloadInfo];
-        [self addWaitingView:130 withText:STRING_ADDLIB_ADDRESS_SUCCEED withAnimation:YES];
-        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:130] afterDelay:2];
-        [_popAddLibView performSelector:@selector(dismiss) withObject:nil afterDelay:2];
+        
+        // update currentlibid
+        CurrentInfo* current = [CurrentInfo sharedCurrentInfo];
+        current.currentLibID = info.libID;
+        DownloadLicense* download = [[[DownloadLicense alloc] init] autorelease];
+        download.libID = info.libID;
+        download.delegate = (id)self;
+        // parser xml data, and download lisecce
+        [self finishVoiceXMLData:data withDownload:(DownloadLicense*)download];
         [info release];
     }
 }
@@ -404,6 +409,21 @@
     if (subView != nil) {
         [subView removeFromSuperview];
     }
+}
+
+- (void)didDownload:(NSError*)error withDownloadLicense:(DownloadLicense*)download
+{
+    if (error == nil) {
+        [self addWaitingView:130 withText:STRING_ADDLIB_ADDRESS_SUCCEED withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:130] afterDelay:2];
+        [_popAddLibView performSelector:@selector(dismiss) withObject:nil afterDelay:2];
+        [self reloadInfo];
+    } else {
+        Database* db = [Database sharedDatabase];
+        [db deleteLibaryInfo:download.libID];
+        [self addWaitingView:120 withText:STRING_ADDLIB_ADDRESS_ERROR withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:120] afterDelay:2];
+     }
 }
 
 - (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
@@ -443,7 +463,7 @@
     
 }
 
-- (void)finishVoiceXMLData:(NSData*)data
+- (void)finishVoiceXMLData:(NSData*)data withDownload:(DownloadLicense*)down
 {
      NSString* xmlPath =  [NSString stringWithFormat:@"%@voice.xml", NSTemporaryDirectory()];
     [data writeToFile:xmlPath atomically:YES];
@@ -457,8 +477,7 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.currentLibID];
+     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", down.libID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
@@ -467,21 +486,19 @@
     [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
     
     StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
-    dataParser.libID = lib.currentLibID;
+    dataParser.libID = down.libID;
     [dataParser loadWithData:data];
-
-    
     
     if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
         if ([dataParser.serverlistArray count] > 0) {
-            [lib checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
+            [down checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
         }
     }
     [dataParser release];
     
     UIView* shadowView = [self.view viewWithTag:101];
     [self.view bringSubviewToFront:shadowView];
-    
+    [self reloadInfo];
 }
 
 @end

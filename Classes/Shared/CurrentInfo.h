@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "VoicePkgInfoObject.h"
+@class DownloadLicense;
+
+@protocol DownloadLicenseDelegate <NSObject>
+- (void)didDownload:(NSError*)error withDownloadLicense:(DownloadLicense*)download;
+@end
+
+@interface DownloadLicense : NSObject
+@property (nonatomic, assign) NSInteger libID;
+@property (nonatomic, assign) id<DownloadLicenseDelegate>delegate;
+- (void)checkLisence:(NSString*)url;
+@end
 
 @interface CurrentInfo : NSObject
 @property (nonatomic, retain) NSString* currentPkgDataPath;
@@ -15,6 +26,4 @@
 @property (nonatomic, assign) NSInteger currentLibID;
 
 + (CurrentInfo*)sharedCurrentInfo;
-- (void)getDeviceID;
-- (void)checkLisence:(NSString*)url;
 @end
