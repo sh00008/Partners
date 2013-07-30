@@ -112,6 +112,11 @@
     [self getDeviceID];
 }
 
+- (void)dealloc
+{
+    self.delegate = nil;
+    [super dealloc];
+}
 @end
 
 

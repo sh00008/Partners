@@ -135,7 +135,7 @@
     if (nRow < [_dataArray count]) {
         object = [_dataArray objectAtIndex:indexPath.row];
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier: CellIdentifier] autorelease];
-        cell.textLabel.text = object.title;
+        cell.textLabel.text = object.title == nil ? STRING_PROMPT_NOTITLE : object.title;
         cell.tag = object.libID;
     } else if (nRow == [_dataArray count]) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];

@@ -184,3 +184,4 @@
 #define STRING_DOWNLOADINGALL           @"正在下载"
 #define STRING_PROMPT_DOWNLOADALL       @"下载本课程全部资源"
 #define STRING_PROMPT_EXPIRED           @"本资源已过期，请重新下载"
+#define STRING_PROMPT_NOTITLE           @"无名称"
