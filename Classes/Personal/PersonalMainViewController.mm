@@ -323,14 +323,21 @@
 
 - (void)confirmText:(YIPopupTextView*)textView didDismissWithText:(NSString*)text;
 {
-    NSURL* url = [NSURL URLWithString:text];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
-    GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-    [fetcher setUserData:text];
-    [fetcher beginFetchWithDelegate:self
-                  didFinishSelector:@selector(fetcher:finishedWithData:error:)];
-}
+    Database* db = [Database sharedDatabase];
+    LibaryInfo* libInfo = [db getLibaryInfoByURL:text];
+    if (libInfo != nil) {
+        [self addWaitingView:132 withText:STRING_ADDLIB_ADDRESS_AREADYADDED withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:132] afterDelay:2];
+    } else {
+        NSURL* url = [NSURL URLWithString:text];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
+        GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+        [fetcher setUserData:text];
+        [fetcher beginFetchWithDelegate:self
+                      didFinishSelector:@selector(fetcher:finishedWithData:error:)];       
+    }
+ }
 
 - (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text
 {

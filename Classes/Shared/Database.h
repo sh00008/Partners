@@ -57,6 +57,7 @@
 - (BOOL)insertLibaryLisenceInfo:(LibaryInfo *)info;
 - (BOOL)updateLibaryLisenceInfo:(LibaryInfo *)info;
 - (LibaryInfo*)getLibaryInfoByID:(NSInteger)libID;
+- (LibaryInfo*)getLibaryInfoByURL:(NSString*)url;
 - (void)getLisenceInfo:(LibaryInfo*)info;
 - (BOOL)deleteLibaryInfo:(NSInteger)libID;
 - (BOOL)deleteLibaryLisenceInfo:(NSInteger)libID;

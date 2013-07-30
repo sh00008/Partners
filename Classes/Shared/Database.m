@@ -587,6 +587,63 @@ static Database* _database;
 	return [info autorelease];
 }
 
+- (LibaryInfo*)getLibaryInfoByURL:(NSString*)url
+{
+    [databaseLock lock];
+	LibaryInfo* info = nil;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_LIBARY_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_VOICE_PKG_URL, url];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    NSString* path = nil;
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            info = [[LibaryInfo alloc] init];
+            NSInteger i = 0;
+            NSInteger libID = sqlite3_column_int(statement, i);
+            i++;
+            
+            char *titleChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            char *pathChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            i++; // skip cover
+
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            // coverChars;
+            char *urlChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+
+            char *timeChars = (char *) sqlite3_column_text(statement, i);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            if (pathChars != nil) {
+                path = [NSString stringWithUTF8String:pathChars];
+                info.path = [NSString stringWithFormat:@"%@", [self getAbsolutelyPath:path]];
+                info.cover = [NSString stringWithFormat:@"%@/cover", [self getAbsolutelyPath:path]] ;
+            }
+            if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.title = [NSString stringWithFormat:@"%@",title];
+            }
+            if (urlChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:urlChars];
+                info.url = [NSString stringWithFormat:@"%@",title];
+            }
+            if (timeChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:timeChars];
+                info.createTime = [NSString stringWithFormat:@"%@",title];
+            }
+            info.libID = libID;
+           break;
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    [self getLisenceInfo:info];
+	return [info autorelease];
+}
 - (void)getLisenceInfo:(LibaryInfo*)info;
 {
     [databaseLock lock];
