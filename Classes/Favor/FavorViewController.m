@@ -79,6 +79,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
+    NSInteger nCount = [_pkgArray count];
+    if (nCount == 0) {
+        return 88.0f;
+    }
     NSInteger nRow = indexPath.row;
     if (nRow < [_pkgArray count]) {
         VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
@@ -101,11 +105,26 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	NSInteger nCount = [_pkgArray count];
+    if (nCount == 0) {
+        return 1;
+    }
     return nCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([_pkgArray count]== 0) {
+         
+        UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.textLabel.text = STRING_PROMPT_HOW_TO_ADD_RES;
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.font = [UIFont fontWithName:@"KaiTi" size:20];
+        return [cell autorelease];
+    }
+    
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"FavorViewCell" owner:self options:nil];
     FavorViewCell *cell = [array objectAtIndex:0];
     
