@@ -44,9 +44,10 @@
 {
     [super viewDidLoad];
     if (_scrollview == nil) {
-        NSInteger iconSize = 36;
-        _edit = NO;
-        _editingLib = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, iconSize, iconSize)];
+        NSInteger iconSize = 24;
+        NSInteger iconBigSize = 36;
+       _edit = NO;
+        _editingLib = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, iconBigSize, iconBigSize)];
         [_editingLib addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
         [_editingLib setImage:[UIImage imageNamed:@"Icon_edit.png"] forState:UIControlStateNormal];
          UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithCustomView:_editingLib];
@@ -191,7 +192,9 @@
 }
 
 - (void)edit {
-    _edit = !_edit;
-    [_persnoal setEditing:_edit animated:YES];
+    if ([_persnoal isCanPerfomEdit]) {
+        _edit = !_edit;
+        [_persnoal setEditing:_edit animated:YES];
+    }
 }
 @end

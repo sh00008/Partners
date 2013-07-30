@@ -291,6 +291,10 @@
     }
     Database* db = [Database sharedDatabase];
     _dataArray = [db loadLibaryInfo];
+    if ([_dataArray count] == 1) {
+        [self setEditing:NO];
+    }
+    
     _products = nil;
     [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
@@ -300,6 +304,11 @@
         [self.refreshControl endRefreshing];
     }];
     [self.tableView reloadData];
+}
+
+- (BOOL)isCanPerfomEdit
+{
+    return ([_dataArray count] != 1);
 }
 
 #pragma mark YIPopupTextViewDelegate
@@ -366,6 +375,9 @@
             [_dataArray release];
             _dataArray = [db loadLibaryInfo];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if ([_dataArray count] == 1) {
+                [self setEditing:NO];
+            }
         }
     }
 }
