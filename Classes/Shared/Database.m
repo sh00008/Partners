@@ -613,6 +613,7 @@ static Database* _database;
 }
 
 - (BOOL)deleteLibaryInfo:(NSInteger)libID {
+    [self deleteLibaryData:libID];
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
@@ -652,6 +653,27 @@ static Database* _database;
 	[databaseLock unlock];
 	return bOK;
 
+}
+
+- (void)deleteLibaryData:(NSInteger)libID
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    
+    // create pkg
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", libID];
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    NSString* voiceXML = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
+    [fm removeItemAtPath:devicePath error:nil];
+    [fm removeItemAtPath:voiceXML error:nil];
 }
 
 - (NSMutableArray*)loadVoicePkgInfo;

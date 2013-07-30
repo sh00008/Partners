@@ -60,6 +60,7 @@
 - (void)getLisenceInfo:(LibaryInfo*)info;
 - (BOOL)deleteLibaryInfo:(NSInteger)libID;
 - (BOOL)deleteLibaryLisenceInfo:(NSInteger)libID;
+- (BOOL)deleteLibaryData:(NSInteger)libID;
 
 - (BOOL)isPkgDownloaded:(NSString*)title withPath:(NSString*)path;
 - (BOOL)insertDownloadedInfo:(NSString*)title withPath:(NSString*)path;

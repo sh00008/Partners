@@ -484,21 +484,18 @@
     NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
     [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
-    
-    StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
-    dataParser.libID = down.libID;
-    [dataParser loadWithData:data];
-    
-    if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
-        if ([dataParser.serverlistArray count] > 0) {
-            [down checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
+    if (![fm fileExistsAtPath:devicePath]) {
+        StoreVoiceDataListParser * dataParser = [[StoreVoiceDataListParser alloc] init];
+        dataParser.libID = down.libID;
+        [dataParser loadWithData:data];
+        
+        if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
+            if ([dataParser.serverlistArray count] > 0) {
+                [down checkLisence:[dataParser.serverlistArray objectAtIndex:0]];
+            }
         }
+        [dataParser release];
     }
-    [dataParser release];
-    
-    UIView* shadowView = [self.view viewWithTag:101];
-    [self.view bringSubviewToFront:shadowView];
-    [self reloadInfo];
 }
 
 @end
