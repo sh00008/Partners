@@ -48,6 +48,7 @@
 #define STRING_KEY_FILETYPE_XIN @"xin"
 #define STRING_KEY_FILETYPE_ISB @"isb"
 #define STRING_KEY_FILETYPE_LES @"les"
+#define HEIGHT_OF_WAVECELL      122
 
 @implementation ListeningViewController
 @synthesize sentencesArray = _sentencesArray;
@@ -625,7 +626,7 @@
 }
 
 - (UIView *)viewForCollapseClickContentViewAtIndex:(int)index {
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 134 * 2)];
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, HEIGHT_OF_WAVECELL * 2)];
     Sentence * sentence = [self.sentencesArray objectAtIndex:index];        
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
     
