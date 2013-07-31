@@ -99,12 +99,10 @@
         CGFloat iconWidth = MAGIN_OF_LESSON_TITLE - 20;
         
         UIImageView* boardIndex = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5 + (self.frame.size.height - iconWidth) / 2, iconWidth, iconWidth)];
-        NSString* path = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@/Cells/board.png", [[NSBundle mainBundle] resourcePath], @"Image"]];
-        //boardIndex.image = [UIImage imageWithContentsOfFile:path];
-        [self.contentView addSubview:boardIndex];
+         [self.contentView addSubview:boardIndex];
          self.board = boardIndex;
         [boardIndex release];
-        [path release];
+  
         UILabel* labelLessonIndex = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, iconWidth, iconWidth - 5)];
         labelLessonIndex.backgroundColor = [UIColor clearColor];
         labelLessonIndex.text = [NSString stringWithFormat:@"%d", (nIndex+1)];
@@ -121,8 +119,9 @@
         [path release];*/
    }
     if (self.lessonLabel == nil) {
-           CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:self.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE];
-        UILabel* txtLabel = [[UILabel alloc] initWithFrame:CGRectMake(MAGIN_OF_LESSON_TITLE, 10, size.width, size.height)];
+        NSInteger w = (self.frame.size.width - WIDTH_OF_OFFSET);     
+        CGSize size   = [Globle calcTextHeight:self.lessonTitle withWidth:w];
+        UILabel* txtLabel = [[UILabel alloc] initWithFrame:CGRectMake(MAGIN_OF_LESSON_TITLE, (self.frame.size.height - size.height) / 2, size.width,  size.height)];
         txtLabel.lineBreakMode   = UILineBreakModeWordWrap;
         txtLabel.numberOfLines   = 0;
         txtLabel.text            = self.lessonTitle;

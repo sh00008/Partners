@@ -208,20 +208,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /* static NSString *CellIdentifier = @"Cell";
-     
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-     if (cell == nil) {
-     cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-     }
-     
-     if (indexPath.row < [_courseParser.course.lessons count]) {
-     Lesson * lesson = [_courseParser.course.lessons objectAtIndex:indexPath.row];
-     cell.textLabel.text = lesson.title;
-     cell.textLabel.numberOfLines = 0;
-     cell.textLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
-     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-     }*/
     // Configure the cell...
     static NSString *CellIdentifier = @"LessonCell";
     
@@ -239,26 +225,7 @@
     }
     if (nPostion < [_courseParser.course.lessons count]) {
         Lesson * lesson = [_courseParser.course.lessons objectAtIndex:nPostion];
-        /*
-        if (configData.bPagination) {
-            if (indexPath.row == 0) {
-                cell.nCellPosition = 1;
-            } else if (indexPath.row == (nPageCount - 1)) {
-                cell.nCellPosition = 3;
-            } else {
-                cell.nCellPosition = 2;
-            }
-        } else {
-            if (indexPath.row == 0) {
-                cell.nCellPosition = 1;
-            } else if (indexPath.row == ([_courseParser.course.lessons count] - 1)) {
-                cell.nCellPosition = 3;
-            } else {
-                cell.nCellPosition = 2;
-            }
-        }
-         */
-        cell.nStyle =configData.nLessonCellStyle;
+         cell.nStyle =configData.nLessonCellStyle;
         cell.lessonTitle = lesson.title;
         cell.useDarkBackground = (nPostion % 2 == 0);
         cell.nIndex = nPostion;
@@ -284,17 +251,22 @@
         NSInteger nPostion = nSelectedPage*nPageCount + indexPath.row;
         if (nPostion < ([_courseParser.course.lessons count])) {
             LessonCell *cell = (LessonCell*)[self tableView: tableView cellForRowAtIndexPath: indexPath];
-            CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE];
-            return size.height + 22;
+            
+            CGFloat width = self.view.bounds.size.width - WIDTH_OF_OFFSET;
+            CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:width];
+            NSLog(@"heightForRow pos %d  widht %f height %f", indexPath.row, size.width, size.height);
+            return size.height;
             
         } else {
             return 44;
         }
 
     } else {
+        
         LessonCell *cell = (LessonCell*)[self tableView: tableView cellForRowAtIndexPath: indexPath];
-        CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:cell.frame.size.width  - CELL_CONTENT_MARGIN*2 - MAGIN_OF_LESSON_TITLE ];
-        return size.height + 22;
+        CGFloat width = self.view.bounds.size.width - WIDTH_OF_OFFSET;
+        CGSize size   = [Globle calcTextHeight:cell.lessonTitle withWidth:width];
+         return size.height+20;
     }
 }
 
