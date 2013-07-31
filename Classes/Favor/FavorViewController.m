@@ -494,4 +494,9 @@
     [self openFavor];
 }
 
+- (void)dimissPopView:(DownloadWholeViewController*)secondDetailViewController;
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
 @end

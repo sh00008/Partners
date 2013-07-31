@@ -144,6 +144,8 @@
 
 - (IBAction)renew:(id)sender
 {
+    self.buttonRenew.enabled = NO;
+    [self.buttonRenew setTitle:STRING_RENEWING forState:UIControlStateNormal];
     // delete all content in scenesName folder
     NSString* scenseFolderPath = [NSString stringWithFormat:@"%@/%@", self.dataPath, self.scenesName];
     NSFileManager* mgr = [NSFileManager defaultManager];
@@ -171,11 +173,12 @@
             if (pkgID != -1) {
                 DownloadDataPkgCourseInfo* course = [db loadPkgCourseInfoByTitle:self.scenesName withPKGID:pkgID];
                 if (libURL != nil && course != nil) {
-                    StoreDownloadCourse* downloadCourse = [[StoreDownloadCourse alloc] init];
-                    downloadCourse.pkgPath = self.dataPath;
+                    StoreDownloadCourse* downloadCourse = [[[StoreDownloadCourse alloc] init] autorelease];
+                    downloadCourse.pkgPath = [NSString stringWithFormat:@"%@/%@", self.dataPath, self.scenesName];
                     
                     downloadCourse.pkgURL = libURL;
                     downloadCourse.course = course;
+                    downloadCourse.delegate = (id)self;
                     [downloadCourse startDownload];
                     
                 }
@@ -184,8 +187,18 @@
           }
 
     }
-    
-    // delete course
+}
+
+- (void)finishDowloaded:(NSError*)error
+{
+    if (error != nil) {
+        self.viewTitle.text = STRING_RENEW_FAILED;
+    } else {
+        self.viewTitle.text = STRING_RENEW_SUCCEED;       
+    }
+    if ([self.delegate respondsToSelector:@selector(dimissPopView:)]) {
+        [self.delegate performSelector:@selector(dimissPopView:) withObject:self afterDelay:1.0];
+    }
 }
 
 - (void)startDownload

@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "VoicePkgInfoObject.h"
 
+@class StoreDownloadCourse;
+@protocol StoreDownloadCourseDelegate<NSObject>
+@optional
+- (void)finishDowloaded:(NSError*)error;
+@end
 @interface StoreDownloadCourse : NSObject
 {
     
@@ -16,7 +21,7 @@
 @property (nonatomic, retain) DownloadDataPkgCourseInfo* course;
 @property (nonatomic, retain) NSString* pkgURL;
 @property (nonatomic, retain) NSString* pkgPath;
-
+@property (nonatomic, assign) id<StoreDownloadCourseDelegate> delegate;
 - (void)startDownload;
 - (void)didDownloaded;
 @end

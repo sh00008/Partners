@@ -21,6 +21,7 @@ typedef NSInteger POPVIEW_TYPE;
 @optional
 - (void)cancelButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
 - (void)doneButtonClicked:(DownloadWholeViewController*)secondDetailViewController;
+- (void)dimissPopView:(DownloadWholeViewController*)secondDetailViewController;
 @end
 
 @interface DownloadWholeViewController : UIViewController

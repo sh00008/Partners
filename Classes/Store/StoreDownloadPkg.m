@@ -16,6 +16,8 @@
 @synthesize pkgURL;
 @synthesize course;
 @synthesize pkgPath;
+@synthesize delegate;
+
 - (void)dealloc
 {
     [self.pkgURL release];
@@ -54,6 +56,9 @@
         [outputData release];
         //[dateData release]; outorelease ,not need to release
         [borrowInfo release];
+    }
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(finishDowloaded:)]) {
+        [self.delegate finishDowloaded:error];
     }
 }
 
