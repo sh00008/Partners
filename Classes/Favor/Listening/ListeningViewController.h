@@ -138,4 +138,5 @@ typedef enum {
 
 // player AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
+- (NSString*)getRecordingFilePath:(NSInteger)nIndex;
 @end

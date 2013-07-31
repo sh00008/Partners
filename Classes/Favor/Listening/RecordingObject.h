@@ -19,7 +19,7 @@
     UIView*     addInview;
 }
 
-- (void)start;
+- (void)start:(NSString*)recordFile;
 - (void)stop;
 - (void)setAddInView:(UIView*)v;
 + (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename toResult:(NSMutableDictionary*)scoreDictionary;

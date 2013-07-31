@@ -209,15 +209,13 @@ void propListener(	void *                  inClientData,
     return self;
 }
 
-- (void)start
+- (void)start:(NSString*)recordFile
 {
     NSFileManager* mgr = [NSFileManager defaultManager];
-    NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
     if ([mgr fileExistsAtPath:recordFile]) {
         [mgr removeItemAtPath:recordFile error:nil];
     }
-    BOOL bOK = recorder->StartRecord(CFSTR("recordedFile.wav"));
-    
+    BOOL bOK = recorder->StartRecord(CFStringRef(recordFile));
     
     [self setFileDescriptionForFormat:recorder->DataFormat() withName:@"Recorded File"];
     if (!bOK) {

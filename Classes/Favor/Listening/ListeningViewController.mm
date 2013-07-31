@@ -672,7 +672,7 @@
     cell.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
 
     cell.delegate = (id)self;
-    NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+    NSString *recordFile = [self getRecordingFilePath:index];
     /*NSFileManager *mgr = [NSFileManager defaultManager];
     if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
         cell.playingButton.enabled = YES;
@@ -780,7 +780,8 @@
         case PLAY_USER_VOICE_BUTTON_TAG:
         {
             Sentence* sentence = (Sentence*)sen;
-            [_recording start];
+            NSString* recordingFilePath = [self getRecordingFilePath:clickindex];
+            [_recording start:recordingFilePath];
              NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
           if (_buttonPlay == nil) {
                 _buttonPlay = [[ButtonPlayObject alloc] init];
@@ -795,7 +796,7 @@
             cell.progressView.hidden = YES;
             
             
-            NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+            NSString *recordFile = recordingFilePath;
             NSFileManager* mgr = [NSFileManager defaultManager];
             if ([mgr fileExistsAtPath:recordFile]) {
                 
@@ -817,7 +818,8 @@
         {
             [self cleanScoreImageView];
             Sentence* sentence = (Sentence*)sen;
-            [_recording start];
+            NSString* recordingFilePath = [self getRecordingFilePath:clickindex];
+            [_recording start:recordingFilePath];
             cell.playingUpButton.enabled = NO;
             cell.playingDownButton.enabled = NO;
             NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
@@ -852,7 +854,7 @@
 {
     [_recording stop];
     cell.playingUpButton.enabled = YES;
-    NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.wav"];
+    NSString *recordFile = [self getRecordingFilePath:clickindex];
     NSFileManager* mgr = [NSFileManager defaultManager];
     if ([mgr fileExistsAtPath:recordFile]) {
         cell.playingDownButton.enabled = YES;
@@ -1118,5 +1120,15 @@
     [t removeFromSuperview];
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
     [self practicewholelesson:nil];
+}
+
+- (NSString*)getRecordingFilePath:(NSInteger)nIndex {
+    NSRange r = [self.wavefile rangeOfString:@"/" options:NSBackwardsSearch];
+    if (r.location != NSNotFound) {
+        NSString* path = [self.wavefile substringToIndex:r.location];
+        NSString* recordingPath = [NSString stringWithFormat:@"%@_%d.wav", path, nIndex];
+        return recordingPath;
+    }
+    return @"";
 }
 @end
