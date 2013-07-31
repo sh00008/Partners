@@ -17,6 +17,7 @@
 #define STRING_DB_VOICE_PKG_ID         @"ID"
 #define STRING_DB_VOICE_PKG_TITLE      @"Title"
 #define STRING_DB_VOICE_PKG_PATH       @"Path"
+#define STRING_DB_VOICE_COURSE_FILE       @"File"
 #define STRING_DB_VOICE_PKG_COVER      @"Cover"
 #define STRING_DB_VOICE_PKG_URL        @"URL"
 #define STRING_DB_VOICE_PKG_CREATEDATE @"CreateDate"
@@ -76,6 +77,8 @@
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;
+- (DownloadDataPkgCourseInfo*)loadPkgCourseInfoByTitle:(NSString*)title withPKGID:(NSInteger)pkgID;
+
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 - (BOOL)deleteCourseInfoByTitle:(NSString*)title withPath:(NSString*)path;

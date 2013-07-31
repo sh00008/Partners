@@ -15,6 +15,8 @@
 #import "DACircularProgressView.h"
 #import "DownloadLesson.h"
 #import "Database.h"
+#import "StoreDownloadPkg.h"
+#import "StoreVoiceDataListParser.h"
 
 @interface DownloadWholeViewController ()
 {
@@ -142,7 +144,48 @@
 
 - (IBAction)renew:(id)sender
 {
+    // delete all content in scenesName folder
+    NSString* scenseFolderPath = [NSString stringWithFormat:@"%@/%@", self.dataPath, self.scenesName];
+    NSFileManager* mgr = [NSFileManager defaultManager];
+    [mgr removeItemAtPath:scenseFolderPath error:nil];
+
+    // create directory
+    [mgr createDirectoryAtPath:scenseFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
     
+    NSRange r = [self.dataPath rangeOfString:@"/" options:NSBackwardsSearch];
+    if (r.location != NSNotFound) {
+        NSString* path = [self.dataPath substringToIndex:(r.location)];
+          
+        NSString* pkgNameString = [self.dataPath substringFromIndex:(r.location + r.length)];
+        r = [path rangeOfString:@"/" options:NSBackwardsSearch];
+        if (r.location != NSNotFound) {
+            NSString* libValue = [path substringFromIndex:(r.location+r.length)];
+            NSInteger libID = [libValue intValue];
+            Database* db = [Database sharedDatabase];
+            VoiceDataPkgObjectFullInfo* fullInfo = [db loadVoicePkgInfoByTitle:pkgNameString withLibID:libID];
+            NSString* libURL = nil;
+            if (fullInfo !=  nil) {
+                libURL = fullInfo.url;
+            }
+            NSInteger pkgID = [db getVoicePkgInfoID:pkgNameString withPath:[NSString stringWithFormat:@"%d/%@", libID, pkgNameString]];
+            if (pkgID != -1) {
+                DownloadDataPkgCourseInfo* course = [db loadPkgCourseInfoByTitle:self.scenesName withPKGID:pkgID];
+                if (libURL != nil && course != nil) {
+                    StoreDownloadCourse* downloadCourse = [[StoreDownloadCourse alloc] init];
+                    downloadCourse.pkgPath = self.dataPath;
+                    
+                    downloadCourse.pkgURL = libURL;
+                    downloadCourse.course = course;
+                    [downloadCourse startDownload];
+                    
+                }
+            }
+                               
+          }
+
+    }
+    
+    // delete course
 }
 
 - (void)startDownload

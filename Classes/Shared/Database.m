@@ -116,6 +116,7 @@ static Database* _database;
 	[sql appendFormat:@"[%@] integer",STRING_DB_VOICE_PKG_ID];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURSE_FILE];
  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
@@ -360,7 +361,7 @@ static Database* _database;
     for (NSInteger i = 0; i < [info.dataPkgCourseInfoArray count]; i++) {
         DownloadDataPkgCourseInfo* course = [info.dataPkgCourseInfoArray objectAtIndex:i];
         sqlite3_stmt *statement;
-        NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
+        NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@, %@) VALUES(?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
         //NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
         if (success == SQLITE_OK) {
@@ -374,15 +375,18 @@ static Database* _database;
             i++;
             
             // path
-            sqlite3_bind_text(statement, i, [course.title UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, i, [course.path UTF8String], -1, SQLITE_TRANSIENT);
             i++;
             
-            
+            // file
+            sqlite3_bind_text(statement, i, [course.file UTF8String], -1, SQLITE_TRANSIENT);
+            i++;
+          
             // cover
             sqlite3_bind_text(statement, i, [@"" UTF8String], -1, SQLITE_TRANSIENT);
             i++;
             
-            // url
+           // url
             sqlite3_bind_text(statement, i, [course.url UTF8String], -1, SQLITE_TRANSIENT);
             i++;
             
@@ -394,10 +398,10 @@ static Database* _database;
             success = sqlite3_step(statement);
             sqlite3_finalize(statement);
             if (success == SQLITE_ERROR) {
-                V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+                V_NSLog(@"Error: failed to %@", @"insertVoiceCourseInfo");
             }
         } else {
-             V_NSLog(@"Error: failed to %@", @"insertVoicePkgInfo");
+             V_NSLog(@"Error: failed to %@", @"insertVoiceCourseInfo");
         }
 
     }
@@ -1135,6 +1139,71 @@ static Database* _database;
     }
 	return [info autorelease];
 }
+
+- (DownloadDataPkgCourseInfo*)loadPkgCourseInfoByTitle:(NSString*)title withPKGID:(NSInteger)pkgID {
+    [databaseLock lock];
+	DownloadDataPkgCourseInfo* info = nil;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@ FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_VOICE_PKG_ID, pkgID];
+    
+ 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    NSString* path = nil;
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            info = [[DownloadDataPkgCourseInfo alloc] init];
+            NSInteger i = 0;
+            char *titleChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            
+            char *pathChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+
+            char *fileChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            
+            char *coverChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            
+           char *urlChars = (char *) sqlite3_column_text(statement, i);
+            i++;
+            
+            //char *timeChars = (char *) sqlite3_column_text(statement, i);
+            //char *coverChars = (char *) sqlite3_column_text(statement, 2);
+            if (pathChars != nil) {
+                path = [NSString stringWithUTF8String:pathChars];
+                if (path != nil) {
+                    info.path = path;
+                }
+             }
+            if (fileChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:fileChars];
+                info.file = [NSString stringWithFormat:@"%@",title];
+            }
+            
+            if (coverChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:coverChars];
+                info.cover = [NSString stringWithFormat:@"%@",title];
+            }
+           if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.title = [NSString stringWithFormat:@"%@",title];
+            }
+            if (urlChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:urlChars];
+                info.url = [NSString stringWithFormat:@"%@",title];
+            }
+            break;
+ 			
+		}
+    } else {
+        V_NSLog(@"%@", @"Not found loadPkgCourseInfoByTitle");
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+	return [info autorelease];
+}
+
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 {
    // [databaseLock lock];
