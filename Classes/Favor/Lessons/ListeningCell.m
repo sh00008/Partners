@@ -9,6 +9,7 @@
 #import "ListeningCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Globle.h"
+#define HEIGHT_OF_LISTENINGCELL 107
 
 @implementation UITeacherIconView
 - (id) initWithFrame:(CGRect)frame
@@ -68,7 +69,7 @@
     [self.sentenceTrans sizeToFit];
     self.sentenceTrans.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, self.sentenceSrc.frame.size.width, szSrc.height);
     self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, self.sentenceTrans.frame.size.width, szTrans.height);
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.sentenceTrans.frame.origin.y + self.sentenceTrans.frame.size.height + 20);
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, fmax(self.sentenceTrans.frame.origin.y + self.sentenceTrans.frame.size.height + 20, HEIGHT_OF_LISTENINGCELL));
 }
 
 - (void)dealloc

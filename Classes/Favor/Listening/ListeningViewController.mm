@@ -49,7 +49,7 @@
 #define STRING_KEY_FILETYPE_ISB @"isb"
 #define STRING_KEY_FILETYPE_LES @"les"
 #define HEIGHT_OF_WAVECELL      122
-
+#define HEIGHT_OF_LISTENINGCELL 107
 @implementation ListeningViewController
 @synthesize sentencesArray = _sentencesArray;
 @synthesize teachersArray = _teachersArray;
@@ -463,8 +463,8 @@
 	size.height += 5;
 	
 	CGFloat height = (size.height < 44) ? 44 : size.height;
-	
-	return fmax(height, 107);
+	height = fmax(height, HEIGHT_OF_LISTENINGCELL);
+	return height;
 }
 
 
