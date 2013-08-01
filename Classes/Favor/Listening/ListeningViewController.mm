@@ -876,6 +876,15 @@
         [header showScore:score];
     }
     [scoreDic release];
+    
+    if (nLesson == PLAY_READING_FLOWME) {
+        Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+        NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+        if (clickindex+1 < [self.sentencesArray count]) {
+            clickindex++;
+            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
+        }
+    }
 }
 
 - (void)cleanScoreImageView
@@ -1028,6 +1037,7 @@
     Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
     NSTimeInterval inter = [sentence endTime] - [sentence startTime];
     if (nLesson == PLAY_LESSON) {
+        // reading lesson.
         [self.player pause];
         if (clickindex < ([_sentencesArray count] - 1)) {
             clickindex++;
@@ -1036,17 +1046,18 @@
             [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(settingData.dTimeInterval+inter)];
         } 
     } else {
+        // reading and practice.
         [self.player pause];
         if (clickindex < ([_sentencesArray count] - 1)) {
-            clickindex++;
-            sentence = [_sentencesArray objectAtIndex:clickindex];
+             sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(showReadyRecording) withObject:self afterDelay:(settingData.dTimeInterval+inter)];
+            [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(settingData.dTimeInterval+inter)];
+            clickindex++;
         }
     }
 }
 
-- (void)showReadyRecording
+- (void)showReadyRecording:(NSNumber*)clickNumber
 {
     UILabel* ready = [[UILabel alloc] initWithFrame:self.view.bounds];
     ready.backgroundColor = [UIColor clearColor];
@@ -1059,6 +1070,7 @@
     
     NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
     [dicValue setObject:ready forKey:@"view"];
+    [dicValue setObject:clickNumber forKey:@"index"];
     [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:1];
 }
 
@@ -1079,6 +1091,9 @@
     theAnimation.toValue = [NSNumber numberWithFloat:1.0];
     theAnimation.delegate = (id)self;
     [theAnimation setValue:@"practiceforready" forKey:@"id"];
+    if ([dicValue objectForKey:@"index"] != nil) {
+        [theAnimation setValue:[dicValue objectForKey:@"index"] forKey:@"index"];
+    }
     viewWillAnimation.tag = READYRECORDINGVIEW_TAG;
    [viewWillAnimation.layer addAnimation:theAnimation forKey:@"transform.scale"];
     [dicValue release];
@@ -1090,20 +1105,21 @@
     CABasicAnimation *theAnimation = (CABasicAnimation*)theAnimation2;
     NSString* valueKey = [theAnimation valueForKey:@"id"];
     if([valueKey isEqual:@"practiceforready"]) {
-        
+        NSNumber* clickNum = [theAnimation valueForKey:@"index"];
+        if (clickNum == nil) {
+            return;
+        }
+        NSInteger index = [clickNum intValue];
         // start recording
-        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:index];
         
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
         if (contentView != nil) {
             RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
-            Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+            Sentence* sentence = [_sentencesArray objectAtIndex:index];
+            // recording, stop recording in this function:
+            clickindex = index;
             [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-            if (clickindex+1 < [self.sentencesArray count]) {
-                clickindex++;
-                [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
-            }
         }
     }
 }
