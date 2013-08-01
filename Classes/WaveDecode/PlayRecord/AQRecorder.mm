@@ -206,7 +206,7 @@ BOOL AQRecorder::StartRecord(CFStringRef recordFile)
 {
 	int i, bufferByteSize;
 	UInt32 size;
-	CFURLRef url;
+	CFURLRef url; 
 	
 	try {
         

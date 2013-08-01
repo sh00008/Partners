@@ -1123,7 +1123,7 @@
 }
 
 - (NSString*)getRecordingFilePath:(NSInteger)nIndex {
-    NSRange r = [self.wavefile rangeOfString:@"/" options:NSBackwardsSearch];
+    NSRange r = [self.wavefile rangeOfString:@"." options:NSBackwardsSearch];
     if (r.location != NSNotFound) {
         NSString* path = [self.wavefile substringToIndex:r.location];
         NSString* recordingPath = [NSString stringWithFormat:@"%@_%d.wav", path, nIndex];

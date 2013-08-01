@@ -217,7 +217,7 @@ void propListener(	void *                  inClientData,
     }
     BOOL bOK = recorder->StartRecord(CFStringRef(recordFile));
     
-    [self setFileDescriptionForFormat:recorder->DataFormat() withName:@"Recorded File"];
+    [self setFileDescriptionForFormat:recorder->DataFormat()];
     if (!bOK) {
         [self addFailedRecordingView:addInview];
         recorder->StopRecord();
@@ -225,7 +225,7 @@ void propListener(	void *                  inClientData,
     }
 }
 
--(void)setFileDescriptionForFormat: (CAStreamBasicDescription)format withName:(NSString*)name
+-(void)setFileDescriptionForFormat:(CAStreamBasicDescription)format
 {
 	char buf[5];
 	const char *dataFormat = OSTypeToStr(buf, format.mFormatID);
