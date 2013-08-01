@@ -864,22 +864,18 @@
         [cell.waveView loadwavedata];
         cell.timelabel.text = [NSString stringWithFormat:@"Time: %.2f", cell.waveView.dwavesecond];
     }
-    int score = [RecordingObject scoreForSentence:cell.sentence file:recordFile toResult:nil];
+    NSMutableDictionary* scoreDic = [[NSMutableDictionary alloc] init];
+    int score = [RecordingObject scoreForSentence:cell.sentence file:recordFile toResult:scoreDic];
     CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
     ListeningCell* header = (ListeningCell*)[wholeCell.TitleView viewWithTag:101];
     if (header != nil) {
-        header.scoreImageView.layer.cornerRadius = 18;
-       if (score < 60) {
-           header.scoreImageView.image = [UIImage imageNamed:@"Icon_Bad@2x.png"];
-           header.scoreImageView.backgroundColor = [UIColor redColor];
-           header.scroeLabel.text = nil;
-        } else {
-           header.scoreImageView.image = nil;
-           header.scoreImageView.backgroundColor = [UIColor greenColor];
-           header.scroeLabel.text = [NSString stringWithFormat:@"%d", score];
-           
+        NSMutableArray* words = [scoreDic objectForKey:@"words"];
+        if (words != nil) {
+            [header changeTextColor:words];
         }
+        [header showScore:score];
     }
+    [scoreDic release];
 }
 
 - (void)cleanScoreImageView
@@ -887,10 +883,7 @@
     CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
     ListeningCell* header = (ListeningCell*)[wholeCell.TitleView viewWithTag:101];
     if (header != nil) {
-        header.scoreImageView.layer.cornerRadius = 18;
-        header.scoreImageView.backgroundColor = [UIColor clearColor];
-        header.scoreImageView.image = nil;
-        header.scroeLabel.text = nil;
+        [header resetCellState];
     }
 
 }

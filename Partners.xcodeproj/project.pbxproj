@@ -190,6 +190,8 @@
 		0DC93BAE17A2A74700080975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0DC93BAD17A2A74700080975 /* SIAlertView.bundle */; };
 		0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB117A2B52100080975 /* DACircularProgressView.m */; };
 		0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BB417A3173800080975 /* DownloadLesson.m */; };
+		0DC93BBE17AB048000080975 /* AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC93BBD17AB048000080975 /* AttributedLabel.m */; };
+		0DC93BC017AB050E00080975 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC93BBF17AB050D00080975 /* CoreText.framework */; };
 		0DDD8825176413E90078D6B7 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD881F176413E90078D6B7 /* CollapseClick.m */; };
 		0DDD8826176413E90078D6B7 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8821176413E90078D6B7 /* CollapseClickArrow.m */; };
 		0DDD8827176413E90078D6B7 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD8823176413E90078D6B7 /* CollapseClickCell.m */; };
@@ -497,6 +499,9 @@
 		0DC93BB117A2B52100080975 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		0DC93BB317A3173800080975 /* DownloadLesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadLesson.h; path = Classes/Favor/DownloadLesson.h; sourceTree = SOURCE_ROOT; };
 		0DC93BB417A3173800080975 /* DownloadLesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadLesson.m; path = Classes/Favor/DownloadLesson.m; sourceTree = SOURCE_ROOT; };
+		0DC93BBC17AB048000080975 /* AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributedLabel.h; sourceTree = "<group>"; };
+		0DC93BBD17AB048000080975 /* AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributedLabel.m; sourceTree = "<group>"; };
+		0DC93BBF17AB050D00080975 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		0DDD881E176413E90078D6B7 /* CollapseClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClick.h; sourceTree = "<group>"; };
 		0DDD881F176413E90078D6B7 /* CollapseClick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollapseClick.m; sourceTree = "<group>"; };
 		0DDD8820176413E90078D6B7 /* CollapseClickArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollapseClickArrow.h; sourceTree = "<group>"; };
@@ -539,6 +544,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DC93BC017AB050E00080975 /* CoreText.framework in Frameworks */,
 				95FC6432179D79D0009990EF /* StoreKit.framework in Frameworks */,
 				0DAA1418175F771500E51620 /* AudioToolbox.framework in Frameworks */,
 				0DAA1416175F770E00E51620 /* AVFoundation.framework in Frameworks */,
@@ -578,6 +584,7 @@
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
+				0DC93BBF17AB050D00080975 /* CoreText.framework */,
 				0D15316A1740B20000633FA0 /* Partners */,
 				0D1531911740B20000633FA0 /* PartnersTests */,
 				0D1531631740B20000633FA0 /* Frameworks */,
@@ -1065,6 +1072,7 @@
 		0DC0D52217509BEA00684ED2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0DC93BBB17AB048000080975 /* AttributeLabel */,
 				0DC93BAF17A2B52100080975 /* DACircularProgressView */,
 				0DC93BA617A15EFD00080975 /* MJPopView */,
 				0DBE67A4177CE0A400AA9B57 /* curledView */,
@@ -1186,6 +1194,15 @@
 				0DC93BB117A2B52100080975 /* DACircularProgressView.m */,
 			);
 			path = DACircularProgressView;
+			sourceTree = "<group>";
+		};
+		0DC93BBB17AB048000080975 /* AttributeLabel */ = {
+			isa = PBXGroup;
+			children = (
+				0DC93BBC17AB048000080975 /* AttributedLabel.h */,
+				0DC93BBD17AB048000080975 /* AttributedLabel.m */,
+			);
+			path = AttributeLabel;
 			sourceTree = "<group>";
 		};
 		0DDD881D176413E90078D6B7 /* Collapse */ = {
@@ -1525,6 +1542,7 @@
 				0D71252D17A249D700C206AE /* DownloadWholeViewController.m in Sources */,
 				0DC93BB217A2B52100080975 /* DACircularProgressView.m in Sources */,
 				0DC93BB517A3173800080975 /* DownloadLesson.m in Sources */,
+				0DC93BBE17AB048000080975 /* AttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -85,6 +85,17 @@ char *OSTypeToStr(char *buf, OSType t)
     }
     V_NSLog(@"分数：%d", score);
 
+    NSMutableArray* wordArray = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < [sentence.words count]; i++) {
+        char* tWord = pWord[i].text;
+        NSData *data = [NSData dataWithBytes:tWord length:strlen(tWord)];
+        NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        if (aStr != nil) {
+            [wordArray addObject:aStr];
+        }
+        [aStr release];
+
+    }
     // 对分数进行调整，以时间为准，调整20分。
     double time = 0.0;
     for(int i = 0;i < [sentence.words count]; i++)
@@ -102,6 +113,10 @@ char *OSTypeToStr(char *buf, OSType t)
     
     if (scoreDictionary != nil) {
         [scoreDictionary setObject:@(score) forKey:@"score"];
+    }
+    if (wordArray != nil) {
+        [scoreDictionary setObject:wordArray forKey:@"words"];
+        [wordArray release];
     }
     return score;
 }
