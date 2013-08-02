@@ -734,6 +734,14 @@
     V_NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
+- (BOOL)responseClickCell {
+    if (nLesson == PLAY_READING_FLOWME || nLesson == PLAY_LESSON) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)playAnimationWithView:(UIView*)viewWillAnimation
 {
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
@@ -1028,7 +1036,6 @@
 - (void)updateUI
 {
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
-
 }
 
 - (void)finishedFllowMe {
@@ -1046,6 +1053,7 @@
 }
 
 - (void)dimissFinishFllowMe:(UIViewController*)controlloer {
+    nLesson = PLAY_LESSON_TYPE_NONE;
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
 }
 

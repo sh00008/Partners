@@ -123,6 +123,11 @@
 
 #pragma mark - Did Click
 -(void)didSelectCollapseClickButton:(UIButton *)titleButton {
+    if ([(id)CollapseClickDelegate respondsToSelector:@selector(responseClickCell)]) {
+        if (![(id)CollapseClickDelegate responseClickCell]) {
+            return;
+        }
+    }
     BOOL isOpen = NO;
     
     // Cell is OPEN -> CLOSED
