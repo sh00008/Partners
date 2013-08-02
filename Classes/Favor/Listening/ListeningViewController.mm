@@ -886,7 +886,7 @@
     if (nLesson == PLAY_READING_FLOWME) {
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
         NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-        if ((clickindex + 1) < [self.sentencesArray count]) {
+        if ((clickindex) < [self.sentencesArray count]) {
             clickindex++;
             [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
         } else {
@@ -973,6 +973,9 @@
     _scroeArray = nil;
     _scroeArray = [[NSMutableArray alloc] init];
     V_NSLog(@"practicewholelesson %d", clickindex);
+    if (clickindex == 7) {
+        NSLog(@"last");
+    }
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
@@ -1037,7 +1040,7 @@
         av = (av + score)/2;
         score = av;
     }
-    customController.showTitle = [NSString stringWithFormat:@"%@%d", STRING_FINISHREADINGFOLLOWME, score];
+    customController.showTitle = [NSString stringWithFormat:@"%@ %d", STRING_FINISHREADINGFOLLOWME, score < 0 ? 0 : score];
     [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
     [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:1.0];
 }
@@ -1069,19 +1072,19 @@
     if (nLesson == PLAY_LESSON) {
         // reading lesson.
         [self.player pause];
-        if (clickindex < ([_sentencesArray count] - 1)) {
+        if (clickindex < [_sentencesArray count]) {
             clickindex++;
             sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(settingData.dTimeInterval+inter)];
+            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(0.5+inter)];
         } 
     } else {
         // reading and practice.
         [self.player pause];
-        if (clickindex < ([_sentencesArray count] - 1)) {
+        if (clickindex < [_sentencesArray count] ) {
              sentence = [_sentencesArray objectAtIndex:clickindex];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(settingData.dTimeInterval+inter)];
+            [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(0.5+inter)];
             clickindex++;
         }
     }
@@ -1162,9 +1165,17 @@
     V_NSLog(@"startNextPractice %d", clickindex);
     UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
     [t removeFromSuperview];
-    [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
-    ePlayStatus = PLAY_STATUS_NONE;
-    [self practicewholelesson:nil];
+    if (clickindex >= [self.sentencesArray count]) {
+        ePlayStatus = PLAY_STATUS_NONE;
+        [self finishedFllowMe];
+        [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+
+    } else {
+        [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+        ePlayStatus = PLAY_STATUS_NONE;
+        [self practicewholelesson:nil];
+        
+    }
 }
 
 - (NSString*)getRecordingFilePath:(NSInteger)nIndex {
