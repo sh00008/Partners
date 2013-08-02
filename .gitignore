@@ -20,3 +20,9 @@ DerivedData
 
 
 Classes/Shared/.DS_Store
+
+*.xcbkptlist
+
+*.xcscheme
+
+*.xcuserstate

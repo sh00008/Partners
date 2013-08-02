@@ -854,6 +854,11 @@
     }
 }
 
+- (void)playingWithTimeInter:(NSTimeInterval)inter
+{
+    
+}
+
 - (void)pausePlaying:(RecordingWaveCell *)cell
 {
     [self.player pause];
@@ -1026,6 +1031,20 @@
                                  sizeof (doChangeDefaultRoute),
                                  &doChangeDefaultRoute);
         [self.player play];
+        if (_buttonPlay == nil) {
+            _buttonPlay = [[ButtonPlayObject alloc] init];
+            
+        }
+        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+        
+        UIView* contentView = [wholeCell.ContentView viewWithTag:102];
+        if (contentView != nil) {
+            RecordingWaveCell* cell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
+            _buttonPlay.progressview = cell.progressView;
+            _buttonPlay.durTime = inter;
+            [_buttonPlay play];
+            [self performSelector:@selector(pausePlaying:) withObject:cell afterDelay:inter];
+       }
         [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
     }
     else {
