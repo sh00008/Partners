@@ -87,6 +87,7 @@ typedef enum {
     UIButton*                       readeButton;
     UIButton*                       practiceButton;
     DownloadLesson*                 _downloadLessonObj;
+    NSMutableArray*                 _scroeArray;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;
@@ -135,6 +136,7 @@ typedef enum {
 - (void)playAnimationWithView:(UIView*)viewWillAnimation;
 - (void)playfromCurrentPos;
 - (void)updateUI;
+- (void)finishedFllowMe;
 
 // player AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;

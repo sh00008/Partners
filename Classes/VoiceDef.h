@@ -192,3 +192,4 @@
 #define STRING_RENEW_SUCCEED            @"续借成功，请重新打开"
 #define STRING_RENEW_FAILED             @"续借失败，请重试"
 #define STRING_RENEWING                 @"正在续借"
+#define STRING_FINISHREADINGFOLLOWME    @"您这次的分数为：%d"

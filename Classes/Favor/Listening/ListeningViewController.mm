@@ -25,6 +25,9 @@
 #import "RecordingObject.h"
 #import "ButtonPlayObject.h"
 #import "CurrentInfo.h"
+#import "CustomViewController.h"
+#import "UIViewController+MJPopupViewController.h"
+
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
 #define DOWNLOADINGVIEWTAG  20936
@@ -873,6 +876,9 @@
         if (words != nil) {
             [header changeTextColor:words];
         }
+        if (nLesson == PLAY_READING_FLOWME) {
+            [_scroeArray addObject:@(score)];
+        }
         [header showScore:score];
     }
     [scoreDic release];
@@ -885,6 +891,7 @@
             [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
         } else {
             ePlayStatus = PLAY_STATUS_NONE;
+            [self finishedFllowMe];
         }
     }
 }
@@ -962,6 +969,9 @@
 
 - (IBAction)practicewholelesson:(id)sender;
 {
+    [_scroeArray release];
+    _scroeArray = nil;
+    _scroeArray = [[NSMutableArray alloc] init];
     V_NSLog(@"practicewholelesson %d", clickindex);
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
@@ -1018,6 +1028,24 @@
 
 }
 
+- (void)finishedFllowMe {
+    CustomViewController* customController = [[CustomViewController alloc] initWithNibName:@"CustomViewController" bundle:nil];
+    NSInteger score = 0;
+    NSInteger av = 0;
+    for (NSInteger i = 0; i < [_scroeArray count]; i++) {
+        av = [[_scroeArray objectAtIndex:i] intValue];
+        av = (av + score)/2;
+        score = av;
+    }
+    customController.showTitle = [NSString stringWithFormat:@"%@%d", STRING_FINISHREADINGFOLLOWME, score];
+    [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
+    [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:1.0];
+}
+
+- (void)dimissFinishFllowMe:(UIViewController*)controlloer {
+    [controlloer dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)myplayer successfully:(BOOL)flag
 {
     if (flag) {
@@ -1070,6 +1098,10 @@
     [self.view addSubview:ready];
     [ready release];
     
+    /*CustomViewController* showReadyRecording = [[CustomViewController alloc] initWithNibName:@"CustomViewController" bundle:nil];
+    showReadyRecording.titleView.text = STRING_READY_RECORDING;
+    [self presentPopupViewController:showReadyRecording animationType:MJPopupViewAnimationSlideBottomTop];
+     */
     NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
     [dicValue setObject:ready forKey:@"view"];
     [dicValue setObject:clickNumber forKey:@"index"];
