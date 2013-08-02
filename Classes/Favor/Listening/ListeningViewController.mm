@@ -1042,11 +1042,11 @@
     }
     customController.showTitle = [NSString stringWithFormat:@"%@ %d", STRING_FINISHREADINGFOLLOWME, score < 0 ? 0 : score];
     [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
-    [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:1.0];
+    [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:2.0];
 }
 
 - (void)dimissFinishFllowMe:(UIViewController*)controlloer {
-    [controlloer dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)myplayer successfully:(BOOL)flag
