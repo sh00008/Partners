@@ -728,7 +728,7 @@
    }
     
 
-    NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
+    V_NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
 - (void)playAnimationWithView:(UIView*)viewWillAnimation
@@ -880,9 +880,11 @@
     if (nLesson == PLAY_READING_FLOWME) {
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
         NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-        if (clickindex+1 < [self.sentencesArray count]) {
+        if ((clickindex + 1) < [self.sentencesArray count]) {
             clickindex++;
             [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
+        } else {
+            ePlayStatus = PLAY_STATUS_NONE;
         }
     }
 }
@@ -894,7 +896,6 @@
     if (header != nil) {
         [header resetCellState];
     }
-
 }
 
 - (void)playWholeLesson
@@ -910,7 +911,6 @@
         else {
             self.player.currentTime = 0;
             self.player.volume = 5.0;
-            clickindex = 0;
             [self playfromCurrentPos];
         }
     }
@@ -934,6 +934,7 @@
 
 - (IBAction)readwholelesson:(id)sender;
 {
+    clickindex = 0;
     [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
@@ -961,7 +962,8 @@
 
 - (IBAction)practicewholelesson:(id)sender;
 {
-    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+    V_NSLog(@"practicewholelesson %d", clickindex);
+   [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
             ePlayStatus = PLAY_STATUS_PLAYING;
@@ -1125,9 +1127,11 @@
 }
 - (void)startNextPractice
 {
+    V_NSLog(@"startNextPractice %d", clickindex);
     UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
     [t removeFromSuperview];
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+    ePlayStatus = PLAY_STATUS_NONE;
     [self practicewholelesson:nil];
 }
 

@@ -40,6 +40,7 @@
     textLayer.transform = CATransform3DMakeScale(0.5,0.5,1);
     textLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     [self.layer addSublayer:textLayer];
+    _textLayer = textLayer;
 }
 
 - (void)setText:(NSString *)text{
