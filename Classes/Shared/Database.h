@@ -12,30 +12,31 @@
 #define HISTORY_TABLE_NAME @"History"
 #define HISTORY_ID         @"ID"
 
-#define STRING_DB_TABLENAME_VOICE_PKG @"VoicePkgInfo"
-#define STRING_DB_TABLENAME_VOICE_COURSES @"VoicePkgCoursesInfo"
-#define STRING_DB_VOICE_PKG_ID         @"ID"
-#define STRING_DB_VOICE_PKG_TITLE      @"Title"
-#define STRING_DB_VOICE_PKG_PATH       @"Path"
-#define STRING_DB_VOICE_COURSE_FILE       @"File"
-#define STRING_DB_VOICE_PKG_COVER      @"Cover"
-#define STRING_DB_VOICE_PKG_URL        @"URL"
-#define STRING_DB_VOICE_PKG_CREATEDATE @"CreateDate"
-#define STRING_DB_VOICE_IS_LISTENED    @"IsListened"
-#define STRING_DB_VOICE_LISENCE        @"Lisence"
-#define STRING_DB_VOICE_LISENCE_LEN     @"LisenceLength"
-#define STRING_DB_TABLENAME_PKG_DOWNLOADINFO @"VoicePkgDownloadInfo"
-#define STRING_DB_VOICE_PKG_DOWNLOAD_FLAG    @"Flag"
+#define STRING_DB_TABLENAME_VOICE_PKG                   @"VoicePkgInfo"
+#define STRING_DB_TABLENAME_VOICE_COURSES               @"VoicePkgCoursesInfo"
+#define STRING_DB_VOICE_ID                              @"ID"
+#define STRING_DB_VOICE_TITLE                           @"Title"
+#define STRING_DB_VOICE_PATH                            @"Path"
+#define STRING_DB_VOICE_COURSE_FILE                     @"File"
+#define STRING_DB_VOICE_COVER                           @"Cover"
+#define STRING_DB_VOICE_URL                             @"URL"
+#define STRING_DB_VOICE_CREATEDATE                      @"CreateDate"
+#define STRING_DB_VOICE_IS_LISTENED                     @"IsListened"
+#define STRING_DB_VOICE_LISENCE                         @"Lisence"
+#define STRING_DB_VOICE_LISENCE_LEN                     @"LisenceLength"
+#define STRING_DB_TABLENAME_PKG_DOWNLOADINFO            @"VoicePkgDownloadInfo"
 
-#define STRING_DB_TABLENAME_LIB_INFO  @"LibaryInfo"
-#define STRING_DB_TABLENAME_LIB_LISENCE_INFO  @"LibaryLisenceInfo"
-#define STRING_DB_LIBARY_ID         @"LibaryID"
+#define STRING_DB_TABLENAME_LIB_INFO                    @"LibaryInfo"
+#define STRING_DB_TABLENAME_LIB_LISENCE_INFO            @"LibaryLisenceInfo"
+#define STRING_DB_LIBARY_ID                             @"LibaryID"
 
-#define STRING_DB_TABLENAME_DOWNLOAD_INFO @"PKGDownloadInfo"
-#define STRING_DB_VOICE_PROCESS @"DownloadProcess"
-#define STRING_DB_VOICE_DOWNLOAD_FLAG @"DownloadFlag"
-#define STRING_DB_VOICE_COURCETILE @"Title"
-#define STRING_DB_VOICE_COURCEPATH @"Path"
+#define STRING_DB_TABLENAME_DOWNLOAD_INFO               @"PKGDownloadInfo"
+#define STRING_DB_VOICE_PROCESS                         @"DownloadProcess"
+#define STRING_DB_VOICE_DOWNLOAD_FLAG                   @"DownloadFlag"
+
+
+#define STRING_DB_TABLENAME_RECORDING_HISTORY           @"RecordingHistoryInfo"
+
 @interface Database : NSObject {
  	Database* _database;
     NSLock *databaseLock; //mutex used to create our Critical Section

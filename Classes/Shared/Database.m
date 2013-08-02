@@ -79,13 +79,13 @@ static Database* _database;
 	BOOL bSuccess = NO;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
-	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_PKG_ID];
+	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_ID];
 	[sql appendFormat:@",[%@] integer",STRING_DB_LIBARY_ID];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_TITLE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PATH];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COVER];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_URL];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_CREATEDATE];
  	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_IS_LISTENED];
 	[sql appendString:@");"];
 	
@@ -113,13 +113,13 @@ static Database* _database;
 	BOOL bSuccess = NO;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
-	[sql appendFormat:@"[%@] integer",STRING_DB_VOICE_PKG_ID];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
+	[sql appendFormat:@"[%@] integer",STRING_DB_VOICE_ID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_TITLE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PATH];
 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURSE_FILE];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COVER];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_URL];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_CREATEDATE];
 	[sql appendString:@");"];
 	
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
@@ -148,12 +148,12 @@ static Database* _database;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
 	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_LIBARY_ID];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_TITLE];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_PATH];
- 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_COVER];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_URL];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_TITLE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PATH];
+ 	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COVER];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_URL];
 	//[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_LISENCE];
-  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PKG_CREATEDATE];
+  	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_CREATEDATE];
 	[sql appendString:@");"];
 	
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
@@ -218,9 +218,9 @@ static Database* _database;
 	BOOL bSuccess = NO;
 	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
 	[sql appendString:@"("];
-	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_PKG_ID];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURCETILE];
-	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_COURCEPATH];
+	[sql appendFormat:@"[%@] integer PRIMARY KEY UNIQUE NOT NULL",STRING_DB_VOICE_ID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_TITLE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PATH];
 	[sql appendFormat:@",[%@] float",STRING_DB_VOICE_PROCESS];
 	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_DOWNLOAD_FLAG];
 	[sql appendString:@");"];
@@ -298,7 +298,7 @@ static Database* _database;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
 
-    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_ID, STRING_DB_LIBARY_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_VOICE_IS_LISTENED];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_ID, STRING_DB_LIBARY_ID, STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_VOICE_IS_LISTENED];
 	//NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
@@ -361,7 +361,7 @@ static Database* _database;
     for (NSInteger i = 0; i < [info.dataPkgCourseInfoArray count]; i++) {
         DownloadDataPkgCourseInfo* course = [info.dataPkgCourseInfoArray objectAtIndex:i];
         sqlite3_stmt *statement;
-        NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@, %@) VALUES(?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
+        NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@, %@) VALUES(?,?,?,?,?,?,?)", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_ID, STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE];
         //NSString  *sql = @"INSERT INTO FileInfo (FileID, FilePath, FileFormat, GroupID, OrderInGroup, FileSourceID, DateAdded, Title, Author, Publisher, PublishDate ,TotalPageCount, FileSize, CoverPath, IDentifier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
         if (success == SQLITE_OK) {
@@ -415,7 +415,7 @@ static Database* _database;
     [databaseLock lock];
 	sqlite3_stmt *statement;
     
-    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID,STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES(?,?,?,?,?,?)", STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID,STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
 		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
@@ -466,7 +466,7 @@ static Database* _database;
     BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = '%@',%@ = '%@' ,%@ = '%@'  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_INFO,  STRING_DB_VOICE_PKG_TITLE, info.title, STRING_DB_VOICE_PKG_PATH, info.path,STRING_DB_VOICE_PKG_COVER, info.cover, STRING_DB_VOICE_PKG_URL, info.url,  STRING_DB_LIBARY_ID, info.libID];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = '%@',%@ = '%@',%@ = '%@' ,%@ = '%@'  WHERE %@ = %d",STRING_DB_TABLENAME_LIB_INFO,  STRING_DB_VOICE_TITLE, info.title, STRING_DB_VOICE_PATH, info.path,STRING_DB_VOICE_COVER, info.cover, STRING_DB_VOICE_URL, info.url,  STRING_DB_LIBARY_ID, info.libID];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -548,7 +548,7 @@ static Database* _database;
      [databaseLock lock];
 	LibaryInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID, libID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_LIBARY_ID, libID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* path = nil;
     if (success == SQLITE_OK) {
@@ -596,7 +596,7 @@ static Database* _database;
     [databaseLock lock];
 	LibaryInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_LIBARY_ID, STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_VOICE_PKG_URL, url];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_LIBARY_ID, STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_VOICE_URL, url];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* path = nil;
     if (success == SQLITE_OK) {
@@ -742,7 +742,7 @@ static Database* _database;
    	[databaseLock lock];
 	NSMutableArray * arrResult = [[NSMutableArray alloc] init];
 	sqlite3_stmt *statement;
-    NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"SELECT %@, %@ FROM %@",STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_TITLE, STRING_DB_TABLENAME_VOICE_PKG];
+    NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"SELECT %@, %@ FROM %@",STRING_DB_VOICE_PATH, STRING_DB_VOICE_TITLE, STRING_DB_TABLENAME_VOICE_PKG];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -784,7 +784,7 @@ static Database* _database;
     [databaseLock lock];
 	NSMutableArray * arrResult = [[NSMutableArray alloc] init];
 	sqlite3_stmt *statement;
-    NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@ FROM %@",STRING_DB_LIBARY_ID,  STRING_DB_VOICE_PKG_TITLE,STRING_DB_VOICE_PKG_PATH,STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO];
+    NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@ FROM %@",STRING_DB_LIBARY_ID,  STRING_DB_VOICE_TITLE,STRING_DB_VOICE_PATH,STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_LIB_INFO];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -842,7 +842,7 @@ static Database* _database;
 	//[databaseLock lock];
 	int uniqueId = -1;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@' AND %@ = '%@'", STRING_DB_VOICE_PKG_ID, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_VOICE_PKG_PATH, path];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@' AND %@ = '%@'", STRING_DB_VOICE_ID, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_PATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -861,7 +861,7 @@ static Database* _database;
 {
 	sqlite3_stmt *statement;
     int flag = 0;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_PATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -877,7 +877,7 @@ static Database* _database;
  
     sqlite3_stmt *statement;
     [databaseLock lock];
-    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@) VALUES(?,?,?,?,?)", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_PKG_ID, STRING_DB_VOICE_COURCETILE, STRING_DB_VOICE_COURCEPATH, STRING_DB_VOICE_PROCESS, STRING_DB_VOICE_DOWNLOAD_FLAG];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@,%@) VALUES(?,?,?,?,?)", STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_ID, STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_PROCESS, STRING_DB_VOICE_DOWNLOAD_FLAG];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
 	if (success == SQLITE_OK) {
 		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
@@ -917,7 +917,7 @@ static Database* _database;
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@'", STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_COURCEPATH, path];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@'", STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_PATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -938,7 +938,7 @@ static Database* _database;
 {
     sqlite3_stmt *statement;
     BOOL bExist = NO;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE  %@ = '%@' AND %@ = '%@'",  STRING_DB_VOICE_DOWNLOAD_FLAG, STRING_DB_TABLENAME_DOWNLOAD_INFO, STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_PATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -956,7 +956,7 @@ static Database* _database;
 	BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@' AND %@ = '%@'",STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_DOWNLOAD_FLAG, 1,  STRING_DB_VOICE_COURCETILE, title, STRING_DB_VOICE_COURCEPATH, path];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@' AND %@ = '%@'",STRING_DB_TABLENAME_DOWNLOAD_INFO,  STRING_DB_VOICE_DOWNLOAD_FLAG, 1,  STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_PATH, path];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -981,7 +981,7 @@ static Database* _database;
     [databaseLock lock];
 	VoiceDataPkgObjectFullInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_LIBARY_ID, downloadinfo.libID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_TITLE, title, STRING_DB_LIBARY_ID, downloadinfo.libID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* path = nil;
     if (success == SQLITE_OK) {
@@ -1035,7 +1035,7 @@ static Database* _database;
     [databaseLock lock];
 	VoiceDataPkgObjectFullInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_TITLE, title];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* path = nil;
     if (success == SQLITE_OK) {
@@ -1092,7 +1092,7 @@ static Database* _database;
     [databaseLock lock];
 	VoiceDataPkgObjectFullInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_VOICE_PKG_TITLE , STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_VOICE_PKG_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_PATH, path];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@  FROM %@ WHERE %@ = '%@'",  STRING_DB_VOICE_TITLE , STRING_DB_VOICE_PATH, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PATH, path];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* title = nil;
     if (success == SQLITE_OK) {
@@ -1144,7 +1144,7 @@ static Database* _database;
     [databaseLock lock];
 	DownloadDataPkgCourseInfo* info = nil;
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@ FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_VOICE_PKG_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_PKG_COVER, STRING_DB_VOICE_PKG_URL, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_VOICE_PKG_ID, pkgID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@, %@, %@, %@, %@ FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_TITLE, STRING_DB_VOICE_PATH, STRING_DB_VOICE_COURSE_FILE, STRING_DB_VOICE_COVER, STRING_DB_VOICE_URL, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_ID, pkgID];
     
  	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSString* path = nil;
@@ -1209,7 +1209,7 @@ static Database* _database;
    // [databaseLock lock];
     NSMutableArray* courseTitleArray = [[ NSMutableArray alloc] init];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_PKG_TITLE, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, nID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = %d",  STRING_DB_VOICE_TITLE, STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_ID, nID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -1234,7 +1234,7 @@ static Database* _database;
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@' AND  %@ = %d", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title,STRING_DB_LIBARY_ID, libID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = '%@' AND  %@ = %d", STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_TITLE, title,STRING_DB_LIBARY_ID, libID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -1261,7 +1261,7 @@ static Database* _database;
     BOOL bOK = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_PKG_ID, nID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE %@ = %d", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_ID, nID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -1348,7 +1348,7 @@ static Database* _database;
 	BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@' AND  %@ = %d",STRING_DB_TABLENAME_VOICE_PKG,  STRING_DB_VOICE_IS_LISTENED, 1,  STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_LIBARY_ID, libID];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@' AND  %@ = %d",STRING_DB_TABLENAME_VOICE_PKG,  STRING_DB_VOICE_IS_LISTENED, 1,  STRING_DB_VOICE_TITLE, title, STRING_DB_LIBARY_ID, libID];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -1370,7 +1370,7 @@ static Database* _database;
 	BOOL bResult = YES;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
-	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@'",STRING_DB_TABLENAME_VOICE_PKG,  STRING_DB_VOICE_IS_LISTENED, 1,  STRING_DB_VOICE_PKG_PATH, path];
+	NSString *sql = [[NSString alloc] initWithFormat:@"UPDATE %@ SET %@ = %d WHERE %@ = '%@'",STRING_DB_TABLENAME_VOICE_PKG,  STRING_DB_VOICE_IS_LISTENED, 1,  STRING_DB_VOICE_PATH, path];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
 		success = sqlite3_step(statement);
@@ -1391,7 +1391,7 @@ static Database* _database;
 {
     [databaseLock lock];
 	sqlite3_stmt *statement;
-    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_IS_LISTENED,STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_PKG_TITLE, title, STRING_DB_LIBARY_ID, libID];
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@' AND %@ = %d",  STRING_DB_VOICE_IS_LISTENED,STRING_DB_TABLENAME_VOICE_PKG, STRING_DB_VOICE_TITLE, title, STRING_DB_LIBARY_ID, libID];
 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     NSInteger bListened = 0;
     if (success == SQLITE_OK) {
