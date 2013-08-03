@@ -92,8 +92,7 @@
         settingData = [[SettingData alloc] init];
         [settingData loadSettingData];
         nCurrentReadingCount = 1;
-        nLesson = settingData.eReadingMode == READING_MODE_WHOLE_TEXT ?  PLAY_LESSON : PLAY_READING_FLOWME;
-		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+ 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 		[center addObserver:self selector:@selector(willEnterToBackground:) name:NOTI_WILLENTERFOREGROUND object:nil];
         nLastScrollPos = 0;
         bInit = NO;
