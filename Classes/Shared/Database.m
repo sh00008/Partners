@@ -1439,7 +1439,24 @@ static Database* _database;
 }
 
 - (BOOL)addRecordingInfo:(NSString*)fromWaveFilePath withScore:(NSInteger)score;{
-    return YES;
+    NSRange r = [fromWaveFilePath rangeOfString:STRING_VOICE_PKG_DIR];
+    if (r.location != NSNotFound) {
+        NSString* path = [fromWaveFilePath substringFromIndex:(r.location + r.length + 1)];
+        r = [path rangeOfString:@"/"];
+        if (r.location != NSNotFound) {
+            NSInteger libID = [[path substringToIndex:r.location] intValue];
+            NSString* title = [path substringFromIndex:(r.location+r.length)];
+            r = [path rangeOfString:@"/"];
+            if (r.location != NSNotFound) {
+                NSString* pkgtitle =  [title substringToIndex:r.location] ;
+                NSString* courseTitle =  [title substringFromIndex:(r.location+r.length)] ;
+                r = [path rangeOfString:@"/"];
+                if (r.location != NSNotFound) {
+                }
+            }
+        }
+    }
+   return YES;
 }
 
 - (NSMutableArray*)loadRecordingInfo:(NSString*)fromWaveFilePath {
