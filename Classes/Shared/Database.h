@@ -36,6 +36,8 @@
 
 
 #define STRING_DB_TABLENAME_RECORDING_HISTORY           @"RecordingHistoryInfo"
+#define STRING_DB_VOICE_COURSEID                        @"CourseID"
+#define STRING_DB_VOICE_SCORE                           @"Score"
 
 @interface Database : NSObject {
  	Database* _database;
@@ -49,6 +51,7 @@
 - (BOOL)createLibInfoTable;
 - (BOOL)createLibLisenceTable;
 - (BOOL)createDownloadPkgTable;
+- (BOOL)createRecordingHistoryTable;
 
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
@@ -88,4 +91,9 @@
 - (BOOL)setPkgListend:(NSString*)title withLibID:(NSInteger)libID;
 - (BOOL)setPkgListendwithPath:(NSString*)path;
 - (BOOL)getPkgIsListened:(NSString*)title withLibID:(NSInteger)libID;
+
+- (BOOL)addRecordingInfo:(NSString*)fromWaveFilePath withScore:(NSInteger)score;
+- (NSMutableArray*)loadRecordingInfo:(NSString*)fromWaveFilePath;
+- (BOOL)clearAllRecordingInfo:(NSString*)fromWaveFilePath;
+
 @end

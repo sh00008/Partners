@@ -113,3 +113,13 @@ static DownloadServerInfo* _serverInfo;
 }
 
 @end
+@implementation RecordingInfo
+@synthesize date;
+- (void)dealloc
+{
+    [self.date release];
+    [super dealloc];
+}
+
+@end
+

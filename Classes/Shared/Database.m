@@ -63,6 +63,7 @@ static Database* _database;
         [self createVoicePkgcCourseTable];
         [self createLibInfoTable];
         [self createDownloadPkgTable];
+        [self createRecordingHistoryTable];
 	}
 	return self;
 }
@@ -235,8 +236,37 @@ static Database* _database;
 	[sql release];
 	[databaseLock unlock];
     return bSuccess;
-
 }
+
+- (BOOL)createRecordingHistoryTable{
+    NSString* tableName = STRING_DB_TABLENAME_RECORDING_HISTORY  ;
+    if ([self isExistsTable:tableName]) {
+        return NO;
+	}
+	
+	[databaseLock lock];
+	sqlite3_stmt *statement;
+	BOOL bSuccess = NO;
+	NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"Create TABLE MAIN.[%@]", tableName];
+	[sql appendString:@"("];
+	[sql appendFormat:@"[%@] integer",STRING_DB_VOICE_COURSEID];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_PATH];
+	[sql appendFormat:@",[%@] integer",STRING_DB_VOICE_SCORE];
+	[sql appendFormat:@",[%@] varchar",STRING_DB_VOICE_CREATEDATE];
+	[sql appendString:@");"];
+	
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		success = sqlite3_step(statement);
+	} else {
+		
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    return bSuccess;
+}
+
 - (BOOL)createTable;
 {
     return YES;
@@ -1407,4 +1437,18 @@ static Database* _database;
 	[databaseLock unlock];
     return bListened;
 }
+
+- (BOOL)addRecordingInfo:(NSString*)fromWaveFilePath withScore:(NSInteger)score;{
+    return YES;
+}
+
+- (NSMutableArray*)loadRecordingInfo:(NSString*)fromWaveFilePath {
+    return nil;
+}
+
+- (BOOL)clearAllRecordingInfo:(NSString*)fromWaveFilePath {
+    return YES;
+}
+
+
 @end

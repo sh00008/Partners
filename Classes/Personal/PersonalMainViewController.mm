@@ -76,7 +76,7 @@
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = PERSONAL_INFO;
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:@"Arial" size:16];
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:22];
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];
    

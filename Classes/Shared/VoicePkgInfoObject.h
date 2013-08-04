@@ -61,4 +61,7 @@
 @property (nonatomic) long lisenceLen;
 @end
 
-
+@interface RecordingInfo : NSObject
+@property (nonatomic, readwrite) NSInteger score;
+@property (nonatomic, retain, readwrite) NSString* date;
+@end

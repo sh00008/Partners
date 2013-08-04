@@ -27,6 +27,7 @@
 #import "CurrentInfo.h"
 #import "CustomViewController.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "RecordingScoreViewController.h"
 
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
@@ -53,6 +54,12 @@
 #define STRING_KEY_FILETYPE_LES @"les"
 #define HEIGHT_OF_WAVECELL      122
 #define HEIGHT_OF_LISTENINGCELL 107
+@interface ListeningViewController ()
+{
+    RecordingScoreViewController* _scoreViewController;
+}
+@end
+
 @implementation ListeningViewController
 @synthesize sentencesArray = _sentencesArray;
 @synthesize teachersArray = _teachersArray;
@@ -156,7 +163,15 @@
     backItem.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = backItem;
     [backItem release];
+   
+    UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 36, 36)];
+    [rightButton setImage:[UIImage imageNamed:@"Icon_Tops_Hit@2x.png"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"Icon_Tops@2x.png"] forState:UIControlStateHighlighted];
     
+    [rightButton addTarget:self action:@selector(checkTopRecording) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* topItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = topItem;
+    [topItem release];
     
     [self addWaitingView:WAITINGVIEWTAG withText:STRING_WAITING_TEXT withAnimation:YES];
   
@@ -166,25 +181,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(settingChanged:) name:NOTI_CHANGED_SETTING_VALUE object:nil]; 
-//    [self.listeningToolbar loadToolbar:self];
-    
-    UIImage* imageThumb = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/slider-handle.png", resourcePath]];
-    
-    [self.progressBar setThumbImage:imageThumb forState:UIControlStateNormal];
-    
-    UIImage* imageTrack = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/slider-track-right.png", resourcePath]];
-    [self.progressBar setMaximumTrackImage:imageTrack forState:UIControlStateNormal];
-    [self.progressBar setMinimumTrackImage:imageTrack forState:UIControlStateNormal];
-    NSInteger maxValue = [_sentencesArray count];
-    maxValue = maxValue == 0? 1: maxValue;
-    [self.progressBar setMaximumValue:maxValue];
-    [self.progressBar setMinimumValue:1];
-    [self.progressBar addTarget:self action:@selector(onGotoSentence:) forControlEvents:UIControlEventTouchUpInside];
-    [self.progressBar addTarget:self action:@selector(onChangingGotoSentence:) forControlEvents:UIControlEventTouchDragInside];
-    
-    self.progressBar.continuous = YES;
-    self.progressBar.enabled = NO;
-//    [self.listeningToolbar enableToolbar:NO];
 
    [self performSelector:@selector(initDownload) withObject:nil afterDelay:1.0];
 }
@@ -217,7 +213,7 @@
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = lesson.title;
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:@"Arial" size:16];
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:22];
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];
     //self.navigationItem.title = lesson.title;
@@ -1065,6 +1061,8 @@
         av = (av + score)/2;
         score = av;
     }
+    Database* db = [Database sharedDatabase];
+    [db addRecordingInfo:self.wavefile withScore:(NSInteger)score];
     customController.showTitle = [NSString stringWithFormat:@"%@ %d", STRING_FINISHREADINGFOLLOWME, score < 0 ? 0 : score];
     [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
     [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:2.0];
@@ -1212,5 +1210,13 @@
         return recordingPath;
     }
     return @"";
+}
+
+- (void)checkTopRecording
+{
+    _scoreViewController = [[RecordingScoreViewController alloc] initWithNibName:@"RecordingScoreViewController" bundle:nil];
+    _scoreViewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width - (IS_IPAD? 100 : 40), self.view.bounds.size.height - 40);
+    _scoreViewController.view.center = self.view.center;
+    [self presentPopupViewController:_scoreViewController animationType:MJPopupViewAnimationSlideRightLeft];
 }
 @end
