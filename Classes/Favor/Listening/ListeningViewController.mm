@@ -412,7 +412,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     timeStart = 0.0;
-    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if (ePlayStatus == PLAY_STATUS_PLAYING) {
     }
     if (self.player) {
@@ -903,11 +903,10 @@
     [scoreDic release];
     
     if (nLesson == PLAY_READING_FLOWME && (clickindex < [_sentencesArray count])) {
-        Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-        NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-        if ((clickindex) < [self.sentencesArray count]) {
-            clickindex++;
-            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:inter];
+        //Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+       // NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+        if ((clickindex+1) < [self.sentencesArray count]) {
+            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:1.0];
         } else {
             ePlayStatus = PLAY_STATUS_NONE;
             [self finishedFllowMe];
@@ -981,9 +980,11 @@
 
 - (IBAction)practicewholelesson:(id)sender;
 {
-    [_scroeArray release];
-    _scroeArray = nil;
-    _scroeArray = [[NSMutableArray alloc] init];
+    if (sender != nil) {
+        [_scroeArray release];
+        _scroeArray = nil;
+        _scroeArray = [[NSMutableArray alloc] init];
+    }
     
     nLesson = PLAY_READING_FLOWME;
     V_NSLog(@"practicewholelesson %d", clickindex);
@@ -1023,24 +1024,12 @@
         [self updateUI];
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
         NSTimeInterval inter = [sentence endTime] - [sentence startTime];
-        UInt32 doChangeDefaultRoute = 1;
-        AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
-                                 sizeof (doChangeDefaultRoute),
-                                 &doChangeDefaultRoute);
-        [self.player play];
-        if (_buttonPlay == nil) {
-            _buttonPlay = [[ButtonPlayObject alloc] init];
-            
-        }
         CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
         
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
         if (contentView != nil) {
             RecordingWaveCell* cell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
-            _buttonPlay.progressview = cell.progressView;
-            _buttonPlay.durTime = inter;
-            [_buttonPlay play];
-            [self performSelector:@selector(pausePlaying:) withObject:cell afterDelay:inter];
+            [self playing:PLAY_SRC_VOICE_BUTTON_TAG withSentence:sentence withCell:cell];
        }
         [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
     }
@@ -1054,6 +1043,8 @@
 }
 
 - (void)finishedFllowMe {
+    UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
+    [t removeFromSuperview];
     CustomViewController* customController = [[CustomViewController alloc] initWithNibName:@"CustomViewController" bundle:nil];
     NSInteger score = 0;
     NSInteger av = 0;
@@ -1108,7 +1099,7 @@
         // reading and practice.
         [self.player pause];
         if (clickindex < [_sentencesArray count] ) {
-             Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+            Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
             NSTimeInterval inter = [sentence endTime] - [sentence startTime];
             self.player.currentTime = [sentence startTime];
             [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(0.5+inter)];
@@ -1191,6 +1182,9 @@
 
 - (void)startNextPractice
 {
+    if (clickindex < ([self.sentencesArray count]-1)) {
+        clickindex++;
+    }
     V_NSLog(@"startNextPractice %d", clickindex);
     UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
     [t removeFromSuperview];
@@ -1200,7 +1194,7 @@
         [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
 
     } else {
-        [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+         [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
         ePlayStatus = PLAY_STATUS_NONE;
         [self practicewholelesson:nil];
     }
