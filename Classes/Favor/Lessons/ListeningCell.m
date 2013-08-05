@@ -101,7 +101,7 @@
     self.sentenceSrc.text = _srcMsg;
     [self.sentenceSrc setFont:[UIFont systemFontOfSize:22] fromIndex:0 length:_srcMsg.length];
     [self.sentenceSrc setColor:[UIColor blackColor] fromIndex:0 length:self.sentenceSrc.text.length];
-    self.scoreImageView.layer.cornerRadius = 18;
+    self.scoreImageView.layer.cornerRadius = 15;
     self.scoreImageView.backgroundColor = [UIColor clearColor];
     self.scoreImageView.image = nil;
     self.scroeLabel.text = nil;
@@ -109,7 +109,7 @@
 }
 
 - (void)showScore:(NSInteger)score{
-    self.scoreImageView.layer.cornerRadius = 18;
+    self.scoreImageView.layer.cornerRadius = 15;
     if (score < 60) {
         self.scoreImageView.image = [UIImage imageNamed:@"Icon_Bad@2x.png"];
         self.scoreImageView.backgroundColor = [UIColor redColor];
