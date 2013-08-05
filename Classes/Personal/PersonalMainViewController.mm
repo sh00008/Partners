@@ -40,7 +40,9 @@
                 self._products = products;
                 [self.tableView reloadData];
             }
-            [self.refreshControl endRefreshing];
+            if ([self respondsToSelector:@selector(refreshControl)]) {
+                [self.refreshControl endRefreshing];
+            }
         }];
     }
     return self;
@@ -301,7 +303,9 @@
             self._products = products;
             [self.tableView reloadData];
         }
-        [self.refreshControl endRefreshing];
+        if ([self respondsToSelector:@selector(refreshControl)]) {
+            [self.refreshControl endRefreshing];
+        }
     }];
     [self.tableView reloadData];
 }
