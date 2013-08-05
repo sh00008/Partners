@@ -82,6 +82,7 @@
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;
 - (DownloadDataPkgCourseInfo*)loadPkgCourseInfoByTitle:(NSString*)title withPKGID:(NSInteger)pkgID;
+- (NSInteger)getCourseInfoIDByTitle:(NSString*)title withPKGID:(NSInteger)pkgID;
 
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 - (BOOL)deleteVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
@@ -95,5 +96,5 @@
 - (BOOL)addRecordingInfo:(NSString*)fromWaveFilePath withScore:(NSInteger)score;
 - (NSMutableArray*)loadRecordingInfo:(NSString*)fromWaveFilePath;
 - (BOOL)clearAllRecordingInfo:(NSString*)fromWaveFilePath;
-
+- (NSMutableArray*)loadRecordingInfoByPath:(NSString*)path;
 @end

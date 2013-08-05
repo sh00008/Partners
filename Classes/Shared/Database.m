@@ -1234,6 +1234,32 @@ static Database* _database;
 	return [info autorelease];
 }
 
+- (NSInteger)getCourseInfoIDByTitle:(NSString*)title withPKGID:(NSInteger)pkgID
+{
+    
+    [databaseLock lock];
+	NSInteger rowID = -1;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"select ROWID FROM %@ WHERE %@ = '%@' AND %@ = %d", STRING_DB_TABLENAME_VOICE_COURSES, STRING_DB_VOICE_TITLE, title, STRING_DB_VOICE_ID, pkgID];
+    
+ 	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+        int result = sqlite3_step(statement);
+		if (result == SQLITE_ROW) {
+            rowID = sqlite3_column_int(statement, 0);         
+		}
+    } else {
+        V_NSLog(@"%@", @"Not found loadPkgCourseInfoByTitle");
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+    if (rowID == 0) {
+        rowID = -1;
+    }
+	return rowID;
+}
+
 - (NSMutableArray*)getCourseTitleByID:(NSInteger)nID;
 {
    // [databaseLock lock];
@@ -1353,6 +1379,7 @@ static Database* _database;
 	NSInteger nID = -1;
 	[databaseLock lock];
 	sqlite3_stmt *statement;
+  
 	NSString *sql = [[NSString alloc] initWithFormat:@"SELECT last_insert_rowid() FROM %@ ",tableName ];
     int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
     if (success == SQLITE_OK) {
@@ -1440,32 +1467,139 @@ static Database* _database;
 
 - (BOOL)addRecordingInfo:(NSString*)fromWaveFilePath withScore:(NSInteger)score;{
     NSRange r = [fromWaveFilePath rangeOfString:STRING_VOICE_PKG_DIR];
+    NSString* path = nil;
+    NSInteger pkgID = -1;
+    NSString* courseTitleSub = nil;
     if (r.location != NSNotFound) {
-        NSString* path = [fromWaveFilePath substringFromIndex:(r.location + r.length + 1)];
+       path = [fromWaveFilePath substringFromIndex:(r.location + r.length + 1)];
         r = [path rangeOfString:@"/"];
         if (r.location != NSNotFound) {
             NSInteger libID = [[path substringToIndex:r.location] intValue];
             NSString* title = [path substringFromIndex:(r.location+r.length)];
-            r = [path rangeOfString:@"/"];
+            r = [title rangeOfString:@"/"];
             if (r.location != NSNotFound) {
                 NSString* pkgtitle =  [title substringToIndex:r.location] ;
                 NSString* courseTitle =  [title substringFromIndex:(r.location+r.length)] ;
-                r = [path rangeOfString:@"/"];
+                r = [courseTitle rangeOfString:@"/"];
                 if (r.location != NSNotFound) {
+                    courseTitleSub =  [courseTitle substringToIndex:(r.location+r.length-1)];
+                    r = [path rangeOfString:@"." options:NSBackwardsSearch];
+                    if (r.location != NSNotFound) {
+                        //recordingPath = [path substringToIndex:r.location];
+                        pkgID = [self getVoicePkgInfoID:pkgtitle withPath:[NSString stringWithFormat:@"%d/%@", libID, pkgtitle]];
+                    }
                 }
             }
         }
     }
-   return YES;
-}
+    if (pkgID == -1) {
+        return NO;
+    }
+    
+    NSInteger courseID = [self getCourseInfoIDByTitle:courseTitleSub withPKGID:pkgID];
+    if (courseID == -1) {
+        return NO;
+    }
+    
+    sqlite3_stmt *statement;
+    [databaseLock lock];
+    NSString* sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@,%@,%@,%@) VALUES(?,?,?,?)", STRING_DB_TABLENAME_RECORDING_HISTORY, STRING_DB_VOICE_COURSEID, STRING_DB_VOICE_PATH, STRING_DB_VOICE_SCORE, STRING_DB_VOICE_CREATEDATE];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+	if (success == SQLITE_OK) {
+		//sqlite3_bind_text(statement, 1, [channel.userID UTF8String], -1, SQLITE_TRANSIENT);
+		NSInteger i = 1;
+        
+		sqlite3_bind_int(statement, i, courseID);
+        i++;
+        
+        sqlite3_bind_text(statement, i, [path UTF8String], -1, SQLITE_TRANSIENT);
+        i++;
+        
+		sqlite3_bind_int(statement, i, score);
+		i++;
+        
+        
+        NSDate* d = [NSDate date];
+        sqlite3_bind_text(statement, i, [[d description] UTF8String], -1, SQLITE_TRANSIENT);
+		i++;
+        
+        success = sqlite3_step(statement);
+		sqlite3_finalize(statement);
+		[databaseLock unlock];
+		if (success == SQLITE_ERROR) {
+			V_NSLog(@"Error: failed to %@", @"addRecordingInfo");
+			return NO;
+		}
+	} else {
+		[databaseLock unlock];
+		V_NSLog(@"Error: failed to %@", @"addRecordingInfo");
+		return NO;
+	}
+    
+    return YES;
+ }
 
 - (NSMutableArray*)loadRecordingInfo:(NSString*)fromWaveFilePath {
+    NSRange r = [fromWaveFilePath rangeOfString:STRING_VOICE_PKG_DIR];
+    if (r.location != NSNotFound) {
+        NSString* path = [fromWaveFilePath substringFromIndex:(r.location + r.length + 1)];
+        return [self loadRecordingInfoByPath:path];
+    }
     return nil;
 }
 
 - (BOOL)clearAllRecordingInfo:(NSString*)fromWaveFilePath {
-    return YES;
+    BOOL bOK = YES;
+    NSRange r = [fromWaveFilePath rangeOfString:STRING_VOICE_PKG_DIR];
+    if (r.location != NSNotFound) {
+        NSString* path = [fromWaveFilePath substringFromIndex:(r.location + r.length + 1)];
+        [databaseLock lock];
+        sqlite3_stmt *statement;
+        NSString  *sql =[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE  %@ = '%@'", STRING_DB_TABLENAME_RECORDING_HISTORY, STRING_DB_VOICE_PATH, path];
+        int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+        if (success == SQLITE_OK) {
+            success = sqlite3_step(statement);
+            if (success == SQLITE_ERROR) {
+                bOK = NO;
+            }
+        } else {
+            bOK = NO;
+        }
+        sqlite3_finalize(statement);
+        [sql release];
+        [databaseLock unlock];
+        return bOK;
+    }
+    return NO;
 }
 
+- (NSMutableArray*)loadRecordingInfoByPath:(NSString *)path {
+    [databaseLock lock];
+	NSMutableArray * arrResult = [[NSMutableArray alloc] init];
+	sqlite3_stmt *statement;
+    NSMutableString  *sql =[[NSMutableString alloc] initWithFormat:@"SELECT %@, %@ FROM %@ WHERE %@ = '%@'",STRING_DB_VOICE_SCORE, STRING_DB_VOICE_CREATEDATE, STRING_DB_TABLENAME_RECORDING_HISTORY, STRING_DB_VOICE_PATH, path];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+            RecordingInfo* info = [[RecordingInfo alloc] init];
+            NSInteger score = sqlite3_column_int(statement, 0);
+            info.score = score;
+            char *titleChars = (char *) sqlite3_column_text(statement, 1);
+            if (titleChars != nil) {
+                NSString *title = [NSString stringWithUTF8String:titleChars];
+                info.date = [NSString stringWithFormat:@"%@",title];
+            }
+            [arrResult addObject:info];
+            [info release];
+ 			
+		}
+    } else {
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	[databaseLock unlock];
+ 	return arrResult;
+
+}
 
 @end

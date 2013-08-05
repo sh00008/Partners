@@ -61,7 +61,9 @@
 }
 
 - (IBAction)clearRecordingScore:(id)sender {
-    
+    Database* db = [Database sharedDatabase];
+    [db clearAllRecordingInfo:self.waveFile];
+    [self.scoreTable reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -72,6 +74,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"scoreCell"];
+    NSInteger i = indexPath.row;
+    if (i < [_scoreArray count]) {
+        RecordingInfo* info = [_scoreArray objectAtIndex:i];
+        cell.textLabel.text = [NSString stringWithFormat:@" %d", info.score];
+        cell.detailTextLabel.text = info.date;
+    }
     return [cell autorelease];
 }
 @end

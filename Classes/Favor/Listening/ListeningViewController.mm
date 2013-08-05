@@ -1203,6 +1203,8 @@
 }
 
 - (NSString*)getRecordingFilePath:(NSInteger)nIndex {
+   // Database* db = [Database sharedDatabase];
+   // [db addRecordingInfo:self.wavefile withScore:(NSInteger)60];
     NSRange r = [self.wavefile rangeOfString:@"." options:NSBackwardsSearch];
     if (r.location != NSNotFound) {
         NSString* path = [self.wavefile substringToIndex:r.location];
@@ -1215,6 +1217,7 @@
 - (void)checkTopRecording
 {
     _scoreViewController = [[RecordingScoreViewController alloc] initWithNibName:@"RecordingScoreViewController" bundle:nil];
+    _scoreViewController.waveFile = self.wavefile;
     _scoreViewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width - (IS_IPAD? 100 : 40), self.view.bounds.size.height - 40);
     _scoreViewController.view.center = self.view.center;
     [self presentPopupViewController:_scoreViewController animationType:MJPopupViewAnimationSlideRightLeft];
