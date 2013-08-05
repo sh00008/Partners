@@ -7,8 +7,62 @@
 //
 
 #import "Animations.h"
-
+#import "VoiceDef.h"
 #define degreesToRadians(x)(M_PI*x/180.0)
+
+@interface AnimatLabel ()
+{
+    CFTimeInterval startTime;
+
+}
+
+@end
+
+@implementation AnimatLabel
+@synthesize from,to;
+@synthesize animationTime;
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    self.backgroundColor = [UIColor clearColor];
+    self.font = [UIFont fontWithName:@"Arial" size:30];
+    self.textAlignment = NSTextAlignmentCenter;
+    self.textColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    self.layer.cornerRadius = 8;
+    self.numberOfLines = 2;
+    self.animationTime = 1.0;
+    return self;
+}
+
+// Create instance variables/properties for: `from`, `to`, and `startTime` (also include the QuartzCore framework in your project)
+
+- (void)animateFrom:(NSNumber *)aFrom toNumber:(NSNumber *)aTo {
+    self.from = aFrom; // or from = [aFrom retain] if your not using @properties
+    self.to = aTo;     // ditto
+    
+    self.text = [from stringValue];
+    
+    CADisplayLink *link = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateNumber:)];
+    
+    startTime = CACurrentMediaTime();
+    [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void)animateNumber:(CADisplayLink *)link {
+    float dt = ([link timestamp] - startTime) / self.animationTime;
+    if (dt >= 1.0) {
+        self.text = [to stringValue];
+        [link removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        return;
+    }
+    
+    float current = ([to floatValue] - [from floatValue]) * dt + [from floatValue];
+    self.text = [NSString stringWithFormat:@"%@\r\n%i",STRING_READY_RECORDING, (long)current];
+}
+
+@end
+
 
 @interface Animations ()
 

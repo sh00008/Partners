@@ -28,6 +28,7 @@
 #import "CustomViewController.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "RecordingScoreViewController.h"
+#import "Animations.h"
 
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
@@ -1109,23 +1110,19 @@
 
 - (void)showReadyRecording:(NSNumber*)clickNumber
 {
-    UILabel* ready = [[UILabel alloc] initWithFrame:self.view.bounds];
-    ready.backgroundColor = [UIColor clearColor];
-    ready.font = [UIFont fontWithName:@"Arial" size:60];
-    ready.textAlignment = NSTextAlignmentCenter;
+    CGFloat animationTime = 2.0f;
+    AnimatLabel* ready = [[AnimatLabel alloc] initWithFrame:CGRectMake(0, 0, 250, 100)];
+    ready.center = self.view.center;
     ready.tag = READYRECORDINGVIEW_TAG;
     ready.text = STRING_READY_RECORDING;
+    ready.animationTime = animationTime;
     [self.view addSubview:ready];
     [ready release];
-    
-    /*CustomViewController* showReadyRecording = [[CustomViewController alloc] initWithNibName:@"CustomViewController" bundle:nil];
-    showReadyRecording.titleView.text = STRING_READY_RECORDING;
-    [self presentPopupViewController:showReadyRecording animationType:MJPopupViewAnimationSlideBottomTop];
-     */
+    [ready animateFrom:[NSNumber numberWithInt:4] toNumber:[NSNumber numberWithInt:1]];
     NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
     [dicValue setObject:ready forKey:@"view"];
     [dicValue setObject:clickNumber forKey:@"index"];
-    [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:1];
+    [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:animationTime];
 }
 
 - (void)playRecordingAnimationWithView:(NSMutableDictionary*)dicValue
@@ -1140,6 +1137,8 @@
     theAnimation.duration = 0.3;
     theAnimation.autoreverses = NO;
     viewWillAnimation.text = STRING_RECORDING_TEXT;
+    viewWillAnimation.frame = CGRectMake(0, 0, 200, 80);
+    viewWillAnimation.center = self.view.center;
     //viewWillAnimation.text = [NSString stringWithFormat:@"%d", [number integerValue]];
     theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
     theAnimation.toValue = [NSNumber numberWithFloat:1.0];

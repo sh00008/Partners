@@ -7,6 +7,15 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+@interface AnimatLabel: UILabel {
+    
+}
+@property (nonatomic, retain) NSNumber* from;
+@property (nonatomic, retain) NSNumber* to;
+@property (nonatomic, assign)CGFloat animationTime;
+- (void)animateFrom:(NSNumber *)aFrom toNumber:(NSNumber *)aTo;
+
+@end
 
 @interface Animations : UIViewController{
 }
