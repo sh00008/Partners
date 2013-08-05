@@ -202,6 +202,9 @@
 }
 - (void)displayLesson;
 {
+    if (!(self.nPositionInCourse < [self.courseParser.course.lessons count])) {
+        return;
+    }
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     [self.courseParser loadLesson:self.nPositionInCourse];
     self.sentencesArray = lesson.setences;
@@ -411,13 +414,10 @@
     timeStart = 0.0;
     
     if (ePlayStatus == PLAY_STATUS_PLAYING) {
-//        [self setStatusPause];
-        Sentence* sentence = [self.sentencesArray objectAtIndex:nPosition];
-        self.player.currentTime = [sentence startTime];
-//        [self updateUI];
     }
     if (self.player) {
         [self.player stop];
+        self.player = nil;
     }
     
    [super viewWillDisappear:animated];
@@ -448,6 +448,9 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (!(section < [self.sentencesArray count])) {
+        return 44.0f;
+    }
     Sentence * sentence = [self.sentencesArray objectAtIndex:section];
    	NSString *aMsg = sentence.orintext;
     NSString *transText = sentence.transtext;
@@ -557,6 +560,9 @@
     Teacher* teacher1 = nil;
     Teacher* teacher2 = nil;
     NSInteger section = index;
+    if (!(section < [self.sentencesArray count])) {
+        return nil;
+    }
     Sentence * sentence = [self.sentencesArray objectAtIndex:section];
     if ([self.teachersArray count] > 1) {
         teacher1 = [self.teachersArray objectAtIndex:0];
@@ -624,6 +630,10 @@
 }
 
 - (UIView *)viewForCollapseClickContentViewAtIndex:(int)index {
+    if (!(index < [self.sentencesArray count])) {
+        return nil;
+    }
+
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, HEIGHT_OF_WAVECELL * 2)];
     Sentence * sentence = [self.sentencesArray objectAtIndex:index];        
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
@@ -722,9 +732,10 @@
             }
             
         }
-         [self.collpaseLesson scrollToCollapseClickCellAtIndex:index animated:YES];
+        if (index < [self.sentencesArray count]) {
+            [self.collpaseLesson scrollToCollapseClickCellAtIndex:index animated:YES];
+        }
    }
-    
 
     V_NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
@@ -891,7 +902,7 @@
     }
     [scoreDic release];
     
-    if (nLesson == PLAY_READING_FLOWME) {
+    if (nLesson == PLAY_READING_FLOWME && (clickindex < [_sentencesArray count])) {
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
         NSTimeInterval inter = [sentence endTime] - [sentence startTime];
         if ((clickindex) < [self.sentencesArray count]) {
@@ -981,9 +992,7 @@
     _scroeArray = nil;
     _scroeArray = [[NSMutableArray alloc] init];
     V_NSLog(@"practicewholelesson %d", clickindex);
-    if (clickindex == 7) {
-        NSLog(@"last");
-    }
+
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
@@ -1020,7 +1029,7 @@
     if (clickindex < [_sentencesArray count]) {
         [self updateUI];
         Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-        NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
+        NSTimeInterval inter = [sentence endTime] - [sentence startTime];
         UInt32 doChangeDefaultRoute = 1;
         AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
                                  sizeof (doChangeDefaultRoute),
@@ -1042,14 +1051,13 @@
        }
         [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
     }
-    else {
-        [self.player play];
-    }
 }
 
 - (void)updateUI
 {
-    [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+    if (clickindex < [self.sentencesArray count]) {
+        [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+    }
 }
 
 - (void)finishedFllowMe {
@@ -1090,23 +1098,25 @@
     if (ePlayStatus != PLAY_STATUS_PLAYING) {
         return;
     }
-    
-    Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-    NSTimeInterval inter = [sentence endTime] - [sentence startTime];
     if (nLesson == PLAY_LESSON) {
         // reading lesson.
         [self.player pause];
         if (clickindex < [_sentencesArray count]) {
             clickindex++;
-            sentence = [_sentencesArray objectAtIndex:clickindex];
-            self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(0.5+inter)];
-        } 
+            if (clickindex < [_sentencesArray count]) {
+                Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+                NSTimeInterval inter = [sentence endTime] - [sentence startTime];
+                self.player.currentTime = [sentence startTime];
+                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(0.5+inter)];
+
+            }
+         }
     } else {
         // reading and practice.
         [self.player pause];
         if (clickindex < [_sentencesArray count] ) {
-             sentence = [_sentencesArray objectAtIndex:clickindex];
+             Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
             self.player.currentTime = [sentence startTime];
             [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(0.5+inter)];
             clickindex++;
@@ -1177,10 +1187,12 @@
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
         if (contentView != nil) {
             RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
-            Sentence* sentence = [_sentencesArray objectAtIndex:index];
-            // recording, stop recording in this function:
-            clickindex = index;
-            [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
+            if (index < [self.sentencesArray count]) {
+                Sentence* sentence = [_sentencesArray objectAtIndex:index];
+                // recording, stop recording in this function:
+                clickindex = index;
+                [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
+            }
         }
     }
 }
