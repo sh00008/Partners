@@ -88,7 +88,7 @@
     for (NSInteger i = 0; i < [willCompareString count]; i++) {
         NSString* word = [willCompareString objectAtIndex:i];
         if (word.length > 0) {
-            NSRange r = [self.sentenceSrc.text rangeOfString:word];
+            NSRange r = [self.sentenceSrc.text rangeOfString:word options:NSDiacriticInsensitiveSearch];
             if (r.location != NSNotFound) {
                 [self.sentenceSrc setColor:[UIColor greenColor] fromIndex:r.location length:r.length];
             }

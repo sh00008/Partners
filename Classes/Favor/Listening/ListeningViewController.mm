@@ -931,14 +931,7 @@
     }
     
     if (bOrinWave) {
-        if (nLesson == PLAY_LESSON) {
-            [self playfromCurrentPos];
-        }
-        else {
-            self.player.currentTime = 0;
-            self.player.volume = 5.0;
-            [self playfromCurrentPos];
-        }
+        [self playfromCurrentPos];
     }
     else
     {
@@ -991,6 +984,8 @@
     [_scroeArray release];
     _scroeArray = nil;
     _scroeArray = [[NSMutableArray alloc] init];
+    
+    nLesson = PLAY_READING_FLOWME;
     V_NSLog(@"practicewholelesson %d", clickindex);
 
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
@@ -1015,8 +1010,6 @@
         default:
             break;
     }
-
-    nLesson = PLAY_READING_FLOWME;
 }
 
 - (void)playfromCurrentPos
@@ -1119,7 +1112,6 @@
             NSTimeInterval inter = [sentence endTime] - [sentence startTime];
             self.player.currentTime = [sentence startTime];
             [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(0.5+inter)];
-            clickindex++;
         }
     }
 }
@@ -1196,6 +1188,7 @@
         }
     }
 }
+
 - (void)startNextPractice
 {
     V_NSLog(@"startNextPractice %d", clickindex);
@@ -1210,7 +1203,6 @@
         [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
         ePlayStatus = PLAY_STATUS_NONE;
         [self practicewholelesson:nil];
-        
     }
 }
 
