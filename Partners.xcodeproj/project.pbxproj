@@ -42,6 +42,7 @@
 		0D1531D01740C65F00633FA0 /* ConfigData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531CF1740C65F00633FA0 /* ConfigData.m */; };
 		0D1531D41740C84F00633FA0 /* FavorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1531D31740C84F00633FA0 /* FavorViewController.m */; };
 		0D1660F917B0256A00697424 /* Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1660F817B0256A00697424 /* Animations.m */; };
+		0D1660FB17B1A1B600697424 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 0D1660FA17B1A1B600697424 /* Data */; };
 		0D2F1B78177C0CEB009A8A87 /* SSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2F1B75177C0CEB009A8A87 /* SSTextView.m */; };
 		0D2F1B79177C0CEB009A8A87 /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2F1B77177C0CEB009A8A87 /* YIPopupTextView.m */; };
 		0D2F1B7D177C163F009A8A87 /* library.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7A177C163F009A8A87 /* library.png */; };
@@ -293,6 +294,7 @@
 		0D1531D31740C84F00633FA0 /* FavorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavorViewController.m; path = Classes/Favor/FavorViewController.m; sourceTree = SOURCE_ROOT; };
 		0D1660F717B0256A00697424 /* Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animations.h; sourceTree = "<group>"; };
 		0D1660F817B0256A00697424 /* Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animations.m; sourceTree = "<group>"; };
+		0D1660FA17B1A1B600697424 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Data; path = Resources/Data; sourceTree = SOURCE_ROOT; };
 		0D2F1B74177C0CEB009A8A87 /* SSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTextView.h; sourceTree = "<group>"; };
 		0D2F1B75177C0CEB009A8A87 /* SSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTextView.m; sourceTree = "<group>"; };
 		0D2F1B76177C0CEB009A8A87 /* YIPopupTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIPopupTextView.h; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 		0DA1486717511555004EBCFF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				0D1660FA17B1A1B600697424 /* Data */,
 				9579A39B1773DAAB0014D1DC /* model.dat */,
 				0DA149A417519715004EBCFF /* Database */,
 				0DA148F2175116A5004EBCFF /* Imges */,
@@ -1467,6 +1470,7 @@
 				0DC93BC317AE9BE300080975 /* Icon_Tops_Hit@2x.png in Resources */,
 				0DC93BC417AE9BE300080975 /* Icon_Tops@2x.png in Resources */,
 				0DC93BCA17AEF11300080975 /* RecordingScoreViewController.xib in Resources */,
+				0D1660FB17B1A1B600697424 /* Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
