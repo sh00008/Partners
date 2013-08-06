@@ -62,6 +62,8 @@ static Database* _database;
         [self createVoicePkgInfoTable];
         [self createVoicePkgcCourseTable];
         [self createLibInfoTable];
+        [self addDefaultLib];
+        [self addHiddenLibForFreeSrc];
         [self createDownloadPkgTable];
         [self createRecordingHistoryTable];
 	}
@@ -168,12 +170,6 @@ static Database* _database;
 	[databaseLock unlock];
 
     [self createLibLisenceTable];
-   LibaryInfo* info = [[LibaryInfo alloc] init];
-    info.url = STRING_STORE_URL_ADDRESS;
-    info.title = STRING_DEFAULT_LIB_NAME;
-    [self insertLibaryInfo:info];
-    
-     [info release];
 
     return bSuccess;
 }
@@ -296,6 +292,25 @@ static Database* _database;
 	[databaseLock unlock];
 	return bSuccess;*/	
 
+}
+
+- (BOOL)addDefaultLib {
+    LibaryInfo* info = [[LibaryInfo alloc] init];
+    info.url = STRING_STORE_URL_ADDRESS;
+    info.title = STRING_DEFAULT_LIB_NAME;
+    [self insertLibaryInfo:info];
+    
+    [info release];
+    return YES;
+}
+
+- (BOOL)addHiddenLibForFreeSrc{
+    LibaryInfo* info = [[LibaryInfo alloc] init];
+    info.url = @"";
+    info.title = STRING_HIDDEN_LIB_NAME;
+    [self insertLibaryInfo:info];
+    [info release];
+    return YES;
 }
 
 - (BOOL)isExistsTable:(NSString*)tableName;
@@ -857,7 +872,9 @@ static Database* _database;
                 object.createTime = [NSString stringWithFormat:@"%@",title];
             }
             object.libID = libID;
-            [arrResult addObject:object];
+            if (![object.title isEqualToString:STRING_HIDDEN_LIB_NAME]) {
+                [arrResult addObject:object];
+            }
             [object release];
 		}
     } else {

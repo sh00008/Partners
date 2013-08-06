@@ -21,4 +21,5 @@
 @property (nonatomic, retain) DMCustomModalViewController *modal;
 @property (nonatomic, retain) IBOutlet UITableView* tableView;
 - (void)loadPkgArray;
+- (void)copyFreeSrc;
 @end

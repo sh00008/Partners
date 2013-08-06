@@ -51,6 +51,7 @@
 
     self.tableView.delegate = (id)self;
     self.tableView.dataSource = (id)self;
+    //[self copyFreeSrc];
     [self loadPkgArray];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
@@ -273,6 +274,33 @@
     _pkgArray = [db loadVoicePkgInfo];
 }
 
+- (void)copyFreeSrc {
+   NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Data"]];
+    NSFileManager *fM = [NSFileManager defaultManager];
+    NSArray *fileList = [[fM contentsOfDirectoryAtPath:resourcePath error:nil] retain];
+    for(NSString *file in fileList) {
+        NSString *path = [resourcePath stringByAppendingPathComponent:file];
+        BOOL isDir = NO;
+        [fM fileExistsAtPath:path isDirectory:(&isDir)];
+        if(isDir) {
+            DownloadDataPkgInfo* pkgInfo = [[DownloadDataPkgInfo alloc] init];
+            NSMutableArray* dataPkgCourseInfoArray = [[NSMutableArray alloc] init];
+            pkgInfo.dataPkgCourseInfoArray = dataPkgCourseInfoArray;
+            [dataPkgCourseInfoArray release];
+            pkgInfo.title = file;
+            NSArray* courseList = [fM contentsOfDirectoryAtPath:path error:nil];
+            for (NSString* courseTitle in courseList) {
+                DownloadDataPkgCourseInfo* courseInfo = [[DownloadDataPkgCourseInfo alloc] init];
+                courseInfo.title = courseTitle;
+                [pkgInfo.dataPkgCourseInfoArray addObject:courseInfo];
+                [courseInfo release];
+            
+            }
+        }
+    }
+    
+ 
+}
 - (void)openSences:(id)sender
 {
     FavorCourseButton* button = (FavorCourseButton*)sender;

@@ -53,6 +53,9 @@
 - (BOOL)createDownloadPkgTable;
 - (BOOL)createRecordingHistoryTable;
 
+- (BOOL)addDefaultLib;
+- (BOOL)addHiddenLibForFreeSrc;
+
 - (BOOL)isExistsTable:(NSString*)tableName;
 - (BOOL)insertVoicePkgInfo:(DownloadDataPkgInfo*)info;
 - (BOOL)insertVoiceCourseInfo:(DownloadDataPkgInfo*)info;;
