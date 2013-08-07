@@ -18,6 +18,7 @@
 @property (nonatomic, assign) NSInteger libID;
 @property (nonatomic, assign) id<DownloadLicenseDelegate>delegate;
 - (void)checkLisence:(NSString*)url;
+- (void)getDeviceID;
 @end
 
 @interface CurrentInfo : NSObject

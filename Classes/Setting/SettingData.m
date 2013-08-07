@@ -12,18 +12,13 @@
 @implementation SettingData
 
 @synthesize dTimeInterval;
-@synthesize clrBubbleBg1 = _clrBubbleBg1;
-@synthesize clrBubbleBg2 = _clrBubbleBg2;
-@synthesize clrBubbleBg3 = _clrBubbleBg3;
-@synthesize clrBubbleText1 = _clrBubbleText1;
-@synthesize clrBubbleText2 = _clrBubbleText2;
-@synthesize clrBubbleText3 = _clrBubbleText3;
 @synthesize nReadingCount;
 @synthesize eShowTextType;
 @synthesize eReadingMode;
 @synthesize bLoop;
 @synthesize bShowDay;
-
+@synthesize version;
+@synthesize isNeedCopyFreeSrc;
 - (id)init
 {
     self = [super init];
@@ -35,11 +30,6 @@
 
 - (void)dealloc 
 {
-    [self.clrBubbleBg1 release];
-    [self.clrBubbleBg2 release];
-    [self.clrBubbleText1 release];
-    [self.clrBubbleText2 release];
-    [self.clrBubbleText3 release];
     [super dealloc];
 }
 
@@ -50,6 +40,8 @@
     self.eShowTextType = SHOW_TEXT_TYPE_SRC;
     self.bLoop = NO;
     self.bShowDay = YES;
+    self.version = 0.0;
+    self.isNeedCopyFreeSrc = YES;
 }
 
 - (void)loadSettingData;
@@ -104,6 +96,17 @@
         if (dayTemp != nil) {
             self.bShowDay = [dayTemp boolValue];
         }
+        NSNumber* versionTemp = [tempsetting objectForKey:kSettingVersion];
+        if (versionTemp != nil) {
+            self.version = [versionTemp floatValue];
+            NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            if ([currentVersion floatValue] != self.version) {
+                self.isNeedCopyFreeSrc = YES;
+            } else {
+                self.isNeedCopyFreeSrc = NO;
+            }
+           
+        }
    
 	}
 }
@@ -138,6 +141,7 @@
     [settingdictionary setObject:[NSNumber numberWithInt:self.eShowTextType] forKey:kSettingisShowTranslation];
     [settingdictionary setObject:[NSNumber numberWithBool:self.bLoop] forKey:kSettingLoopReading];
     [settingdictionary setObject:[NSNumber numberWithBool:self.bShowDay] forKey:kSettingShowDay];
+    [settingdictionary setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:kSettingVersion];
 	[settingdictionary writeToFile:path atomically:YES];
     [settingdictionary release];
 }

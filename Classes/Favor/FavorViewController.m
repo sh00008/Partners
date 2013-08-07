@@ -16,6 +16,7 @@
 #import "CurrentInfo.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "DownloadWholeViewController.h"
+#import "SettingData.h"
 
 @interface FavorViewController ()
 {
@@ -51,7 +52,12 @@
 
     self.tableView.delegate = (id)self;
     self.tableView.dataSource = (id)self;
-    //[self copyFreeSrc];
+    SettingData* setting = [[SettingData alloc] init];
+    [setting loadSettingData];
+    if (setting.isNeedCopyFreeSrc) {
+        [self copyFreeSrc];
+    }
+    [setting release];
     [self loadPkgArray];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(addNewPKGNotification:) name:NOTIFICATION_ADD_VOICE_PKG object:nil];
@@ -275,6 +281,12 @@
 }
 
 - (void)copyFreeSrc {
+    Database* db = [Database sharedDatabase];
+    NSInteger libID = [db getLibaryIDByURL:STRING_HIDDEN_LIB_NAME];
+    if (libID == -1) {
+        return;
+    }
+    
    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Data"]];
     NSFileManager *fM = [NSFileManager defaultManager];
     NSArray *fileList = [[fM contentsOfDirectoryAtPath:resourcePath error:nil] retain];
@@ -283,19 +295,52 @@
         BOOL isDir = NO;
         [fM fileExistsAtPath:path isDirectory:(&isDir)];
         if(isDir) {
+            NSString* lisencePath = [path stringByAppendingPathComponent:@"ServerRequest.dat"];
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString *documentDirectory = [paths objectAtIndex:0];
+            documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+            
+            //documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", file];
+            
+            NSString* absolutePath = [NSString stringWithFormat:@"%@/%d", documentDirectory, libID];
+            if (![fM fileExistsAtPath:absolutePath]) {
+                [fM createDirectoryAtPath:absolutePath withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+            // copy liscense;
+            NSString* newLiscensePath = [absolutePath stringByAppendingPathComponent:@"ServerRequest.dat"];
+            [fM copyItemAtPath:lisencePath toPath:newLiscensePath error:nil];
+            DownloadLicense* download = [[DownloadLicense alloc] init];
+            download.libID = libID;
+            [download getDeviceID];
+            [download release];
+            
+            // copy data
+            NSString* newPath = [absolutePath stringByAppendingPathComponent:file] ;
+            [fM copyItemAtPath:path toPath:newPath error:nil];
+
+            NSString* wrongLisencePath = [newPath stringByAppendingPathComponent:@"ServerRequest.dat"];
+            [fM removeItemAtPath:wrongLisencePath error:nil];
+            
             DownloadDataPkgInfo* pkgInfo = [[DownloadDataPkgInfo alloc] init];
             NSMutableArray* dataPkgCourseInfoArray = [[NSMutableArray alloc] init];
             pkgInfo.dataPkgCourseInfoArray = dataPkgCourseInfoArray;
             [dataPkgCourseInfoArray release];
             pkgInfo.title = file;
+            pkgInfo.libID = libID;
             NSArray* courseList = [fM contentsOfDirectoryAtPath:path error:nil];
             for (NSString* courseTitle in courseList) {
-                DownloadDataPkgCourseInfo* courseInfo = [[DownloadDataPkgCourseInfo alloc] init];
-                courseInfo.title = courseTitle;
-                [pkgInfo.dataPkgCourseInfoArray addObject:courseInfo];
-                [courseInfo release];
-            
+                BOOL isDirCourse = NO;
+                NSString *coursepath = [path stringByAppendingPathComponent:courseTitle];
+                [fM fileExistsAtPath:coursepath isDirectory:(&isDirCourse)];
+               if (isDirCourse) {
+                   DownloadDataPkgCourseInfo* courseInfo = [[DownloadDataPkgCourseInfo alloc] init];
+                   courseInfo.title = courseTitle;
+                   [pkgInfo.dataPkgCourseInfoArray addObject:courseInfo];
+                   [courseInfo release];
+                }
             }
+            [db insertVoicePkgInfo:pkgInfo];
+            [db updateDownloadedInfo:pkgInfo.title withPath:[NSString stringWithFormat:@"%d/%@", libID, pkgInfo.title]];
         }
     }
     

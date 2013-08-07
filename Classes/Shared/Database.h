@@ -81,6 +81,7 @@
 // return VoiceDataPkgObject object
 - (NSMutableArray*)loadVoicePkgInfo;
 - (NSMutableArray*)loadLibaryInfo;
+- (NSInteger)getLibaryIDByURL:(NSString*)url;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfo:(DownloadDataPkgInfo*)downloadinfo;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByTitle:(NSString*)title withLibID:(NSInteger)libID;
 - (VoiceDataPkgObjectFullInfo*)loadVoicePkgInfoByPath:(NSString*)path;

@@ -62,8 +62,6 @@ static Database* _database;
         [self createVoicePkgInfoTable];
         [self createVoicePkgcCourseTable];
         [self createLibInfoTable];
-        [self addDefaultLib];
-        [self addHiddenLibForFreeSrc];
         [self createDownloadPkgTable];
         [self createRecordingHistoryTable];
 	}
@@ -170,6 +168,8 @@ static Database* _database;
 	[databaseLock unlock];
 
     [self createLibLisenceTable];
+    [self addDefaultLib];
+    [self addHiddenLibForFreeSrc];
 
     return bSuccess;
 }
@@ -299,14 +299,13 @@ static Database* _database;
     info.url = STRING_STORE_URL_ADDRESS;
     info.title = STRING_DEFAULT_LIB_NAME;
     [self insertLibaryInfo:info];
-    
     [info release];
     return YES;
 }
 
 - (BOOL)addHiddenLibForFreeSrc{
     LibaryInfo* info = [[LibaryInfo alloc] init];
-    info.url = @"";
+    info.url = STRING_HIDDEN_LIB_NAME;
     info.title = STRING_HIDDEN_LIB_NAME;
     [self insertLibaryInfo:info];
     [info release];
@@ -872,7 +871,7 @@ static Database* _database;
                 object.createTime = [NSString stringWithFormat:@"%@",title];
             }
             object.libID = libID;
-            if (![object.title isEqualToString:STRING_HIDDEN_LIB_NAME]) {
+            if (![object.url isEqualToString:STRING_HIDDEN_LIB_NAME]) {
                 [arrResult addObject:object];
             }
             [object release];
@@ -883,6 +882,26 @@ static Database* _database;
 	[sql release];
 	[databaseLock unlock];
  	return arrResult;
+}
+
+- (NSInteger)getLibaryIDByURL:(NSString*)url;
+{
+ 	int uniqueId = -1;
+	sqlite3_stmt *statement;
+    NSString  *sql =[[NSString alloc] initWithFormat:@"SELECT %@ FROM %@ WHERE %@ = '%@'", STRING_DB_LIBARY_ID, STRING_DB_TABLENAME_LIB_INFO, STRING_DB_VOICE_URL, url];
+	int success = sqlite3_prepare_v2((sqlite3 *)_database, [sql UTF8String], -1, &statement, NULL);
+    if (success == SQLITE_OK) {
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			uniqueId = sqlite3_column_int(statement, 0);
+		}
+    } else {
+		uniqueId = -1;
+	}
+	sqlite3_finalize(statement);
+	[sql release];
+	//[databaseLock unlock];
+	return uniqueId;
+
 }
 - (NSInteger)getVoicePkgInfoID:(NSString*)title withPath:(NSString*)path;
 {

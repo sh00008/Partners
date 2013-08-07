@@ -15,6 +15,7 @@
 #define kSettingisShowTranslation @"ShowTextType"
 #define kSettingLoopReading @"LoopReading"
 #define kSettingShowDay @"showDaySentence"
+#define kSettingVersion @"lastAppVersion"
 #define kSettingShowDate @"showDayDatae"
 
 typedef enum {
@@ -34,12 +35,6 @@ typedef enum {
     NSInteger nReadingCount;
     READING_MODE eReadingMode;
     SHOW_TEXT_TYPE eShowTextType;
-    UIColor* _clrBubbleBg1;
-    UIColor* _clrBubbleBg2;
-    UIColor* _clrBubbleBg3;
-    UIColor* _clrBubbleText1;
-    UIColor* _clrBubbleText2;
-    UIColor* _clrBubbleText3;
     BOOL bLoop;
     BOOL bShowDay;
 }
@@ -50,12 +45,8 @@ typedef enum {
 @property (nonatomic, assign) SHOW_TEXT_TYPE eShowTextType;
 @property (nonatomic, assign) BOOL bLoop;
 @property (nonatomic, assign) BOOL bShowDay;
-@property (nonatomic, retain) UIColor* clrBubbleBg1;
-@property (nonatomic, retain) UIColor* clrBubbleBg2;
-@property (nonatomic, retain) UIColor* clrBubbleBg3;
-@property (nonatomic, retain) UIColor* clrBubbleText1;
-@property (nonatomic, retain) UIColor* clrBubbleText2;
-@property (nonatomic, retain) UIColor* clrBubbleText3;
+@property (nonatomic, assign) CGFloat version;
+@property (nonatomic, assign) BOOL isNeedCopyFreeSrc;
 
 - (void)initSettingData;
 - (void)loadSettingData;
