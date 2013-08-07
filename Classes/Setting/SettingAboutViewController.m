@@ -9,6 +9,7 @@
 #import "SettingAboutViewController.h"
 #import "Globle.h"
 #import "VoiceDef.h"
+#import "SettingLogoCell.h"
 @implementation SettingAboutViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -99,28 +100,45 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // Configure the cell...
     if (indexPath.section == 0) {
-        cell.textLabel.text = STRING_ABOUT_VERSION;
-        if (cell.accessoryView == nil) {
-            UILabel* acv = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
-            acv.backgroundColor = [UIColor clearColor];
-            acv.textAlignment = UITextAlignmentCenter;
-            acv.textColor = [UIColor grayColor];
-            acv.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-            cell.accessoryView = acv;
-            [acv release];
-        }
-    } else {
+        NSArray* views = [[NSBundle mainBundle] loadNibNamed:@"SettingLogoCell" owner:nil options:nil];
+        if ([views count] > 0) {
+            cell = [views objectAtIndex:0];
+            SettingLogoCell* logoCell = (SettingLogoCell*)cell;
+            logoCell.logoImageView.image = [UIImage imageNamed:@"logoAbout.png"];
+            logoCell.versionLabel.text = [NSString stringWithFormat:@"%@:%@", STRING_ABOUT_VERSION, [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+        } else {
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            }
+         }
+        /*if (indexPath.row == 0) {
+            cell.imageView.image = 
+         } else {
+           cell.textLabel.text = STRING_ABOUT_VERSION;
+           if (cell.accessoryView == nil) {
+               UILabel* acv = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+               acv.backgroundColor = [UIColor clearColor];
+               acv.textAlignment = UITextAlignmentCenter;
+               acv.textColor = [UIColor grayColor];
+               acv.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+               cell.accessoryView = acv;
+               [acv release];
+           }
+        }*/
+     } else {
+         if (cell == nil) {
+             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+         }
         NSString* detail = STRING_ABOUT_DETAIL;
         cell.textLabel.text = detail;
         cell.textLabel.lineBreakMode   = UILineBreakModeWordWrap;
         cell.textLabel.numberOfLines   = 0;
         cell.textLabel.font            = [UIFont systemFontOfSize:FONT_SIZE_BUBBLE];
+        cell.textLabel.textColor       = [UIColor darkGrayColor];
+        
     }
     return cell;
 }
@@ -128,7 +146,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 44;
+        return 166;
     } else {
         NSString* detail = STRING_ABOUT_DETAIL;
         CGSize size   = [Globle calcTextHeight:detail withWidth:self.view.bounds.size.width  - CELL_CONTENT_MARGIN*2];

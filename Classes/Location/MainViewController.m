@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-#import "SettingViewController.h"
+#import "SettingAboutViewController.h"
 #import "FavorViewController.h"
 #import "VoiceDef.h"
 #import "StoreVoiceDataListParser.h"
@@ -92,7 +92,7 @@
         [_scrollview addSubview:favor.view];
         favor.view.frame = CGRectMake(_persnoal.view.frame.origin.x + _persnoal.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         
-        SettingViewController* setting = [[SettingViewController alloc] init];
+        SettingAboutViewController* setting = [[SettingAboutViewController alloc] init];
         [_scrollview addSubview:setting.view];
         
         setting.view.frame = CGRectMake(favor.view.frame.origin.x + favor.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height);
@@ -178,7 +178,7 @@
         [_store setSelected:NO];
         [_home setSelected:NO];
         [_settingBar setSelected:YES];
-        _titleLabel.text = STRING_SETTING_INTITLE;
+        _titleLabel.text = STRING_ABOUT_US;
          _editingLib.hidden = YES;
      } else {
         [_store setSelected:NO];

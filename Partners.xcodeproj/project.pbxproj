@@ -138,6 +138,9 @@
 		0DB36282176CBC67007FDB60 /* CERoundProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3627F176CBC67007FDB60 /* CERoundProgressLayer.m */; };
 		0DB36283176CBC67007FDB60 /* CERoundProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36281176CBC67007FDB60 /* CERoundProgressView.m */; };
 		0DB36286176CC0A8007FDB60 /* ButtonPlayObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */; };
+		0DBBE46F17B23B8E00815814 /* logoAbout.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DBBE46E17B23B8E00815814 /* logoAbout.png */; };
+		0DBBE47517B23E3500815814 /* SettingLogoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBBE47417B23E3300815814 /* SettingLogoCell.m */; };
+		0DBBE47717B23E4800815814 /* SettingLogoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DBBE47617B23E4700815814 /* SettingLogoCell.xib */; };
 		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */; };
 		0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */; };
 		0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */; };
@@ -414,6 +417,10 @@
 		0DB36281176CBC67007FDB60 /* CERoundProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CERoundProgressView.m; sourceTree = "<group>"; };
 		0DB36284176CC0A7007FDB60 /* ButtonPlayObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonPlayObject.h; sourceTree = "<group>"; };
 		0DB36285176CC0A7007FDB60 /* ButtonPlayObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonPlayObject.m; sourceTree = "<group>"; };
+		0DBBE46E17B23B8E00815814 /* logoAbout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoAbout.png; sourceTree = "<group>"; };
+		0DBBE47317B23E3300815814 /* SettingLogoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingLogoCell.h; path = Classes/Setting/SettingLogoCell.h; sourceTree = SOURCE_ROOT; };
+		0DBBE47417B23E3300815814 /* SettingLogoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingLogoCell.m; path = Classes/Setting/SettingLogoCell.m; sourceTree = SOURCE_ROOT; };
+		0DBBE47617B23E4700815814 /* SettingLogoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingLogoCell.xib; path = Classes/Setting/SettingLogoCell.xib; sourceTree = SOURCE_ROOT; };
 		0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalMainViewController.h; path = Classes/Personal/PersonalMainViewController.h; sourceTree = SOURCE_ROOT; };
 		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PersonalMainViewController.mm; path = Classes/Personal/PersonalMainViewController.mm; sourceTree = SOURCE_ROOT; };
 		0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurledViewBase.h; sourceTree = "<group>"; };
@@ -718,6 +725,9 @@
 				0D1531BA1740C4A900633FA0 /* SettingViewController.h */,
 				0D1531BB1740C4A900633FA0 /* SettingViewController.m */,
 				0D1531BC1740C4A900633FA0 /* SettingViewController.xib */,
+				0DBBE47317B23E3300815814 /* SettingLogoCell.h */,
+				0DBBE47417B23E3300815814 /* SettingLogoCell.m */,
+				0DBBE47617B23E4700815814 /* SettingLogoCell.xib */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -892,6 +902,7 @@
 		0DA1492E175116A5004EBCFF /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				0DBBE46E17B23B8E00815814 /* logoAbout.png */,
 				0DC93BC117AE9BE200080975 /* Icon_Tops_Hit@2x.png */,
 				0DC93BC217AE9BE300080975 /* Icon_Tops@2x.png */,
 				0DC93BA4179C93A500080975 /* Icon_edit.png */,
@@ -1471,6 +1482,8 @@
 				0DC93BC417AE9BE300080975 /* Icon_Tops@2x.png in Resources */,
 				0DC93BCA17AEF11300080975 /* RecordingScoreViewController.xib in Resources */,
 				0D1660FB17B1A1B600697424 /* Data in Resources */,
+				0DBBE46F17B23B8E00815814 /* logoAbout.png in Resources */,
+				0DBBE47717B23E4800815814 /* SettingLogoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1597,6 +1610,7 @@
 				0DC3DD8017AB55EA005C7CDC /* CustomViewController.m in Sources */,
 				0DC93BC917AEF11300080975 /* RecordingScoreViewController.m in Sources */,
 				0D1660F917B0256A00697424 /* Animations.m in Sources */,
+				0DBBE47517B23E3500815814 /* SettingLogoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
