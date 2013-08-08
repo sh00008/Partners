@@ -37,7 +37,7 @@
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
     // set navigation bar backgroundImage
     UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
-    if([nav.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+    if([nav.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
         [nav.navigationBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
     }
     nav.navigationBar.tintColor = [UIColor grayColor];

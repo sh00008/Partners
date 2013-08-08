@@ -50,7 +50,7 @@
         _editingLib = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, iconBigSize, iconBigSize)];
         [_editingLib addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
         [_editingLib setImage:[UIImage imageNamed:@"Icon_edit.png"] forState:UIControlStateNormal];
-         UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithCustomView:_editingLib];
+        UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithCustomView:_editingLib];
         self.navigationItem.leftBarButtonItem = box;
         [box release];
       
@@ -95,7 +95,7 @@
         SettingAboutViewController* setting = [[SettingAboutViewController alloc] init];
         [_scrollview addSubview:setting.view];
         
-        setting.view.frame = CGRectMake(favor.view.frame.origin.x + favor.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        setting.view.frame = CGRectMake(favor.view.frame.origin.x + favor.view.frame.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height - CELL_CONTENT_MARGIN*2);
        
         
         [_scrollview setContentSize:CGSizeMake(self.view.bounds.size.width * 3, self.view.bounds.size.height)];
