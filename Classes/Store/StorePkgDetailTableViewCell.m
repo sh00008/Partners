@@ -12,6 +12,7 @@
 #import "CurrentInfo.h"
 #import "Database.h"
 #import "VoiceDef.h"
+#import "PartnerIAPHelper.h"
 
 @implementation DetailCustomBackgroundView
 @synthesize bUpToDown;
@@ -74,6 +75,12 @@
 
 
 @end
+@interface StorePkgDetailTableViewCell()
+{
+    NSArray* _products;
+}
+
+@end
 
 @implementation StorePkgDetailTableViewCell
 @synthesize coverImageView, titleLabel, downloadButton;
@@ -101,7 +108,7 @@
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
 
-    [self.downloadButton setTitle:STRING_DOWNLOAD forState:UIControlStateNormal];
+    [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
     UIImage *blueButtonImage = [UIImage imageNamed:@"buttonblue_normal.png"];
     UIImage *stretchableBlueButton = [blueButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self.downloadButton setBackgroundImage:stretchableBlueButton forState:UIControlStateNormal];
@@ -117,6 +124,15 @@
     UIImage *darkGreenButtonImage = [UIImage imageNamed:@"buttonblue_pressed.png"];
     UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self.downloadButton setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
+    _products = nil;
+    [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _products = products;
+        } else {
+            
+        }
+    }];
+ 
 }
 
 - (void)setVoiceData:(DownloadDataPkgInfo*)info
@@ -126,7 +142,7 @@
     info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
     if ([db loadVoicePkgInfo:info] != nil) {
-        [self.downloadButton setTitle:STRING_DOWNLOADED forState:UIControlStateNormal];
+        [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
         [self.downloadButton setEnabled:NO];
         [self.downloadButton setHidden:YES];
     } else {
@@ -182,14 +198,26 @@
 
 - (IBAction)clickButton:(id)sender
 {
-    if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
+    if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING]) {
+        
+        //UIButton *buyButton = (UIButton *)sender;
+        if (_products == nil) {
+            [self.downloadButton  setTitle:STRING_BUYING_FAILED forState:UIControlStateNormal];
+        } else {
+                //SKProduct *product = _products[buyButton.tag];
+            SKProduct *product = _products[0];
+                
+            [self.downloadButton  setTitle:STRING_DOWNLOAD forState:UIControlStateNormal];
+            NSLog(@"Buying %@...", product.productIdentifier);
+            [[PartnerIAPHelper sharedInstance] buyProduct:product];
+             
+        }
+        
+    } else if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
         // begin download
         [self.downloadButton  setTitle:STRING_DOWNLOADING forState:UIControlStateNormal];
         self.downloadButton.enabled = NO;
-        [self.delegate doDownload:_info];
-        /*StoreDownloadPkg* downloadPkg = [[StoreDownloadPkg alloc] init];
-        downloadPkg.info = _info;
-        [downloadPkg doDownload];*/
+        [self.delegate doDownload:_info];        
     }
 }
 
@@ -202,7 +230,7 @@
 {
 	NSString *infoTitle = [aNotification object];
     if ([infoTitle isEqualToString:_info.title]) {
-        [self.downloadButton setTitle:STRING_DOWNLOADED forState:UIControlStateNormal];
+        [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
         [self.downloadButton setEnabled:NO];
         [self performSelector:@selector(delayShowBackToShelfButton) withObject:nil afterDelay:0.5];
     }

@@ -47,6 +47,7 @@
 #define STRING_LOADINGDATA_WAITING @"正在载入..."
 #define STRING_LOADINGDATA_ERROR @"网络连接错误"
 #define STRING_DOWNLOAD         @"添加至“我的资料库”"
+#define STRING_BUYING_FAILED         @"购买失败"
 #define STRING_DOWNLOADING      @"正在添加"
 #define STRING_START_LEARNING   @"开始学习"
 #define STRING_DOWNLOADED       @"添加成功"
@@ -62,7 +63,7 @@
 #define STRING_VOICE_PKG_DIR    @"VoicePkgData"
 #define SUB_DIR_DOCUMENT				@"/Documents/"
 #define SUB_DIR_CACHE                   @"/Caches/"
-
+#define STRING_BUYING           @"购买"
 #define kBufferDurationSeconds 1.0
 
 #define TAG_OF_TIME_INTEVAL 40000
