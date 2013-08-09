@@ -26,7 +26,6 @@
     UILabel* _titleLabel;
     PersonalMainViewController* _persnoal;
     BOOL _edit;
-    NSMutableArray* _barStatus;
 }
 @end
 
@@ -37,10 +36,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _barStatus = [[NSMutableArray alloc] initWithCapacity:3];
-        [_barStatus addObject:[NSNumber numberWithBool:NO]];
-        [_barStatus addObject:[NSNumber numberWithBool:YES]];
-        [_barStatus addObject:[NSNumber numberWithBool:NO]];
     }
     return self;
 }
@@ -166,8 +161,6 @@
 
 - (void)dealloc
 {
-    [_barStatus release];
-    _barStatus = nil;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:NOTIFICATION_OPEN_PKG object:nil];
     [super dealloc];
@@ -180,53 +173,45 @@
             [_store setSelected:YES];
             [_home setSelected:NO];
             [_settingBar setSelected:NO];
-            _titleLabel.text = STRING_LIBS;
-            _editingLib.hidden = NO;
+             _editingLib.hidden = NO;
             
             [Animations fadeIn:_store andAnimationDuration:1.0 andWait:NO];
-            /*if ([[_barStatus objectAtIndex:1] boolValue]) {
-                [Animations zoomIn:_home andAnimationDuration:1.0 andWait:NO];
-            } else if ([[_barStatus objectAtIndex:2] boolValue]) {
-                [Animations zoomIn:_settingBar andAnimationDuration:1.0 andWait:NO];
-                
-            }*/
-           [_barStatus replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:YES]];
-            [_barStatus replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
-            [_barStatus replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
+             [UIView transitionWithView:_titleLabel
+                              duration:0.33f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                _titleLabel.text = STRING_LIBS;
+                            } completion:NULL];
          }
      } else if (pt.x == 2* self.view.bounds.size.width) {
          if (!_settingBar.isSelected) {
              [_store setSelected:NO];
              [_home setSelected:NO];
              [_settingBar setSelected:YES];
-             _titleLabel.text = STRING_ABOUT_US;
+             //_titleLabel.text = STRING_ABOUT_US;
              _editingLib.hidden = YES;
              [Animations fadeIn:_settingBar andAnimationDuration:1.0 andWait:NO];
-             /*if ([[_barStatus objectAtIndex:0] boolValue]) {
-                 [Animations zoomIn:_store andAnimationDuration:1.0 andWait:NO];
-             } else if ([[_barStatus objectAtIndex:1] boolValue]) {
-                 [Animations zoomIn:_home andAnimationDuration:1.0 andWait:NO];
-             }*/
-             [_barStatus replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
-             [_barStatus replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
-             [_barStatus replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:YES]];
+             [UIView transitionWithView:_titleLabel
+                               duration:0.33f
+                                options:UIViewAnimationOptionTransitionCrossDissolve
+                             animations:^{
+                                 _titleLabel.text = STRING_ABOUT_US;
+                             } completion:NULL];
          }
     } else if (pt.x == self.view.bounds.size.width){
         if (!_home.isSelected) {
             [_store setSelected:NO];
             [_home setSelected:YES];
             [_settingBar setSelected:NO];
-            _titleLabel.text = STRING_MY_RES;
+            //_titleLabel.text = STRING_MY_RES;
             _editingLib.hidden = YES;
             [Animations fadeIn:_home andAnimationDuration:1.0 andWait:NO];
-            /*if ([[_barStatus objectAtIndex:0] boolValue]) {
-                [Animations zoomIn:_store andAnimationDuration:1.0 andWait:NO];
-            } else if ([[_barStatus objectAtIndex:2] boolValue]) {
-                [Animations zoomIn:_settingBar andAnimationDuration:1.0 andWait:NO];
-            }*/
-            [_barStatus replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
-            [_barStatus replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:YES]];
-            [_barStatus replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
+            [UIView transitionWithView:_titleLabel
+                              duration:0.33f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                _titleLabel.text = STRING_MY_RES;
+                            } completion:NULL];
         }
     }
     [_titleLabel sizeToFit];

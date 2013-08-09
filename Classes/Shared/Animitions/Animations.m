@@ -237,7 +237,17 @@
     view.layer.masksToBounds = YES;
 }
 
-
++ (void)contentOnView:(UIView *)view from:(id)fromValue toValue:(id)toValue andAnimationDuration: (float) duration{
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"contents"];
+    anim.duration = duration;
+    anim.fromValue = fromValue;
+    anim.toValue = toValue;
+    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.repeatCount = 1;
+    anim.autoreverses = YES;
+    
+    [view.layer addAnimation:anim forKey:nil];
+}
 
 + (void) shadowOnView: (UIView *) view andShadowType: (NSString *) shadowType{
     CGSize size = view.bounds.size;

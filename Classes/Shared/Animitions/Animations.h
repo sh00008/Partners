@@ -40,5 +40,5 @@
 
 + (void) background: (UIView *) view andImageFileName: (NSString *) filename;
 + (void) roundedCorners: (UIView *) view;
-
++ (void)contentOnView:(UIView *)view from:(id)fromValue toValue:(id)toValue andAnimationDuration: (float) duration;
 @end
