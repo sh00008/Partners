@@ -141,6 +141,7 @@
 		0DBBE46F17B23B8E00815814 /* logoAbout.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DBBE46E17B23B8E00815814 /* logoAbout.png */; };
 		0DBBE47517B23E3500815814 /* SettingLogoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBBE47417B23E3300815814 /* SettingLogoCell.m */; };
 		0DBBE47717B23E4800815814 /* SettingLogoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DBBE47617B23E4700815814 /* SettingLogoCell.xib */; };
+		0DBBE47A17B498C300815814 /* BuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBBE47917B498C300815814 /* BuyButton.m */; };
 		0DBE679F177883BE00AA9B57 /* PersonalMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */; };
 		0DBE67AB177CE0A400AA9B57 /* CurledViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A6177CE0A400AA9B57 /* CurledViewBase.m */; };
 		0DBE67AC177CE0A400AA9B57 /* UIButton+Curled.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE67A8177CE0A400AA9B57 /* UIButton+Curled.m */; };
@@ -421,6 +422,8 @@
 		0DBBE47317B23E3300815814 /* SettingLogoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingLogoCell.h; path = Classes/Setting/SettingLogoCell.h; sourceTree = SOURCE_ROOT; };
 		0DBBE47417B23E3300815814 /* SettingLogoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingLogoCell.m; path = Classes/Setting/SettingLogoCell.m; sourceTree = SOURCE_ROOT; };
 		0DBBE47617B23E4700815814 /* SettingLogoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingLogoCell.xib; path = Classes/Setting/SettingLogoCell.xib; sourceTree = SOURCE_ROOT; };
+		0DBBE47817B498C300815814 /* BuyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyButton.h; path = Classes/Store/BuyButton.h; sourceTree = SOURCE_ROOT; };
+		0DBBE47917B498C300815814 /* BuyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyButton.m; path = Classes/Store/BuyButton.m; sourceTree = SOURCE_ROOT; };
 		0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalMainViewController.h; path = Classes/Personal/PersonalMainViewController.h; sourceTree = SOURCE_ROOT; };
 		0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PersonalMainViewController.mm; path = Classes/Personal/PersonalMainViewController.mm; sourceTree = SOURCE_ROOT; };
 		0DBE67A5177CE0A400AA9B57 /* CurledViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurledViewBase.h; sourceTree = "<group>"; };
@@ -1079,6 +1082,8 @@
 				0DC0D51F17509BEA00684ED2 /* StoreViewController.xib */,
 				0DC0D52017509BEA00684ED2 /* StoreVoiceDataListParser.h */,
 				0DC0D52117509BEA00684ED2 /* StoreVoiceDataListParser.m */,
+				0DBBE47817B498C300815814 /* BuyButton.h */,
+				0DBBE47917B498C300815814 /* BuyButton.m */,
 			);
 			name = Store;
 			path = Classes/Store;
@@ -1611,6 +1616,7 @@
 				0DC93BC917AEF11300080975 /* RecordingScoreViewController.m in Sources */,
 				0D1660F917B0256A00697424 /* Animations.m in Sources */,
 				0DBBE47517B23E3500815814 /* SettingLogoCell.m in Sources */,
+				0DBBE47A17B498C300815814 /* BuyButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
