@@ -19,9 +19,13 @@
 #import "PartnerIAPHelper.h"
 #import "GTMHTTPFetcher.h"
 #import "StoreVoiceDataListParser.h"
+#import "BuyButton.h"
+
 @interface PersonalMainViewController ()
 {
     YIPopupTextView* _popAddLibView;
+    BuyButton* _buyButton;
+    UITableViewCell *_productCell;
 }
 
 @end
@@ -38,10 +42,13 @@
         [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
             if (success) {
                 self._products = products;
-                [self.tableView reloadData];
+                 [self.tableView reloadData];
             }
             if ([self respondsToSelector:@selector(refreshControl)]) {
                 [self.refreshControl endRefreshing];
+            }
+            if (_buyButton != nil) {
+                [_buyButton showText:STRING_BUYING forBlue:YES];
             }
         }];
     }
@@ -63,7 +70,10 @@
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     _isCloseAddLibView = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Restore" style:UIBarButtonItemStyleBordered target:self action:@selector(restoreTapped:)];
-}
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedTransactionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productDone:) name:IAPHelperProductDoneTransactionNotification object:nil];
+ }
 
 - (void)restoreTapped:(id)sender {
     [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];
@@ -92,10 +102,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+}
+
+- (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -109,6 +121,17 @@
         }
     }];
     
+}
+
+- (void)productFailed:(NSNotification *)notification {
+    [_buyButton showText:STRING_BUYING forBlue:YES];
+}
+
+- (void)productDone:(NSNotification *)notification {
+    if (_productCell != nil) {
+        _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+   [_buyButton removeFromSuperview];
 }
 
 #pragma mark - Table view data source
@@ -152,7 +175,8 @@
     [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:14]];
     cell.imageView.image = [UIImage imageNamed:@"add"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
+    _productCell = cell;
+    [_productCell retain];
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
         SKProduct * product = (SKProduct *)_products[0];
         [_priceFormatter setLocale:product.priceLocale];
@@ -162,27 +186,35 @@
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
         } else {
-            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            buyButton.frame = CGRectMake(0, 0, 72, 37);
-            [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
-            buyButton.tag = indexPath.row;
-            [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = buyButton;
+            if (_products == nil) {
+                BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 5, 72, 37)];
+                [buyButton start];
+                buyButton.tag = indexPath.row;
+                [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryView = buyButton;
+                _buyButton = buyButton;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
         }
-    }
+    } 
 
     return cell;
 }
 
 - (void)buyButtonTapped:(id)sender {
     
-    UIButton *buyButton = (UIButton *)sender;
-    SKProduct *product = _products[buyButton.tag];
+    BuyButton *buyButton = (BuyButton *)sender;
+    if (buyButton.isLoading) {
+        return;
+    }
     
+    SKProduct *product = _products[buyButton.tag];
     NSLog(@"Buying %@...", product.productIdentifier);
     [[PartnerIAPHelper sharedInstance] buyProduct:product];
-    [self reloadInfo];
+    [buyButton start];
+    //[self reloadInfo];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;

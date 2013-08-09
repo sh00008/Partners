@@ -9,6 +9,8 @@
 #import "IAPHelper.h"
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
+NSString *const IAPHelperProductFailedTransactionNotification = @"IAPHelperProductFailedTransactionNotification";
+NSString *const IAPHelperProductDoneTransactionNotification = @"IAPHelperProductDoneransactionNotification";
 
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
@@ -91,6 +93,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductDoneTransactionNotification object:transaction userInfo:nil];
+   
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
@@ -109,6 +113,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductFailedTransactionNotification object:transaction userInfo:nil];
+    
 }
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {

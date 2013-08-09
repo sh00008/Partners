@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VoicePkgInfoObject.h"
-
+#import "BuyButton.h"
 typedef enum {
 	STORE_DOWNLOADING_STATUS_None           = 0,
 	STORE_DOWNLOADING_STATUS_DOWNLOADING    = 1,
@@ -38,8 +38,8 @@ typedef enum {
 
 @property (nonatomic, retain) IBOutlet UIImageView* coverImageView;
 @property (nonatomic, retain) IBOutlet UILabel* titleLabel;
-@property (nonatomic, retain) IBOutlet UIButton* downloadButton;
-@property (nonatomic, retain) IBOutlet UIButton* backToShelfButton;
+@property (nonatomic, retain) IBOutlet BuyButton* downloadButton;
+@property (nonatomic, retain) IBOutlet BuyButton* backToShelfButton;
 @property (nonatomic, assign) id<StorePkgDetailTableViewCellDelegate> delegate;
 
 - (void)setVoiceData:(DownloadDataPkgInfo*)info;

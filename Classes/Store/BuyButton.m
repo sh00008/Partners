@@ -9,16 +9,20 @@
 #import "BuyButton.h"
 
 @implementation BuyButton
+@synthesize isLoading;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        UIImage *blueButtonImage = [UIImage imageNamed:@"buttonblue_normal.png"];
+        UIImage *stretchableBlueButton = [blueButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
+        [self setBackgroundImage:stretchableBlueButton forState:UIControlStateNormal];
         UIImage *darkGreenButtonImage = [UIImage imageNamed:@"buttonblue_pressed.png"];
         UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
         [self setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
-       
+        self.isLoading = YES;
     }
     return self;
 }
@@ -35,16 +39,19 @@
 - (void)start
 {
     if (_indicatior == nil) {
-        _indicatior = [[UIActivityIndicatorView alloc] initWithFrame:self.frame];
+        _indicatior = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self addSubview:_indicatior];
+        _indicatior.center = self.center;
         [_indicatior release];
-    }
+     }
     [_indicatior startAnimating];
+    self.isLoading = YES;
 }
 
-- (void)setShowText:(NSString*)t forBlue:(BOOL)isBlue;
+- (void)showText:(NSString*)t forBlue:(BOOL)isBlue;
 {
-    [_indicatior stopAnimating];
+    self.isLoading = NO;
+   [_indicatior stopAnimating];
     [_indicatior removeFromSuperview];
     _indicatior = nil;
     [self setTitle:t forState:UIControlStateNormal];

@@ -11,7 +11,8 @@
 @interface BuyButton : UIButton {
     UIActivityIndicatorView* _indicatior;
 }
+@property(nonatomic, assign) BOOL isLoading;
 
 - (void)start;
-- (void)setShowText:(NSString*)t forBlue:(BOOL)isBlue;
+- (void)showText:(NSString*)t forBlue:(BOOL)isBlue;
 @end
