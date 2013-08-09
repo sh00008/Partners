@@ -12,6 +12,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 NSString *const IAPHelperProductFailedTransactionNotification = @"IAPHelperProductFailedTransactionNotification";
 NSString *const IAPHelperProductDoneTransactionNotification = @"IAPHelperProductDoneransactionNotification";
 
+NSString *const IAPHelperProductRequestFailedNotification = 
+@"IAPHelperProductRequestFailedNotification";
 @interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 @end
 
@@ -152,6 +154,7 @@ NSString *const IAPHelperProductDoneTransactionNotification = @"IAPHelperProduct
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     
     NSLog(@"Failed to load list of products.");
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductRequestFailedNotification object:error];
     _productsRequest = nil;
     
     _completionHandler(NO, nil);

@@ -12,6 +12,7 @@
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 UIKIT_EXTERN NSString *const IAPHelperProductFailedTransactionNotification;
 UIKIT_EXTERN NSString *const IAPHelperProductDoneTransactionNotification;
+UIKIT_EXTERN NSString *const IAPHelperProductRequestFailedNotification;
 
 typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
 

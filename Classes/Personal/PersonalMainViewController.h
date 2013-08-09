@@ -23,4 +23,5 @@
 - (void)loadLibaryInfo;
 - (void)reloadInfo;
 - (BOOL)isCanPerfomEdit;
+- (void)loadProducts;
 @end

@@ -64,6 +64,8 @@
 #define SUB_DIR_DOCUMENT				@"/Documents/"
 #define SUB_DIR_CACHE                   @"/Caches/"
 #define STRING_BUYING           @"购买"
+#define STRING_ON_BUYING           @"购买中"
+#define STRING_RETRY           @"点击重试"
 #define kBufferDurationSeconds 1.0
 
 #define TAG_OF_TIME_INTEVAL 40000

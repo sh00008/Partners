@@ -38,12 +38,13 @@
 
 - (void)start
 {
-    if (_indicatior == nil) {
+   if (_indicatior == nil) {
         _indicatior = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self addSubview:_indicatior];
         _indicatior.center = self.center;
         [_indicatior release];
      }
+    [self bringSubviewToFront:_indicatior];
     [_indicatior startAnimating];
     self.isLoading = YES;
 }

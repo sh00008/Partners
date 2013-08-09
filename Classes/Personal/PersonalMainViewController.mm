@@ -26,6 +26,8 @@
     YIPopupTextView* _popAddLibView;
     BuyButton* _buyButton;
     UITableViewCell *_productCell;
+    BOOL _isContinueRequest;
+    BOOL _isRequestSucceed;
 }
 
 @end
@@ -39,18 +41,9 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-            if (success) {
-                self._products = products;
-                 [self.tableView reloadData];
-            }
-            if ([self respondsToSelector:@selector(refreshControl)]) {
-                [self.refreshControl endRefreshing];
-            }
-            if (_buyButton != nil) {
-                [_buyButton showText:STRING_BUYING forBlue:YES];
-            }
-        }];
+        _isContinueRequest = YES;
+        _isRequestSucceed = NO;
+        [self loadProducts];
     }
     return self;
 }
@@ -73,7 +66,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedTransactionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productDone:) name:IAPHelperProductDoneTransactionNotification object:nil];
- }
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFailed:) name:IAPHelperProductRequestFailedNotification object:nil];
+}
 
 - (void)restoreTapped:(id)sender {
     [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];
@@ -102,9 +97,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    _isContinueRequest = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    _isContinueRequest = NO;
 }
 
 - (void)viewDidUnload {
@@ -128,11 +125,27 @@
 }
 
 - (void)productDone:(NSNotification *)notification {
-    if (_productCell != nil) {
-        _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    SKPaymentTransaction* transaction = notification.object;// (SKPaymentTransaction *)transaction
+    if (transaction == nil) {
+        return;
     }
-   [_buyButton removeFromSuperview];
+    if ([[PartnerIAPHelper sharedInstance] productPurchased:transaction.payment.productIdentifier]) {
+        if (_productCell != nil) {
+            _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        [_buyButton removeFromSuperview];
+        
+    } else {
+        [_buyButton showText:STRING_BUYING forBlue:YES];
+    }
 }
+
+- (void)requestFailed:(NSNotification *)notification {
+    _isContinueRequest = NO;
+    [_buyButton showText:STRING_RETRY forBlue:YES];
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -187,15 +200,22 @@
             cell.accessoryView = nil;
         } else {
             if (_products == nil) {
-                BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 5, 72, 37)];
+                BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
                 [buyButton start];
                 buyButton.tag = indexPath.row;
                 [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.accessoryView = buyButton;
                 _buyButton = buyButton;
+                if (_isRequestSucceed) {
+                    [_buyButton showText:STRING_BUYING forBlue:YES];                   
+                } else {
+                    if (!_isContinueRequest) {
+                        [_buyButton showText:STRING_RETRY forBlue:YES];
+                    }
+                }
             } else {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                 [_buyButton showText:STRING_BUYING forBlue:YES];
             }
         }
     } 
@@ -210,10 +230,19 @@
         return;
     }
     
-    SKProduct *product = _products[buyButton.tag];
-    NSLog(@"Buying %@...", product.productIdentifier);
-    [[PartnerIAPHelper sharedInstance] buyProduct:product];
-    [buyButton start];
+    if (!_isContinueRequest && !_isRequestSucceed) {
+        _isContinueRequest = YES;
+        [buyButton start];
+        [self loadProducts];
+        return;
+    }
+    if (_isRequestSucceed) {
+        [buyButton showText:STRING_ON_BUYING forBlue:YES];
+        SKProduct *product = _products[buyButton.tag];
+        NSLog(@"Buying %@...", product.productIdentifier);
+        [[PartnerIAPHelper sharedInstance] buyProduct:product];
+        [buyButton start];
+    }
     //[self reloadInfo];
 }
 
@@ -329,22 +358,41 @@
         [self setEditing:NO];
     }
     
-    _products = nil;
-    [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            self._products = products;
-            [self.tableView reloadData];
-        }
-        if ([self respondsToSelector:@selector(refreshControl)]) {
-            [self.refreshControl endRefreshing];
-        }
-    }];
     [self.tableView reloadData];
 }
 
 - (BOOL)isCanPerfomEdit
 {
     return ([_dataArray count] != 1);
+}
+
+- (void)loadProducts {
+    if (!_isContinueRequest) {
+        return;
+    }
+    [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _isRequestSucceed = YES;
+            self._products = products;
+            SKProduct * product = (SKProduct *)_products[0];
+            
+            if ([[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+                if (_productCell != nil) {
+                    _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+                [_buyButton removeFromSuperview];
+                
+            } else {
+                [_buyButton showText:STRING_BUYING forBlue:YES];
+            }
+         } else {
+            _isRequestSucceed = NO;
+            [self loadProducts];
+        }
+        if ([self respondsToSelector:@selector(refreshControl)]) {
+            [self.refreshControl endRefreshing];
+        }
+    }];
 }
 
 #pragma mark YIPopupTextViewDelegate

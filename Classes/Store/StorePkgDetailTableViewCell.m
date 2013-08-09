@@ -107,29 +107,17 @@
 {
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
-
-    [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
-    UIImage *blueButtonImage = [UIImage imageNamed:@"buttonblue_normal.png"];
-    UIImage *stretchableBlueButton = [blueButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
-    [self.downloadButton setBackgroundImage:stretchableBlueButton forState:UIControlStateNormal];
-    
-    UIImage *greenButtonImage = [UIImage imageNamed:@"button_green_normal.png"];
-    UIImage *stretchableGreenButton = [greenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
-   [self.backToShelfButton setBackgroundImage:stretchableGreenButton forState:UIControlStateNormal];
-    [self.backToShelfButton setTitle:STRING_START_LEARNING forState:UIControlStateNormal];
-    [self.backToShelfButton setTitle:STRING_START_LEARNING forState:UIControlStateSelected];
-   
-    [self.backToShelfButton setHidden:NO];
-    
-    UIImage *darkGreenButtonImage = [UIImage imageNamed:@"buttonblue_pressed.png"];
-    UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
-    [self.downloadButton setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
+    [self.downloadButton start];
+    [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
+    [self.backToShelfButton setHidden:YES];
     _products = nil;
     [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
         } else {
-            
+            [self.downloadButton showText:STRING_BUYING forBlue:YES];
+         
         }
     }];
  
@@ -141,10 +129,12 @@
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
-    if ([db loadVoicePkgInfo:info] != nil) {
-        [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
-        [self.downloadButton setEnabled:NO];
-        [self.downloadButton setHidden:YES];
+    if ([db loadVoicePkgInfo:info] == nil) {
+        if (_products != nil) {
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+        } else {
+            [self.downloadButton start];
+        }
     } else {
         [self.backToShelfButton setHidden:YES];
     }
