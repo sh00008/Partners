@@ -70,6 +70,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFailed:) name:IAPHelperProductRequestFailedNotification object:nil];
 }
 
+
+
 - (void)restoreTapped:(id)sender {
     [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];
 }
@@ -86,8 +88,6 @@
     titleLabel.font = [UIFont fontWithName:@"Arial" size:22];
     self.navigationItem.titleView = titleLabel;
     [titleLabel release];
-   
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,8 +145,6 @@
     [_buyButton showText:STRING_RETRY forBlue:YES];
 }
 
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -188,9 +186,9 @@
     [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:14]];
     cell.imageView.image = [UIImage imageNamed:@"add"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    _productCell = cell;
-    [_productCell retain];
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
+        _productCell = cell;
+        [_productCell retain];
         SKProduct * product = (SKProduct *)_products[0];
         [_priceFormatter setLocale:product.priceLocale];
         cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
@@ -376,6 +374,9 @@
             _isRequestSucceed = YES;
             self._products = products;
             SKProduct * product = (SKProduct *)_products[0];
+            
+            [_priceFormatter setLocale:product.priceLocale];
+            _productCell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
             
             if ([[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
                 if (_productCell != nil) {

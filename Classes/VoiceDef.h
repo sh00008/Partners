@@ -29,7 +29,7 @@
 #define NOTIFICATION_ADDNEWNAVI @"AddNewNavigationNotification"
 #define NOTIFICATION_MODEL_LESSONS @"ModalLessonsNotification"
 #define NOTIFICATION_CLOSE_LESSONS @"CloseLessonsNotification"
-#define STRING_STORE_URL_ADDRESS_BASE @"http://isaybox.b0.upaiyun.com"
+#define STRING_STORE_URL_ADDRESS_BASE @"http://isaybox.b0.upaiyun.com/"
 // #define STRING_STORE_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"
 #define STRING_STORE_URL_ADDRESS @"http://isaybox.b0.upaiyun.com/index_ios.xml"
 #define STORE_UNLOCK_ID @"com.story.partners.unlockdefaultlibrary"
@@ -66,7 +66,7 @@
 #define SUB_DIR_DOCUMENT				@"/Documents/"
 #define SUB_DIR_CACHE                   @"/Caches/"
 #define STRING_BUYING           @"购买"
-#define STRING_ON_BUYING           @"购买中"
+#define STRING_ON_BUYING           @"购买中..."
 #define STRING_RETRY           @"点击重试"
 #define kBufferDurationSeconds 1.0
 

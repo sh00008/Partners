@@ -91,9 +91,48 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
     }
     return self;
+}
+
+- (void)productPurchased:(NSNotification *)notification { 
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+        } else {
+            [self.downloadButton showText:STRING_BUYING forBlue:YES];
+        }
+    }
+}
+
+- (void)productFailed:(NSNotification *)notification {
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+        } else {
+            [self.downloadButton showText:STRING_BUYING_FAILED forBlue:YES];
+        }
+    }
+}
+
+- (void)productDone:(NSNotification *)notification {
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+        } else {
+            [self.downloadButton showText:STRING_BUYING_FAILED forBlue:YES];
+        }
+    }
+}
+
+- (void)requestFailed:(NSNotification *)notification {
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+        } else {
+            [self.downloadButton showText:STRING_BUYING forBlue:YES];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -110,22 +149,24 @@
     [self.downloadButton start];
     [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
     [self.backToShelfButton setHidden:YES];
-    _products = nil;
-    [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            _products = products;
+    
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
             [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
         } else {
             [self.downloadButton showText:STRING_BUYING forBlue:YES];
-         
         }
-    }];
- 
+    }
 }
 
 - (void)setVoiceData:(DownloadDataPkgInfo*)info
 {
-    [self setButtomImage];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedTransactionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productDone:) name:IAPHelperProductDoneTransactionNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFailed:) name:IAPHelperProductRequestFailedNotification object:nil];
+
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
@@ -140,6 +181,8 @@
     }
     
     _info = info;
+    [self setButtomImage];
+
     self.titleLabel.text = info.title;
      if (info.receivedCoverImagePath == nil) {
         // download cover
@@ -188,20 +231,29 @@
 
 - (IBAction)clickButton:(id)sender
 {
-    if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING]) {
+    if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING]
+        || [[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING_FAILED]) {
         
-        //UIButton *buyButton = (UIButton *)sender;
-        if (_products == nil) {
-            [self.downloadButton  setTitle:STRING_BUYING_FAILED forState:UIControlStateNormal];
-        } else {
-                //SKProduct *product = _products[buyButton.tag];
-            SKProduct *product = _products[0];
-                
-            [self.downloadButton  setTitle:STRING_DOWNLOAD forState:UIControlStateNormal];
-            NSLog(@"Buying %@...", product.productIdentifier);
-            [[PartnerIAPHelper sharedInstance] buyProduct:product];
-             
+        if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+            if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
+                [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+            } else {
+                [self.downloadButton showText:STRING_ON_BUYING forBlue:YES];
+            }
         }
+        
+        [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+            if (success) {
+                
+                _products = products;
+                SKProduct * product = (SKProduct *)_products[0];
+                
+                NSLog(@"Buying %@...", product.productIdentifier);
+                [[PartnerIAPHelper sharedInstance] buyProduct:product];
+            } else {
+                [self.downloadButton  setTitle:STRING_BUYING_FAILED forState:UIControlStateNormal];
+            }
+        }];
         
     } else if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
         // begin download

@@ -73,7 +73,7 @@ NSString *const IAPHelperProductRequestFailedNotification =
 -(BOOL)isExistenceNetwork
 {
     BOOL isExistenceNetwork;
-    Reachability *r = [Reachability reachabilityWithHostName:STRING_STORE_URL_ADDRESS_BASE];
+    Reachability *r = [Reachability reachabilityWithHostName:STRING_STORE_URL_ADDRESS];
     switch ([r currentReachabilityStatus]) {
         case NotReachable:
             isExistenceNetwork=FALSE;
@@ -166,12 +166,12 @@ NSString *const IAPHelperProductRequestFailedNotification =
               skProduct.price.floatValue);
     }
     
-    if ([self isExistenceNetwork]) {
+    if ([skProducts count] > 0) {
         _completionHandler(YES, skProducts);
-    }
-    else {
+    } else {
         _completionHandler(NO, nil);
     }
+    
     _completionHandler = nil;
     
 }
