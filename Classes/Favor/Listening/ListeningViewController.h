@@ -130,8 +130,9 @@ typedef enum {
 
 - (void)displayLesson;
 - (void)openCell:(id)sender;
-- (IBAction)readwholelesson:(id)sender;
-- (IBAction)practicewholelesson:(id)sender;
+- (IBAction)clickReadLessonButton:(id)sender;
+- (IBAction)clickReadingFollowButton:(id)sender;
+- (void)beforePlayWholeLesson;
 
 - (void)playAnimationWithView:(UIView*)viewWillAnimation;
 - (void)playfromCurrentPos;

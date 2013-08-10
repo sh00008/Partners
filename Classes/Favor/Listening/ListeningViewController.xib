@@ -232,7 +232,7 @@
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="993387283"/>
 					</object>
-					<int key="connectionID">108</int>
+					<int key="connectionID">112</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -240,16 +240,16 @@
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="41572725"/>
 					</object>
-					<int key="connectionID">109</int>
+					<int key="connectionID">113</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">practicewholelesson:</string>
+						<string key="label">clickReadingFollowButton:</string>
 						<reference key="source" ref="41572725"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">107</int>
+					<int key="connectionID">114</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -259,6 +259,15 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">106</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickReadLessonButton:</string>
+						<reference key="source" ref="993387283"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">115</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -385,7 +394,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">109</int>
+			<int key="maxID">115</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -405,8 +414,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>practicewholelesson:</string>
-							<string>readwholelesson:</string>
+							<string>clickReadLessonButton:</string>
+							<string>clickReadingFollowButton:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -418,17 +427,17 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>practicewholelesson:</string>
-							<string>readwholelesson:</string>
+							<string>clickReadLessonButton:</string>
+							<string>clickReadingFollowButton:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">practicewholelesson:</string>
+								<string key="name">clickReadLessonButton:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">readwholelesson:</string>
+								<string key="name">clickReadingFollowButton:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

@@ -951,46 +951,29 @@
     }
 }
 
-- (IBAction)readwholelesson:(id)sender;
+- (IBAction)clickReadLessonButton:(id)sender;
 {
     clickindex = 0;
-    [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
-    switch (ePlayStatus) {
-        case PLAY_STATUS_NONE:
-            ePlayStatus = PLAY_STATUS_PLAYING;
-            [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
-            [self playWholeLesson];
-            break;
-        case PLAY_STATUS_PAUSING:
-            ePlayStatus = PLAY_STATUS_PLAYING;
-            [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
-            [self playWholeLesson];
-            break;
-        case PLAY_STATUS_PLAYING:
-            ePlayStatus = PLAY_STATUS_PAUSING;
-            [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
-            if (self.player) {
-                [self.player pause];
-            }
-            break;
-        default:
-            break;
-    }
     nLesson = PLAY_LESSON;
+    [_scroeArray release];
+    _scroeArray = nil;
+    [self beforePlayWholeLesson];
 }
 
-- (IBAction)practicewholelesson:(id)sender;
+- (IBAction)clickReadingFollowButton:(id)sender
 {
-    if (sender != nil) {
-        [_scroeArray release];
-        _scroeArray = nil;
-        _scroeArray = [[NSMutableArray alloc] init];
-    }
-    
+    clickindex = 0;
     nLesson = PLAY_READING_FLOWME;
-    V_NSLog(@"practicewholelesson %d", clickindex);
+    [_scroeArray release];
+    _scroeArray = nil;
+    _scroeArray = [[NSMutableArray alloc] init];
+    [self beforePlayWholeLesson];
+}
 
+- (void)beforePlayWholeLesson
+{
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+    [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
             ePlayStatus = PLAY_STATUS_PLAYING;
@@ -1195,7 +1178,7 @@
     } else {
          [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
         ePlayStatus = PLAY_STATUS_NONE;
-        [self practicewholelesson:nil];
+        [self beforePlayWholeLesson];
     }
 }
 
