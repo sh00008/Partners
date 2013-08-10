@@ -148,7 +148,6 @@
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
     [self.downloadButton start];
     [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
-    [self.backToShelfButton setHidden:YES];
     
     if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
         if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
@@ -171,13 +170,16 @@
     info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
     if ([db loadVoicePkgInfo:info] == nil) {
-        if (_products != nil) {
+        [self.backToShelfButton setHidden:YES];
+        [self.downloadButton setHidden:NO];
+       if (_products != nil) {
             [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
         } else {
             [self.downloadButton start];
         }
     } else {
-        [self.backToShelfButton setHidden:YES];
+        [self.backToShelfButton setHidden:NO];
+        [self.downloadButton setHidden:YES];
     }
     
     _info = info;
