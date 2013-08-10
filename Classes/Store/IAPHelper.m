@@ -7,6 +7,8 @@
 //
 
 #import "IAPHelper.h"
+#import "Reachability.h"
+#import "VoiceDef.h"
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 NSString *const IAPHelperProductFailedTransactionNotification = @"IAPHelperProductFailedTransactionNotification";
@@ -66,7 +68,25 @@ NSString *const IAPHelperProductRequestFailedNotification =
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
+}
+
+-(BOOL)isExistenceNetwork
+{
+    BOOL isExistenceNetwork;
+    Reachability *r = [Reachability reachabilityWithHostName:STRING_STORE_URL_ADDRESS_BASE];
+    switch ([r currentReachabilityStatus]) {
+        case NotReachable:
+            isExistenceNetwork=FALSE;
+            break;
+        case ReachableViaWWAN:
+            isExistenceNetwork=TRUE;
+            break;
+        case ReachableViaWiFi:
+            isExistenceNetwork=TRUE;
+            break;
+    }
     
+    return isExistenceNetwork;
 }
 
 #pragma mark - Transactions
@@ -146,7 +166,12 @@ NSString *const IAPHelperProductRequestFailedNotification =
               skProduct.price.floatValue);
     }
     
-    _completionHandler(YES, skProducts);
+    if ([self isExistenceNetwork]) {
+        _completionHandler(YES, skProducts);
+    }
+    else {
+        _completionHandler(NO, nil);
+    }
     _completionHandler = nil;
     
 }

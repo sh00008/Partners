@@ -230,6 +230,9 @@
 		95799BE117B61F0D00431337 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BE017B61F0D00431337 /* Default-Landscape@2x~ipad.png */; };
 		95799BE317B61F7B00431337 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BE217B61F7B00431337 /* Icon-72.png */; };
 		95799BE517B61F8300431337 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BE417B61F8300431337 /* Icon-72@2x.png */; };
+		95799BE817B627E800431337 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 95799BE717B627E800431337 /* Reachability.m */; };
+		95799BE917B628DB00431337 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 95799BE717B627E800431337 /* Reachability.m */; };
+		95799BEB17B6295700431337 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95799BEA17B6295700431337 /* SystemConfiguration.framework */; };
 		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
 		95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
 		95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
@@ -568,6 +571,9 @@
 		95799BE017B61F0D00431337 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		95799BE217B61F7B00431337 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../../Icon-72.png"; sourceTree = "<group>"; };
 		95799BE417B61F8300431337 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../../Icon-72@2x.png"; sourceTree = "<group>"; };
+		95799BE617B627E800431337 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		95799BE717B627E800431337 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		95799BEA17B6295700431337 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
 		95C0669917928755008E39C6 /* BorrowInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorrowInfo.h; sourceTree = "<group>"; };
 		95C0669A17928755008E39C6 /* BorrowInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorrowInfo.m; sourceTree = "<group>"; };
@@ -583,6 +589,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95799BEB17B6295700431337 /* SystemConfiguration.framework in Frameworks */,
 				0DC93BC017AB050E00080975 /* CoreText.framework in Frameworks */,
 				95FC6432179D79D0009990EF /* StoreKit.framework in Frameworks */,
 				0DAA1418175F771500E51620 /* AudioToolbox.framework in Frameworks */,
@@ -623,7 +630,6 @@
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
-				0DC93BBF17AB050D00080975 /* CoreText.framework */,
 				0D15316A1740B20000633FA0 /* Partners */,
 				0D1531911740B20000633FA0 /* PartnersTests */,
 				0D1531631740B20000633FA0 /* Frameworks */,
@@ -643,6 +649,8 @@
 		0D1531631740B20000633FA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				95799BEA17B6295700431337 /* SystemConfiguration.framework */,
+				0DC93BBF17AB050D00080975 /* CoreText.framework */,
 				95FC6431179D79CF009990EF /* StoreKit.framework */,
 				0DAA1417175F771500E51620 /* AudioToolbox.framework */,
 				0DAA1415175F770E00E51620 /* AVFoundation.framework */,
@@ -1318,6 +1326,8 @@
 		95FC642D179D683C009990EF /* IAP */ = {
 			isa = PBXGroup;
 			children = (
+				95799BE617B627E800431337 /* Reachability.h */,
+				95799BE717B627E800431337 /* Reachability.m */,
 				95FC642A179D66FC009990EF /* IAPHelper.h */,
 				95FC642B179D66FC009990EF /* IAPHelper.m */,
 				95FC642E179D6861009990EF /* PartnerIAPHelper.h */,
@@ -1543,6 +1553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95799BE917B628DB00431337 /* Reachability.m in Sources */,
 				95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */,
 				953960AB17805ACF00546B92 /* md5_dgst.c in Sources */,
 				953960AC17805ACF00546B92 /* md5_one.c in Sources */,
@@ -1651,6 +1662,7 @@
 				953960A21780592900546B92 /* md5_one.c in Sources */,
 				953960A31780592900546B92 /* SmartEncrypt.cpp in Sources */,
 				95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */,
+				95799BE817B627E800431337 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

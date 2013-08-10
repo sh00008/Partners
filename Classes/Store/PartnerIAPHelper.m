@@ -7,6 +7,7 @@
 //
 
 #import "PartnerIAPHelper.h"
+#import "VoiceDef.h"
 
 @implementation PartnerIAPHelper
 
@@ -14,7 +15,7 @@
     static dispatch_once_t once;
     static PartnerIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
-        NSSet * productIdentifiers = [NSSet setWithObject:@"com.story.partners.unlockdefaultlibrary"];
+        NSSet * productIdentifiers = [NSSet setWithObject:STORE_UNLOCK_ID];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
     return sharedInstance;

@@ -195,7 +195,8 @@
         [_priceFormatter setLocale:product.priceLocale];
         cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
         
-        if (product != nil && [[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+        // 判断Store是否已经购买
+        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
         } else {
