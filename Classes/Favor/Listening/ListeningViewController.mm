@@ -1073,9 +1073,8 @@
             clickindex++;
             if (clickindex < [_sentencesArray count]) {
                 Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-                NSTimeInterval inter = [sentence endTime] - [sentence startTime];
                 self.player.currentTime = [sentence startTime];
-                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(0.5+inter)];
+                [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(1.0)];
 
             }
          }
@@ -1084,9 +1083,8 @@
         [self.player pause];
         if (clickindex < [_sentencesArray count] ) {
             Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime];
             self.player.currentTime = [sentence startTime];
-            [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(0.5+inter)];
+            [self performSelector:@selector(showReadyRecording:) withObject:[NSNumber numberWithInt:clickindex] afterDelay:(1.0)];
         }
     }
 }
