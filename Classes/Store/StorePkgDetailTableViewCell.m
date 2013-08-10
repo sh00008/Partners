@@ -274,7 +274,6 @@
 {
 	NSString *infoTitle = [aNotification object];
     if ([infoTitle isEqualToString:_info.title]) {
-        [self.downloadButton setTitle:STRING_BUYING forState:UIControlStateNormal];
         [self.downloadButton setEnabled:NO];
         [self performSelector:@selector(delayShowBackToShelfButton) withObject:nil afterDelay:0.5];
     }
