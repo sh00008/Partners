@@ -953,20 +953,32 @@
 
 - (IBAction)clickReadLessonButton:(id)sender;
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    if (self.player) {
+        [self.player pause];
+    }
+    ePlayStatus = PLAY_STATUS_NONE;
     clickindex = 0;
-    nLesson = PLAY_LESSON;
     [_scroeArray release];
     _scroeArray = nil;
+
+    nLesson = PLAY_LESSON;
     [self beforePlayWholeLesson];
 }
 
 - (IBAction)clickReadingFollowButton:(id)sender
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    if (self.player) {
+        [self.player pause];
+    }
+    ePlayStatus = PLAY_STATUS_NONE;
     clickindex = 0;
-    nLesson = PLAY_READING_FLOWME;
     [_scroeArray release];
     _scroeArray = nil;
-    _scroeArray = [[NSMutableArray alloc] init];
+
+    nLesson = PLAY_READING_FLOWME;
+     _scroeArray = [[NSMutableArray alloc] init];
     [self beforePlayWholeLesson];
 }
 
