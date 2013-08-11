@@ -778,14 +778,14 @@
             self.player.currentTime = [sentence startTime];
             cell.playingButton.enabled = NO;
             NSTimeInterval inter = [sentence endTime] - self.player.currentTime;
-             UInt32 doChangeDefaultRoute = 1;
+            UInt32 doChangeDefaultRoute = 1;
             AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
                                      sizeof (doChangeDefaultRoute),
                                      &doChangeDefaultRoute);
             [self.player play];
             if (_buttonPlay == nil) {
-               _buttonPlay = [[ButtonPlayObject alloc] init];
-
+                _buttonPlay = [[ButtonPlayObject alloc] init];
+                
             }
             _buttonPlay.progressview = cell.progressView;
             _buttonPlay.durTime = inter;
@@ -794,14 +794,14 @@
         }
             cell.progressUpView.hidden = YES;
             cell.progressDownView.hidden = YES;
-           break;
+            break;
         case PLAY_USER_VOICE_BUTTON_TAG:
         {
             Sentence* sentence = (Sentence*)sen;
             NSString* recordingFilePath = [self getRecordingFilePath:clickindex];
             [_recording start:recordingFilePath];
-             NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
-          if (_buttonPlay == nil) {
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+            if (_buttonPlay == nil) {
                 _buttonPlay = [[ButtonPlayObject alloc] init];
                 
             }
@@ -852,13 +852,22 @@
             cell.progressDownView.hidden = YES;
             cell.progressView.hidden = YES;
             [self performSelector:@selector(stopRecording:) withObject:cell afterDelay:inter];
-          
+            
         }
             break;
-
+            
         default:
             break;
     }
+}
+
+- (void)clickPlayButton:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell *)cell
+{
+    if (nLesson != PLAY_LESSON_TYPE_NONE ) {
+        return;
+    }
+
+    [self playing:buttonTag withSentence:sen withCell:cell];
 }
 
 - (void)playingWithTimeInter:(NSTimeInterval)inter
@@ -953,30 +962,15 @@
 
 - (IBAction)clickReadLessonButton:(id)sender;
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    if (self.player) {
-        [self.player pause];
-    }
-    ePlayStatus = PLAY_STATUS_NONE;
-    clickindex = 0;
-    [_scroeArray release];
-    _scroeArray = nil;
-
+    [self clearViewAndResetButtons];
+    
     nLesson = PLAY_LESSON;
     [self beforePlayWholeLesson];
 }
 
 - (IBAction)clickReadingFollowButton:(id)sender
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    if (self.player) {
-        [self.player pause];
-    }
-    ePlayStatus = PLAY_STATUS_NONE;
-    clickindex = 0;
-    [_scroeArray release];
-    _scroeArray = nil;
-
+    [self clearViewAndResetButtons];
     nLesson = PLAY_READING_FLOWME;
      _scroeArray = [[NSMutableArray alloc] init];
     [self beforePlayWholeLesson];
@@ -1009,6 +1003,19 @@
         default:
             break;
     }
+}
+
+- (void)clearViewAndResetButtons {
+    UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
+    [t removeFromSuperview];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    if (self.player) {
+        [self.player pause];
+    }
+    ePlayStatus = PLAY_STATUS_NONE;
+    clickindex = 0;
+    [_scroeArray release];
+    _scroeArray = nil;
 }
 
 - (void)playfromCurrentPos

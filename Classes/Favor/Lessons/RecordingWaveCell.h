@@ -13,7 +13,7 @@
 @class RecordingWaveCell;
 @protocol RecordingWaveCellDelegate <NSObject>
 
-- (void)playing:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell*)cell;
+- (void)clickPlayButton:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell*)cell;
 
 @end
 
