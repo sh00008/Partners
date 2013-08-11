@@ -972,22 +972,24 @@
 
 - (void)beforePlayWholeLesson
 {
+    
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+    UIButton* setButton = nLesson == PLAY_READING_FLOWME ? practiceButton : readeButton;
     switch (ePlayStatus) {
         case PLAY_STATUS_NONE:
             ePlayStatus = PLAY_STATUS_PLAYING;
-            [practiceButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [setButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
             [self playWholeLesson];
             break;
         case PLAY_STATUS_PAUSING:
             ePlayStatus = PLAY_STATUS_PLAYING;
-            [practiceButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
+            [setButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
             [self playWholeLesson];
             break;
         case PLAY_STATUS_PLAYING:
             ePlayStatus = PLAY_STATUS_PAUSING;
-            [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+            [setButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
             if (self.player) {
                 [self.player pause];
             }

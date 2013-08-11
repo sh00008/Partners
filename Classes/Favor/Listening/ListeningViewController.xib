@@ -253,15 +253,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">readwholelesson:</string>
-						<reference key="source" ref="993387283"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">106</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">clickReadLessonButton:</string>
 						<reference key="source" ref="993387283"/>
 						<reference key="destination" ref="372490531"/>
