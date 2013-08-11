@@ -339,7 +339,6 @@
         [fileURL release];
         
         self.player = newPlayer;
-        bOrinWave = YES;
         [player prepareToPlay];
         [player setDelegate:(id<AVAudioPlayerDelegate>)self];
         [newPlayer release];
@@ -770,7 +769,6 @@
             [fileURL release];
             
             self.player = newPlayer;
-            bOrinWave = YES;
             [player prepareToPlay];
             [player setDelegate:(id<AVAudioPlayerDelegate>)self];
             [newPlayer release];
@@ -822,7 +820,6 @@
                 AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
                 [fileURL release];
                 self.player = newPlayer;
-                bOrinWave = NO;
                 [player prepareToPlay];
                 [player setDelegate:(id<AVAudioPlayerDelegate>)self];
                 [newPlayer release];
@@ -866,7 +863,7 @@
     if (nLesson != PLAY_LESSON_TYPE_NONE ) {
         return;
     }
-
+    nLesson = PLAY_LESSON_TYPE_NONE;
     [self playing:buttonTag withSentence:sen withCell:cell];
 }
 
@@ -913,13 +910,11 @@
     [scoreDic release];
     
     if (nLesson == PLAY_READING_FLOWME && (clickindex < [_sentencesArray count])) {
-        //Sentence* sentence = [_sentencesArray objectAtIndex:clickindex];
-       // NSTimeInterval inter = [sentence endTime] - [sentence startTime];
         if ((clickindex+1) < [self.sentencesArray count]) {
             [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:1.0];
         } else {
             ePlayStatus = PLAY_STATUS_NONE;
-            [self finishedFllowMe];
+            [self finishReadingWholeText];
         }
     }
 }
@@ -933,37 +928,18 @@
     }
 }
 
-- (void)playWholeLesson
-{
-    if (self.player == nil) {
-        return;
-    }
-    
-    if (bOrinWave) {
-        [self playfromCurrentPos];
-    }
-    else
-    {
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
-        AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
-        [fileURL release];
-        
-        self.player = newPlayer;
-        bOrinWave = YES;
-        [player prepareToPlay];
-        [player setDelegate:(id<AVAudioPlayerDelegate>)self];
-        [newPlayer release];
-        self.player.currentTime = 0;
-        self.player.volume = 5.0;
-        clickindex = 0;
-        [self playfromCurrentPos];
-    }
-}
-
 - (IBAction)clickReadLessonButton:(id)sender;
 {
     [self clearViewAndResetButtons];
-    
+    if (nLesson == PLAY_READING_FLOWME && ePlayStatus != PLAY_STATUS_NONE) {
+        // last status: reading or pause.
+        ePlayStatus = PLAY_STATUS_NONE;
+        clickindex = 0;
+    }
+    if (nLesson == PLAY_LESSON_TYPE_NONE) {
+        ePlayStatus = PLAY_STATUS_NONE;
+        clickindex = 0;
+    }
     nLesson = PLAY_LESSON;
     [self beforePlayWholeLesson];
 }
@@ -971,14 +947,27 @@
 - (IBAction)clickReadingFollowButton:(id)sender
 {
     [self clearViewAndResetButtons];
+    if (nLesson == PLAY_LESSON && ePlayStatus != PLAY_STATUS_NONE) {
+        // last status.
+        ePlayStatus = PLAY_STATUS_NONE;
+        clickindex = 0;
+        [_scroeArray release];
+        _scroeArray = nil;
+        _scroeArray = [[NSMutableArray alloc] init];
+    }
+    if (nLesson == PLAY_LESSON_TYPE_NONE) {
+        ePlayStatus = PLAY_STATUS_NONE;
+        clickindex = 0;
+        [_scroeArray release];
+        _scroeArray = nil;
+        _scroeArray = [[NSMutableArray alloc] init];
+    }
     nLesson = PLAY_READING_FLOWME;
-     _scroeArray = [[NSMutableArray alloc] init];
-    [self beforePlayWholeLesson];
+     [self beforePlayWholeLesson];
 }
 
 - (void)beforePlayWholeLesson
 {
-    
    [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
     UIButton* setButton = nLesson == PLAY_READING_FLOWME ? practiceButton : readeButton;
@@ -986,12 +975,12 @@
         case PLAY_STATUS_NONE:
             ePlayStatus = PLAY_STATUS_PLAYING;
             [setButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
-            [self playWholeLesson];
+            [self playfromCurrentPos];
             break;
         case PLAY_STATUS_PAUSING:
             ePlayStatus = PLAY_STATUS_PLAYING;
             [setButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
-            [self playWholeLesson];
+            [self playfromCurrentPos];
             break;
         case PLAY_STATUS_PLAYING:
             ePlayStatus = PLAY_STATUS_PAUSING;
@@ -1006,16 +995,15 @@
 }
 
 - (void)clearViewAndResetButtons {
-    UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
-    [t removeFromSuperview];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if (self.player) {
         [self.player pause];
     }
-    ePlayStatus = PLAY_STATUS_NONE;
-    clickindex = 0;
-    [_scroeArray release];
-    _scroeArray = nil;
+    
+    if (ePlayStatus != PLAY_STATUS_NONE) {
+        UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
+        [t removeFromSuperview];
+    }
 }
 
 - (void)playfromCurrentPos
@@ -1035,7 +1023,7 @@
         if (contentView != nil) {
             RecordingWaveCell* cell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
             [self playing:PLAY_SRC_VOICE_BUTTON_TAG withSentence:sentence withCell:cell];
-       }
+        }
         [self performSelector:@selector(pauseintime) withObject:self afterDelay:inter];
     }
 }
@@ -1062,11 +1050,30 @@
     [db addRecordingInfo:self.wavefile withScore:(NSInteger)score];
     customController.showTitle = [NSString stringWithFormat:@"%@ %d", STRING_FINISHREADINGFOLLOWME, score < 0 ? 0 : score];
     [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
-    [self performSelector:@selector(dimissFinishFllowMe:) withObject:customController afterDelay:2.0];
+    [self performSelector:@selector(dimissCustomController:) withObject:customController afterDelay:2.0];
 }
 
-- (void)dimissFinishFllowMe:(UIViewController*)controlloer {
-    nLesson = PLAY_LESSON_TYPE_NONE;
+- (void)finishReadingWholeText {
+    clickindex = [self.sentencesArray count] - 1;
+    if (nLesson == PLAY_LESSON) {
+        [readeButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+        nLesson = PLAY_LESSON_TYPE_NONE;
+        [self.collpaseLesson reloadCollapseClick];
+        CustomViewController* customController = [[CustomViewController alloc] initWithNibName:@"CustomViewController" bundle:nil];
+        customController.showTitle = STRING_SHOWREADINGWHOLEFINISHED;
+        [self presentPopupViewController:customController animationType:MJPopupViewAnimationSlideBottomTop];
+        [self performSelector:@selector(dimissCustomController:) withObject:customController afterDelay:2.0];
+        
+    } else if (nLesson == PLAY_READING_FLOWME) {
+        [practiceButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
+        nLesson = PLAY_LESSON_TYPE_NONE;
+        [self.collpaseLesson reloadCollapseClick];
+        [self finishedFllowMe];
+    }
+    [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:NO];
+}
+
+- (void)dimissCustomController:(UIViewController*)controlloer {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideBottomBottom];
 }
 
@@ -1097,6 +1104,8 @@
                 self.player.currentTime = [sentence startTime];
                 [self performSelector:@selector(playfromCurrentPos) withObject:self afterDelay:(1.0)];
 
+            } else {
+                [self finishReadingWholeText];
             }
          }
     } else {
@@ -1191,7 +1200,7 @@
     [t removeFromSuperview];
     if (clickindex >= [self.sentencesArray count]) {
         ePlayStatus = PLAY_STATUS_NONE;
-        [self finishedFllowMe];
+        [self finishReadingWholeText];
         [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
 
     } else {

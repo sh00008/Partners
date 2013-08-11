@@ -83,7 +83,6 @@ typedef enum {
     ButtonPlayObject*               _buttonPlay;
     BOOL                            _bReadFlowMe;
     
-    BOOL                            bOrinWave;
     UIButton*                       readeButton;
     UIButton*                       practiceButton;
     DownloadLesson*                 _downloadLessonObj;
@@ -139,6 +138,7 @@ typedef enum {
 - (void)playfromCurrentPos;
 - (void)updateUI;
 - (void)finishedFllowMe;
+- (void)finishReadingWholeText;
 
 // player AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
