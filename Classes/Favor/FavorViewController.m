@@ -41,8 +41,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:246.0/255.0 blue:240.0/255.0 alpha:1.0];
-    UITableView* v = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
-    
+    UITableView* v = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 44) style:UITableViewStylePlain];
+    v.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:v];
     [v release];
     
@@ -102,7 +102,8 @@
         NSInteger r = (nMod == 0) ? nQ : (nQ + 1);
         NSInteger h = (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
         nHeight = h * r + r * 20 + 20;
-        return nHeight + nSpace;
+        NSInteger offset = r == 1 ? 20 : 0;
+        return nHeight + nSpace + offset ;
 
     } else {
         return 44.0f;
