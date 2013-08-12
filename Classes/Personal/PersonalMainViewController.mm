@@ -121,7 +121,7 @@
 }
 
 - (void)productFailed:(NSNotification *)notification {
-    [_buyButton showText:STRING_BUYING forBlue:YES];
+    [_buyButton showText:[self getPriceString] forBlue:YES];
 }
 
 - (void)productDone:(NSNotification *)notification {
@@ -136,7 +136,7 @@
         [_buyButton removeFromSuperview];
         
     } else {
-        [_buyButton showText:STRING_BUYING forBlue:YES];
+        [_buyButton showText:[self getPriceString] forBlue:YES];
     }
 }
 
@@ -189,9 +189,7 @@
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
         _productCell = cell;
         [_productCell retain];
-        SKProduct * product = (SKProduct *)_products[0];
-        [_priceFormatter setLocale:product.priceLocale];
-        cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
+        //[_buyButton showText:[self getPriceString] forBlue:YES];
         
         // 判断Store是否已经购买
         if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
@@ -207,19 +205,28 @@
                 cell.accessoryView = buyButton;
                 _buyButton = buyButton;
                 if (_isRequestSucceed) {
-                    [_buyButton showText:STRING_BUYING forBlue:YES];                   
+                    [_buyButton showText:[self getPriceString] forBlue:YES];
                 } else {
                     if (!_isContinueRequest) {
                         [_buyButton showText:STRING_RETRY forBlue:YES];
                     }
                 }
             } else {
-                 [_buyButton showText:STRING_BUYING forBlue:YES];
+                [_buyButton showText:[self getPriceString] forBlue:YES];
             }
         }
     } 
 
     return cell;
+}
+
+- (NSString*)getPriceString
+{
+    SKProduct * product = (SKProduct *)_products[0];
+    [_priceFormatter setLocale:product.priceLocale];
+    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    NSString* price = [_priceFormatter stringFromNumber:product.price];
+    return price;
 }
 
 - (void)buyButtonTapped:(id)sender {
@@ -375,8 +382,7 @@
             self._products = products;
             SKProduct * product = (SKProduct *)_products[0];
             
-            [_priceFormatter setLocale:product.priceLocale];
-            _productCell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];
+//            [_buyButton showText:[self getPriceString] forBlue:YES];
             
             if ([[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
                 if (_productCell != nil) {
@@ -385,7 +391,7 @@
                 [_buyButton removeFromSuperview];
                 
             } else {
-                [_buyButton showText:STRING_BUYING forBlue:YES];
+                [_buyButton showText:[self getPriceString] forBlue:YES];
             }
          } else {
             _isRequestSucceed = NO;

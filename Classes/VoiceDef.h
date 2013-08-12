@@ -65,7 +65,7 @@
 #define STRING_VOICE_PKG_DIR    @"VoicePkgData"
 #define SUB_DIR_DOCUMENT				@"/Documents/"
 #define SUB_DIR_CACHE                   @"/Caches/"
-#define STRING_BUYING           @"购买"
+#define STRING_BUYING           @"点击购买图书馆"
 #define STRING_SHOWREADINGWHOLEFINISHED           @"全文试听完毕"
 #define STRING_ON_BUYING           @"购买中..."
 #define STRING_RETRY           @"点击重试"
