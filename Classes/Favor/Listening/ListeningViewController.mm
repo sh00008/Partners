@@ -742,7 +742,7 @@
 }
 
 - (BOOL)responseClickCell {
-    if (nLesson == PLAY_READING_FLOWME || nLesson == PLAY_LESSON) {
+    if (ePlayStatus == PLAY_STATUS_PLAYING) {
         return NO;
     }
     
