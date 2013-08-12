@@ -87,6 +87,7 @@ typedef enum {
     UIButton*                       practiceButton;
     DownloadLesson*                 _downloadLessonObj;
     NSMutableArray*                 _scroeArray;
+    NSInteger                       _lastPlayIndexforPause;
 }
 
 @property (nonatomic, retain) NSMutableArray* sentencesArray;

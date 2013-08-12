@@ -10,6 +10,7 @@
 @interface ButtonPlayObject ()
 {
     NSTimer *timer;
+    BOOL bAddMessage;
 }
 
 
@@ -18,20 +19,37 @@
 @implementation ButtonPlayObject
 @synthesize durTime, position;
 
+- (id)init
+{
+    self = [super init];
+    bAddMessage = NO;
+    return self;
+}
 - (void)dealloc
 {
     [timer invalidate];
     self.progressview = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTI_STOP_ANIMITIONPRESS_RIGHTNOW object:nil];
     [super dealloc];
 }
 
 - (void) play
 {
+    if (!bAddMessage) {
+        bAddMessage = YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopRightNow:) name:NOTI_STOP_ANIMITIONPRESS_RIGHTNOW object:nil];
+    }
     if(timer)
         return;
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerDidFire:) userInfo:nil repeats:YES];
 }
+
+- (void)stopRightNow:(NSNotification*)obj {
+    [self pause];
+    self.position = 0.0;
+}
+
 - (void) pause
 {
     [timer invalidate];

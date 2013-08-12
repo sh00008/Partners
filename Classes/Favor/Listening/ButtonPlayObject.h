@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CERoundProgressView.h"
+#define NOTI_STOP_ANIMITIONPRESS_RIGHTNOW      @"StopPressAnimitionRightNowNotification"
+
 @interface ButtonPlayObject : NSObject
 - (void) play;
 - (void) pause;

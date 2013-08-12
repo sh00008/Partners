@@ -109,6 +109,7 @@
         _recording = [[RecordingObject alloc] init];
         [_recording setAddInView:self.view];
         _bReadFlowMe = NO;
+        _lastPlayIndexforPause = -1;
     }
     return self;
 }
@@ -860,12 +861,22 @@
 
 - (void)clickPlayButton:(NSInteger)buttonTag withSentence:(id)sen withCell:(RecordingWaveCell *)cell
 {
-    if (nLesson != PLAY_LESSON_TYPE_NONE ) {
-        return;
+    BOOL canPlay1 =  (nLesson == PLAY_LESSON && ePlayStatus == PLAY_STATUS_PAUSING);
+    BOOL canPlay2 =  (nLesson == PLAY_READING_FLOWME && ePlayStatus == PLAY_STATUS_PAUSING);
+   
+    BOOL canPlay3 = nLesson == PLAY_LESSON_TYPE_NONE && ePlayStatus != PLAY_STATUS_PLAYING;
+    
+    BOOL canPlay = canPlay1 || canPlay2 || canPlay3;
+    if (canPlay1 || canPlay2) {
+        _lastPlayIndexforPause = clickindex;
+        [self clearViewAndResetButtons];
     }
-    nLesson = PLAY_LESSON_TYPE_NONE;
-    [self playing:buttonTag withSentence:sen withCell:cell];
-}
+    
+    if (canPlay) {
+        nLesson = PLAY_LESSON_TYPE_NONE;
+        [self playing:buttonTag withSentence:sen withCell:cell];
+    }
+ }
 
 - (void)playingWithTimeInter:(NSTimeInterval)inter
 {
@@ -934,11 +945,19 @@
     if (nLesson == PLAY_READING_FLOWME && ePlayStatus != PLAY_STATUS_NONE) {
         // last status: reading or pause.
         ePlayStatus = PLAY_STATUS_NONE;
-        clickindex = 0;
+        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+            clickindex = _lastPlayIndexforPause;
+        } else {
+            clickindex = 0;
+        }
     }
     if (nLesson == PLAY_LESSON_TYPE_NONE) {
         ePlayStatus = PLAY_STATUS_NONE;
-        clickindex = 0;
+        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+            clickindex = _lastPlayIndexforPause;
+        } else {
+            clickindex = 0;
+        }
     }
     nLesson = PLAY_LESSON;
     [self beforePlayWholeLesson];
@@ -950,14 +969,22 @@
     if (nLesson == PLAY_LESSON && ePlayStatus != PLAY_STATUS_NONE) {
         // last status.
         ePlayStatus = PLAY_STATUS_NONE;
-        clickindex = 0;
+        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+            clickindex = _lastPlayIndexforPause;
+        } else {
+            clickindex = 0;
+        }
         [_scroeArray release];
         _scroeArray = nil;
         _scroeArray = [[NSMutableArray alloc] init];
     }
     if (nLesson == PLAY_LESSON_TYPE_NONE) {
         ePlayStatus = PLAY_STATUS_NONE;
-        clickindex = 0;
+        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+            clickindex = _lastPlayIndexforPause;
+        } else {
+            clickindex = 0;
+        }
         [_scroeArray release];
         _scroeArray = nil;
         _scroeArray = [[NSMutableArray alloc] init];
@@ -987,6 +1014,7 @@
             [setButton setImage:[UIImage imageNamed:@"Btn_Play_S@2x.png"] forState:UIControlStateNormal];
             if (self.player) {
                 [self.player pause];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTI_STOP_ANIMITIONPRESS_RIGHTNOW object:nil userInfo:nil];
             }
             break;
         default:
@@ -999,6 +1027,7 @@
     if (self.player) {
         [self.player pause];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTI_STOP_ANIMITIONPRESS_RIGHTNOW object:nil userInfo:nil];
     
     if (ePlayStatus != PLAY_STATUS_NONE) {
         UILabel* t = (UILabel*)[self.view viewWithTag:READYRECORDINGVIEW_TAG];
