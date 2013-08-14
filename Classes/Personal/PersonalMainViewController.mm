@@ -52,7 +52,12 @@
 {
     [super viewDidLoad];
     _edit = NO;
+    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"viewbg.png"]];
+    UIImage* bkimage = [UIImage imageWithContentsOfFile:resourcePath];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
+    [resourcePath release];
     [self performSelector:@selector(setControllerTitle) withObject:nil afterDelay:0.5];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -177,13 +182,21 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
         cell.textLabel.text = STRING_ADD_NEW_LIB;
     }
-    UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
+    UIView* b = [[UIView alloc] initWithFrame:cell.frame];
+    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"bg.png"]];
+    UIImage* bkimage = [UIImage imageWithContentsOfFile:resourcePath];
+    b.backgroundColor = [UIColor colorWithPatternImage:bkimage];
+    [resourcePath release];
     cell.backgroundView = b;
     
     [b release];
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:14]];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    
+    cell.textLabel.shadowColor = [UIColor grayColor];
+    cell.textLabel.shadowOffset = CGSizeMake(1, 1);
+    [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:22]];
     cell.imageView.image = [UIImage imageNamed:@"add"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
