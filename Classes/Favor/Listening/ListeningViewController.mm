@@ -922,7 +922,7 @@
     
     if (nLesson == PLAY_READING_FLOWME && (clickindex < [_sentencesArray count])) {
         if ((clickindex+1) < [self.sentencesArray count]) {
-            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:1.0];
+            [self performSelector:@selector(startNextPractice) withObject:nil afterDelay:2.0];
         } else {
             ePlayStatus = PLAY_STATUS_NONE;
             [self finishReadingWholeText];
