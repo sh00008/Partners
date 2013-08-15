@@ -96,7 +96,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 186.0f;
+    return 340.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -126,7 +126,7 @@
         cell.textLabel.text = detail;
         cell.textLabel.lineBreakMode   = UILineBreakModeWordWrap;
         cell.textLabel.numberOfLines   = 0;
-        cell.textLabel.font            = [UIFont systemFontOfSize:FONT_SIZE_BUBBLE];
+        cell.textLabel.font            = [UIFont systemFontOfSize:IS_IPAD ? FONT_SIZE*1.6 :FONT_SIZE];
         cell.textLabel.textColor       = [UIColor darkGrayColor];
     }
     return cell;
@@ -135,7 +135,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString* detail = STRING_ABOUT_DETAIL;
-    CGSize size   = [Globle calcTextHeight:detail withWidth:self.view.bounds.size.width  - CELL_CONTENT_MARGIN*2];
+    CGSize size   = [Globle calcTextHeight:detail withWidth:self.view.bounds.size.width  - CELL_CONTENT_MARGIN*2 withFontSize:IS_IPAD ? FONT_SIZE*1.6 :FONT_SIZE];
     return size.height + 44;
 
 }
