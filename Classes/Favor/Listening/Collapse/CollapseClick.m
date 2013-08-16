@@ -240,8 +240,15 @@
 
 #pragma mark - Scroll To Cell
 -(void)scrollToCollapseClickCellAtIndex:(int)index animated:(BOOL)animated {
-    CollapseClickCell *cell = [self.dataArray objectAtIndex:index];
-    [self setContentOffset:CGPointMake(cell.frame.origin.x, cell.frame.origin.y) animated:animated];
+    if (index < [self.dataArray count]) {
+        CollapseClickCell* lastCell = nil;
+        if (index != 0) {
+            lastCell = [self.dataArray objectAtIndex:index-1];
+        }
+        CollapseClickCell *cell = [self.dataArray objectAtIndex:index];
+        CGPoint pos = lastCell == nil ? CGPointMake(cell.frame.origin.x, cell.frame.origin.y) : CGPointMake(cell.frame.origin.x, cell.frame.origin.y - 50);
+        [self setContentOffset:pos animated:animated];
+    }
 }
 
 
