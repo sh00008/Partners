@@ -156,7 +156,7 @@
         _backgroundView.alpha = 0;
         _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        _popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 240)];
+        _popupView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 320, 240)];
         _popupView.autoresizingMask = UIViewAutoresizingFlexibleWidth; // height will be set at KeyboardWillShow
         [_backgroundView addSubview:_popupView];
 #if !IS_ARC
