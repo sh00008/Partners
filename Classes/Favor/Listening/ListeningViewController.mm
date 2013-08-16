@@ -635,7 +635,7 @@
         return nil;
     }
 
-    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, HEIGHT_OF_WAVECELL * 2)];
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, HEIGHT_OF_WAVECELL)];
     Sentence * sentence = [self.sentencesArray objectAtIndex:index];        
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
     
@@ -645,6 +645,8 @@
     
     [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
     cellPlay.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
+    cellPlay.playingUpButton.tag = RECORDING_USER_VOICE_BUTTON_TAG;
+    cellPlay.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
     cellPlay.sentence = (id)sentence;
     cellPlay.waveView.starttime = [sentence startTime] * 1000;
     cellPlay.waveView.endtime = [sentence endTime] *1000;
@@ -657,44 +659,6 @@
     cellPlay.timelabel.text = [NSString stringWithFormat:@"Time: %.2f",[sentence endTime] - [sentence startTime]];
     [contentView addSubview:cellPlay];
     
-        
-    array = [[NSBundle mainBundle] loadNibNamed:@"RecordingWaveCell" owner:self options:nil];
-    RecordingWaveCell *cell = [array objectAtIndex:0];
-    cell.tag = RECORDING_WAVE_CELL_TAG;
-    cell.frame = CGRectMake(0, cellPlay.frame.size.height, cellPlay.frame.size.width, cellPlay.frame.size.height);
-    cell.waveView.layer.borderWidth = 1;
-    cell.waveView.layer.borderColor = [[UIColor whiteColor] CGColor];
-        //cell.backgroundColor = [UIColor colorWithRed:f green:f blue:f alpha:1.0];
-    cell.backgroundColor = [UIColor whiteColor];
-    itemImage = [UIImage imageNamed:@"Btn_Record@2x.png"];
-    cell.sentence = (id)sentence;
-   
-    cell.playingUpButton.hidden = NO;
-    cell.playingDownButton.hidden = NO;
-    cell.playingButton.hidden = YES;
-    [cell.playingUpButton setImage:itemImage forState:UIControlStateNormal];
-    cell.playingUpButton.tag = RECORDING_USER_VOICE_BUTTON_TAG;
-    
-    itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
-    [cell.playingDownButton setImage:itemImage forState:UIControlStateNormal];
-    cell.playingDownButton.enabled = NO;
-    cell.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
-
-    cell.delegate = (id)self;
-    NSString *recordFile = [self getRecordingFilePath:index];
-    /*NSFileManager *mgr = [NSFileManager defaultManager];
-    if ([mgr fileExistsAtPath:recordFile isDirectory:nil]) {
-        cell.playingButton.enabled = YES;
-    } else {
-        cell.playingButton.enabled = NO;
-    }
-       */ 
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //recordCell = cell;
-    cell.waveView.bReadfromTime = NO;
-    cell.waveView.wavefilename = recordFile;
-    [cell.waveView setNeedsLayout];
-    [contentView addSubview:cell];
     return contentView;
 }
 
@@ -717,19 +681,17 @@
                 if (playingbutton != nil) {
                     [self performSelector:@selector(playAnimationWithView:) withObject:playingbutton afterDelay:animationTime];
                 }
-            }
-            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
-            if (recoringCell != nil) {
-                UIView* recoringbutton =recoringCell.playingUpButton;
+                
+                UIView* recoringbutton =playingSrcCell.playingUpButton;
                 if (recoringbutton != nil) {
                     [self performSelector:@selector(playAnimationWithView:) withObject:recoringbutton afterDelay:animationTime];
                 }
                 
-                UIView* playingbutton = recoringCell.playingDownButton;
-                if (playingbutton != nil) {
+                UIView* playingRecordingbutton = playingSrcCell.playingDownButton;
+                if (playingRecordingbutton != nil) {
                     //[self playAnimationWithView:playingbutton];
-                    [self performSelector:@selector(playAnimationWithView:) withObject:playingbutton afterDelay:animationTime];
-               }
+                    [self performSelector:@selector(playAnimationWithView:) withObject:playingRecordingbutton afterDelay:animationTime];
+                }
             }
             
         }
@@ -1212,7 +1174,7 @@
         
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
         if (contentView != nil) {
-            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:RECORDING_WAVE_CELL_TAG];
+            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
             if (index < [self.sentencesArray count]) {
                 Sentence* sentence = [_sentencesArray objectAtIndex:index];
                 // recording, stop recording in this function:
