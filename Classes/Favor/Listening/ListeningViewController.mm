@@ -781,6 +781,7 @@
             AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
                                      sizeof (doChangeDefaultRoute),
                                      &doChangeDefaultRoute);
+            self.player.volume = 5.0;
             [self.player play];
             if (_buttonPlay == nil) {
                 _buttonPlay = [[ButtonPlayObject alloc] init];
@@ -797,9 +798,7 @@
         case PLAY_USER_VOICE_BUTTON_TAG:
         {
             Sentence* sentence = (Sentence*)sen;
-            NSString* recordingFilePath = [self getRecordingFilePath:clickindex];
-            [_recording start:recordingFilePath];
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+             NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
             if (_buttonPlay == nil) {
                 _buttonPlay = [[ButtonPlayObject alloc] init];
                 
@@ -812,20 +811,25 @@
             cell.progressUpView.hidden = YES;
             cell.progressView.hidden = YES;
             
+            [self.player stop];
             
-            NSString *recordFile = recordingFilePath;
-            NSFileManager* mgr = [NSFileManager defaultManager];
+            NSString* recordFile = [self getRecordingFilePath:clickindex];
+             NSFileManager* mgr = [NSFileManager defaultManager];
             if ([mgr fileExistsAtPath:recordFile]) {
                 
                 NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:recordFile];
                 AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL error: nil];
                 [fileURL release];
                 self.player = newPlayer;
-                [player prepareToPlay];
-                [player setDelegate:(id<AVAudioPlayerDelegate>)self];
+                [self.player prepareToPlay];
+                [self.player setDelegate:(id<AVAudioPlayerDelegate>)self];
                 [newPlayer release];
-                self.player.currentTime = timeStart;
+                 UInt32 doChangeDefaultRoute = 1;
+                AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
+                                         sizeof (doChangeDefaultRoute),
+                                         &doChangeDefaultRoute);
                 self.player.volume = 5.0;
+                [self.player play];
             }
             
         }
