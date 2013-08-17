@@ -1028,6 +1028,7 @@
 {
     if (clickindex < [self.sentencesArray count]) {
         [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+        lastClickIndex = clickindex;
     }
 }
 

@@ -255,7 +255,8 @@
         // 122 是按钮view的高
         const int nHightForCollapse = 122;
         nOffset += nHightForCollapse;
-        if (nOffset > self.frame.size.height) {
+        NSLog(@"%d nOffset : %d\n", index, nOffset);
+        if (nOffset > self.frame.size.height + nHightForCollapse) {
             pos = CGPointMake(cell.frame.origin.x,
                               cell.frame.origin.y - self.frame.size.height + cell.frame.size.height);
         } else {
