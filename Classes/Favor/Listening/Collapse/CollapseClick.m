@@ -240,13 +240,27 @@
 
 #pragma mark - Scroll To Cell
 -(void)scrollToCollapseClickCellAtIndex:(int)index animated:(BOOL)animated {
+    CollapseClickCell *cell = [self.dataArray objectAtIndex:index];
     if (index < [self.dataArray count]) {
         CollapseClickCell* lastCell = nil;
         if (index != 0) {
             lastCell = [self.dataArray objectAtIndex:index-1];
         }
-        CollapseClickCell *cell = [self.dataArray objectAtIndex:index];
-        CGPoint pos = lastCell == nil ? CGPointMake(cell.frame.origin.x, cell.frame.origin.y) : CGPointMake(cell.frame.origin.x, cell.frame.origin.y - 50);
+        int nOffset = 0;
+        CGPoint pos;
+        for (int i = 0; i <= index; i ++) {
+            CollapseClickCell* tempCell = [self.dataArray objectAtIndex:i];
+            nOffset += tempCell.frame.size.height;
+        }
+        // 122 是按钮view的高
+        const int nHightForCollapse = 122;
+        nOffset += nHightForCollapse;
+        if (nOffset > self.frame.size.height) {
+            pos = CGPointMake(cell.frame.origin.x,
+                              cell.frame.origin.y - self.frame.size.height + cell.frame.size.height);
+        } else {
+            pos = CGPointMake(0, 0);
+        }
         [self setContentOffset:pos animated:animated];
     }
 }

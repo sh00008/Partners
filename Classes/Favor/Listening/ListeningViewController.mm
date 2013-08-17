@@ -855,7 +855,6 @@
 {
     [self.player pause];
     cell.playingButton.enabled = YES;
-    
 }
 
 - (void)stopRecording:(RecordingWaveCell *)cell
