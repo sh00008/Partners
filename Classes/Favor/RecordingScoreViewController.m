@@ -38,7 +38,7 @@
         [ self.naviBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
     }
     self.naviBar.tintColor = [UIColor grayColor];
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = STRING_RECORDING_INFO;
