@@ -112,6 +112,7 @@ typedef enum {
 
 @property (nonatomic, retain) IBOutlet UIButton* readeButton;
 @property (nonatomic, retain) IBOutlet UIButton* practiceButton;
+@property (nonatomic, retain) IBOutlet UILabel* posLabel;
 
 - (void)initMembers;
 - (void)initDownload;

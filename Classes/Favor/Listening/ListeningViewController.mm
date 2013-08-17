@@ -79,7 +79,7 @@
 @synthesize delegate;
 @synthesize adView;
 @synthesize collpaseLesson;
-@synthesize readeButton, practiceButton;
+@synthesize readeButton, practiceButton,posLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -477,6 +477,7 @@
     
     // If you want a cell open on load, run this method:
     [self.collpaseLesson openCollapseClickCellAtIndex:0 animated:YES];
+    self.posLabel.text = [NSString stringWithFormat:@"%d/%d", 1, [self.sentencesArray count]];
 }
 #pragma Notifications
 - (void)settingChanged:(NSNotification *)aNotification
@@ -1029,6 +1030,8 @@
 {
     if (clickindex < [self.sentencesArray count]) {
         [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+        self.posLabel.text = [NSString stringWithFormat:@"%d/%d", clickindex+1, [self.sentencesArray count]];
+
         lastClickIndex = clickindex;
     }
 }
@@ -1069,6 +1072,7 @@
         [self finishedFllowMe];
     }
     [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:NO];
+    self.posLabel.text = [NSString stringWithFormat:@"%d/%d", clickindex+1, [self.sentencesArray count]];
 }
 
 - (void)dimissCustomController:(UIViewController*)controlloer {
@@ -1203,6 +1207,7 @@
 
     } else {
          [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+        self.posLabel.text = [NSString stringWithFormat:@"%d/%d", clickindex+1, [self.sentencesArray count]];
         ePlayStatus = PLAY_STATUS_NONE;
         [self beforePlayWholeLesson];
     }
