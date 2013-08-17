@@ -51,9 +51,8 @@
 								<object class="NSMutableArray" key="NSSubviews">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 								</object>
-								<string key="NSFrame">{{13, 20}, {72, 72}}</string>
+								<string key="NSFrame">{{20, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1027376138"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="834324808">
@@ -64,10 +63,9 @@
 							</object>
 							<object class="IBUIButton" id="1027376138">
 								<reference key="NSNextResponder" ref="953652307"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 20}, {72, 72}}</string>
+								<int key="NSvFlags">288</int>
+								<string key="NSFrame">{{20, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="958768402"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -104,9 +102,8 @@
 							<object class="IBUIView" id="916620252">
 								<reference key="NSNextResponder" ref="953652307"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{223, 20}, {72, 72}}</string>
+								<string key="NSFrame">{{230, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="427891852"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="834324808"/>
@@ -115,10 +112,8 @@
 							<object class="IBUIButton" id="427891852">
 								<reference key="NSNextResponder" ref="953652307"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{223, 20}, {72, 72}}</string>
+								<string key="NSFrame">{{230, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -136,9 +131,8 @@
 							<object class="IBUIView" id="958768402">
 								<reference key="NSNextResponder" ref="953652307"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{117, 20}, {72, 72}}</string>
+								<string key="NSFrame">{{124, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="616296491"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="834324808"/>
@@ -147,9 +141,8 @@
 							<object class="IBUIButton" id="616296491">
 								<reference key="NSNextResponder" ref="953652307"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{117, 20}, {72, 72}}</string>
+								<string key="NSFrame">{{124, 20}, {72, 72}}</string>
 								<reference key="NSSuperview" ref="953652307"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="916620252"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -169,9 +162,8 @@
 								<reference key="IBUIFont" ref="9314688"/>
 							</object>
 						</object>
-						<string key="NSFrameSize">{320, 121}</string>
+						<string key="NSFrameSize">{322, 121}</string>
 						<reference key="NSSuperview" ref="369090858"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="113552527"/>
 						<reference key="IBUIBackgroundColor" ref="834324808"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -181,9 +173,8 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 122}</string>
+				<string key="NSFrameSize">{322, 122}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="953652307"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -401,120 +392,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">29</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">CERoundProgressView</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/CERoundProgressView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">RecordingWaveCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">onPlaying:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">onPlaying:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">onPlaying:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playingButton</string>
-							<string>playingDownButton</string>
-							<string>playingUpButton</string>
-							<string>progressDownView</string>
-							<string>progressUpView</string>
-							<string>progressView</string>
-							<string>timelabel</string>
-							<string>waveView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>UIButton</string>
-							<string>UIButton</string>
-							<string>UIButton</string>
-							<string>CERoundProgressView</string>
-							<string>CERoundProgressView</string>
-							<string>CERoundProgressView</string>
-							<string>UILabel</string>
-							<string>WaveView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playingButton</string>
-							<string>playingDownButton</string>
-							<string>playingUpButton</string>
-							<string>progressDownView</string>
-							<string>progressUpView</string>
-							<string>progressView</string>
-							<string>timelabel</string>
-							<string>waveView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">playingButton</string>
-								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">playingDownButton</string>
-								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">playingUpButton</string>
-								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressDownView</string>
-								<string key="candidateClassName">CERoundProgressView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressUpView</string>
-								<string key="candidateClassName">CERoundProgressView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">progressView</string>
-								<string key="candidateClassName">CERoundProgressView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">timelabel</string>
-								<string key="candidateClassName">UILabel</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">waveView</string>
-								<string key="candidateClassName">WaveView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/RecordingWaveCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WaveView</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WaveView.h</string>
-					</object>
-				</object>
-			</object>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">

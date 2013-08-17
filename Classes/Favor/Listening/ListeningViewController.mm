@@ -644,6 +644,7 @@
     UIImage* itemImage = [UIImage imageNamed:@"Btn_Play@2x.png"];
     
     [cellPlay.playingButton setImage:itemImage forState:UIControlStateNormal];
+    cellPlay.frame = CGRectMake((contentView.frame.size.width - cellPlay.frame.size.width) / 2, 0, cellPlay.frame.size.width, cellPlay.frame.size.height);
     cellPlay.playingButton.tag = PLAY_SRC_VOICE_BUTTON_TAG;
     cellPlay.playingUpButton.tag = RECORDING_USER_VOICE_BUTTON_TAG;
     cellPlay.playingDownButton.tag = PLAY_USER_VOICE_BUTTON_TAG;
@@ -657,6 +658,7 @@
     cellPlay.waveView.bReadfromTime = YES;
     [cellPlay.waveView setNeedsLayout];
     cellPlay.timelabel.text = [NSString stringWithFormat:@"Time: %.2f",[sentence endTime] - [sentence startTime]];
+    contentView.backgroundColor = [UIColor whiteColor]; 
     [contentView addSubview:cellPlay];
     
     return contentView;
