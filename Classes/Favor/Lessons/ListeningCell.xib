@@ -41,6 +41,7 @@
 						<int key="NSvFlags">290</int>
 						<string key="NSFrame">{{83, 15}, {217, 39}}</string>
 						<reference key="NSSuperview" ref="1721567"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="885149403"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="531419878">
@@ -52,13 +53,14 @@
 							<integer value="320" key="IBUIAccessibilityTraits"/>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Srcsdfsdfdsfddddddddddddddddddddddddddddddddddd</string>
+						<string type="base64-UTF8" key="IBUIText">IA</string>
 						<nil key="IBUITextColor"/>
 						<object class="NSColor" key="IBUIHighlightedColor" id="613938174">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
 						<int key="IBUIBaselineAdjustment">0</int>
+						<int key="IBUINumberOfLines">0</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">22</double>
@@ -69,12 +71,14 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+						<double key="preferredMaxLayoutWidth">217</double>
 					</object>
 					<object class="IBUILabel" id="885149403">
 						<reference key="NSNextResponder" ref="1721567"/>
 						<int key="NSvFlags">290</int>
 						<string key="NSFrame">{{83, 62}, {217, 21}}</string>
 						<reference key="NSSuperview" ref="1721567"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="531419878"/>
@@ -112,6 +116,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{56, 56}</string>
 								<reference key="NSSuperview" ref="338852539"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="871247989"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -120,6 +125,7 @@
 						</array>
 						<string key="NSFrame">{{11, 18}, {56, 56}}</string>
 						<reference key="NSSuperview" ref="1721567"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="910749388"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="531419878"/>
@@ -131,6 +137,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{42, 9}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="1721567"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="474835793"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<float key="IBUIAlpha">0.80000001192092896</float>
@@ -142,6 +149,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{42, 9}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="1721567"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1019032710"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -173,6 +181,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 107}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="338852539"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -324,7 +333,68 @@
 			<nil key="sourceID"/>
 			<int key="maxID">35</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AttributedLabel</string>
+					<string key="superclassName">UILabel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AttributedLabel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ListeningCell</string>
+					<string key="superclassName">UIView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="scoreImageView">UIImageView</string>
+						<string key="scroeLabel">UILabel</string>
+						<string key="sentenceSrc">AttributedLabel</string>
+						<string key="sentenceTrans">UILabel</string>
+						<string key="teatcherIconView">UITeacherIconView</string>
+						<string key="teatcherImageView">UIImageView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="scoreImageView">
+							<string key="name">scoreImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scroeLabel">
+							<string key="name">scroeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sentenceSrc">
+							<string key="name">sentenceSrc</string>
+							<string key="candidateClassName">AttributedLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sentenceTrans">
+							<string key="name">sentenceTrans</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="teatcherIconView">
+							<string key="name">teatcherIconView</string>
+							<string key="candidateClassName">UITeacherIconView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="teatcherImageView">
+							<string key="name">teatcherImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/ListeningCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UITeacherIconView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UITeacherIconView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

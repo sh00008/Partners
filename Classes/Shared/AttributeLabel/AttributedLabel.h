@@ -13,7 +13,7 @@
 @interface AttributedLabel : UILabel{
     NSMutableAttributedString          *_attString;
 }
-
+@property(nonatomic, assign)CGRect visibleRect;
 
 // 设置某段字的颜色
 - (void)setColor:(UIColor *)color fromIndex:(NSInteger)location length:(NSInteger)length;

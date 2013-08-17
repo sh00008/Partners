@@ -625,7 +625,8 @@
             [imagePath release];
             break;
     }
-    [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
+    cell.frame = CGRectMake(0, 0, self.view.bounds.size.width, cell.frame.size.height);
+   [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
     
     return cell;
 }

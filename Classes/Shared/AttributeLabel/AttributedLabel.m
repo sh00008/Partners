@@ -17,7 +17,7 @@
 
 @implementation AttributedLabel
 @synthesize attString = _attString;
-
+@synthesize visibleRect;
 - (void)dealloc{
     [_attString release];
     [super dealloc];
@@ -28,6 +28,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.visibleRect = frame;
     }
     return self;
 }
@@ -38,7 +39,9 @@
     textLayer.string = _attString;
     textLayer.wrapped = YES;
     textLayer.transform = CATransform3DMakeScale(0.5,0.5,1);
-    textLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    
+    textLayer.frame = CGRectMake(0, 0, self.visibleRect.size.width, self.visibleRect.size.height);
+    
     [self.layer addSublayer:textLayer];
     _textLayer = textLayer;
 }

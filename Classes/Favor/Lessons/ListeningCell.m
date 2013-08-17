@@ -69,13 +69,14 @@
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
    
     CGSize szSrc = [Globle calcTextHeight:msgText withWidth:self.sentenceSrc.frame.size.width withFontSize:22];
-    
+
     CGSize szTrans = [Globle calcTextHeight:transText withWidth:self.sentenceTrans.frame.size.width withFontSize:14];
-    [self.sentenceSrc sizeToFit];
-    
-    [self.sentenceTrans sizeToFit];
-    self.sentenceTrans.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, self.sentenceSrc.frame.size.width, szSrc.height);
+    self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, self.sentenceSrc.frame.size.width, szSrc.height);
     self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, self.sentenceTrans.frame.size.width, szTrans.height);
+    [self.sentenceSrc sizeToFit];
+    self.sentenceSrc.visibleRect = self.sentenceSrc.frame;
+
+    [self.sentenceTrans sizeToFit];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, fmax(self.sentenceTrans.frame.origin.y + self.sentenceTrans.frame.size.height + 20, HEIGHT_OF_LISTENINGCELL));
 }
 
