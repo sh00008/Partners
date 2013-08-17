@@ -246,22 +246,31 @@
         if (index != 0) {
             lastCell = [self.dataArray objectAtIndex:index-1];
         }
-        int nOffset = 0;
+
         CGPoint pos;
-        for (int i = 0; i <= index; i ++) {
-            CollapseClickCell* tempCell = [self.dataArray objectAtIndex:i];
-            nOffset += tempCell.frame.size.height;
+        if (self.contentOffset.y < cell.frame.origin.y)
+        {
+            // 如果当前句子在本屏幕，则不滚动
+            if (self.contentOffset.y + self.frame.size.height > cell.frame.origin.y + cell.frame.size.height)
+                return;
+            else
+            {
+                pos = CGPointMake(cell.frame.origin.x,
+                                  cell.frame.origin.y - self.frame.size.height + cell.frame.size.height);
+            }
         }
-        // 122 是按钮view的高
-        const int nHightForCollapse = 122;
-        nOffset += nHightForCollapse;
-        NSLog(@"%d nOffset : %d\n", index, nOffset);
-        if (nOffset > self.frame.size.height + nHightForCollapse) {
-            pos = CGPointMake(cell.frame.origin.x,
-                              cell.frame.origin.y - self.frame.size.height + cell.frame.size.height);
-        } else {
-            pos = CGPointMake(0, 0);
+        else
+        {
+            pos = CGPointMake(cell.frame.origin.x, cell.frame.origin.y);
         }
+
+        
+//        if (nOffset > self.frame.size.height + nHightForCollapse) {
+//            pos = CGPointMake(cell.frame.origin.x,
+//                              cell.frame.origin.y - self.frame.size.height + cell.frame.size.height);
+//        } else {
+//            pos = CGPointMake(0, 0);
+//        }
         [self setContentOffset:pos animated:animated];
     }
 }
