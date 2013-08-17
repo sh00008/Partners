@@ -52,8 +52,9 @@
 {
     [super viewDidLoad];
     _edit = NO;
-    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"viewbg.png"]];
-    UIImage* bkimage = [UIImage imageWithContentsOfFile:resourcePath];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Image"]];
+    UIImage* bkimage = [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/background_gray.png", resourcePath]] stretchableImageWithLeftCapWidth:24 topCapHeight:15];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
     [resourcePath release];
     [self performSelector:@selector(setControllerTitle) withObject:nil afterDelay:0.5];
@@ -182,21 +183,15 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
         cell.textLabel.text = STRING_ADD_NEW_LIB;
     }
-    UIView* b = [[UIView alloc] initWithFrame:cell.frame];
-    NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"bg.png"]];
-    UIImage* bkimage = [UIImage imageWithContentsOfFile:resourcePath];
-    b.backgroundColor = [UIColor colorWithPatternImage:bkimage];
-    [resourcePath release];
-    cell.backgroundView = b;
+    UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
+      cell.backgroundView = b;
     
     [b release];
 
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
     
-    cell.textLabel.shadowColor = [UIColor grayColor];
-    cell.textLabel.shadowOffset = CGSizeMake(1, 1);
-    [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:22]];
+     [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:22]];
     cell.imageView.image = [UIImage imageNamed:@"add"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {

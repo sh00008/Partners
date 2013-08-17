@@ -48,6 +48,7 @@
 - (void)stopRightNow:(NSNotification*)obj {
     [self pause];
     self.position = 0.0;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTI_STOP_ANIMITIONPRESS_RIGHTNOW object:nil];
 }
 
 - (void) pause
