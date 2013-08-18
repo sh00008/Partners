@@ -672,9 +672,10 @@
         if ((lastClickIndex != -1) && (lastClickIndex != index)) {
             [self.collpaseLesson closeCollapseClickCellAtIndex:lastClickIndex animated:NO];
         }
-       lastClickIndex = clickindex;
-       clickindex = index;
+        lastClickIndex = clickindex;
+        clickindex = index;
         CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:clickindex];
+        self.posLabel.text = [NSString stringWithFormat:@"%d/%d", clickindex+1, [self.sentencesArray count]];
         
         UIView* contentView = [wholeCell.ContentView viewWithTag:102];
         CGFloat animationTime = 0.1;
@@ -702,8 +703,8 @@
         if (index < [self.sentencesArray count]) {
             [self.collpaseLesson scrollToCollapseClickCellAtIndex:index animated:YES];
         }
-   }
-
+    }
+    
     V_NSLog(@"%d and it's open:%@", index, (open ? @"YES" : @"NO"));
 }
 
@@ -1206,7 +1207,7 @@
         [readeButton setImage:[UIImage imageNamed:@"Btn_Pause_S@2x.png"] forState:UIControlStateNormal];
 
     } else {
-         [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
+        [self.collpaseLesson openCollapseClickCellAtIndex:clickindex animated:YES];
         self.posLabel.text = [NSString stringWithFormat:@"%d/%d", clickindex+1, [self.sentencesArray count]];
         ePlayStatus = PLAY_STATUS_NONE;
         [self beforePlayWholeLesson];
