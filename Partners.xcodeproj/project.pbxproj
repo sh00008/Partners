@@ -226,6 +226,7 @@
 		953960AB17805ACF00546B92 /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960971780592900546B92 /* md5_dgst.c */; };
 		953960AC17805ACF00546B92 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = 953960991780592900546B92 /* md5_one.c */; };
 		953960AE1781B0AA00546B92 /* CourseParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 953960AD1781B0AA00546B92 /* CourseParser.mm */; };
+		9574664717C077B900FEF3A0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9574664617C077B900FEF3A0 /* Default-568h@2x.png */; };
 		95799BDB17B61EEA00431337 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BDA17B61EEA00431337 /* Default-Portrait~ipad.png */; };
 		95799BDD17B61EF600431337 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BDC17B61EF600431337 /* Default-Portrait@2x~ipad.png */; };
 		95799BDF17B61F0700431337 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 95799BDE17B61F0700431337 /* Default-Landscape~ipad.png */; };
@@ -569,6 +570,7 @@
 		9539609D1780592900546B92 /* SmartEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartEncrypt.h; path = SmartEncryt/SmartEncrypt.h; sourceTree = "<group>"; };
 		953960A5178059F900546B92 /* ISaybEncrypt2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ISaybEncrypt2.mm; sourceTree = "<group>"; };
 		953960AD1781B0AA00546B92 /* CourseParser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CourseParser.mm; sourceTree = "<group>"; };
+		9574664617C077B900FEF3A0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		95799BDA17B61EEA00431337 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		95799BDC17B61EF600431337 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		95799BDE17B61F0700431337 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 		0D1531581740B20000633FA0 = {
 			isa = PBXGroup;
 			children = (
+				9574664617C077B900FEF3A0 /* Default-568h@2x.png */,
 				0D15316A1740B20000633FA0 /* Partners */,
 				0D1531911740B20000633FA0 /* PartnersTests */,
 				0D1531631740B20000633FA0 /* Frameworks */,
@@ -1535,6 +1538,7 @@
 				95799BE517B61F8300431337 /* Icon-72@2x.png in Resources */,
 				0DDF879617BBDDBA009B082B /* bg.png in Resources */,
 				0DDF879817BBDE9C009B082B /* viewbg.png in Resources */,
+				9574664717C077B900FEF3A0 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1776,8 +1780,8 @@
 				CLANG_WARN_ENUM_CONVERSION = NO;
 				CLANG_WARN_INT_CONVERSION = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DING LI (AYF3BE479S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: DING LI (AYF3BE479S)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_VERSION = "";
