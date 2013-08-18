@@ -754,7 +754,8 @@
                 _buttonPlay = [[ButtonPlayObject alloc] init];
                 
             }
-            _buttonPlay.progressview = cell.progressView;
+            cell.progressView.hidden = NO;
+           _buttonPlay.progressview = cell.progressView;
             _buttonPlay.durTime = inter;
             [_buttonPlay play];
             [self performSelector:@selector(pausePlaying:) withObject:cell afterDelay:inter];
@@ -797,7 +798,9 @@
                                          &doChangeDefaultRoute);
                 self.player.volume = 5.0;
                 [self.player play];
-            }
+                [self performSelector:@selector(stopPlayingRecording:) withObject:cell afterDelay:inter];
+                cell.playingDownButton.enabled = NO;
+           }
             
         }
             break;
@@ -860,6 +863,11 @@
     cell.playingButton.enabled = YES;
 }
 
+- (void)stopPlayingRecording:(RecordingWaveCell *)cell{
+    [self.player pause];
+    cell.playingDownButton.enabled = YES;
+ 
+}
 - (void)stopRecording:(RecordingWaveCell *)cell
 {
     [_recording stop];
