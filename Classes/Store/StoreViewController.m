@@ -77,7 +77,24 @@
     fetcher.userData = @"voicexml";
     [fetcher beginFetchWithDelegate:self
                   didFinishSelector:@selector(fetcher:finishedWithData:error:)];
+
+
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
+    if([ self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+        [ self.navigationController.navigationBar  setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+    }
+    self.navigationController.navigationBar .tintColor = [UIColor grayColor];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.text = STRING_DATA_CENTER;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.font = [UIFont fontWithName:@"Arial" size:22];
+    self.navigationController.navigationBar .topItem.titleView = titleLabel;
+    [titleLabel release];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
