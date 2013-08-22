@@ -438,7 +438,15 @@
         [self addWaitingView:132 withText:STRING_ADDLIB_ADDRESS_AREADYADDED withAnimation:YES];
         [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:132] afterDelay:2];
     } else {
-        NSURL* url = [NSURL URLWithString:text];
+        // correct url: add index_ios.xml
+        NSString* newURL = text;
+        NSRange r = [text rangeOfString:@".xml" options:NSBackwardsSearch];
+        if (r.location == NSNotFound) {
+            newURL = [NSString stringWithFormat:@"%@/index_ios.xml", text];
+        }
+        
+        
+        NSURL* url = [NSURL URLWithString:newURL];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
         GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
