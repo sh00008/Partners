@@ -188,6 +188,7 @@
 #define STRING_ADDLIB_ADDRESS_ERROR     @"图书馆地址错误"
 #define STRING_ADDLIB_ADDRESS_SUCCEED   @"成功添加图书馆！"
 #define STRING_ADDLIB_ADDRESS_AREADYADDED   @"图书馆已存在"
+#define STRING_ADDLIB_ADDRESS_ADDED   @"已添加"
 #define STRING_DEFAULT_LIB_NAME         @"我爱读书"
 #define STRING_HIDDEN_LIB_NAME          @"Hidden"
 #define STRING_DOWNLOADINGALL           @"正在下载"
@@ -201,3 +202,4 @@
 #define STRING_RENEWING                 @"正在续借"
 #define STRING_FINISHREADINGFOLLOWME    @"您这次的分数为:"
 #define STRING_RECORDING_INFO           @"查看榜单"
+#define STRING_LIB_NEW_NAME             @"新图书馆(未验证"

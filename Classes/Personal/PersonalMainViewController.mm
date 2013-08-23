@@ -445,14 +445,26 @@
             newURL = [NSString stringWithFormat:@"%@/index_ios.xml", text];
         }
         
+        // add new lib address.
         
-        NSURL* url = [NSURL URLWithString:newURL];
+        Database* db = [Database sharedDatabase];
+        LibaryInfo* info = [[LibaryInfo alloc] init];
+        info.url = newURL;
+        info.title = [NSString stringWithFormat:@"%@:%@)", STRING_LIB_NEW_NAME, newURL] ;
+        [db insertLibaryInfo:info];
+ 
+        [self addWaitingView:140 withText:STRING_ADDLIB_ADDRESS_ADDED withAnimation:YES];
+        [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:140] afterDelay:2];
+        [_popAddLibView performSelector:@selector(dismiss) withObject:nil afterDelay:2.1];
+        [self reloadInfo];
+       
+        /*NSURL* url = [NSURL URLWithString:newURL];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setValue:@"checkLib" forHTTPHeaderField:@"User-Agent"];
         GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
         [fetcher setUserData:text];
         [fetcher beginFetchWithDelegate:self
-                      didFinishSelector:@selector(fetcher:finishedWithData:error:)];       
+                      didFinishSelector:@selector(fetcher:finishedWithData:error:)]; */      
     }
  }
 
