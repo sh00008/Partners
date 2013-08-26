@@ -195,7 +195,7 @@
 #define STRING_PROMPT_DOWNLOADALL       @"下载本课程全部资源"
 #define STRING_PROMPT_EXPIRED           @"本资源已过期，请重新下载"
 #define STRING_PROMPT_NOTITLE           @"无名称"
-#define STRING_PROMPT_HOW_TO_ADD_RES    @"还没有资源哦！向左滑动，切换到在线图书馆添加资源"
+#define STRING_PROMPT_HOW_TO_ADD_RES    @"还没有图书馆的资源哦！向左滑动，切换到在线图书馆添加资源"
 
 #define STRING_RENEW_SUCCEED            @"续借成功，请重新打开"
 #define STRING_RENEW_FAILED             @"续借失败，请重试"

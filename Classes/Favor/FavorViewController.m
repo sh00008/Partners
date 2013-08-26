@@ -113,8 +113,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	NSInteger nCount = [_pkgArray count];
-    if (nCount == 0) {
-        return 1;
+    if (nCount == 0 || nCount == 1) {
+        return nCount + 1;
     }
     return nCount;
 }
@@ -133,92 +133,107 @@
         return [cell autorelease];
     }
     
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"FavorViewCell" owner:self options:nil];
-    FavorViewCell *cell = [array objectAtIndex:0];
-    
-    // Configure the cell...
-    
-    while ([cell.pkgCourseBGView.subviews count] > 0) {
-        UIView* subView = [[cell.pkgCourseBGView subviews] objectAtIndex:0];
-        if (subView != nil) {
-            [subView removeFromSuperview];
-            subView = nil;
+    if (indexPath.row < [_pkgArray count]) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"FavorViewCell" owner:self options:nil];
+        FavorViewCell *cell = [array objectAtIndex:0];
+        
+        // Configure the cell...
+        
+        while ([cell.pkgCourseBGView.subviews count] > 0) {
+            UIView* subView = [[cell.pkgCourseBGView subviews] objectAtIndex:0];
+            if (subView != nil) {
+                [subView removeFromSuperview];
+                subView = nil;
+            }
         }
-    }
-	NSInteger nRow = indexPath.row;
-
-    VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
-    cell.pkgTitle.text = pkgObject.dataTitle;
-    CGRect f = cell.pkgTitle.frame;
-    NSInteger alignX = 40;
-    //if (IS_IPAD) {
+        NSInteger nRow = indexPath.row;
+        
+        VoiceDataPkgObject* pkgObject = [_pkgArray objectAtIndex:nRow];
+        cell.pkgTitle.text = pkgObject.dataTitle;
+        CGRect f = cell.pkgTitle.frame;
+        NSInteger alignX = 40;
+        //if (IS_IPAD) {
         cell.pkgTitle.frame = CGRectMake(alignX + f.origin.x, f.origin.y, f.size.width, f.size.height);
-    /*} else {
-        cell.pkgTitle.frame = CGRectMake(20 + f.origin.x, f.origin.y, f.size.width, f.size.height);
-        
-    }*/
-    NSInteger fromX = IS_IPAD ? alignX : 0;
-    NSInteger dx = fromX;
-    NSInteger dy = 0;
-    NSInteger w =  (IS_IPAD ? MAIN_COURSE_GRID_W_IPAD : MAIN_COURSE_GRID_W);
-    NSInteger h =  (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
-    NSInteger seperator = IS_IPAD ? 10 : 1;
-    NSInteger count = IS_IPAD ? 5 : 3;
-    NSInteger r = 1;
-    NSInteger c = 1;
-    NSInteger libID = 0;
-    NSRange range = [pkgObject.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
-    if (range.location != NSNotFound) {
-        NSString* path = [pkgObject.dataPath substringFromIndex:(range.location + range.length + 1)];
-        range = [path rangeOfString:@"/"];
+        /*} else {
+         cell.pkgTitle.frame = CGRectMake(20 + f.origin.x, f.origin.y, f.size.width, f.size.height);
+         
+         }*/
+        NSInteger fromX = IS_IPAD ? alignX : 0;
+        NSInteger dx = fromX;
+        NSInteger dy = 0;
+        NSInteger w =  (IS_IPAD ? MAIN_COURSE_GRID_W_IPAD : MAIN_COURSE_GRID_W);
+        NSInteger h =  (IS_IPAD ? MAIN_COURSE_GRID_H_IPAD : MAIN_COURSE_GRID_H);
+        NSInteger seperator = IS_IPAD ? 10 : 1;
+        NSInteger count = IS_IPAD ? 5 : 3;
+        NSInteger r = 1;
+        NSInteger c = 1;
+        NSInteger libID = 0;
+        NSRange range = [pkgObject.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
         if (range.location != NSNotFound) {
-            libID = [[path substringToIndex:(range.location + range.length)] intValue] ;;
-            cell.tag = libID;
+            NSString* path = [pkgObject.dataPath substringFromIndex:(range.location + range.length + 1)];
+            range = [path rangeOfString:@"/"];
+            if (range.location != NSNotFound) {
+                libID = [[path substringToIndex:(range.location + range.length)] intValue] ;;
+                cell.tag = libID;
+            }
+            
+        }
+        for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
+            FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
+            NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
+            bt.pkgPath = pkgObject.dataPath;
+            bt.pkgTitle = courseTitle;
+            [bt setCourseTitle:courseTitle];
+            [cell.pkgCourseBGView addSubview:bt];
+            [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
+            [bt release];
+            if (c % count == 0) {
+                // next row
+                r++;
+                dy = h * (r - 1) + r * seperator;
+                dx = fromX;
+                c = 1;
+            } else {
+                c++;
+                dx += w + seperator ;
+            }
+        }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        //if (IS_IPAD) {
+        BOOL bListened = [[Database sharedDatabase] getPkgIsListened:pkgObject.dataTitle withLibID:libID];
+        if (!bListened) {
+            UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
+            UIImage* im = [UIImage imageNamed:@"NEW.png"];
+            UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
+            newCourse.image = newIm;
+            [cell addSubview:newCourse];
+            [newCourse release];
         }
         
-    }
-	for (NSInteger i = 0; i < [pkgObject.dataPkgCourseTitleArray count]; i++) {
-        FavorCourseButton* bt = [[FavorCourseButton alloc] initWithFrame:CGRectMake(dx, dy, w, h)];
-        NSString* courseTitle = [pkgObject.dataPkgCourseTitleArray objectAtIndex:i];
-        bt.pkgPath = pkgObject.dataPath;
-        bt.pkgTitle = courseTitle;
-        [bt setCourseTitle:courseTitle];
-        [cell.pkgCourseBGView addSubview:bt];
-        [bt addTarget:self action:@selector(openSences:) forControlEvents:UIControlEventTouchUpInside];
-        [bt release];
-        if (c % count == 0) {
-            // next row
-            r++;
-            dy = h * (r - 1) + r * seperator;
-            dx = fromX;
-            c = 1;
-        } else {
-            c++;
-            dx += w + seperator ;
-        }
-    }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    //if (IS_IPAD) {
-    BOOL bListened = [[Database sharedDatabase] getPkgIsListened:pkgObject.dataTitle withLibID:libID];
-    if (!bListened) {
-        UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 154/2, 153/2)];
-        UIImage* im = [UIImage imageNamed:@"NEW.png"];
-        UIImage* newIm = [UIImage imageWithCGImage:im.CGImage scale:1.0 orientation:UIImageOrientationLeft];
-        newCourse.image = newIm;
-        [cell addSubview:newCourse];
-        [newCourse release];
-    }
+        /*} else {
+         UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
+         newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
+         [cell addSubview:newCourse];
+         [newCourse release];
+         
+         }*/
+        // Configure the cell...
+        [cell.deletePkg addTarget:self action:@selector(deletePkg:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
 
-    /*} else {
-        UIImageView* newCourse = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width - 154/2, 0, 154/2, 153/2)];
-        newCourse.image = [UIImage imageNamed:@"Icon_New_L@2x.png"];
-        [cell addSubview:newCourse];
-        [newCourse release];
-
-    }*/
-      // Configure the cell...
-    [cell.deletePkg addTarget:self action:@selector(deletePkg:) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
+    }
+   
+    if ([_pkgArray count]== 1 && indexPath.row == 1) {
+        
+        UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.textLabel.text = STRING_PROMPT_HOW_TO_ADD_RES;
+        cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.font = [UIFont fontWithName:@"KaiTi" size:20];
+        return [cell autorelease];
+    }
 }
 
 /*
