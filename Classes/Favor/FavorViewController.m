@@ -208,6 +208,9 @@
             newCourse.image = newIm;
             [cell addSubview:newCourse];
             [newCourse release];
+        } else {
+            cell.pkgTitle.frame = CGRectMake(f.origin.x, f.origin.y, f.size.width, f.size.height);
+
         }
         
         /*} else {
@@ -234,6 +237,9 @@
         cell.textLabel.font = [UIFont fontWithName:@"KaiTi" size:20];
         return [cell autorelease];
     }
+    
+    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    return [cell autorelease];
 }
 
 /*
