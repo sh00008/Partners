@@ -104,6 +104,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     _isContinueRequest = YES;
+    [self reloadInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -220,7 +221,12 @@
                     }
                 }
             } else {
-                [_buyButton showText:[self getPriceString] forBlue:YES];
+                if (cell.accessoryView != nil) {
+                    [_buyButton showText:[self getPriceString] forBlue:YES];
+
+                } else {
+                    cell.accessoryView = _buyButton;
+                }
             }
         }
     } 

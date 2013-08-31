@@ -25,6 +25,7 @@
 #define NOTIFICATION_EDIT_VOICE_PKG @"EditPkgNotification"
 #define NOTIFICATION_ADD_VOICE_PKG @"ADDPkgNotification"
 #define NOTIFICATION_OPEN_PKG @"OpenPkgNotification"
+#define NOTIFICATION_RELOAD_LIB @"ReloadLibNotification"
 #define NOTIFICATION_OPEN_A_STORE @"OpenStoreNotification"
 #define NOTIFICATION_ADDNEWNAVI @"AddNewNavigationNotification"
 #define NOTIFICATION_MODEL_LESSONS @"ModalLessonsNotification"
