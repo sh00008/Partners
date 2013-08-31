@@ -155,6 +155,8 @@
         } else {
             [self.downloadButton showText:STRING_BUYING forBlue:YES];
         }
+    } else {
+        [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];       
     }
 }
 
