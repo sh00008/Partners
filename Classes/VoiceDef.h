@@ -34,8 +34,8 @@
 // #define STRING_STORE_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"
 #define STRING_STORE_URL_ADDRESS @"http://isaybox.b0.upaiyun.com/index_ios.xml"
 #define STORE_UNLOCK_ID @"com.story.partners.unlockdefaultlibrary"
-#define STRING_MY_DATA_CENTER @"我的资料库"
-#define STRING_DATA_CENTER @"在线资料"
+#define STRING_MY_DATA_CENTER @"我的资源"
+#define STRING_DATA_CENTER @"在线资源"
 #define VALUE_TITLEBAR_COLOR_R 51.0/255.0
 #define VALUE_TITLEBAR_COLOR_G 61.0/255.0
 #define VALUE_TITLEBAR_COLOR_B 75.0/255.0
@@ -49,7 +49,7 @@
 #define STRING_DATA_SAMPLE_2 @"职场英语"
 #define STRING_LOADINGDATA_WAITING @"正在载入..."
 #define STRING_LOADINGDATA_ERROR @"网络连接错误"
-#define STRING_DOWNLOAD         @"添加至“我的资料库”"
+#define STRING_DOWNLOAD         @"添加至“我的资源”"
 #define STRING_BUYING_FAILED         @"购买失败"
 #define STRING_DOWNLOADING      @"正在添加"
 #define STRING_START_LEARNING   @"开始学习"
