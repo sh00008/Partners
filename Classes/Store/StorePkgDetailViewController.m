@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = self.info.title;
+    //self.title = self.info.title;
     self.tableView.separatorColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
@@ -62,7 +62,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+    /*UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = self.info.title;
@@ -71,7 +71,7 @@
     UINavigationController * na = self.navigationController;
     //NSArray *items = na.navigationBar.items;
     self.navigationController.navigationBar.topItem.titleView = titleLabel;
-    [titleLabel release];
+    [titleLabel release];*/
 }
 
 - (void)viewDidUnload
