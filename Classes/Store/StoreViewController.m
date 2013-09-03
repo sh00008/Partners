@@ -14,6 +14,7 @@
 #import "VoiceDef.h"
 #import "CurrentInfo.h"
 #import "Database.h"
+#import "Globle.h"
 
 @interface StoreViewController ()
 {
@@ -133,13 +134,7 @@
     [data writeToFile:xmlPath atomically:YES];
     
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    
-    // create pkg
-    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *documentDirectory = [Globle getPkgPath];
     
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.currentLibID];

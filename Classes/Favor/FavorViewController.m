@@ -17,6 +17,7 @@
 #import "UIViewController+MJPopupViewController.h"
 #import "DownloadWholeViewController.h"
 #import "SettingData.h"
+#import "Globle.h"
 
 @interface FavorViewController ()
 {
@@ -318,11 +319,7 @@
         [fM fileExistsAtPath:path isDirectory:(&isDir)];
         if(isDir) {
             NSString* lisencePath = [path stringByAppendingPathComponent:@"ServerRequest.dat"];
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-            NSString *documentDirectory = [paths objectAtIndex:0];
-            documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-            
-            //documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", file];
+            NSString *documentDirectory = [Globle getPkgPath];
             
             NSString* absolutePath = [NSString stringWithFormat:@"%@/%d", documentDirectory, libID];
             if (![fM fileExistsAtPath:absolutePath]) {
@@ -514,7 +511,9 @@
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
             NSString *docsDir = [paths objectAtIndex:0];
-            NSString *waveDir = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR, info.dataPath];
+            NSString* path = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR];
+            NSString *waveDir = [NSString stringWithFormat:@"%@/%@", path, STRING_VOICE_PKG_DIR, info.dataPath];
+            [Globle addSkipBackupAttributeToFile:waveDir];
             if ([fm fileExistsAtPath:waveDir]) {
                 [fm removeItemAtPath:waveDir error:nil];
             }

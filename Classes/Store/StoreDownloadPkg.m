@@ -11,6 +11,7 @@
 #import "GTMHTTPFetcher.h"
 #import "BorrowInfo.h"
 #import "VoiceDef.h"
+#import "Globle.h"
 
 @implementation StoreDownloadCourse
 @synthesize pkgURL;
@@ -84,13 +85,7 @@
 - (void)createDir
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    
-    // create pkg
-    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *documentDirectory = [Globle getPkgPath];
 
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d/%@", self.info.libID, self.info.title];
 

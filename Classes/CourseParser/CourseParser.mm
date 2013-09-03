@@ -21,7 +21,7 @@
 #import "Database.h"
 #import "CurrentInfo.h"
 #import "BorrowInfo.h"
-
+#import "Globle.h"
 @implementation CourseParser
 
 @synthesize resourcePath, tbxml, course;
@@ -66,6 +66,7 @@ static bool bLoadModel = NO;
 {
     if (wavePath == nil) {
         NSRange r = [resourcePath rangeOfString:STRING_VOICE_PKG_DIR];
+        [Globle addSkipBackupAttributeToFile:resourcePath];
         if (r.length != 0) {
             NSString* dataPath = [resourcePath substringFromIndex:r.location];
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);

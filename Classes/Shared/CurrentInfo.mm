@@ -11,14 +11,13 @@
 #import "ISaybEncrypt2.h"
 #import "Database.h"
 #import "GTMHTTPFetcher.h"
+#import "Globle.h"
 @implementation DownloadLicense
 @synthesize libID, delegate;
 - (void)getDeviceID
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    NSString *documentDirectory = [Globle getPkgPath];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
     if ([fm fileExistsAtPath:documentDirectory]) {
@@ -54,13 +53,7 @@
 - (void)checkLisence:(NSString*)fromUrl;
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    
-    // create pkg
-    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *documentDirectory = [Globle getPkgPath];
     
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
@@ -103,9 +96,7 @@
 
 - (void)finishDeviceData:(NSData*)data
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    NSString *documentDirectory = [Globle getPkgPath];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
     [data writeToFile:documentDirectory atomically:YES];

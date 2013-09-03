@@ -9,7 +9,7 @@
 #import "Database.h"
 #import <sqlite3.h>
 #import "VoiceDef.h"
-
+#import "Globle.h"
 @implementation Database
 
 static Database* _database;
@@ -33,17 +33,20 @@ static Database* _database;
 		
         NSString* userdata = PATH_USERDATA;
 		NSString *sqlitePath = [libaryDir stringByAppendingString:userdata];
+        [Globle addSkipBackupAttributeToFile:sqlitePath];
         if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil])  
             [fileMgr createDirectoryAtPath:sqlitePath withIntermediateDirectories:YES attributes:nil error:nil];	
 
         NSString* dirdatabase = DIR_DATABASE;
 		sqlitePath = [sqlitePath stringByAppendingPathComponent:dirdatabase];
-        if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil])  
+        [Globle addSkipBackupAttributeToFile:dirdatabase];
+        if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil])
             [fileMgr createDirectoryAtPath:sqlitePath withIntermediateDirectories:YES attributes:nil error:nil];	
 
         NSString* databaseName = DATABASE_NAME;
 		sqlitePath = [sqlitePath stringByAppendingPathComponent:databaseName];
-        if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil]) {
+        [Globle addSkipBackupAttributeToFile:dirdatabase];
+         if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil]) {
             NSString *homePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingFormat:@"/%@", dirdatabase];
             
             NSString *copyFromDatabasePath = [homePath stringByAppendingPathComponent:databaseName];
@@ -763,13 +766,7 @@ static Database* _database;
 - (void)deleteLibaryData:(NSInteger)libID
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
-    
-    // create pkg
-    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
-        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *documentDirectory = [Globle getPkgPath];
     
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", libID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
@@ -1399,11 +1396,8 @@ static Database* _database;
 
 - (NSString*)getAbsolutelyPath:(NSString*)path
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    NSString *documentDirectory = [Globle getPkgPath];
     
-     
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", path];
     
     NSString* absolutePath = [NSString stringWithFormat:@"%@", documentDirectory];
