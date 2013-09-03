@@ -163,7 +163,7 @@
 #define STRING_LOADING_TEXT             @"第一次初始化课程..."
 #define STRING_WAITING_TEXT             @"正在加载..."
 #define STRING_DOWNLOADING_TEXT         @"正在下载课程..."
-#define STRING_DOWNLOADING_FAILED_TEXT  @"下载失败，请重试."
+#define STRING_DOWNLOADING_FAILED_TEXT  @"下载失败，点击重试"
 #define STRING_RECORDING_ERROR          @"录音失败，请检查设备"
 #define STRING_RECORDING_TEXT           @"正在录音"
 #define STRING_SETTING                  @"设置"

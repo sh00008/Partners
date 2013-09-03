@@ -29,10 +29,12 @@
 #import "UIViewController+MJPopupViewController.h"
 #import "RecordingScoreViewController.h"
 #import "Animations.h"
+#import "BuyButton.h"
 
 #define LOADINGVIEWTAG      20933
 #define WAITINGVIEWTAG      20934
 #define DOWNLOADINGVIEWTAG  20936
+#define DOWNLOADINGBUTTONTAG  20937
 #define FAILEDRECORDINGVIEW_TAG 45505
 #define PLAY_SRC_VOICE_BUTTON_TAG 50001
 #define PLAY_USER_VOICE_BUTTON_TAG 50002
@@ -189,10 +191,8 @@
 
 - (void)initDownload;
 {
-    UIView* loadingView = [self.view viewWithTag:WAITINGVIEWTAG];
-    if (loadingView != nil) {
-        [loadingView removeFromSuperview];
-    }
+    [self removeSubViewwithTag:[NSNumber numberWithInt:DOWNLOADINGBUTTONTAG]];
+    [self removeSubViewwithTag:[NSNumber numberWithInt:WAITINGVIEWTAG]];
     if (![self downloadLesson]) {
         return;
     }
@@ -314,11 +314,45 @@
 
 }
 
+- (void)removeSubViewwithTag:(NSNumber*)tag
+{
+    NSInteger t = [tag intValue];
+    UIView* loadingView = [self.view viewWithTag:t];
+    if (loadingView != nil) {
+        [loadingView setHidden:YES];
+        [loadingView removeFromSuperview];
+    }
+}
+
+- (void)addFailedDownloadRetryButton
+{
+    [self removeSubViewwithTag:[NSNumber numberWithInt:DOWNLOADINGBUTTONTAG]];
+    BuyButton* buttonTemp = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 140, 37)];
+    buttonTemp.center = self.view.center;
+    [buttonTemp showText:STRING_DOWNLOADING_FAILED_TEXT forBlue:YES];
+    buttonTemp.tag = DOWNLOADINGBUTTONTAG;
+    [self.view addSubview:buttonTemp];
+    
+    // add animation here.
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    theAnimation.duration = 0.3;
+    theAnimation.autoreverses = NO;
+    theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
+    theAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    [buttonTemp.layer addAnimation:theAnimation forKey:nil];
+    
+    // click event.
+    [buttonTemp addTarget:self action:@selector(initDownload) forControlEvents:UIControlEventTouchUpInside];
+    [buttonTemp release];
+}
+
 - (void)addDownloadingFailedView;
 {
     self.sentencesTableView.hidden = NO;
     [self.navigationItem setHidesBackButton:NO animated:YES];
-    [self addWaitingView:DOWNLOADINGVIEWTAG withText:STRING_DOWNLOADING_FAILED_TEXT withAnimation:NO];
+    [self addFailedDownloadRetryButton];
+    //[self addWaitingView:DOWNLOADINGVIEWTAG withText:STRING_DOWNLOADING_FAILED_TEXT withAnimation:NO];
 }
 
 - (void)viewDidLoad
