@@ -509,15 +509,18 @@
             NSFileManager* fm = [NSFileManager defaultManager];
             [fm removeItemAtPath:info.dataPath error:nil];
             
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-            NSString *docsDir = [paths objectAtIndex:0];
-            NSString* path = [NSString stringWithFormat:@"%@/%@/%@", docsDir, STRING_VOICE_PKG_DIR];
-            NSString *waveDir = [NSString stringWithFormat:@"%@/%@", path, STRING_VOICE_PKG_DIR, info.dataPath];
-            [Globle addSkipBackupAttributeToFile:waveDir];
-            if ([fm fileExistsAtPath:waveDir]) {
-                [fm removeItemAtPath:waveDir error:nil];
+
+            NSString *docsDir = [Globle getMirrorPath];
+            NSRange r = [info.dataPath rangeOfString:STRING_VOICE_PKG_DIR];
+            if (r.location != NSNotFound) {
+                NSString* dataPathTemp = [info.dataPath substringFromIndex:(r.location + r.length)];
+                
+                NSString *waveDir = [NSString stringWithFormat:@"%@%@", docsDir, dataPathTemp];
+                if ([fm fileExistsAtPath:waveDir]) {
+                    [fm removeItemAtPath:waveDir error:nil];
+                }
             }
-            
+          
         }
         
         [db deleteVoicePkgInfoByTitle:_deleteTitle withLibID:_deleteLibID];

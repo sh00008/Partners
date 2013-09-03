@@ -47,12 +47,7 @@
 - (void)loadSettingData;
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-	NSString *documentDIrectory = [paths objectAtIndex:0];
-	NSString *path = [documentDIrectory stringByAppendingString:PATH_USERDATA];
-    [Globle addSkipBackupAttributeToFile:path ];
-	if (![fileManager fileExistsAtPath:path isDirectory:nil])  
-		[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];	
+	NSString *path = [Globle getUserDataPath];
 	
 	path = [path stringByAppendingPathComponent:DIR_SETTING];
 	if (![fileManager fileExistsAtPath:path isDirectory:nil])  
@@ -115,12 +110,7 @@
 - (void)saveSettingData;
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-	NSString *documentDirectory = [paths objectAtIndex:0];
-	NSString *path = [documentDirectory stringByAppendingString:PATH_USERDATA];
-    [Globle addSkipBackupAttributeToFile:path ];
-	if (![fileManager fileExistsAtPath:path isDirectory:nil])
-		[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];	
+	NSString *path = [Globle getUserDataPath];
 	
 	path = [path stringByAppendingPathComponent:DIR_SETTING];
 	if (![fileManager fileExistsAtPath:path isDirectory:nil])  

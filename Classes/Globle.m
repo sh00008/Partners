@@ -56,9 +56,31 @@
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil]) {
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-        [Globle addSkipBackupAttributeToFile:documentDirectory];
     }
+    [Globle addSkipBackupAttributeToFile:documentDirectory];
     return documentDirectory;
 }
 
++ (NSString*)getMirrorPath {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", STRING_VOICE_PKG_DIR];
+    if (![fm fileExistsAtPath:documentDirectory isDirectory:nil]) {
+        [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [Globle addSkipBackupAttributeToFile:documentDirectory];
+    return documentDirectory;
+}
+
++ (NSString*)getUserDataPath {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+	NSString *documentDIrectory = [paths objectAtIndex:0];
+	NSString *path = [documentDIrectory stringByAppendingString:PATH_USERDATA];
+    [Globle addSkipBackupAttributeToFile:path ];
+	if (![fileManager fileExistsAtPath:path isDirectory:nil])
+		[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    return path;
+}
 @end

@@ -21,4 +21,6 @@
 + (void)addSkipBackupAttributeToFile:(NSString *)file;
 
 + (NSString*)getPkgPath;
++ (NSString*)getMirrorPath;
++ (NSString*)getUserDataPath;
 @end

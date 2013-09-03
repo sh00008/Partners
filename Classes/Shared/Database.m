@@ -28,18 +28,9 @@ static Database* _database;
 	if ((self = [super init])) {
         NSError *error = nil;
         NSFileManager * fileMgr = [NSFileManager defaultManager];
-		NSArray* libary =  NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-		NSString *libaryDir =  [libary objectAtIndex:0];
-		
-        NSString* userdata = PATH_USERDATA;
-		NSString *sqlitePath = [libaryDir stringByAppendingString:userdata];
-        [Globle addSkipBackupAttributeToFile:sqlitePath];
-        if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil])  
-            [fileMgr createDirectoryAtPath:sqlitePath withIntermediateDirectories:YES attributes:nil error:nil];	
-
+		NSString *sqlitePath = [Globle getUserDataPath];
         NSString* dirdatabase = DIR_DATABASE;
 		sqlitePath = [sqlitePath stringByAppendingPathComponent:dirdatabase];
-        [Globle addSkipBackupAttributeToFile:dirdatabase];
         if (![fileMgr fileExistsAtPath:sqlitePath isDirectory:nil])
             [fileMgr createDirectoryAtPath:sqlitePath withIntermediateDirectories:YES attributes:nil error:nil];	
 

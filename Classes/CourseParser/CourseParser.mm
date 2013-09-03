@@ -68,10 +68,9 @@ static bool bLoadModel = NO;
         NSRange r = [resourcePath rangeOfString:STRING_VOICE_PKG_DIR];
         [Globle addSkipBackupAttributeToFile:resourcePath];
         if (r.length != 0) {
-            NSString* dataPath = [resourcePath substringFromIndex:r.location];
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-            NSString *docsDir = [paths objectAtIndex:0];
-            wavePath = [[NSString alloc] initWithFormat:@"%@/%@", docsDir, dataPath];
+            NSString* dataPath = [resourcePath substringFromIndex:(r.location + r.length)];
+            NSString *docsDir = [Globle getMirrorPath];
+            wavePath = [[NSString alloc] initWithFormat:@"%@%@", docsDir, dataPath];
 
         }
     }
