@@ -86,12 +86,16 @@
     [self.sentenceSrc setFont:[UIFont systemFontOfSize:22] fromIndex:0 length:_srcMsg.length];
     [self.sentenceSrc setColor:[UIColor redColor] fromIndex:0 length:self.sentenceSrc.text.length];
     
+    NSRange lastWord = NSMakeRange(0, self.sentenceSrc.text.length);
+    NSRange findResult = lastWord;
     for (NSInteger i = 0; i < [willCompareString count]; i++) {
         NSString* word = [willCompareString objectAtIndex:i];
         if (word.length > 0) {
-            NSRange r = [self.sentenceSrc.text rangeOfString:word options:NSCaseInsensitiveSearch];
-            if (r.location != NSNotFound) {
-                [self.sentenceSrc setColor:[UIColor greenColor] fromIndex:r.location length:r.length];
+            findResult = [self.sentenceSrc.text rangeOfString:word options:NSCaseInsensitiveSearch range:lastWord];
+            if (findResult.location != NSNotFound) {
+                [self.sentenceSrc setColor:[UIColor greenColor] fromIndex:findResult.location length:findResult.length];
+                lastWord = NSMakeRange(findResult.location + findResult.length,
+                                       self.sentenceSrc.text.length - findResult.location - findResult.length - 1);
             }
         }
     }

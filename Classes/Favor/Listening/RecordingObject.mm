@@ -107,7 +107,8 @@ char *OSTypeToStr(char *buf, OSType t)
     for (int i = 0; i < nWord; i++) {
         rgTime += pWord[i].fTimeEd - pWord[i].fTimeSt;
     }
-    score = score - fabs(time - rgTime) / time * 20;
+    int result = score - (fabs(time - rgTime) / time * 20);
+    score = result > 0 ? result : score;
     
     V_NSLog(@"调整后的分数：%d", score);
     
