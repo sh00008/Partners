@@ -12,7 +12,7 @@
 #import "CurrentInfo.h"
 #import "Database.h"
 #import "VoiceDef.h"
-#import "PartnerIAPHelper.h"
+#import "PartnerIAPProcess.h"
 
 @implementation DetailCustomBackgroundView
 @synthesize bUpToDown;
@@ -72,8 +72,6 @@
     [super dealloc];
 }
 
-
-
 @end
 @interface StorePkgDetailTableViewCell()
 {
@@ -95,46 +93,6 @@
     return self;
 }
 
-- (void)productPurchased:(NSNotification *)notification { 
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton showText:STRING_BUYING forBlue:YES];
-        }
-    }
-}
-
-- (void)productFailed:(NSNotification *)notification {
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton showText:STRING_BUYING_FAILED forBlue:YES];
-        }
-    }
-}
-
-- (void)productDone:(NSNotification *)notification {
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton showText:STRING_BUYING_FAILED forBlue:YES];
-        }
-    }
-}
-
-- (void)requestFailed:(NSNotification *)notification {
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton showText:STRING_BUYING forBlue:YES];
-        }
-    }
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -146,39 +104,33 @@
 {
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
-    [self.downloadButton start];
     [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
     
     if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton showText:STRING_BUYING forBlue:YES];
-        }
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapStatusChanged:) name:NOTIFICATION_IAPSTATUS_CHANGED object:nil];
+        PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+        [self setCurrentBuyButonStatus:iapProcess.status];
     } else {
         [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];       
     }
 }
 
+- (void)iapStatusChanged:(NSNotification *)notification {
+    NSNumber* status = notification.object;// (SKPaymentTransaction *)transaction
+    if (status == nil) {
+        return;
+    }
+    [self setCurrentBuyButonStatus:[status intValue]];
+}
+
 - (void)setVoiceData:(DownloadDataPkgInfo*)info
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedTransactionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productDone:) name:IAPHelperProductDoneTransactionNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFailed:) name:IAPHelperProductRequestFailedNotification object:nil];
-
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     info.libID = lib.currentLibID;
     Database* db = [Database sharedDatabase];
     if ([db loadVoicePkgInfo:info] == nil) {
         [self.backToShelfButton setHidden:YES];
         [self.downloadButton setHidden:NO];
-       if (_products != nil) {
-            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-        } else {
-            [self.downloadButton start];
-        }
     } else {
         [self.backToShelfButton setHidden:NO];
         [self.downloadButton setHidden:YES];
@@ -235,35 +187,81 @@
 
 - (IBAction)clickButton:(id)sender
 {
-    if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING]
-        || [[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_BUYING_FAILED]) {
-        
-        if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
-            if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-                [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
-            } else {
-                [self.downloadButton showText:STRING_ON_BUYING forBlue:YES];
-            }
+    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+        PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+        switch (iapProcess.status) {
+            case IAP_STATUS_NONE:
+            case IAP_STATUS_CHECKING_NETWORK:
+                break;
+            case IAP_STATUS_NETWORK_FAILED:
+                [iapProcess start];
+                break;
+            case IAP_STATUS_REQUESTING_IAP:
+                break;
+            case IAP_STATUS_REQUEST_IAP_FAILED:
+                [iapProcess start];
+                break;
+            case IAP_STATUS_NO_PRODUCT:
+            case IAP_STATUS_READY_TO_BUY:
+                [iapProcess doBuyProduct];
+                break;
+            case IAP_STATUS_BUYING_PRODUCT:
+                break;
+            case IAP_STATUS_ALREADY_BUYED:
+                break;
+            case IAP_STATUS_BUYED_FAILED:
+                [iapProcess doBuyProduct];
+                break;
+            default:
+                break;
         }
-        
-        [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-            if (success) {
-                
-                _products = products;
-                SKProduct * product = (SKProduct *)_products[0];
-                
-                NSLog(@"Buying %@...", product.productIdentifier);
-                [[PartnerIAPHelper sharedInstance] buyProduct:product];
-            } else {
-                [self.downloadButton  setTitle:STRING_BUYING_FAILED forState:UIControlStateNormal];
-            }
-        }];
-        
-    } else if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
-        // begin download
-        [self.downloadButton  setTitle:STRING_DOWNLOADING forState:UIControlStateNormal];
-        self.downloadButton.enabled = NO;
-        [self.delegate doDownload:_info];        
+    } else {
+        if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
+            // begin download
+            [self.downloadButton  setTitle:STRING_DOWNLOADING forState:UIControlStateNormal];
+            self.downloadButton.enabled = NO;
+            [self.delegate doDownload:_info];
+        }
+    
+    }
+}
+
+- (void)setCurrentBuyButonStatus:(IAP_STATUS)s
+{
+    [self.backToShelfButton setHidden:YES];
+    [self.downloadButton setHidden:NO];
+    switch (s) {
+        case IAP_STATUS_NONE:
+            [self.downloadButton start];
+            break;
+        case IAP_STATUS_CHECKING_NETWORK:
+            [self.downloadButton start];
+            break;
+        case IAP_STATUS_NETWORK_FAILED:
+            [self.downloadButton showText:STRING_RETRY forBlue:YES];
+            break;
+        case IAP_STATUS_REQUESTING_IAP:
+            [self.downloadButton start];
+            break;
+        case IAP_STATUS_REQUEST_IAP_FAILED:
+            [self.downloadButton showText:STRING_RETRY forBlue:YES];
+            break;
+        case IAP_STATUS_NO_PRODUCT:
+            break;
+        case IAP_STATUS_READY_TO_BUY:
+            [self.downloadButton showText:STRING_BUYING forBlue:YES];
+            break;
+        case IAP_STATUS_BUYING_PRODUCT:
+            [self.downloadButton showText:STRING_ON_BUYING forBlue:YES];
+            break;
+        case IAP_STATUS_ALREADY_BUYED:
+            [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+            break;
+        case IAP_STATUS_BUYED_FAILED:
+            [self.downloadButton showText:STRING_BUYING forBlue:YES];
+            
+        default:
+            break;
     }
 }
 
