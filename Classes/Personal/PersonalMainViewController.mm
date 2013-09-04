@@ -21,14 +21,13 @@
 #import "StoreVoiceDataListParser.h"
 #import "BuyButton.h"
 #import "Globle.h"
+#import "PartnerIAPProcess.h"
 
 @interface PersonalMainViewController ()
 {
     YIPopupTextView* _popAddLibView;
     BuyButton* _buyButton;
     UITableViewCell *_productCell;
-    BOOL _isContinueRequest;
-    BOOL _isRequestSucceed;
 }
 
 @end
@@ -42,8 +41,6 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        _isContinueRequest = YES;
-        _isRequestSucceed = NO;
         [self loadProducts];
     }
     return self;
@@ -65,22 +62,59 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    _priceFormatter = [[NSNumberFormatter alloc] init];
-    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     _isCloseAddLibView = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Restore" style:UIBarButtonItemStyleBordered target:self action:@selector(restoreTapped:)];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedTransactionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productDone:) name:IAPHelperProductDoneTransactionNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFailed:) name:IAPHelperProductRequestFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapStatusChanged:) name:NOTIFICATION_IAPSTATUS_CHANGED object:nil];
 }
 
+- (void)iapStatusChanged:(NSNotification *)notification {
+    NSNumber* status = notification.object;// (SKPaymentTransaction *)transaction
+    if (status == nil) {
+        return;
+    }
+    [self setCurrentBuyButonStatus:[status intValue]];
+}
 
+- (void)setCurrentBuyButonStatus:(IAP_STATUS)s
+{
+    PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+    switch (s) {
+        case IAP_STATUS_NONE:
+            [_buyButton start];           
+            break;
+        case IAP_STATUS_CHECKING_NETWORK:
+            [_buyButton start];
+            break;
+        case IAP_STATUS_NETWORK_FAILED:
+            [_buyButton showText:STRING_RETRY forBlue:YES];
+            break;
+        case IAP_STATUS_REQUESTING_IAP:
+            [_buyButton start];
+            break;
+        case IAP_STATUS_REQUEST_IAP_FAILED:
+            [_buyButton showText:STRING_RETRY forBlue:YES];
+            break;
+        case IAP_STATUS_NO_PRODUCT:
+            break;
+        case IAP_STATUS_READY_TO_BUY:
+            [_buyButton showText:[iapProcess getPriceString] forBlue:YES];
+            break;
+        case IAP_STATUS_BUYING_PRODUCT:
+            [_buyButton showText:STRING_ON_BUYING forBlue:YES];
+            break;
+        case IAP_STATUS_ALREADY_BUYED:
+            _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
+        case IAP_STATUS_BUYED_FAILED:
+            [_buyButton showText:[iapProcess getPriceString] forBlue:YES];
+            
+        default:
+            break;
+    }
+}
 
 - (void)restoreTapped:(id)sender {
-    [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];
+    PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+    [iapProcess doRestore];
 }
 
 - (void)setControllerTitle
@@ -104,53 +138,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    _isContinueRequest = YES;
     [self reloadInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    _isContinueRequest = NO;
 }
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)productPurchased:(NSNotification *)notification {
-    
-    NSString * productIdentifier = notification.object;
-    [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
-        if ([product.productIdentifier isEqualToString:productIdentifier]) {
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-            *stop = YES;
-        }
-    }];
-    
-}
-
-- (void)productFailed:(NSNotification *)notification {
-    [_buyButton showText:[self getPriceString] forBlue:YES];
-}
-
-- (void)productDone:(NSNotification *)notification {
-    SKPaymentTransaction* transaction = notification.object;// (SKPaymentTransaction *)transaction
-    if (transaction == nil) {
-        return;
-    }
-    if ([[PartnerIAPHelper sharedInstance] productPurchased:transaction.payment.productIdentifier]) {
-        if (_productCell != nil) {
-            _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }
-        [_buyButton removeFromSuperview];
-        
-    } else {
-        [_buyButton showText:[self getPriceString] forBlue:YES];
-    }
-}
-
-- (void)requestFailed:(NSNotification *)notification {
-    _isContinueRequest = NO;
-    [_buyButton showText:STRING_RETRY forBlue:YES];
 }
 
 #pragma mark - Table view data source
@@ -182,8 +177,14 @@
         cell.textLabel.text = object.title == nil ? STRING_PROMPT_NOTITLE : object.title;
         cell.tag = object.libID;
     } else if (nRow == [_dataArray count]) {
+        
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
         cell.textLabel.text = STRING_ADD_NEW_LIB;
+        BuyButton *restore = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
+        [restore showText:@"Restore" forBlue:NO];
+        [restore addTarget:self action:@selector(restoreTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = restore;
     }
     UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
       cell.backgroundView = b;
@@ -214,34 +215,13 @@
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.accessoryView = buyButton;
                 _buyButton = buyButton;
-                if (_isRequestSucceed) {
-                    [_buyButton showText:[self getPriceString] forBlue:YES];
-                } else {
-                    if (!_isContinueRequest) {
-                        [_buyButton showText:STRING_RETRY forBlue:YES];
-                    }
-                }
-            } else {
-                if (cell.accessoryView != nil) {
-                    [_buyButton showText:[self getPriceString] forBlue:YES];
-
-                } else {
-                    cell.accessoryView = _buyButton;
-                }
             }
+            PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+            [self setCurrentBuyButonStatus:iapProcess.status];
         }
-    } 
+    }
 
     return cell;
-}
-
-- (NSString*)getPriceString
-{
-    SKProduct * product = (SKProduct *)_products[0];
-    [_priceFormatter setLocale:product.priceLocale];
-    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    NSString* price = [_priceFormatter stringFromNumber:product.price];
-    return price;
 }
 
 - (void)buyButtonTapped:(id)sender {
@@ -250,21 +230,33 @@
     if (buyButton.isLoading) {
         return;
     }
-    
-    if (!_isContinueRequest && !_isRequestSucceed) {
-        _isContinueRequest = YES;
-        [buyButton start];
-        [self loadProducts];
-        return;
+    PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+    switch (iapProcess.status) {
+        case IAP_STATUS_NONE:
+        case IAP_STATUS_CHECKING_NETWORK:
+            break;
+        case IAP_STATUS_NETWORK_FAILED:
+            [iapProcess start];
+            break;
+        case IAP_STATUS_REQUESTING_IAP:
+            break;
+        case IAP_STATUS_REQUEST_IAP_FAILED:
+            [iapProcess start];
+            break;
+        case IAP_STATUS_NO_PRODUCT:
+        case IAP_STATUS_READY_TO_BUY:
+            [iapProcess doBuyProduct];
+            break;
+        case IAP_STATUS_BUYING_PRODUCT:
+            break;
+        case IAP_STATUS_ALREADY_BUYED:
+            break;
+        case IAP_STATUS_BUYED_FAILED:
+            [iapProcess doBuyProduct];
+            break;
+        default:
+            break;
     }
-    if (_isRequestSucceed) {
-        [buyButton showText:STRING_ON_BUYING forBlue:YES];
-        SKProduct *product = _products[buyButton.tag];
-        NSLog(@"Buying %@...", product.productIdentifier);
-        [[PartnerIAPHelper sharedInstance] buyProduct:product];
-        [buyButton start];
-    }
-    //[self reloadInfo];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -388,34 +380,10 @@
 }
 
 - (void)loadProducts {
-    if (!_isContinueRequest) {
-        return;
+    PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+    if (iapProcess != nil) {
+        [iapProcess start];
     }
-    [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            _isRequestSucceed = YES;
-            self._products = products;
-            SKProduct * product = (SKProduct *)_products[0];
-            
-//            [_buyButton showText:[self getPriceString] forBlue:YES];
-            
-            if ([[PartnerIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-                if (_productCell != nil) {
-                    _productCell.accessoryType = UITableViewCellAccessoryCheckmark;
-                }
-                [_buyButton removeFromSuperview];
-                
-            } else {
-                [_buyButton showText:[self getPriceString] forBlue:YES];
-            }
-         } else {
-            _isRequestSucceed = NO;
-            [self loadProducts];
-        }
-        if ([self respondsToSelector:@selector(refreshControl)]) {
-            [self.refreshControl endRefreshing];
-        }
-    }];
 }
 
 #pragma mark YIPopupTextViewDelegate

@@ -53,6 +53,9 @@ NSString *const IAPHelperProductRequestFailedNotification =
     }
     _completionHandler = [completionHandler copy];
     
+    if (_productIdentifiers == nil) {
+        return;
+    }
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = (id <SKProductsRequestDelegate>)self;
     [_productsRequest start];
@@ -166,12 +169,7 @@ NSString *const IAPHelperProductRequestFailedNotification =
               skProduct.price.floatValue);
     }
     
-    if ([self isExistenceNetwork]) {
-        _completionHandler(YES, skProducts);
-    } else {
-        _completionHandler(NO, nil);
-    }
-    
+    _completionHandler(YES, skProducts);
     _completionHandler = nil;
     
 }

@@ -48,6 +48,7 @@
 		0D2F1B7D177C163F009A8A87 /* library.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7A177C163F009A8A87 /* library.png */; };
 		0D2F1B7E177C163F009A8A87 /* NEW.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7B177C163F009A8A87 /* NEW.png */; };
 		0D2F1B7F177C163F009A8A87 /* newICON.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2F1B7C177C163F009A8A87 /* newICON.png */; };
+		0D36770A17D76FA00013E4CD /* PartnerIAPProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D36770917D76FA00013E4CD /* PartnerIAPProcess.m */; };
 		0D3B75E417870E95002224DC /* CurrentInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B75E317870E94002224DC /* CurrentInfo.mm */; };
 		0D50AAA1176A022E00873CF8 /* RecordingObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAA0176A022E00873CF8 /* RecordingObject.mm */; };
 		0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA4176A036500873CF8 /* libisayscore.a */; };
@@ -317,6 +318,8 @@
 		0D2F1B7A177C163F009A8A87 /* library.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = library.png; sourceTree = "<group>"; };
 		0D2F1B7B177C163F009A8A87 /* NEW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NEW.png; sourceTree = "<group>"; };
 		0D2F1B7C177C163F009A8A87 /* newICON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newICON.png; sourceTree = "<group>"; };
+		0D36770817D76FA00013E4CD /* PartnerIAPProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PartnerIAPProcess.h; path = Classes/Personal/PartnerIAPProcess.h; sourceTree = SOURCE_ROOT; };
+		0D36770917D76FA00013E4CD /* PartnerIAPProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PartnerIAPProcess.m; path = Classes/Personal/PartnerIAPProcess.m; sourceTree = SOURCE_ROOT; };
 		0D3B75E217870E94002224DC /* CurrentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentInfo.h; sourceTree = "<group>"; };
 		0D3B75E317870E94002224DC /* CurrentInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CurrentInfo.mm; sourceTree = "<group>"; };
 		0D50AA9F176A022E00873CF8 /* RecordingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingObject.h; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 		0D1531A31740B52D00633FA0 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				0D36770817D76FA00013E4CD /* PartnerIAPProcess.h */,
+				0D36770917D76FA00013E4CD /* PartnerIAPProcess.m */,
 				0DBE679D177883BE00AA9B57 /* PersonalMainViewController.h */,
 				0DBE679E177883BE00AA9B57 /* PersonalMainViewController.mm */,
 			);
@@ -1668,6 +1673,7 @@
 				0D1660F917B0256A00697424 /* Animations.m in Sources */,
 				0DBBE47517B23E3500815814 /* SettingLogoCell.m in Sources */,
 				0DBBE47A17B498C300815814 /* BuyButton.m in Sources */,
+				0D36770A17D76FA00013E4CD /* PartnerIAPProcess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
