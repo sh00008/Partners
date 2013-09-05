@@ -39,15 +39,22 @@
 
 - (void)start
 {
+    // Initialization code
+    UIImage *blueButtonImage = [UIImage imageNamed:@"buttonblue_normal.png"];
+    UIImage *stretchableBlueButton = [blueButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
+    [self setBackgroundImage:stretchableBlueButton forState:UIControlStateNormal];
+    UIImage *darkGreenButtonImage = [UIImage imageNamed:@"buttonblue_pressed.png"];
+    UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
+    [self setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
    if (_indicatior == nil) {
         _indicatior = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self addSubview:_indicatior];
-        _indicatior.center = self.center;
         [_indicatior release];
      }
     [self bringSubviewToFront:_indicatior];
     [_indicatior startAnimating];
     self.isLoading = YES;
+    [self setFont:[UIFont systemFontOfSize:14]];
 }
 
 - (void)showText:(NSString*)t forBlue:(BOOL)isBlue;

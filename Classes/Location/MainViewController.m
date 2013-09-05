@@ -84,7 +84,7 @@
         [self.view addSubview:_scrollview];
         _scrollview.delegate = (id)self;
         
-        _persnoal = [[PersonalMainViewController alloc] init];
+        _persnoal = [[PersonalMainViewController alloc] initWithStyle:UITableViewStyleGrouped];
         [_scrollview addSubview:_persnoal.view];
         _persnoal.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         

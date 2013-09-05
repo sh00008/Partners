@@ -105,7 +105,8 @@
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
     [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
-    
+    [self.downloadButton start];
+   
     if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapStatusChanged:) name:NOTIFICATION_IAPSTATUS_CHANGED object:nil];
         PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];

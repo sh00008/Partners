@@ -56,7 +56,6 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
     [resourcePath release];
     [self performSelector:@selector(setControllerTitle) withObject:nil afterDelay:0.5];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -159,7 +158,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return ([_dataArray count] + 1);
+    return ([_dataArray count]);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,13 +177,13 @@
         cell.tag = object.libID;
     } else if (nRow == [_dataArray count]) {
         
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
+        /*cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier] autorelease];
         cell.textLabel.text = STRING_ADD_NEW_LIB;
         BuyButton *restore = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
         [restore showText:@"Restore" forBlue:NO];
         [restore addTarget:self action:@selector(restoreTapped:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = restore;
+        cell.accessoryView = restore;*/
     }
     UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
       cell.backgroundView = b;
@@ -200,28 +199,44 @@
     if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
         _productCell = cell;
         [_productCell retain];
-        //[_buyButton showText:[self getPriceString] forBlue:YES];
-        
-        // 判断Store是否已经购买
-        if ([[PartnerIAPHelper sharedInstance] productPurchased:STORE_UNLOCK_ID]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            cell.accessoryView = nil;
-        } else {
-            if (_products == nil) {
-                BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
-                [buyButton start];
-                buyButton.tag = indexPath.row;
-                [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.accessoryView = buyButton;
-                _buyButton = buyButton;
-            }
-            PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
-            [self setCurrentBuyButonStatus:iapProcess.status];
-        }
+         BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
+        [buyButton start];
+        buyButton.tag = indexPath.row;
+        [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = buyButton;
+        _buyButton = buyButton;
+        [_buyButton retain];
+         PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
+        [self setCurrentBuyButonStatus:iapProcess.status];
     }
 
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 100.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView* footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
+    
+    CGSize buttonSize = CGSizeMake(76, 37);
+    CGFloat disBetweenButton = 20;
+    CGFloat yOffset = 50;
+    
+    BuyButton *addNewLib = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x - buttonSize.width - disBetweenButton, yOffset, buttonSize.width, buttonSize.height)];
+    [addNewLib showText:STRING_ADD_NEW_LIB forBlue:YES];
+    [addNewLib addTarget:self action:@selector(addNewLib) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:addNewLib];
+    [addNewLib release];
+    BuyButton *restore = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x + disBetweenButton, addNewLib.frame.origin.y, buttonSize.width, buttonSize.height)];
+    [restore showText:STRING_RESTORE forBlue:NO];
+    [restore addTarget:self action:@selector(restoreTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:restore];
+    [restore release];
+    footerView.backgroundColor = [UIColor clearColor];
+    return footerView;
 }
 
 - (void)buyButtonTapped:(id)sender {
@@ -308,8 +323,6 @@
 {
     if (indexPath.row < [_dataArray count]) {
         [self openLib:indexPath.row];
-    } else if (indexPath.row == [_dataArray count]) {
-        [self addNewLib];
     }
     // Navigation logic may go here. Create and push another view controller.
     /*

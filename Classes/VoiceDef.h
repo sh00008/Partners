@@ -179,7 +179,8 @@
 #define STRING_MY_RES                   @"我的资源"
 #define STRING_LIBS                     @"在线图书馆"
 #define STRING_SETTING_INTITLE          @"设置"
-#define STRING_ADD_NEW_LIB               @"点击增加新图书馆"
+#define STRING_ADD_NEW_LIB               @"添加图书馆"
+#define STRING_RESTORE                   @"恢复购买"
 #define MAIN_COURSE_GRID_W              90
 #define MAIN_COURSE_GRID_H              60
 #define MAIN_COURSE_GRID_W_IPAD         120
@@ -190,7 +191,7 @@
 #define STRING_ADDLIB_ADDRESS_SUCCEED   @"成功添加图书馆！"
 #define STRING_ADDLIB_ADDRESS_AREADYADDED   @"图书馆已存在"
 #define STRING_ADDLIB_ADDRESS_ADDED   @"已添加"
-#define STRING_DEFAULT_LIB_NAME         @"我爱读书"
+#define STRING_DEFAULT_LIB_NAME         @"口语伙伴"
 #define STRING_HIDDEN_LIB_NAME          @"Hidden"
 #define STRING_DOWNLOADINGALL           @"正在下载"
 #define STRING_PROMPT_DOWNLOADALL       @"下载本课程全部资源"
