@@ -433,7 +433,8 @@
 - (void)openFavor
 {
     self.modal.animationSpeed = 0.2;
-    [self.modal setRootViewControllerHeight:self.view.bounds.size.height * 0.8];
+    CGFloat height =  ([[UIScreen mainScreen] bounds].size.height) * 0.8;
+   [self.modal setRootViewControllerHeight:height];
     [self.modal setParentViewYPath:self.view.bounds.size.height * 0.2];
     
     [self.modal setDelegate:(id<DMCustomViewControllerDelegate>)self];

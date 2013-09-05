@@ -105,7 +105,12 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:bkimage];
     [resourcePath release];
-    self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.view.frame.size.height * 0.8 + 22);
+    if (!IS_IPAD) {
+        CGFloat screenOfheight =  ([[UIScreen mainScreen] bounds].size.height) ;
+        
+        CGFloat height =  (self.view.frame.size.height + 30 + (screenOfheight == 568 ? 0 : 20)) * 0.8;
+        self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height);
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
