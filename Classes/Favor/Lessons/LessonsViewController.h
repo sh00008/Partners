@@ -20,7 +20,7 @@
 
 @end
 
-@interface LessonsViewController : UITableViewController {
+@interface LessonsViewController : UIViewController {
      NSString* _scenesName;
     CourseParser* _courseParser;
     NSInteger nSelectedPage;
@@ -35,7 +35,7 @@
 @property (nonatomic, retain) UISegmentedControl* pageSegment;
 @property (nonatomic, retain) NSString* dataPath;
 @property (nonatomic, assign) id<LessonsViewControllerDelegate> delegate;
-
+@property (nonatomic, retain) IBOutlet UITableView* tableView;
 - (void) loadCourses;
 - (void) loadToolbarItems;
 - (void) onPrevious:(id)sender;
