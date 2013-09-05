@@ -50,7 +50,15 @@
 {
     [super viewDidLoad];
     _edit = NO;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor clearColor];
+     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    /*NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
+    NSString* stringResource = @"bg_webview.png";
+    NSString* imagePath = [NSString stringWithFormat:@"%@/%@", resourcePath, stringResource];
+    UIImage* bgImage = [UIImage imageWithContentsOfFile:imagePath];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+  */
     NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Image"]];
     UIImage* bkimage = [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/background_gray.png", resourcePath]] stretchableImageWithLeftCapWidth:24 topCapHeight:15];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
@@ -186,7 +194,7 @@
         cell.accessoryView = restore;*/
     }
     UACellBackgroundView* b = [[UACellBackgroundView alloc] initWithFrame:cell.frame];
-      cell.backgroundView = b;
+    //  cell.backgroundView = b;
     
     [b release];
 
