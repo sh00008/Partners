@@ -63,6 +63,8 @@
 - (IBAction)clearRecordingScore:(id)sender {
     Database* db = [Database sharedDatabase];
     [db clearAllRecordingInfo:self.waveFile];
+    [_scoreArray release];
+    _scoreArray = nil;
     [self.scoreTable reloadData];
 }
 
