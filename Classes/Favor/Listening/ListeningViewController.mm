@@ -846,7 +846,7 @@
             [_recording start:recordingFilePath];
             cell.playingUpButton.enabled = NO;
             cell.playingDownButton.enabled = NO;
-            NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 0.3;
+            NSTimeInterval inter = [sentence endTime] - [sentence startTime] + 1.0;
             if (_buttonPlay == nil) {
                 _buttonPlay = [[ButtonPlayObject alloc] init];
                 
@@ -1174,63 +1174,29 @@
     ready.animationTime = animationTime;
     [self.view addSubview:ready];
     [ready release];
-    [ready animateFrom:[NSNumber numberWithInt:4] toNumber:[NSNumber numberWithInt:1]];
-    NSMutableDictionary* dicValue = [[NSMutableDictionary alloc] init];
-    [dicValue setObject:ready forKey:@"view"];
-    [dicValue setObject:clickNumber forKey:@"index"];
-    [self performSelector:@selector(playRecordingAnimationWithView:) withObject:dicValue afterDelay:animationTime];
+    [ready animateFrom:[NSNumber numberWithInt:4] toNumber:[NSNumber numberWithInt:1]]; 
+    [self performSelector:@selector(recordingAfterShowText:) withObject:clickNumber afterDelay:animationTime];
 }
 
-- (void)playRecordingAnimationWithView:(NSMutableDictionary*)dicValue
-{
-    if (dicValue == nil) {
+- (void)recordingAfterShowText:(NSNumber*) clickNum{
+    
+    UIView* readyView = [self.view viewWithTag:READYRECORDINGVIEW_TAG];
+    [readyView removeFromSuperview];
+    if (clickNum == nil) {
         return;
     }
+    NSInteger index = [clickNum intValue];
+    // start recording
+    CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:index];
     
-    UILabel* viewWillAnimation = [dicValue objectForKey:@"view"];
-    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    theAnimation.duration = 0.3;
-    theAnimation.autoreverses = NO;
-    viewWillAnimation.text = STRING_RECORDING_TEXT;
-    viewWillAnimation.frame = CGRectMake(0, 0, 200, 80);
-    viewWillAnimation.center = self.view.center;
-    //viewWillAnimation.text = [NSString stringWithFormat:@"%d", [number integerValue]];
-    theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
-    theAnimation.toValue = [NSNumber numberWithFloat:1.0];
-    theAnimation.delegate = (id)self;
-    [theAnimation setValue:@"practiceforready" forKey:@"id"];
-    if ([dicValue objectForKey:@"index"] != nil) {
-        [theAnimation setValue:[dicValue objectForKey:@"index"] forKey:@"index"];
-    }
-    viewWillAnimation.tag = READYRECORDINGVIEW_TAG;
-   [viewWillAnimation.layer addAnimation:theAnimation forKey:@"transform.scale"];
-    [dicValue release];
-    
-}
-
-
-- (void)animationDidStop:(CAAnimation *)theAnimation2 finished:(BOOL)flag {
-    CABasicAnimation *theAnimation = (CABasicAnimation*)theAnimation2;
-    NSString* valueKey = [theAnimation valueForKey:@"id"];
-    if([valueKey isEqual:@"practiceforready"]) {
-        NSNumber* clickNum = [theAnimation valueForKey:@"index"];
-        if (clickNum == nil) {
-            return;
-        }
-        NSInteger index = [clickNum intValue];
-        // start recording
-        CollapseClickCell* wholeCell = [self.collpaseLesson collapseClickCellForIndex:index];
-        
-        UIView* contentView = [wholeCell.ContentView viewWithTag:102];
-        if (contentView != nil) {
-            RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
-            if (index < [self.sentencesArray count]) {
-                Sentence* sentence = [_sentencesArray objectAtIndex:index];
-                // recording, stop recording in this function:
-                clickindex = index;
-                [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
-            }
+    UIView* contentView = [wholeCell.ContentView viewWithTag:102];
+    if (contentView != nil) {
+        RecordingWaveCell* recoringCell = (RecordingWaveCell*)[contentView viewWithTag:PLAYINGSRC_WAVE_CELL_TAG];
+        if (index < [self.sentencesArray count]) {
+            Sentence* sentence = [_sentencesArray objectAtIndex:index];
+            // recording, stop recording in this function:
+            clickindex = index;
+            [self playing:RECORDING_USER_VOICE_BUTTON_TAG withSentence:sentence withCell:recoringCell];
         }
     }
 }
