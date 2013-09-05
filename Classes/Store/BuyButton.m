@@ -46,6 +46,7 @@
     UIImage *darkGreenButtonImage = [UIImage imageNamed:@"buttonblue_pressed.png"];
     UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
+    [self setTitle:@" " forState:UIControlStateNormal];
    if (_indicatior == nil) {
         _indicatior = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self addSubview:_indicatior];

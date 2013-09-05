@@ -61,7 +61,7 @@
     
     self.title = STRING_DATA_CENTER;
     // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithTitle:STRING_MY_DATA_CENTER style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+    UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithTitle:STRING_LIBS style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
     self.navigationItem.rightBarButtonItem = box;
     [box release];
     

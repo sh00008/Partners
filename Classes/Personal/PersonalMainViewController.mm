@@ -223,7 +223,7 @@
     
     CGSize buttonSize = CGSizeMake(76, 37);
     CGFloat disBetweenButton = 20;
-    CGFloat yOffset = 50;
+    CGFloat yOffset = 25;
     
     BuyButton *addNewLib = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x - buttonSize.width - disBetweenButton, yOffset, buttonSize.width, buttonSize.height)];
     [addNewLib showText:STRING_ADD_NEW_LIB forBlue:YES];
