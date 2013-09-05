@@ -965,11 +965,12 @@
     }
     if (nLesson == PLAY_LESSON_TYPE_NONE) {
         ePlayStatus = PLAY_STATUS_NONE;
-        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
-            clickindex = _lastPlayIndexforPause;
-        } else {
-            clickindex = 0;
-        }
+//        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+//            clickindex = _lastPlayIndexforPause;
+//        } else {
+//            clickindex = 0;
+//        }
+        clickindex = 0;
     }
     nLesson = PLAY_LESSON;
     [self beforePlayWholeLesson];
@@ -992,11 +993,13 @@
     }
     if (nLesson == PLAY_LESSON_TYPE_NONE) {
         ePlayStatus = PLAY_STATUS_NONE;
-        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
-            clickindex = _lastPlayIndexforPause;
-        } else {
-            clickindex = 0;
-        }
+//        if (_lastPlayIndexforPause > -1 && _lastPlayIndexforPause < [self.sentencesArray count]) {
+//            clickindex = _lastPlayIndexforPause;
+//        } else {
+//            clickindex = 0;
+//        }
+        clickindex = 0;
+
         [_scroeArray release];
         _scroeArray = nil;
         _scroeArray = [[NSMutableArray alloc] init];
