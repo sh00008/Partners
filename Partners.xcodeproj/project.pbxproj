@@ -1403,6 +1403,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = JiaLi;
+				TargetAttributes = {
+					0D1531601740B20000633FA0 = {
+						DevelopmentTeam = AYF3BE479S;
+					};
+				};
 			};
 			buildConfigurationList = 0D15315C1740B20000633FA0 /* Build configuration list for PBXProject "Partners" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1805,6 +1810,8 @@
 		0D15319D1740B20000633FA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partners/Partners-Prefix.pch";
@@ -1816,6 +1823,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1823,6 +1831,8 @@
 		0D15319E1740B20000633FA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partners/Partners-Prefix.pch";
@@ -1834,6 +1844,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
