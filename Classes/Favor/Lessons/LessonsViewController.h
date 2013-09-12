@@ -35,7 +35,7 @@
 @property (nonatomic, retain) UISegmentedControl* pageSegment;
 @property (nonatomic, retain) NSString* dataPath;
 @property (nonatomic, assign) id<LessonsViewControllerDelegate> delegate;
-@property (nonatomic, retain) IBOutlet UITableView* tableView;
+@property (nonatomic, retain) IBOutlet UITableView* lessonTableView;
 - (void) loadCourses;
 - (void) loadToolbarItems;
 - (void) onPrevious:(id)sender;

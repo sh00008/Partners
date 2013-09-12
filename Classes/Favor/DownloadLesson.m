@@ -147,7 +147,7 @@
     }
 }
 
-- (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
+- (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex
 {
     Lesson* lesson = (Lesson*)[self.courseParser.course.lessons objectAtIndex:self.nPositionInCourse];
     Database* db = [Database sharedDatabase];
