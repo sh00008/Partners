@@ -101,7 +101,7 @@
         [_scrollview setContentSize:CGSizeMake(self.view.bounds.size.width * 3, self.view.bounds.size.height)];
         [_scrollview setPagingEnabled:YES];
         [_scrollview setContentOffset:CGPointMake(self.view.bounds.size.width, 0)];
-        
+        _scrollview.directionalLockEnabled = YES;
         [_home setSelected:YES];
     }
     

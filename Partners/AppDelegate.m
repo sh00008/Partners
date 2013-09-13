@@ -10,6 +10,8 @@
 #import "PartnerIAPHelper.h"
 #import "ViewController.h"
 #import "MainViewController.h"
+#import "Globle.h"
+
 #define IS_IPAD	([[UIDevice currentDevice] respondsToSelector:@selector(userInterfaceIdiom)] && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 @implementation AppDelegate
 
@@ -36,13 +38,16 @@
     _mainViewController.view.frame = CGRectMake(0, 0, self.window.bounds.size.width, self.window.bounds.size.height);
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
     // set navigation bar backgroundImage
-    UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
-    if([nav.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-        [nav.navigationBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
+        if([nav.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+            [nav.navigationBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+        }
     }
     nav.navigationBar.tintColor = [UIColor grayColor];
     
     self.window.rootViewController = nav;
+    nav.view.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     // 创建IAP辅助类
