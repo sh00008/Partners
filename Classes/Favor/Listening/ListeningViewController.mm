@@ -150,7 +150,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)initMembers;
+- (void)initMembers
 {
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
     Database* db = [Database sharedDatabase];
@@ -193,7 +193,7 @@
    [self performSelector:@selector(initDownload) withObject:nil afterDelay:1.0];
 }
 
-- (void)initDownload;
+- (void)initDownload
 {
     [self removeSubViewwithTag:[NSNumber numberWithInt:DOWNLOADINGBUTTONTAG]];
     [self removeSubViewwithTag:[NSNumber numberWithInt:WAITINGVIEWTAG]];
@@ -206,7 +206,7 @@
     }
 
 }
-- (void)displayLesson;
+- (void)displayLesson
 {
     if (!(self.nPositionInCourse < [self.courseParser.course.lessons count])) {
         return;
@@ -251,7 +251,7 @@
     
 }
 
-- (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated;
+- (void)addWaitingView:(NSInteger)tag withText:(NSString*)text withAnimation:(BOOL)animated
 {
     UIView *loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 80)];
     loadingView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
@@ -287,12 +287,12 @@
     [loadingView release];
 
 }
-- (void)addLoadingView;
+- (void)addLoadingView
 {
     [self addWaitingView:LOADINGVIEWTAG withText:STRING_LOADING_TEXT withAnimation:YES];
 }
 
-- (void)removeLoadingView;
+- (void)removeLoadingView
 {
     UIView* loadingView = [self.view viewWithTag:LOADINGVIEWTAG];
     if (loadingView != nil) {
@@ -370,7 +370,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)initValue;
+- (void)initValue
 {
     if (self.player == nil) {
         NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: wavefile];
@@ -394,7 +394,7 @@
 //    self.listeningToolbar.nextItem.enabled = ((nPosition + 1) != [_sentencesArray count]);
 }
 
-- (void)parseWAVFile;
+- (void)parseWAVFile
 {
     NSFileManager* fileMgr = [NSFileManager defaultManager];
     if (![fileMgr fileExistsAtPath:wavefile]) {
