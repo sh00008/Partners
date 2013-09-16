@@ -19,7 +19,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *documentDirectory = [Globle getPkgPath];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
     if ([fm fileExistsAtPath:documentDirectory]) {
         // parse
         const char* licenseFile = [documentDirectory cStringUsingEncoding:NSUTF8StringEncoding];
