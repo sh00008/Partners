@@ -81,9 +81,11 @@
 
 
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
-    if([ self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-        [ self.navigationController.navigationBar  setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
+        if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+            [self.navigationController.navigationBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+        }
     }
     self.navigationController.navigationBar .tintColor = [UIColor grayColor];
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
@@ -119,12 +121,14 @@
 
 - (void)back
 {
+    [self dismissModalViewControllerAnimated:YES];
+   /*
     UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
     [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition: trans forView:[self.view window] cache: NO];
+    [UIView setAnimationTransition: trans forView:self.view cache: NO];
     [self dismissModalViewControllerAnimated:NO];
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 - (void)finishVoiceXMLData:(NSData*)data
@@ -205,12 +209,14 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OPEN_PKG object:info.title];
     
    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
+    /*
     UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
     [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition: trans forView:[self.view window] cache: NO];
+    [UIView setAnimationTransition: trans forView:self.view cache: NO];
     [self dismissModalViewControllerAnimated:NO];
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 @end

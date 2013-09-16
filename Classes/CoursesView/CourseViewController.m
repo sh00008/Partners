@@ -40,11 +40,12 @@
 
 - (void)back
 {
-    UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
+    [self dismissModalViewControllerAnimated:YES];
+    /*UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
     [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition: trans forView:[self.view window] cache: NO];
+    [UIView setAnimationTransition: trans forView:self.view cache: NO];
     [self dismissModalViewControllerAnimated:NO];
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 @end

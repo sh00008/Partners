@@ -131,12 +131,16 @@
 - (void)openStore:(NSNotification*)aNotification;
 {
     UIViewController* ob = aNotification.object;
+    ob.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:ob animated:YES];
+
+    /*UIViewController* ob = aNotification.object;
     UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
     [UIView setAnimationDuration:0.5];
-    [UIView setAnimationTransition:transition forView:[self.view window] cache: NO];
+    [UIView setAnimationTransition:transition forView:self.view cache: NO];
     [self presentModalViewController:ob animated:NO];
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 - (void)setFavorViewPosition

@@ -10,6 +10,7 @@
 #import "Database.h"
 #import "VoicePkgInfoObject.h"
 #import "VoiceDef.h"
+#import "Globle.h"
 @interface RecordingScoreViewController ()
 {
     NSMutableArray* _scoreArray;
@@ -33,9 +34,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
-    if([ self.naviBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-        [ self.naviBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
+        if([self.naviBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+            [self.naviBar setBackgroundImage:bk forBarMetrics:UIBarMetricsDefault];
+        }
     }
     self.naviBar.tintColor = [UIColor grayColor];
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
