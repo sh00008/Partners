@@ -222,7 +222,7 @@
          
          }*/
         // Configure the cell...
-        [cell.deletePkg addTarget:self action:@selector(deletePkg:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.deletePkg addTarget:self action:@selector(onDeletePkg:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
 
     }
@@ -483,10 +483,17 @@
     }
 }
 
-- (void)deletePkg:(id)sender;
+- (void)onDeletePkg:(id)sender;
 {
     UIButton* b = (UIButton*)sender;
     FavorViewCell *cell = (FavorViewCell*)[[b superview] superview];
+    if (![cell isKindOfClass:[FavorViewCell class]]) {
+        // for iOS7
+        cell = (FavorViewCell*)[cell superview];
+        if (![cell isKindOfClass:[FavorViewCell class]]) {
+            return;
+        }
+    }
     _deleteTitle = cell.pkgTitle.text;
     _deleteLibID = cell.tag;
     [_deleteTitle retain];
