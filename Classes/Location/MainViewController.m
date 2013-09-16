@@ -131,8 +131,8 @@
 - (void)openStore:(NSNotification*)aNotification;
 {
     UIViewController* ob = aNotification.object;
-    ob.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:ob animated:YES];
+    ob.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:ob animated:NO];
 
     /*UIViewController* ob = aNotification.object;
     UIViewAnimationTransition transition = UIViewAnimationTransitionFlipFromRight;

@@ -610,7 +610,7 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
     [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
     if (![fm fileExistsAtPath:devicePath]) {

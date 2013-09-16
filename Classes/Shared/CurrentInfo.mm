@@ -19,7 +19,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *documentDirectory = [Globle getPkgPath];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     if ([fm fileExistsAtPath:documentDirectory]) {
         // parse
         const char* licenseFile = [documentDirectory cStringUsingEncoding:NSUTF8StringEncoding];
@@ -59,10 +59,10 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     if (![fm fileExistsAtPath:devicePath isDirectory:nil]) {
         if (fromUrl != nil) {
-            NSString* urlstr = [NSString stringWithFormat:@"%@/ServerRequest.dat", fromUrl];
+            NSString* urlstr = [NSString stringWithFormat:@"%@ServerRequest.dat", fromUrl];
             NSURL* url = [NSURL URLWithString:urlstr];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setValue:@"device" forHTTPHeaderField:@"User-Agent"];
@@ -98,7 +98,7 @@
 {
     NSString *documentDirectory = [Globle getPkgPath];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", self.libID];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     [data writeToFile:documentDirectory atomically:YES];
     [self getDeviceID];
 }

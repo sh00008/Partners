@@ -763,7 +763,7 @@ static Database* _database;
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     NSString* voiceXML = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
     [fm removeItemAtPath:devicePath error:nil];
     [fm removeItemAtPath:voiceXML error:nil];

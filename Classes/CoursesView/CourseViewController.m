@@ -40,7 +40,7 @@
 
 - (void)back
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:NO];
     /*UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
     [UIView setAnimationDuration:0.5];

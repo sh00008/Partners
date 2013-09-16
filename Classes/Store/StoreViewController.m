@@ -62,7 +62,7 @@
     self.title = STRING_DATA_CENTER;
     // Do any additional setup after loading the view from its nib.
     UIBarButtonItem* box = [[UIBarButtonItem alloc] initWithTitle:STRING_LIBS style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-    self.navigationItem.rightBarButtonItem = box;
+    self.navigationItem.leftBarButtonItem = box;
     [box release];
     
     NSString* urlstr = STRING_STORE_URL_ADDRESS;
@@ -121,7 +121,7 @@
 
 - (void)back
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:NO];
    /*
     UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
@@ -145,7 +145,7 @@
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
-    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"/%@", @"ServerRequest.dat"];
+    NSString* devicePath = [documentDirectory stringByAppendingFormat:@"%@", @"ServerRequest.dat"];
     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%@", @"voice.xml"];
     [fm copyItemAtPath:xmlPath toPath:documentDirectory error:nil];
     
@@ -211,8 +211,8 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_OPEN_PKG object:info.title];
     
-   [self.navigationController popToRootViewControllerAnimated:YES];
-    [self dismissModalViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self dismissModalViewControllerAnimated:NO];
     /*
     UIViewAnimationTransition trans = UIViewAnimationTransitionFlipFromRight;
     [UIView beginAnimations: nil context: nil];
