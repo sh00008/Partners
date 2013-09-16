@@ -23,7 +23,7 @@
         UIImage *stretchabledarkGreenButton = [darkGreenButtonImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
         [self setBackgroundImage:stretchabledarkGreenButton forState:UIControlStateHighlighted];
         self.isLoading = YES;
-        [self setFont:[UIFont systemFontOfSize:14]];
+        [self.titleLabel setFont:[UIFont systemFontOfSize:14]];
     }
     return self;
 }
@@ -55,7 +55,7 @@
     [self bringSubviewToFront:_indicatior];
     [_indicatior startAnimating];
     self.isLoading = YES;
-    [self setFont:[UIFont systemFontOfSize:14]];
+    [self.titleLabel setFont:[UIFont systemFontOfSize:14]];
 }
 
 - (void)showText:(NSString*)t forBlue:(BOOL)isBlue;

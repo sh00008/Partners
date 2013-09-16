@@ -22,7 +22,7 @@
 @synthesize dataPath;
 @synthesize delegate;
 @synthesize pkgName;
-@synthesize tableView;
+@synthesize lessonTableView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -99,20 +99,20 @@
             [_daybayday performSelector:@selector(loadDaybyDayView) withObject:nil afterDelay:0.2];
         }*/
     }
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.lessonTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     NSString* resourcePath = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], @"Image"]];
     UIImage* bkimage = [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/background_gray.png", resourcePath]] stretchableImageWithLeftCapWidth:24 topCapHeight:15];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bkimage];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:bkimage];
+    self.lessonTableView.backgroundColor = [UIColor colorWithPatternImage:bkimage];
     [resourcePath release];
     if (!IS_IPAD) {
         CGFloat screenOfheight =  ([[UIScreen mainScreen] bounds].size.height) ;
         CGFloat height =  (screenOfheight - (screenOfheight == 568 ? (64+20+40) : 15)) * 0.8;
-        self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height);
+        self.lessonTableView.frame = CGRectMake(0, 0, self.lessonTableView.frame.size.width, height);
     } else {
         CGFloat screenOfheight =  ([[UIScreen mainScreen] bounds].size.height) ;
         CGFloat height =  (screenOfheight - 696) * 0.8;
-        self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, height);
+        self.lessonTableView.frame = CGRectMake(0, 0, self.lessonTableView.frame.size.width, height);
        
     }
     // Uncomment the following line to preserve selection between presentations.
@@ -131,7 +131,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
+    [self.lessonTableView reloadData];
     [super viewWillAppear:animated];
 }
 
@@ -158,7 +158,7 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
 {
-    [self.tableView reloadData];
+    [self.lessonTableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -466,7 +466,7 @@
     if (nSelectedPage > 0) {
         nSelectedPage --;
         self.pageSegment.selectedSegmentIndex = nSelectedPage;
-        [self.tableView reloadData];
+        [self.lessonTableView reloadData];
     }
 }
 
@@ -476,7 +476,7 @@
     if (nSelectedPage < (nSegmentNum-1)) {
         nSelectedPage ++;
         self.pageSegment.selectedSegmentIndex = nSelectedPage;
-        [self.tableView reloadData];
+        [self.lessonTableView reloadData];
     }
     
 }
@@ -486,7 +486,7 @@
     NSInteger nSelected = self.pageSegment.selectedSegmentIndex;
     if (nSelected != nSelectedPage) {
         nSelectedPage = nSelected;
-        [self.tableView reloadData];
+        [self.lessonTableView reloadData];
     }
 }
 

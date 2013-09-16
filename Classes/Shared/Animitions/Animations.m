@@ -58,7 +58,7 @@
     }
     
     float current = ([to floatValue] - [from floatValue]) * dt + [from floatValue];
-    self.text = [NSString stringWithFormat:@"%@\r\n%i",STRING_READY_RECORDING, (long)current];
+    self.text = [NSString stringWithFormat:@"%@\r\n%li",STRING_READY_RECORDING, (long)current];
 }
 
 @end

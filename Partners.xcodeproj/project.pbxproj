@@ -55,7 +55,6 @@
 		0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAA7176A05BD00873CF8 /* libisayioDecode.a */; };
 		0D50AAB3176A11C600873CF8 /* AQPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAD176A11C600873CF8 /* AQPlayer.mm */; };
 		0D50AAB4176A11C600873CF8 /* AQRecorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D50AAAF176A11C600873CF8 /* AQRecorder.mm */; };
-		0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D50AAB2176A11C600873CF8 /* libisayscore.a */; };
 		0D71252D17A249D700C206AE /* DownloadWholeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D71252B17A249D600C206AE /* DownloadWholeViewController.m */; };
 		0D71252E17A249D700C206AE /* DownloadWholeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D71252C17A249D700C206AE /* DownloadWholeViewController.xib */; };
 		0D954035176230BE00A616D8 /* Btn_Pause_Avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D95402B176230BE00A616D8 /* Btn_Pause_Avatar@2x.png */; };
@@ -610,7 +609,6 @@
 				0D1531691740B20000633FA0 /* CoreGraphics.framework in Frameworks */,
 				0D50AAA5176A036500873CF8 /* libisayscore.a in Frameworks */,
 				0D50AAA8176A05BD00873CF8 /* libisayioDecode.a in Frameworks */,
-				0D50AAB5176A11C600873CF8 /* libisayscore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1403,8 +1401,13 @@
 		0D1531591740B20000633FA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = JiaLi;
+				TargetAttributes = {
+					0D1531601740B20000633FA0 = {
+						DevelopmentTeam = AYF3BE479S;
+					};
+				};
 			};
 			buildConfigurationList = 0D15315C1740B20000633FA0 /* Build configuration list for PBXProject "Partners" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1742,7 +1745,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
@@ -1766,7 +1768,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A235897A-ECAF-4E00-8C9E-9B29C8CCBCE9";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1778,7 +1780,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
@@ -1798,7 +1799,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "A235897A-ECAF-4E00-8C9E-9B29C8CCBCE9";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1809,6 +1810,8 @@
 		0D15319D1740B20000633FA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partners/Partners-Prefix.pch";
@@ -1820,6 +1823,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1827,6 +1831,8 @@
 		0D15319E1740B20000633FA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partners/Partners-Prefix.pch";
@@ -1838,6 +1844,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -125,12 +125,11 @@ typedef enum {
 - (void)removeDownloadingView;
 - (void)addDownloadingFailedView;
 - (BOOL)downloadLesson;
-- (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
-- (void)downloadXINByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex;
-- (void)downloadISBByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
+//- (void)downloadLESByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
+//- (void)downloadXINByURL:(NSString*)url withTryIndex:(NSInteger)tryIndex;
+//- (void)downloadISBByURL:(NSString *)url withTryIndex:(NSInteger)tryIndex;
 
 - (void)displayLesson;
-- (void)openCell:(id)sender;
 - (IBAction)clickReadLessonButton:(id)sender;
 - (IBAction)clickReadingFollowButton:(id)sender;
 - (void)beforePlayWholeLesson;
