@@ -14,6 +14,7 @@
 //#import "MobiSageSDK.h"
 #import "ConfigData.h"
 #import "StoreCourceTableViewCell.h"
+#import "Globle.h"
 @interface StoreRootViewController ()
 
 @end

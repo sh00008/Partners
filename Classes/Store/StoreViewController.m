@@ -158,6 +158,9 @@
         rootViewController.delegate = (id)self;
         CGRect rc = self.view.frame;
         rootViewController.view.frame = CGRectMake(0, 0, rc.size.width, rc.size.height);
+        if (IS_IOS7) {
+            rootViewController.view.frame = CGRectMake(0, 64, rc.size.width, rc.size.height - 64);
+        }
         rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
         [self.view addSubview:rootViewController.view];
     }
