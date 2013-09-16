@@ -162,7 +162,11 @@
     [self.sentencesTableView setBackgroundView:[[[UIView alloc] init] autorelease]];
     [self.sentencesTableView setBackgroundColor:UIColor.clearColor];
     
-    
+    if (IS_IOS7) {
+        self.collpaseLesson.frame = CGRectMake(0, 64, self.collpaseLesson.frame.size.width, self.collpaseLesson.frame.size.height - 64);
+        self.collpaseLesson.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+    }
+   
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithTitle:backString style:UIBarButtonItemStyleBordered target:nil action:nil];
     backItem.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = backItem;
