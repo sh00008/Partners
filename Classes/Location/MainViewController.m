@@ -15,7 +15,7 @@
 #import "PersonalMainViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Animations.h"
-
+#import "Globle.h"
 @interface MainViewController ()
 {
     // buttons in title bar
@@ -219,6 +219,9 @@
         }
     }
     [_titleLabel sizeToFit];
+    if (IS_IOS7) {
+        [_scrollview setContentOffset:CGPointMake(pt.x, -64)];
+    }
     
 }
 
