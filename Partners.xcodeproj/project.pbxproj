@@ -237,6 +237,9 @@
 		95799BE917B628DB00431337 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 95799BE717B627E800431337 /* Reachability.m */; };
 		95799BEB17B6295700431337 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95799BEA17B6295700431337 /* SystemConfiguration.framework */; };
 		9579A39C1773DAAB0014D1DC /* model.dat in Resources */ = {isa = PBXBuildFile; fileRef = 9579A39B1773DAAB0014D1DC /* model.dat */; };
+		95A6295417E7409100BBE124 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 95A6295317E7409100BBE124 /* Icon-152.png */; };
+		95A6295717E740EA00BBE124 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 95A6295517E740EA00BBE124 /* Icon-76.png */; };
+		95A6295817E740EA00BBE124 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 95A6295617E740EA00BBE124 /* Icon-120.png */; };
 		95C0669B17928755008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
 		95C0669C179292E2008E39C6 /* BorrowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C0669A17928755008E39C6 /* BorrowInfo.m */; };
 		95FC642C179D66FC009990EF /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FC642B179D66FC009990EF /* IAPHelper.m */; };
@@ -583,6 +586,9 @@
 		95799BE717B627E800431337 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		95799BEA17B6295700431337 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9579A39B1773DAAB0014D1DC /* model.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = model.dat; path = Resources/model.dat; sourceTree = SOURCE_ROOT; };
+		95A6295317E7409100BBE124 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = SOURCE_ROOT; };
+		95A6295517E740EA00BBE124 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = SOURCE_ROOT; };
+		95A6295617E740EA00BBE124 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = SOURCE_ROOT; };
 		95C0669917928755008E39C6 /* BorrowInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorrowInfo.h; sourceTree = "<group>"; };
 		95C0669A17928755008E39C6 /* BorrowInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorrowInfo.m; sourceTree = "<group>"; };
 		95FC642A179D66FC009990EF /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
@@ -898,6 +904,9 @@
 		0DA148A11751159A004EBCFF /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				95A6295517E740EA00BBE124 /* Icon-76.png */,
+				95A6295617E740EA00BBE124 /* Icon-120.png */,
+				95A6295317E7409100BBE124 /* Icon-152.png */,
 				95799BE417B61F8300431337 /* Icon-72@2x.png */,
 				95799BE217B61F7B00431337 /* Icon-72.png */,
 				95799BE017B61F0D00431337 /* Default-Landscape@2x~ipad.png */,
@@ -1478,6 +1487,7 @@
 				0DA1499D175116A5004EBCFF /* buttonblue_pressed.png in Resources */,
 				0DA1499E175116A5004EBCFF /* buttonblue_pressed@2x.png in Resources */,
 				0DA1499F175116A5004EBCFF /* cellBg.png in Resources */,
+				95A6295817E740EA00BBE124 /* Icon-120.png in Resources */,
 				0DA149A0175116A5004EBCFF /* starsForeground.png in Resources */,
 				0DA149A2175116B1004EBCFF /* Image in Resources */,
 				0DA149A517519715004EBCFF /* Database in Resources */,
@@ -1485,6 +1495,7 @@
 				0DAA13D7175E208C00E51620 /* LessonsViewController.xib in Resources */,
 				0DAA13DF175E223A00E51620 /* LessonCell.xib in Resources */,
 				0DAA140E175F6FC700E51620 /* 4-light-menu-bar.png in Resources */,
+				95A6295717E740EA00BBE124 /* Icon-76.png in Resources */,
 				0DAA140F175F6FC700E51620 /* 4-light-menu-bar@2x.png in Resources */,
 				0DAA1414175F761900E51620 /* ListeningViewController.xib in Resources */,
 				0DAA14221760D93F00E51620 /* ListeningCell.xib in Resources */,
@@ -1533,6 +1544,7 @@
 				0DC93BAE17A2A74700080975 /* SIAlertView.bundle in Resources */,
 				0DC3DD8117AB55EA005C7CDC /* CustomViewController.xib in Resources */,
 				0DC93BC317AE9BE300080975 /* Icon_Tops_Hit@2x.png in Resources */,
+				95A6295417E7409100BBE124 /* Icon-152.png in Resources */,
 				0DC93BC417AE9BE300080975 /* Icon_Tops@2x.png in Resources */,
 				0DC93BCA17AEF11300080975 /* RecordingScoreViewController.xib in Resources */,
 				0D1660FB17B1A1B600697424 /* Data in Resources */,
@@ -1768,7 +1780,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				PROVISIONING_PROFILE = "A235897A-ECAF-4E00-8C9E-9B29C8CCBCE9";
+				PROVISIONING_PROFILE = "AA102ED0-2852-40E1-B4E6-A94AAAF7EBF6";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1799,7 +1811,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lz";
 				PREBINGDING = NO;
-				PROVISIONING_PROFILE = "A235897A-ECAF-4E00-8C9E-9B29C8CCBCE9";
+				PROVISIONING_PROFILE = "AA102ED0-2852-40E1-B4E6-A94AAAF7EBF6";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1823,7 +1835,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
+				PROVISIONING_PROFILE = "AA102ED0-2852-40E1-B4E6-A94AAAF7EBF6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1831,8 +1843,8 @@
 		0D15319E1740B20000633FA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: DING LI (AYF3BE479S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: DING LI (AYF3BE479S)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partners/Partners-Prefix.pch";
@@ -1844,7 +1856,7 @@
 					"\"$(SRCROOT)/Classes/WaveDecode/VoiceScore\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE538D04-73D1-4B66-B46C-60AE04E27434";
+				PROVISIONING_PROFILE = "AA102ED0-2852-40E1-B4E6-A94AAAF7EBF6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
