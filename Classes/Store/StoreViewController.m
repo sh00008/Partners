@@ -141,7 +141,7 @@
     NSString *documentDirectory = [Globle getPkgPath];
     
     CurrentInfo* lib = [CurrentInfo sharedCurrentInfo];
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", lib.currentLibID];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d/", lib.currentLibID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     

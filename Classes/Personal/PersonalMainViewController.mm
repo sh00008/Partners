@@ -606,7 +606,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *documentDirectory = [Globle getPkgPath];
     
-     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", down.libID];
+     documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d/", down.libID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     

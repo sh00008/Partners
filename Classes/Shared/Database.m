@@ -759,7 +759,7 @@ static Database* _database;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *documentDirectory = [Globle getPkgPath];
     
-    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d", libID];
+    documentDirectory = [documentDirectory stringByAppendingFormat:@"/%d/", libID];
     if (![fm fileExistsAtPath:documentDirectory isDirectory:nil])
         [fm createDirectoryAtPath:documentDirectory withIntermediateDirectories:YES attributes:nil error:nil];
     
