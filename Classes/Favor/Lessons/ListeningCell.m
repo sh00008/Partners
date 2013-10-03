@@ -9,8 +9,9 @@
 #import "ListeningCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Globle.h"
+#import "VoiceDef.h"
 #define HEIGHT_OF_LISTENINGCELL 107
-
+#define WIDTH_OF_IPAD_SRCSENTENCE 640
 @implementation UITeacherIconView
 - (id) initWithFrame:(CGRect)frame
 {
@@ -43,6 +44,9 @@
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
     self.sentenceTrans.numberOfLines = 0;
     self.sentenceTrans.lineBreakMode   = UILineBreakModeWordWrap;
+    if (IS_IPAD) {
+        self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IPAD_SRCSENTENCE, 44);
+    }
 }
 
 - (void)cleanUp;
@@ -67,15 +71,18 @@
    
     self.sentenceSrc.numberOfLines = 0;
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
-   
+    if (IS_IPAD) {
+        self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IPAD_SRCSENTENCE, 44);
+    }
     CGSize szSrc = [Globle calcTextHeight:msgText withWidth:self.sentenceSrc.frame.size.width withFontSize:22];
 
     CGSize szTrans = [Globle calcTextHeight:transText withWidth:self.sentenceTrans.frame.size.width withFontSize:14];
-    self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, self.sentenceSrc.frame.size.width, szSrc.height);
-    self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, self.sentenceTrans.frame.size.width, szTrans.height);
+    self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, szSrc.width, szSrc.height);
+    
+    self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, szTrans.width, szTrans.height);
+    self.sentenceSrc.visibleRect = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, IS_IPAD? fmax(WIDTH_OF_IPAD_SRCSENTENCE, szSrc.width): szSrc.width, szSrc.height);
+    //self.sentenceSrc.text = msgText;
     [self.sentenceSrc sizeToFit];
-    self.sentenceSrc.visibleRect = self.sentenceSrc.frame;
-
     [self.sentenceTrans sizeToFit];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, fmax(self.sentenceTrans.frame.origin.y + self.sentenceTrans.frame.size.height + 20, HEIGHT_OF_LISTENINGCELL));
 }
