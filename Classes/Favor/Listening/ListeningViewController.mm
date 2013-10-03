@@ -134,6 +134,7 @@
     [self.player release];
     [self.courseParser release];
     if (_downloadLessonObj) {
+        _downloadLessonObj.delegate = nil;
         [_downloadLessonObj release];
         _downloadLessonObj = nil;
     }
@@ -664,7 +665,8 @@
             [imagePath release];
             break;
     }
-    cell.frame = CGRectMake(0, 0, self.view.bounds.size.width, cell.frame.size.height);
+    CGRect newframe = CGRectMake(0, 0, self.view.bounds.size.width, cell.frame.size.height);
+    cell.frame = newframe;
    [cell setMsgText:sentence.orintext withTrans:sentence.transtext];
     
     return cell;
