@@ -31,7 +31,7 @@
 #define NOTIFICATION_MODEL_LESSONS @"ModalLessonsNotification"
 #define NOTIFICATION_CLOSE_LESSONS @"CloseLessonsNotification"
 #define STRING_STORE_URL_ADDRESS_BASE @"http://isaybox.b0.upaiyun.com/"
-// #define STRING_STORE_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"
+#define STRING_STORE_DEFAULT_TEST_URL_ADDRESS @"http://ilovestory.b0.upaiyun.com/index_ios.xml"
 #define STRING_STORE_URL_ADDRESS @"http://isaybox.b0.upaiyun.com/index_ios.xml"
 #define STORE_UNLOCK_ID @"com.story.partners.unlockdefaultlibrary"
 #define STRING_MY_DATA_CENTER @"我的资源"

@@ -429,20 +429,18 @@
 - (void)confirmText:(YIPopupTextView*)textView didDismissWithText:(NSString*)text;
 {
     Database* db = [Database sharedDatabase];
-    LibaryInfo* libInfo = [db getLibaryInfoByURL:text];
+    // correct url: add index_ios.xml
+    NSString* newURL = text;
+    NSRange r = [text rangeOfString:@"ilovestory.b0.upaiyun.com" options:NSBackwardsSearch];
+    if (r.location != NSNotFound) {
+        newURL = [NSString stringWithFormat:@"%@", STRING_STORE_DEFAULT_TEST_URL_ADDRESS];
+    }
+    LibaryInfo* libInfo = [db getLibaryInfoByURL:newURL];
     if (libInfo != nil) {
         [self addWaitingView:132 withText:STRING_ADDLIB_ADDRESS_AREADYADDED withAnimation:YES];
         [self performSelector:@selector(removeWatingView:) withObject:[NSNumber numberWithInt:132] afterDelay:2];
     } else {
-        // correct url: add index_ios.xml
-        NSString* newURL = text;
-        NSRange r = [text rangeOfString:@".xml" options:NSBackwardsSearch];
-        if (r.location == NSNotFound) {
-            newURL = [NSString stringWithFormat:@"%@/index_ios.xml", text];
-        }
-        
         // add new lib address.
-        
         Database* db = [Database sharedDatabase];
         LibaryInfo* info = [[LibaryInfo alloc] init];
         info.url = newURL;
