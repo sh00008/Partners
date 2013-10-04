@@ -12,6 +12,7 @@
 #import "VoiceDef.h"
 #define HEIGHT_OF_LISTENINGCELL 107
 #define WIDTH_OF_IPAD_SRCSENTENCE 640
+#define WIDTH_OF_IIPHONE_SRCSENTENCE 220
 @implementation UITeacherIconView
 - (id) initWithFrame:(CGRect)frame
 {
@@ -46,6 +47,9 @@
     self.sentenceTrans.lineBreakMode   = UILineBreakModeWordWrap;
     if (IS_IPAD) {
         self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IPAD_SRCSENTENCE, 44);
+    } else {
+        self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IIPHONE_SRCSENTENCE, 44);
+       
     }
 }
 
@@ -73,6 +77,9 @@
     self.sentenceSrc.lineBreakMode   = UILineBreakModeWordWrap;
     if (IS_IPAD) {
         self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IPAD_SRCSENTENCE, 44);
+    } else {
+        self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, WIDTH_OF_IIPHONE_SRCSENTENCE, 44);
+        
     }
     CGSize szSrc = [Globle calcTextHeight:msgText withWidth:self.sentenceSrc.frame.size.width withFontSize:22];
 
@@ -80,7 +87,7 @@
     self.sentenceSrc.frame = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, szSrc.width, szSrc.height);
     
     self.sentenceTrans.frame = CGRectMake(self.sentenceTrans.frame.origin.x, self.sentenceSrc.frame.origin.y + self.sentenceSrc.frame.size.height + 10, szTrans.width, szTrans.height);
-    self.sentenceSrc.visibleRect = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, IS_IPAD? fmax(WIDTH_OF_IPAD_SRCSENTENCE, szSrc.width): szSrc.width, szSrc.height);
+    self.sentenceSrc.visibleRect = CGRectMake(self.sentenceSrc.frame.origin.x, self.sentenceSrc.frame.origin.y, fmax(IS_IPAD ? WIDTH_OF_IPAD_SRCSENTENCE : WIDTH_OF_IIPHONE_SRCSENTENCE, szSrc.width), szSrc.height);
     //self.sentenceSrc.text = msgText;
     [self.sentenceSrc sizeToFit];
     [self.sentenceTrans sizeToFit];
