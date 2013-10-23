@@ -83,6 +83,8 @@
 
 - (void)setCurrentBuyButonStatus:(IAP_STATUS)s
 {
+    // hide IAP
+    return;
     PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
     switch (s) {
         case IAP_STATUS_NONE:
@@ -120,6 +122,9 @@
 }
 
 - (void)restoreTapped:(id)sender {
+    // hide IAP
+    return;
+    
     PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
     [iapProcess doRestore];
 }
@@ -230,19 +235,21 @@
     UIView* footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
     
     CGSize buttonSize = CGSizeMake(76, 37);
-    CGFloat disBetweenButton = 20;
+    //CGFloat disBetweenButton = 20;
     CGFloat yOffset = 25;
     
-    BuyButton *addNewLib = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x - buttonSize.width - disBetweenButton, yOffset, buttonSize.width, buttonSize.height)];
+    BuyButton *addNewLib = [[BuyButton alloc] initWithFrame:CGRectMake((self.view.center.x - buttonSize.width/2) /*- disBetweenButton*/, yOffset, buttonSize.width, buttonSize.height)];
     [addNewLib showText:STRING_ADD_NEW_LIB forBlue:YES];
     [addNewLib addTarget:self action:@selector(addNewLib) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:addNewLib];
     [addNewLib release];
-    BuyButton *restore = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x + disBetweenButton, addNewLib.frame.origin.y, buttonSize.width, buttonSize.height)];
+    // hide IAP
+    
+    /*BuyButton *restore = [[BuyButton alloc] initWithFrame:CGRectMake(self.view.center.x + disBetweenButton, addNewLib.frame.origin.y, buttonSize.width, buttonSize.height)];
     [restore showText:STRING_RESTORE forBlue:NO];
     [restore addTarget:self action:@selector(restoreTapped:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:restore];
-    [restore release];
+    [restore release];*/
     footerView.backgroundColor = [UIColor clearColor];
     return footerView;
 }
@@ -388,19 +395,25 @@
     }
     Database* db = [Database sharedDatabase];
     _dataArray = [db loadLibaryInfo];
-    if ([_dataArray count] == 1) {
+    // hide IAP
+    /*if ([_dataArray count] == 1) {
         [self setEditing:NO];
-    }
+    }*/
     
     [self.tableView reloadData];
 }
 
 - (BOOL)isCanPerfomEdit
 {
-    return ([_dataArray count] != 1);
+    // hide IAP
+    //return ([_dataArray count] != 1);
+    return YES;
 }
 
 - (void)loadProducts {
+    // hide IAP
+    return;
+
     PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
     if (iapProcess != nil) {
         [iapProcess start];
@@ -489,16 +502,19 @@
             [_dataArray release];
             _dataArray = [db loadLibaryInfo];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            if ([_dataArray count] == 1) {
+            // hide IAP
+            /*if ([_dataArray count] == 1) {
                 [self setEditing:NO];
-            }
+            }*/
         }
     }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
-        return UITableViewCellEditingStyleDelete;
+    // hide IAP
+    //if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
+    if (indexPath.row < [_dataArray count]) {
+       return UITableViewCellEditingStyleDelete;
     }
     return UITableViewCellEditingStyleNone;
 }
@@ -506,7 +522,9 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
+    // hide IAP
+    //if ((indexPath.row < [_dataArray count]) && indexPath.row != 0) {
+    if (indexPath.row < [_dataArray count]) {
         return YES;
     }
     return NO;

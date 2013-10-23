@@ -24,6 +24,8 @@ static PartnerIAPProcess* _iap;
 - (id)init {
     self = [super init];
     self.status = IAP_STATUS_NONE;
+    // hide IAP
+   return self;
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
@@ -36,7 +38,9 @@ static PartnerIAPProcess* _iap;
 }
 
 - (void)start {
-    if (![self hasNetwork]) {
+    // hide IAP
+    return;
+   if (![self hasNetwork]) {
         self.status = IAP_STATUS_NETWORK_FAILED;
     } else {
         [self requestIAP];
@@ -45,21 +49,29 @@ static PartnerIAPProcess* _iap;
 
 // action
 - (void)doCheckNetwork {
-    [self status];
+    // hide IAP
+    return;
+   [self status];
 }
 
 - (void)doBuyProduct {
+    // hide IAP
+    return;
     self.status = IAP_STATUS_BUYING_PRODUCT;
     SKProduct * product = (SKProduct *)_products[0];
     [[PartnerIAPHelper sharedInstance] buyProduct:product];
 }
 
 - (void)doRestore {
-    [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];   
+    // hide IAP
+    return;
+    [[PartnerIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 
 - (void)checkProductBuy:(NSString*)productIdentifier {
-    if ([[PartnerIAPHelper sharedInstance] productPurchased:productIdentifier]) {
+    // hide IAP
+    return;
+   if ([[PartnerIAPHelper sharedInstance] productPurchased:productIdentifier]) {
         self.status = IAP_STATUS_ALREADY_BUYED;
     } else {
         self.status = IAP_STATUS_READY_TO_BUY;
@@ -84,7 +96,10 @@ static PartnerIAPProcess* _iap;
 }
 
 - (void)requestIAP {
-    self.status = IAP_STATUS_REQUESTING_IAP;
+    // hide IAP
+    return;
+   self.status = IAP_STATUS_REQUESTING_IAP;
+    
     [[PartnerIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             if ([products count] > 0) {
@@ -106,7 +121,9 @@ static PartnerIAPProcess* _iap;
 }
 
 - (void)provideContentForProductIdentifier:(NSNotification *)notification {
-    
+    // hide IAP
+    return;
+  
     NSString * productIdentifier = notification.object;
     [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
         if ([product.productIdentifier isEqualToString:productIdentifier]) {
@@ -119,11 +136,15 @@ static PartnerIAPProcess* _iap;
 }
 
 - (void)productFailed:(NSNotification *)notification {
-    self.status = IAP_STATUS_BUYED_FAILED;
+    // hide IAP
+    return;
+   self.status = IAP_STATUS_BUYED_FAILED;
 }
 
 - (void)completeTransaction:(NSNotification *)notification {
-    SKPaymentTransaction* transaction = notification.object;// (SKPaymentTransaction *)transaction
+    // hide IAP
+    return;
+   SKPaymentTransaction* transaction = notification.object;// (SKPaymentTransaction *)transaction
     if (transaction == nil) {
         return;
     }
@@ -131,11 +152,15 @@ static PartnerIAPProcess* _iap;
 }
 
 - (void)requestFailed:(NSNotification *)notification {
-    self.status = IAP_STATUS_REQUEST_IAP_FAILED;
+    // hide IAP
+    return;
+   self.status = IAP_STATUS_REQUEST_IAP_FAILED;
 }
 
 - (void)setStatus:(IAP_STATUS)s
 {
+    // hide IAP
+    return;
     status = s;
     [[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_IAPSTATUS_CHANGED object: [NSNumber numberWithInt:s]];
 }

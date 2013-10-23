@@ -162,7 +162,7 @@ static Database* _database;
 	[databaseLock unlock];
 
     [self createLibLisenceTable];
-    [self addDefaultLib];
+    //[self addDefaultLib];
     [self addHiddenLibForFreeSrc];
 
     return bSuccess;
