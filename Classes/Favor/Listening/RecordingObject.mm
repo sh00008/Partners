@@ -37,7 +37,7 @@ char *OSTypeToStr(char *buf, OSType t)
 + (int)scoreForSentence:(Sentence*)sentence file:(NSString*)filename toResult:(NSMutableDictionary*)scoreDictionary
 {
     // Score
-    ISAYB5WORD * pWord;
+    ISAYB6WORDSCORE * pWord;
     int nWord;
     int score;
     FILE* file = fopen([filename cStringUsingEncoding:NSUTF8StringEncoding], "rb");
@@ -91,10 +91,11 @@ char *OSTypeToStr(char *buf, OSType t)
         NSData *data = [NSData dataWithBytes:tWord length:strlen(tWord)];
         NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         if (aStr != nil) {
+            V_NSLog(@"%s 分数：%f", pWord[i].text, pWord[i].fScore);
+            
             [wordArray addObject:aStr];
         }
         [aStr release];
-
     }
     // 对分数进行调整，以时间为准，调整20分。
     double time = 0.0;
