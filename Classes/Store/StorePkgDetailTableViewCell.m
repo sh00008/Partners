@@ -106,14 +106,15 @@
 	[center addObserver:self selector:@selector(didDownloadedXML:) name:NOTIFICATION_DOWNLOADED_VOICE_PKGXML object:nil];
     [self.backToShelfButton showText:STRING_START_LEARNING forBlue:NO];
     [self.downloadButton start];
-   
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+    [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];
+
+    /*if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapStatusChanged:) name:NOTIFICATION_IAPSTATUS_CHANGED object:nil];
         PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
         [self setCurrentBuyButonStatus:iapProcess.status];
     } else {
         [self.downloadButton showText:STRING_DOWNLOAD forBlue:YES];       
-    }
+    }*/
 }
 
 - (void)iapStatusChanged:(NSNotification *)notification {
@@ -188,7 +189,8 @@
 
 - (IBAction)clickButton:(id)sender
 {
-    if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
+    // for IAP
+    /*if ([_info.url isEqualToString:STRING_STORE_URL_ADDRESS_BASE]) {
         PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
         switch (iapProcess.status) {
             case IAP_STATUS_NONE:
@@ -216,7 +218,7 @@
             default:
                 break;
         }
-    } else {
+    } else {*/
         if ([[self.downloadButton titleForState:UIControlStateNormal] isEqual:STRING_DOWNLOAD]) {
             // begin download
             [self.downloadButton  setTitle:STRING_DOWNLOADING forState:UIControlStateNormal];
@@ -224,7 +226,7 @@
             [self.delegate doDownload:_info];
         }
     
-    }
+    //}
 }
 
 - (void)setCurrentBuyButonStatus:(IAP_STATUS)s

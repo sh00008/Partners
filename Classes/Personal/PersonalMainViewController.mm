@@ -209,7 +209,8 @@
      [cell.textLabel setFont:[UIFont fontWithName:@"KaiTi" size:22]];
     cell.imageView.image = [UIImage imageNamed:@"add"];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
+    // for IAP
+    /*if (object && [object.url isEqualToString:STRING_STORE_URL_ADDRESS]) {
         _productCell = cell;
         [_productCell retain];
          BuyButton *buyButton = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 72, 37)];
@@ -222,7 +223,7 @@
         [_buyButton retain];
          PartnerIAPProcess* iapProcess = [PartnerIAPProcess sharedInstance];
         [self setCurrentBuyButonStatus:iapProcess.status];
-    }
+    }*/
 
     return cell;
 }
@@ -444,10 +445,24 @@
     Database* db = [Database sharedDatabase];
     // correct url: add index_ios.xml
     NSString* newURL = text;
+    
+    // correct index_ios.xml
+    NSRange rXML = [newURL rangeOfString:@"/index_ios.xml" options:NSBackwardsSearch];
+    if (rXML.location  == NSNotFound) {
+        newURL =[NSString stringWithFormat:@"%@/index_ios.xml", newURL];
+    }
+    // correct http:///
+    NSRange httpRange = [newURL rangeOfString:@"http://"];
+    if (httpRange.location == NSNotFound) {
+        newURL =[NSString stringWithFormat:@"http://%@", newURL];
+    }
+    
+    // correct testurl
     NSRange r = [text rangeOfString:@"ilovestory.b0.upaiyun.com" options:NSBackwardsSearch];
     if (r.location != NSNotFound) {
         newURL = [NSString stringWithFormat:@"%@", STRING_STORE_DEFAULT_TEST_URL_ADDRESS];
     }
+    
     LibaryInfo* libInfo = [db getLibaryInfoByURL:newURL];
     if (libInfo != nil) {
         [self addWaitingView:132 withText:STRING_ADDLIB_ADDRESS_AREADYADDED withAnimation:YES];
