@@ -15,7 +15,7 @@
 #import "CurrentInfo.h"
 #import "Database.h"
 #import "Globle.h"
-
+#import "BuyButton.h"
 @interface StoreViewController ()
 {
     BOOL bInit;
@@ -57,7 +57,7 @@
     NSString* imagePath = [NSString stringWithFormat:@"%@/%@", resourcePath, stringResource];
     UIImage* bgImage = [UIImage imageWithContentsOfFile:imagePath];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
-    [StoreNetworkConnectionView startAnimation:self.view];
+    //[StoreNetworkConnectionView startAnimation:self.view];
     
     self.title = STRING_DATA_CENTER;
     // Do any additional setup after loading the view from its nib.
@@ -65,21 +65,8 @@
     self.navigationItem.leftBarButtonItem = box;
     [box release];
     
-    NSString* urlstr = STRING_STORE_URL_ADDRESS;
-    if (self.storeURL != nil) {
-        urlstr = self.storeURL;
-    }
-    NSURL* url = [NSURL URLWithString:urlstr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"voice" forHTTPHeaderField:@"User-Agent"];
     
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-    fetcher.userData = @"voicexml";
-    [fetcher beginFetchWithDelegate:self
-                  didFinishSelector:@selector(fetcher:finishedWithData:error:)];
-
-
+    [self beginDownloadVoiceIndex];
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
         UIImage* bk = IS_IPAD ? [UIImage imageNamed:@"4-light-menu-barPad_P.png"] :[UIImage imageNamed:@"4-light-menu-bar.png"];
@@ -98,6 +85,22 @@
     [titleLabel release];
 }
 
+- (void)beginDownloadVoiceIndex {
+    NSString* urlstr = STRING_STORE_URL_ADDRESS;
+    if (self.storeURL != nil) {
+        urlstr = self.storeURL;
+    }
+    NSURL* url = [NSURL URLWithString:urlstr];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"voice" forHTTPHeaderField:@"User-Agent"];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    GTMHTTPFetcher *fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+    fetcher.userData = @"voicexml";
+    [fetcher beginFetchWithDelegate:self
+                  didFinishSelector:@selector(fetcher:finishedWithData:error:)];
+    
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -188,7 +191,11 @@
     V_NSLog(@"error : %@", [error description]);
     if (error != nil) {
         [StoreNetworkConnectionView stopAnimation:STRING_LOADINGDATA_ERROR withSuperView:self.view];
-        
+        UIView* retry = [self.view viewWithTag:345];
+        if (retry != nil) {
+            [retry removeFromSuperview];
+        }
+        [self addRetryButton];
     } else {
         if ([fecther.userData isEqualToString:@"voicexml"]) {
             [self finishVoiceXMLData:data];
@@ -196,6 +203,27 @@
     }
 }
 
+- (void)addRetryButton {
+    BuyButton* buttonTemp = [[BuyButton alloc] initWithFrame:CGRectMake(0, 0, 140, 37)];
+    buttonTemp.center = self.view.center;
+    [buttonTemp showText:STRING_CONNECT_FAILED_TEXT forBlue:YES];
+    buttonTemp.tag = 345;
+    [self.view addSubview:buttonTemp];
+    
+    // add animation here.
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    theAnimation.duration = 0.3;
+    theAnimation.autoreverses = NO;
+    theAnimation.fromValue = [NSNumber numberWithFloat:0.2];
+    theAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    [buttonTemp.layer addAnimation:theAnimation forKey:nil];
+    
+    // click event.
+    [buttonTemp addTarget:self action:@selector(beginDownloadVoiceIndex) forControlEvents:UIControlEventTouchUpInside];
+    [buttonTemp release];
+
+}
 - (void)dealloc
 {
     [StoreNetworkConnectionView removeConnectionView:self.view];

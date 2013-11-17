@@ -16,6 +16,9 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef graphicContext = UIGraphicsGetCurrentContext();
+    if (graphicContext == nil) {
+        return;
+    }
     if (bDark) {
         // fill rect
         CGContextSetFillColorWithColor(graphicContext, [[UIColor colorWithRed:235.0/255.0 green:234.0/255.0 blue:233.0/255.0 alpha:1.0] CGColor]);
